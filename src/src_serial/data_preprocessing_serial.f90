@@ -2,6 +2,9 @@
 
 module data_preprocessing_serial
     
+    use inverse_connectivity_preprocessor_module
+    
+    implicit none
     
     contains
     

@@ -34,6 +34,16 @@ module object_relation_data
     use iso_fortran_env
     implicit none
     
+    ! following are reversed connectivity arrays
+    ! p_c :: point index to cell index
+    ! p_f :: point index to face index
+    ! p_e :: point index to edge index
+    
+    integer(KIND=INT32) :: p_c_sum, p_f_sum, p_e_sum
+    integer(KIND=INT32), allocatable :: p_c_obj_relation_array(:) , p_c_index_array(:)
+    integer(KIND=INT32), allocatable :: p_f_obj_relation_array(:) , p_f_index_array(:)
+    integer(KIND=INT32), allocatable :: p_e_obj_relation_array(:) , p_e_index_array(:)
+    
     
     
 end module object_relation_data
