@@ -55,6 +55,8 @@ module setup_configuration_module
                         if ( trim(adjustL(current_line((1+len(binary_internal_str)):len(current_line)))) .eq. 'true' ) &
                             & output_requests = output_requests + vtu_binary_appended
                         
+                        ! last line in config file
+                        
                         exit
                         
                 end select
@@ -62,7 +64,11 @@ module setup_configuration_module
             endif
         enddo
         
+        if (.not.allocated(raw_data_path)) print*, 'no raw data file found', raw_data_path
         
+        if (output_requests .eq. no_output) print*, 'no output formats specified'
+        
+        close(10)
         
     end subroutine setup_configuration
     
