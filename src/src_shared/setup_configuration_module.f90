@@ -2,8 +2,6 @@
 
 module setup_configuration_module
     
-    use iso_fortran_env
-    
     use io_data
     
     implicit none
