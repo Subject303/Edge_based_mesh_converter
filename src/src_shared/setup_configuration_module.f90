@@ -32,7 +32,8 @@ module setup_configuration_module
             
             current_line = trim(adjustL(current_line))
             
-            if (len(current_line)) then
+            if (len(current_line).gt.0) then
+            
                 select case(current_line)
                 
                     case(current_line(1:len(prerocessed_data_file_str)) .eq. prerocessed_data_file_str)
@@ -40,21 +41,24 @@ module setup_configuration_module
                         
                     case(current_line(1:len(binary_internal_str)) .eq. binary_internal_str)
                         if ( trim(adjustL(current_line((1+len(binary_internal_str)):len(current_line)))) .eq. 'true' ) &
-                        & output_requests = output_requests + binary_internal
+                            & output_requests = output_requests + binary_internal
                         
                     case(current_line(1:len(ascii_internal_str)) .eq. ascii_internal_str)
                         if ( trim(adjustL(current_line((1+len(binary_internal_str)):len(current_line)))) .eq. 'true' ) &
-                        & output_requests = output_requests + ascii_internal
+                            & output_requests = output_requests + ascii_internal
                         
                     case(current_line(1:len(vtu_ascii_str)) .eq. vtu_ascii_str)
                         if ( trim(adjustL(current_line((1+len(binary_internal_str)):len(current_line)))) .eq. 'true' ) &
-                        & output_requests = output_requests + vtu_ascii
+                            & output_requests = output_requests + vtu_ascii
                         
                     case(current_line(1:len(vtu_binary_appended_str)) .eq. vtu_binary_appended_str)
                         if ( trim(adjustL(current_line((1+len(binary_internal_str)):len(current_line)))) .eq. 'true' ) &
-                        & output_requests = output_requests + vtu_binary_appended
+                            & output_requests = output_requests + vtu_binary_appended
+                        
+                        exit
                         
                 end select
+                
             endif
         enddo
         

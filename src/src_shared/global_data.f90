@@ -31,8 +31,10 @@ module io_data
     implicit none
     
     character(:), allocatable :: raw_data_path
+    
     integer(KIND=INT32) :: output_requests 
     integer(KIND=INT32),parameter :: binary_internal=1 ,ascii_internal=2, vtu_ascii=4, vtu_binary_appended=8
+    
     
     
 end module io_data
