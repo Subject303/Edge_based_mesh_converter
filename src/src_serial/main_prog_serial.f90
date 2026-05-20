@@ -1,9 +1,9 @@
 
 
-program main
+program converter_serial
     use iso_fortran_env
     implicit none
     
     
     
-end program main
+end program converter_serial
