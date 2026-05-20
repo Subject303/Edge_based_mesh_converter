@@ -8,21 +8,23 @@ module data_outputting_serial
         
         
         
-        select case (output_requests)
-            
-            case(output_requests .gt. binary_internal)
+        
+        if ((output_requests - binary_internal) .ge. 0) then
                 call output_binary_internal
-                
-            case(output_requests .gt. ascii_internal)
+        endif
+        
+        if ((output_requests - ascii_internal) .ge. 0) then
                 call output_ascii_internal
-                
-            case(output_requests .gt. vtu_ascii)
+        endif
+        
+        if ((output_requests - vtu_ascii) .ge. 0) then
                 call output_vtu_ascii
-                
-            case(output_requests .gt. vtu_binary_appended)
+        endif
+        
+        if ((output_requests - vtu_binary_appended) .ge. 0) then
                 call output_vtu_binary_appended
-                
-        end select
+        endif
+        
         
     end subroutine data_outputting
     
