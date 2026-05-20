@@ -15,6 +15,7 @@ module read_data_serial
     
     subroutine read_data
         
+        print*, ' '
         print *, 'Reading_raw_data'
         
         open(10,file=raw_data_path,access='stream',action='read',status='old')
@@ -50,6 +51,11 @@ module read_data_serial
         
         Print*, 'reading edge connectivity array '
         read(10) edge_connectivity(:)
+        
+        close(10)
+        
+        print*, 'total memory size of raw data :: ', ( (8*3*npoin) + (4*(4+nele+nface+element_con_sum+face_con_sum+(2*nedge)))) ) , ' bytes'
+        print*, ' '
         
     end subroutine read_data
     
