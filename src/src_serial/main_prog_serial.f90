@@ -13,7 +13,7 @@ program converter_serial
     ! start of program
     
     
-    call read_data
+    call read_data_serial
     
     
     call data_preprocessing
