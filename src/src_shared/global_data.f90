@@ -24,7 +24,7 @@ module raw_data
     integer(KIND=INT32) :: element_con_sum, face_con_sum, c_p_sum, f_p_sum
     integer(KIND=INT32), allocatable :: c_p_obj_relation_array(:), c_p_index_array(:)
     integer(KIND=INT32), allocatable :: f_p_obj_relation_array(:), f_p_index_array(:), 
-    integer(KIND=INT32), allocatable :: edge_connectivity(:)
+    integer(KIND=INT32), allocatable :: e_p_obj_relation_array(:)
     
     ! premapped cell to face and face to edge relations
     ! c_f :: cell index to face index

@@ -42,7 +42,7 @@ module read_data_serial
         read(10) f_p_sum
         read(10) f_p_index_array(:)
         
-        allocate ( c_p_obj_relation_array(c_p_sum), f_p_obj_relation_array(f_p_sum), edge_connectivity(2*nedge) )
+        allocate ( c_p_obj_relation_array(c_p_sum), f_p_obj_relation_array(f_p_sum), e_p_obj_relation_array(2*nedge) )
         
         Print*, 'reading element connectivity array '
         read(10) c_p_obj_relation_array(:)
@@ -51,7 +51,7 @@ module read_data_serial
         read(10) f_p_obj_relation_array(:)
         
         Print*, 'reading edge connectivity array '
-        read(10) edge_connectivity(:)
+        read(10) e_p_obj_relation_array(:)
         
         close(10)
         
