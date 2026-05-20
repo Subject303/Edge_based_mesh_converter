@@ -22,6 +22,7 @@ module read_data_serial
         
         read(10) npoin, nele, nface, nedge
         print *, 'mesh contains ', npoin, ' points, ', nele, ' elements, ', nface, ' faces, ', nedge, ' edges '
+        print*, ' '
         
         allocate( coords(npoin,3), element_con_index(nele), face_con_index(nface) )
         
