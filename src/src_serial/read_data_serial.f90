@@ -24,7 +24,7 @@ module read_data_serial
         print *, 'mesh contains ', npoin, ' points, ', nele, ' elements, ', nface, ' faces, ', nedge, ' edges '
         print*, ' '
         
-        allocate( coords(npoin,3), c_p_index_array(nele), f_p_index_array(nface) )
+        allocate( coords(npoin,3), c_p_index_array(0:nele), f_p_index_array(0:nface) )
         
         Print*, 'reading coordinates '
 
@@ -53,9 +53,29 @@ module read_data_serial
         Print*, 'reading edge connectivity array '
         read(10) e_p_obj_relation_array(:)
         
+        
+        allocate ( c_f_index_array(0:nele), f_e_index_array(0:nface) )
+        
+        print*, 'reading cell to face index array '
+        read(10) c_f_sum
+        read(10) c_f_index_array(:)
+        
+        print*, 'reading cell to face index array '
+        read(10) f_e_sum
+        read(10) f_e_index_array(:)
+        
+        allocate ( c_f_obj_relation_array(c_f_sum), f_e_obj_relation_array(f_e_sum) )
+        
+        print*, 'reading cell to face relation array '
+        read(10) c_f_obj_relation_array(:)
+        
+        print*, 'reading cell to face relation array '
+        read(10) f_e_obj_relation_array(:)
+        
+        
         close(10)
         
-        print*, 'total memory size of raw data :: ', ( (8*3*npoin) + (4*(4+nele+nface+c_p_sum+f_p_sum+(2*nedge)))) ) , ' bytes'
+        print*, 'total memory size of raw data :: ', ( (8*3*npoin) + (4*( 4 + nele + nface + c_p_sum + f_p_sum + (2*nedge) + 2 + nele + nface + c_f_sum + f_e_sum + 4))) ) , ' bytes'
         print*, ' '
         
     end subroutine read_data
