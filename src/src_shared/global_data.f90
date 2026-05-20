@@ -20,21 +20,27 @@ module raw_data
     
     real(KIND=REAL64), allocatable :: coords(:,:)
     
-    integer(KIND=INT32) :: element_con_sum, face_con_sum
-    integer(KIND=INT32), allocatable :: element_con_index(:), element_connectivity(:)
-    integer(KIND=INT32), allocatable :: face_con_index(:), face_connectivity(:)
+    ! raw connectivity arrays 
+    integer(KIND=INT32) :: element_con_sum, face_con_sum, c_p_sum, f_p_sum
+    integer(KIND=INT32), allocatable :: c_p_obj_relation_array(:), c_p_index_array(:)
+    integer(KIND=INT32), allocatable :: f_p_obj_relation_array(:), f_p_index_array(:), 
     integer(KIND=INT32), allocatable :: edge_connectivity(:)
     
+    ! premapped cell to face and face to edge relations
+    ! c_f :: cell index to face index
+    ! f_e :: face index to edge index
+    
+    integer(KIND=INT32) :: c_f_sum, f_e_sum
+    integer(KIND=INT32), allocatable :: c_f_obj_relation_array(:) , c_f_index_array(:)
+    integer(KIND=INT32), allocatable :: f_e_obj_relation_array(:) , f_e_index_array(:)
     
 end module raw_data
-
-
 
 module object_relation_data
     use iso_fortran_env
     implicit none
     
-    ! following are reversed connectivity arrays
+    ! reversed connectivity arrays 
     ! p_c :: point index to cell index
     ! p_f :: point index to face index
     ! p_e :: point index to edge index
@@ -43,6 +49,11 @@ module object_relation_data
     integer(KIND=INT32), allocatable :: p_c_obj_relation_array(:) , p_c_index_array(:)
     integer(KIND=INT32), allocatable :: p_f_obj_relation_array(:) , p_f_index_array(:)
     integer(KIND=INT32), allocatable :: p_e_obj_relation_array(:) , p_e_index_array(:)
+    
+    ! mapped cell to edge relation
+    ! c_e :: cell index to edge index
+    integer(KIND=INT32) :: c_e_sum
+    integer(KIND=INT32), allocatable :: c_e_obj_relation_array(:) , c_e_index_array(:)
     
     
     
