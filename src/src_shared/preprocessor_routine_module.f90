@@ -80,6 +80,8 @@ module preprocessor_routine_module
             
         enddo
         
+        call remove_flagged_duplicates(c_e_obj_relation_array)
+        
         allocate(mask(c_e_sum))
         mask=(/c_e_obj_relation_array(ce) .gt. 0 ,ce=0,c_e_sum)/)
         c_e_obj_relation_array=pack(c_e_obj_relation_array,mask)
