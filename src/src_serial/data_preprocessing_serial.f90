@@ -55,6 +55,11 @@ module data_preprocessing_serial
 
         call identify_boundary_edges(...)
         call boundary_angle_feature_flagging(...)
+        ! calculate an azi, yaw and pitch for every face normal against some reference azi, yaw and pitch 
+        ! we do azi, yaw and pitch so positive and negative 15 degrees are different
+        ! sort by angles so close angles are next to each other in the arrays, we can then low pass filter it out for only feature edges
+        ! compare vectors to flag feature edges
+        ! growth algo to differentiate flags
         
 
     end subroutine data_preprocessing
