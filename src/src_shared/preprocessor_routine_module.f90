@@ -13,7 +13,6 @@ module preprocessor_routine_module
     subroutine c_e_preprocess
         integer(KIND=INT32) :: c, cf_index, cf_start_index, cf_end_index, f, fe_index, fe_start_index, fe_end_index, ce_index, n_con_edges
         integer(KIND=INT32) :: c_e_sum
-        logical,allocatable :: mask(:)
         
         c_start_index = 1
         c_e_sum = 0
@@ -82,14 +81,16 @@ module preprocessor_routine_module
         
         call remove_flagged_duplicates(c_e_obj_relation_array)
         
-        allocate(mask(c_e_sum))
-        mask=(/c_e_obj_relation_array(ce) .gt. 0 ,ce=0,c_e_sum)/)
-        c_e_obj_relation_array=pack(c_e_obj_relation_array,mask)
-        
     end subroutine c_e_preprocess
     
     
     subroutine p_c_preprocess
+        integer(KIND=INT32) :: 
+    
+        allocate(p_c_obj_relation_array(c_p_sum)) 
+        
+
+        ! DO IT BY CREATING A CELL ARRAY AND SORTING IT OBVS
     
     end subroutine p_c_preprocess
     
