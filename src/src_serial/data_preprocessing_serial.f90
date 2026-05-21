@@ -41,6 +41,21 @@ module data_preprocessing_serial
         ! c_f, f_e, c_e
         ! f_c, e_f, e_c
 
+
+        ! once this is sorted, we now need to break out the data we need wrt to boundaries
+        ! we can identify internal and external faces by whether they are connected to 1, or 2 unique cells this gives us sbb faces
+        ! we can generate normal vectors with vector math in the faces, and we can ensure they're external facing by comparing with the edge barycentre
+        ! we then can search for edges within boundary faces, this gives us sb edges
+        ! we can flag boundaries by comparing connected boundary face normal angles
+        ! we can subtract external edges from all edges for only internal edges
+
+        call identify_external_faces(...)
+        call calculate_normal_vectors(...)
+        
+        call identify_boundary_edges(...)
+        call boundary_angle_feature_flagging(...)
+
+
     end subroutine data_preprocessing
     
 end module data_preprocessing_serial
