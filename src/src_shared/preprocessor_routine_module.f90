@@ -85,13 +85,59 @@ module preprocessor_routine_module
     
     
     subroutine p_c_preprocess
-        integer(KIND=INT32) :: 
-    
-        allocate(p_c_obj_relation_array(c_p_sum)) 
-        
+        integer(KIND=INT32),allocatable :: point_index, p_c_index_array_duplicates
+        integer(KIND=INT32) :: c, p, count, total_count, index
 
-        ! DO IT BY CREATING A CELL ARRAY AND SORTING IT OBVS
-    
+        allocate(p_c_obj_relation_array(c_p_sum), p_c_index_array(0:npoin), p_c_index_array_duplicates(0:npoin) )
+        allocate(point_index,source=c_p_obj_relation_array)
+
+        do c=1,nele
+            cp_start_index = 1 + c_p_index_array(c-1)
+            cp_end_index   = c_p_index_array(c)
+
+            p_c_obj_relation_array(cp_start_index:cp_end_index) = c
+
+        enddo
+        
+        call quicksort(point_index , 1 , c_p_sum , p_c_obj_relation_array)
+
+        p_c_index_array(0) = 0
+        p_c_index_array_duplicates = 0
+        total_count = 0
+        count=0
+        index=1
+        do p=1,npoin
+        
+            ! count the number of cells adjacent to each point
+
+            do while (p .eq. point_index(count))
+                count = count + 1
+            enddo
+
+            ! flag duplicates
+
+            call sort_and_flag_duplicates(p_c_obj_relation_array, p_c_index_array(p-1)+1, count)
+
+            ! adjust count
+
+            p_c_index_array(p) = count
+
+            do while (p_c_obj_relation_array(p_c_index_array(p)-p_c_index_array_duplicates(p)) .lt. 0)
+                p_c_index_array_duplicates(p) = p_c_index_array_duplicates(p) + 1
+            enddo
+
+            ! I'ma be real here
+            ! I'm pretty smug about this loop
+            ! update: less so now
+
+        enddo
+
+        p_c_index_array(:) = p_c_index_array(:) - p_c_index_array_duplicates(:)
+
+        call remove_flagged_duplicates(p_c_obj_relation_array)
+
+        p_c_sum = size(p_c_obj_relation_array)
+
     end subroutine p_c_preprocess
     
     
