@@ -16,9 +16,9 @@ module data_preprocessing_serial
         
         ! so four more object mapping arrays are needed to provide full, immediate access to all connected objects
         
-        call c_e_preprocess
+        call c_e_preprocess ! conjoined from c_f and f_e
         
-        call p_c_preprocess
+        call p_c_preprocess ! don't think p_c is ever actually needed but weh
         call p_f_preprocess
         call p_e_preprocess
 
@@ -26,7 +26,7 @@ module data_preprocessing_serial
         ! the inverse of the e f c relations
         ! e_c, e_f, e_c 
 
-        call e_c_preprocess
+        call f_c_preprocess
         call e_f_preprocess
         call e_c_preprocess ! remember this specific one must be synced in the mpi implementation
 
@@ -51,10 +51,11 @@ module data_preprocessing_serial
 
         call identify_external_faces(...)
         call calculate_normal_vectors(...)
+        ! for normal vectors find the face normals and average stuff, it's easier for directionality
 
         call identify_boundary_edges(...)
         call boundary_angle_feature_flagging(...)
-
+        
 
     end subroutine data_preprocessing
     
