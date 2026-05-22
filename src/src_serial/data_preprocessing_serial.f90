@@ -57,7 +57,7 @@ module data_preprocessing_serial
         print*, ' '
         print*, 'finished object relation preprocessing'
         print*, ' '
-        print*, 'beginning boundary property preprocessing'
+        print*, 'beginning boundary identification'
         print*, ' '
 
         ! once this is sorted, we now need to break out the data we need wrt to boundaries
@@ -66,18 +66,21 @@ module data_preprocessing_serial
         ! we then can search for edges within boundary faces, this gives us sb edges
         ! we can subtract external edges from all edges for only internal edges, giving us sn edges
         ! we can flag boundaries by comparing connected boundary face normal angles
-
-        call identify_boundary_faces(...)
-        call identify_boundary_edges(...)
-        call identify_boundary_points(...)
         
-        call calculate_normal_vectors(...)
-        ! for normal vectors find the face normals and average stuff, it's easier for directionality
-
-        call boundary_angle_feature_flagging(...)
+        call identify_boundary_faces
+        call identify_boundary_edges
+        call identify_boundary_points
         
         print*, ' '
-        print*, 'finished boundary property preprocessing'
+        print*, 'finished boundary identification'
+        print*, ' '
+        print*, 'starting calculating boundary normal vectors'
+        print*, ' '
+        
+        call calculate_normal_vectors
+        
+        print*, ' '
+        print*, 'finished calculating boundary normal vectors'
         print*, ' '
 
     end subroutine data_preprocessing
