@@ -58,11 +58,13 @@ module data_preprocessing_serial
         ! we can subtract external edges from all edges for only internal edges, giving us sn edges
         ! we can flag boundaries by comparing connected boundary face normal angles
 
-        call identify_external_faces(...)
+        call identify_boundary_faces(...)
+        call identify_boundary_edges(...)
+        call identify_boundary_points(...)
+        
         call calculate_normal_vectors(...)
         ! for normal vectors find the face normals and average stuff, it's easier for directionality
 
-        call identify_boundary_edges(...)
         call boundary_angle_feature_flagging(...)
         
         print*, ' '

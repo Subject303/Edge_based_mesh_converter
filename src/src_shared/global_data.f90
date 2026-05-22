@@ -9,8 +9,8 @@ module object_counts
     
     ! abstracted object counts
         ! i_ are internal 
-        ! e_ are external
-    integer(KIND=INT32) :: i_nedge, e_nedge, i_nface, e_nface, i_npoin, e_npoin
+        ! b_ are external
+    integer(KIND=INT32) :: i_nedge, b_nedge, i_nface, b_nface, i_npoin, b_npoin
     
 end module object_counts
 
@@ -55,7 +55,30 @@ module object_relation_data
     integer(KIND=INT32) :: c_e_sum
     integer(KIND=INT32), allocatable :: c_e_obj_relation_array(:) , c_e_index_array(:)
     
+    ! reversed object mapping arrays 
+    ! f_c :: face index to cell index
+    ! e_f :: edge index to face index
+    ! e_c :: edge index to cell index
+    
+    integer(KIND=INT32) :: f_c_sum, e_f_sum, p_e_sum
+    integer(KIND=INT32), allocatable :: f_c_obj_relation_array(:) , f_c_index_array(:)
+    integer(KIND=INT32), allocatable :: e_f_obj_relation_array(:) , e_f_index_array(:)
+    integer(KIND=INT32), allocatable :: e_c_obj_relation_array(:) , e_c_index_array(:)
+    
 end module object_relation_data
+
+module boundary_data
+    use iso_fortran_env
+    implicit none
+    
+    ! logical arrays of size npoin, nedge, nface, nele with boundary adjacent objects flagged true
+    logical, allocatable :: p_bound_array(:) , e_bound_array(:), f_bound_array(:) , c_bound_array(:)
+    
+    ! logical arrays of size npoin, nedge, nface, nele with internal objects flagged true
+    ! the logical inverse of x_bound_array
+    logical, allocatable :: p_internal_array(:) , e_internal_array(:), f_internal_array(:) , c_internal_array(:)
+    
+end module boundary_data
 
 
 module io_data

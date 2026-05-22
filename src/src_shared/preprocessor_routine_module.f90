@@ -3,6 +3,7 @@
 
 module preprocessor_routine_module
     use iso_fortran_env
+    use object_counts
     use raw_data
     use object_relation_data
     
