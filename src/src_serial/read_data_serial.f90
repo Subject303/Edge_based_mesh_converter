@@ -52,7 +52,9 @@ module read_data_serial
         
         Print*, 'reading edge connectivity array '
         read(10) e_p_obj_relation_array(:)
-        
+        ! note: an assumption here is that I've broken feature edges but not points into two for boundaries in the preprocessor
+        ! this is so I can alternate boundary faces then edges to grow my boundary regions,
+        ! but still have it reference the same point in all other point relation arrays
         
         allocate ( c_f_index_array(0:nele), f_e_index_array(0:nface)  )
         

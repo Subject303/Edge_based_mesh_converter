@@ -6,6 +6,7 @@ module preprocessor_routine_module
     use object_counts
     use raw_data
     use object_relation_data
+    use centroid_data
     
     implicit none
     
@@ -15,6 +16,8 @@ module preprocessor_routine_module
     
     subroutine calc_e_centroid
         integer(KIND=INT32) :: e, i, ep_start, ep_end
+        
+        print*, 'beginning calculating edge centroids'
         
         allocate(e_centroid(nedge,3))
         
@@ -29,12 +32,16 @@ module preprocessor_routine_module
             enddo
         enddo
         
+        print*, 'finished calculating edge centroids'
+        
     end subroutine calc_e_centroid
     
     subroutine calc_f_centroid
         integer(KIND=INT32) :: f, i, fp_start, fp_end, number_of_points
         
-        allocate(f_centroid(nedge,3))
+        print*, 'beginning calculating face centroids'
+        
+        allocate(f_centroid(nface,3))
         
         do f=1,nedge
             fp_start = (1 + f_p_index_array(f-1))
@@ -46,12 +53,16 @@ module preprocessor_routine_module
             enddo
         enddo
         
+        print*, 'finished calculating face centroids'
+        
     end subroutine calc_f_centroid    
     
     subroutine calc_c_centroid
         integer(KIND=INT32) :: c, i, cp_start, cp_end, number_of_points
         
-        allocate(c_centroid(nedge,3))
+        print*, 'beginning calculating cell centroids'
+        
+        allocate(c_centroid(nele,3))
         
         do c=1,nedge
             cp_start = (1 + c_p_index_array(c-1))
@@ -62,6 +73,8 @@ module preprocessor_routine_module
                 c_centroid(c,i) = sum(coord(c_p_obj_relation_array(cp_start:cp_end),i)) / number_of_points
             enddo
         enddo
+        
+        print*, 'finished calculating cell centroids'
         
     end subroutine calc_c_centroid
     

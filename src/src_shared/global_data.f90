@@ -85,23 +85,19 @@ module boundary_data
     ! indexing arrays as above, internals
     integer(KIND=INT32), allocatable :: p_internal_indexing_array(:) , e_internal_indexing_array(:), f_internal_indexing_array(:) , c_internal_indexing_array(:)
     
-    
-    ! array for feature edges that define boundaries
-    logical, allocatable :: e_feature(:)
-    
     ! for boundary normal vectors it makes sense to both calculate  normals for faces, and then derive point normals
-    real(KIND=REAL32), allocatable :: p_normal_vectors(:,:), f_normal_vectors(:,:), e_bound_feature_angle(:)
+    real(KIND=REAL32), allocatable :: p_normal_vectors(:,:), f_normal_vectors(:,:)
     
     
 end module boundary_data
 
-module barycenter_data
+module centroid_data
     use iso_fortran_env
     implicit none
     
-    real(KIND=REAL32),parameter :: e_centroid(:,:), f_centroid(:,:), c_centroid(:,:)
+    real(KIND=REAL32) :: e_centroid(:,:), f_centroid(:,:), c_centroid(:,:)
     
-end module barycenter_data
+end module centroid_data
 
 module io_data
     use iso_fortran_env

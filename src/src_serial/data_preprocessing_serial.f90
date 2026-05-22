@@ -9,8 +9,16 @@ module data_preprocessing_serial
     contains
     
     subroutine data_preprocessing
-    
-    
+        
+        print*, 'beginning calculating object centroids'
+        print*, ' '
+        call calc_e_centroid
+        call calc_f_centroid
+        call calc_c_centroid
+        
+        print*, ' '
+        print*, 'finished calculating object centroids'
+        print*, ' '
         print*, 'beginning object relation preprocessing'
         print*, ' '
         

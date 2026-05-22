@@ -123,7 +123,8 @@ module preprocessor_routine_module
     !!!!!!!!!!!!!!!!!! boundary flagging & normal vector routines
     
     subroutine calculate_normal_vectors
-        integer(KIND=INT32) :: f, bf, fp_start, p1, p2, p3, magnitude, c
+        use centroid_data
+        integer(KIND=INT32) :: f, bf, fp_start, p1, p2, p3, magnitude, dot_product_of_c_to_f_and_normal, p, bp, pf_start, pf_end, number_of_points, i
         real(KIND=REAL32)   :: v1(3), v2(3)
         
         allocate(f_normal_vectors(b_nface,3))
@@ -152,16 +153,42 @@ module preprocessor_routine_module
             
             f_normal_vectors(bf,:)  = f_normal_vectors(bf,:) / magnitude
             
-            c = f_c_obj_relation_array(f_c_index_array(f))
             
-            ! I want barycentres already
+            ! we're taking the scalar product of the normal vector and the vector of the adjacent cell to the face to guarantee the normal faces outward.
+            v1(:) = f_normal_vectors(bf,:) * (c_centroid(f_c_obj_relation_array(f_c_index_array(f)),:) - f_centroid(f,:))
+            dot_product_of_c_to_f_and_normal = v1(1) + v1(2) + v1(3)
+            
+            if (dot_product_of_c_to_f_and_normal .lt. 0) f_normal_vectors(bf,:) = -f_normal_vectors(bf,:)
             
         endif
+        
+        ! because I've already split my feature edges in my preprocessor I can then get point normal vectors by just averaging connected face normals
+        
+        allocate(p_normal_vectors(b_npoin,3))
+        
+        do bp=1,npoin
+            
+            p = p_bound_indexing_array(bp)
+            
+            pf_start = (1 + p_f_index_array(p-1))
+            pf_end   = p_f_index_array(p)
+            number_of_points = 1 + pf_end - pf_start
+            
+            do i=1,3
+                p_normal_vectors(bp,i) = sum(f_normal_vectors(p_f_obj_relation_array(pf_start:pf_end),i)) / number_of_points
+            enddo
+            
+            ! fuck this is elegant
+            ! I'm dickriding myself pretty hard over this
+            
+        enddo
         
     end subroutine calculate_normal_vectors
     
     subroutine boundary_angle_feature_flagging
-    
+     ! wont need to do this 
+     ! I will have already split my edges for the purpose of normal vectors
+     ! so I can just growth algo my boundaries
     end subroutine boundary_angle_feature_flagging
     
     ! end contains    
