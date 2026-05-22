@@ -12,7 +12,6 @@ module preprocessor_routine_module
     
     subroutine c_e_preprocess
         integer(KIND=INT32) :: c, cf_index, cf_start_index, cf_end_index, f, fe_index, fe_start_index, fe_end_index, ce_index, n_con_edges
-        integer(KIND=INT32) :: c_e_sum
         
         c_start_index = 1
         c_e_sum = 0
@@ -83,47 +82,96 @@ module preprocessor_routine_module
         
     end subroutine c_e_preprocess
     
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!  obj relation inversion routines below ::
+    
+    !!!!!!!!!!! raw connectivity inversions ::
     
     subroutine p_c_preprocess
-        integer(KIND=INT32),allocatable :: point_index, p_c_index_array_duplicates
-        integer(KIND=INT32) :: c, p, count, total_count, index
+    
+        call obj_relation_inverter(nele, npoin, c_p_sum, c_p_index_array, c_p_obj_relation_array, p_c_sum, p_c_index_array, p_c_obj_relation_array)
 
-        allocate(p_c_obj_relation_array(c_p_sum), p_c_index_array(0:npoin), p_c_index_array_duplicates(0:npoin) )
-        allocate(point_index,source=c_p_obj_relation_array)
+    end subroutine p_c_preprocess
+    
+    
+    subroutine p_f_preprocess
 
-        do c=1,nele
-            cp_start_index = 1 + c_p_index_array(c-1)
-            cp_end_index   = c_p_index_array(c)
+        call obj_relation_inverter(nface, npoin, f_p_sum, f_p_index_array, f_p_obj_relation_array, p_f_sum, p_f_index_array, p_f_obj_relation_array)
+    
+    end subroutine p_f_preprocess
+    
+    subroutine p_e_preprocess
+    
+        call obj_relation_inverter(nedge, npoin, e_p_sum, e_p_index_array, e_p_obj_relation_array, p_e_sum, p_e_index_array, p_e_obj_relation_array)
+    
+    end subroutine p_e_preprocess
+    
+    !!!!!!!!!!! e f c obj relation inversions ::
+    
+    subroutine f_c_preprocess
+    
+        call obj_relation_inverter(nele, nface, c_f_sum, c_f_index_array, c_f_obj_relation_array, f_c_sum, f_c_index_array, f_c_obj_relation_array)
 
-            p_c_obj_relation_array(cp_start_index:cp_end_index) = c
+    end subroutine f_c_preprocess
+    
+    subroutine e_f_preprocess
+    
+        call obj_relation_inverter(nface, nedge, e_f_sum, e_f_index_array, e_f_obj_relation_array, f_e_sum, f_e_index_array, f_e_obj_relation_array)
+    
+    end subroutine e_f_preprocess
+    
+    subroutine e_c_preprocess
+    
+        call obj_relation_inverter(nele, nedge, c_e_sum, c_e_index_array, c_e_obj_relation_array, e_c_sum, e_c_index_array, e_c_obj_relation_array)
+
+    end subroutine e_c_preprocess
+    
+    !!!!!!!!!!!!!!!!!!!!!!!!!!! inverter routine below ::
+    
+    subroutine obj_relation_inverter(forward_leading_obj_count, backward_leading_obj_count, forward_sum, forward_index, forward_obj_relation_array, backward_sum, backward_index, backward_obj_relation_array)
+    
+        integer(KIND=INT32),allocatable :: forward_index(:), backward_index(:), forward_obj_relation_array(:), backward_obj_relation_array(:)
+        integer(KIND=INT32),allocatable :: p_index(:), backward_index_duplicates(:)
+        integer(KIND=INT32) :: x, p, x_count, total_x_count, forward_sum, backward_sum, cx_start_index, cx_end_index, forward_leading_obj_count, backward_leading_obj_count
+        
+        
+
+        allocate(backward_obj_relation_array(forward_sum), backward_index(0:npoin), backward_index_duplicates(0:npoin) )
+        allocate(p_index,source=forward_obj_relation_array)
+
+        do x=1, forward_leading_obj_count
+            cx_start_index = 1 + forward_index(x-1)
+            cx_end_index   = forward_index(x)
+
+            backward_obj_relation_array(cx_start_index:cx_end_index) = x
 
         enddo
         
-        call quicksort(point_index , 1 , c_p_sum , p_c_obj_relation_array)
+        call quicksort(p_index , 1 , forward_sum , backward_obj_relation_array)
 
-        p_c_index_array(0) = 0
-        p_c_index_array_duplicates = 0
-        total_count = 0
-        count=0
-        index=1
-        do p=1,npoin
+        backward_index(0) = 0
+        backward_index_duplicates = 0
+        total_x_count = 0
+        x_count=0
+        do p=1, backward_leading_obj_count
         
             ! count the number of cells adjacent to each point
 
-            do while (p .eq. point_index(count))
-                count = count + 1
+            do while (p .eq. p_index(x_count))
+                x_count = x_count + 1
             enddo
 
             ! flag duplicates
 
-            call sort_and_flag_duplicates(p_c_obj_relation_array, p_c_index_array(p-1)+1, count)
+            call sort_and_flag_duplicates(backward_obj_relation_array, backward_index(p-1)+1, x_count)
 
-            ! adjust count
+            ! adjust x_count
 
-            p_c_index_array(p) = count
-
-            do while (p_c_obj_relation_array(p_c_index_array(p)-p_c_index_array_duplicates(p)) .lt. 0)
-                p_c_index_array_duplicates(p) = p_c_index_array_duplicates(p) + 1
+            backward_index(p) = x_count
+            
+            
+            backward_index_duplicates = x_count - 1 ! starts looping at beginning of a point and counts up
+            do while (backward_obj_relation_array(backward_index(p)-backward_index_duplicates(p)) .lt. 0)
+                backward_index_duplicates(p) = backward_index_duplicates(p) - 1
             enddo
 
             ! I'ma be real here
@@ -132,28 +180,73 @@ module preprocessor_routine_module
 
         enddo
 
-        p_c_index_array(:) = p_c_index_array(:) - p_c_index_array_duplicates(:)
+        backward_index(:) = backward_index(:) - backward_index_duplicates(:)
 
-        call remove_flagged_duplicates(p_c_obj_relation_array)
+        call remove_flagged_duplicates(backward_obj_relation_array)
 
-        p_c_sum = size(p_c_obj_relation_array)
-
-    end subroutine p_c_preprocess
+        backward_sum = size(backward_obj_relation_array)
+        
+        
+        ! based on ::
+!         integer(KIND=INT32),allocatable :: p_index, p_c_index_array_duplicates
+!         integer(KIND=INT32) :: c, p, c_count, total_c_count
+! 
+!         allocate(p_c_obj_relation_array(c_p_sum), p_c_index_array(0:npoin), p_c_index_array_duplicates(0:npoin) )
+!         allocate(p_index,source=c_p_obj_relation_array)
+! 
+!         do c=1,nele
+!             cp_start_index = 1 + c_p_index_array(c-1)
+!             cp_end_index   = c_p_index_array(c)
+! 
+!             p_c_obj_relation_array(cp_start_index:cp_end_index) = c
+! 
+!         enddo
+!         
+!         call quicksort(p_index , 1 , c_p_sum , p_c_obj_relation_array)
+! 
+!         p_c_index_array(0) = 0
+!         p_c_index_array_duplicates = 0
+!         total_c_count = 0
+!         c_count=0
+!         do p=1,npoin
+!         
+!             ! c_count the number of cells adjacent to each point
+! 
+!             do while (p .eq. p_index(c_count))
+!                 c_count = c_count + 1
+!             enddo
+! 
+!             ! flag duplicates
+! 
+!             call sort_and_flag_duplicates(p_c_obj_relation_array, p_c_index_array(p-1)+1, c_count)
+! 
+!             ! adjust c_count
+! 
+!             p_c_index_array(p) = c_count
+!             
+!             
+!             p_c_index_array_duplicates = c_count - 1 ! starts looping at beginning of a point and counts up
+!             do while (p_c_obj_relation_array(p_c_index_array(p)-p_c_index_array_duplicates(p)) .lt. 0)
+!                 p_c_index_array_duplicates(p) = p_c_index_array_duplicates(p) - 1
+!             enddo
+! 
+!             ! I'ma be real here
+!             ! I'm pretty smug about this loop
+!             ! update: less so now
+! 
+!         enddo
+! 
+!         p_c_index_array(:) = p_c_index_array(:) - p_c_index_array_duplicates(:)
+! 
+!         call remove_flagged_duplicates(p_c_obj_relation_array)
+! 
+!         p_c_sum = size(p_c_obj_relation_array)
+        
+        
+    end subroutine obj_relation_inverter
     
     
     
-    
-    subroutine p_f_preprocess
-    
-    end subroutine p_f_preprocess
-    
-    
-    
-    
-    
-    subroutine p_e_preprocess
-    
-    end subroutine p_e_preprocess
     
     
     ! end contains    
