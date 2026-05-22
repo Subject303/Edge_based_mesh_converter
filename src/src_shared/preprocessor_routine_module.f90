@@ -11,6 +11,63 @@ module preprocessor_routine_module
     
     contains
     
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!  centroid routines below ::
+    
+    subroutine calc_e_centroid
+        integer(KIND=INT32) :: e, i, ep_start, ep_end
+        
+        allocate(e_centroid(nedge,3))
+        
+        e_p_index_array = (/0:nedge/) * 2
+        
+        do e=1,nedge
+            ep_start = (1 + e_p_index_array(f-1))
+            ep_end   = e_p_index_array(f)
+            
+            do i=1,3
+                e_centroid(e,i) = sum(coord(e_p_obj_relation_array(ep_start:ep_end),i)) / 2
+            enddo
+        enddo
+        
+    end subroutine calc_e_centroid
+    
+    subroutine calc_f_centroid
+        integer(KIND=INT32) :: f, i, fp_start, fp_end, number_of_points
+        
+        allocate(f_centroid(nedge,3))
+        
+        do f=1,nedge
+            fp_start = (1 + f_p_index_array(f-1))
+            fp_end   = f_p_index_array(f)
+            number_of_points = 1 + fp_end - fp_start
+            
+            do i=1,3
+                f_centroid(f,i) = sum(coord(f_p_obj_relation_array(fp_start:fp_end),i)) / number_of_points
+            enddo
+        enddo
+        
+    end subroutine calc_f_centroid    
+    
+    subroutine calc_c_centroid
+        integer(KIND=INT32) :: c, i, cp_start, cp_end, number_of_points
+        
+        allocate(c_centroid(nedge,3))
+        
+        do c=1,nedge
+            cp_start = (1 + c_p_index_array(c-1))
+            cp_end   = c_p_index_array(c)
+            number_of_points = 1 + fp_end - fp_start
+            
+            do i=1,3
+                c_centroid(c,i) = sum(coord(c_p_obj_relation_array(cp_start:cp_end),i)) / number_of_points
+            enddo
+        enddo
+        
+    end subroutine calc_c_centroid
+    
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!  cell edge routine below ::
+    
+    
     subroutine c_e_preprocess
         integer(KIND=INT32) :: c, cf_index, cf_start_index, cf_end_index, f, fe_index, fe_start_index, fe_end_index, ce_index, n_con_edges
         

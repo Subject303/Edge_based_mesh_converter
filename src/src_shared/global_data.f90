@@ -10,7 +10,7 @@ module object_counts
     ! abstracted object counts
         ! i_ are internal 
         ! b_ are external
-    integer(KIND=INT32) :: i_nedge, b_nedge, i_nface, b_nface, i_npoin, b_npoin
+    integer(KIND=INT32) :: i_npoin, b_npoin, i_nedge, b_nedge, i_nface, b_nface, i_nele, b_nele
     
 end module object_counts
 
@@ -23,8 +23,8 @@ module raw_data
     ! raw connectivity arrays 
     integer(KIND=INT32) :: c_p_sum, f_p_sum
     integer(KIND=INT32), allocatable :: c_p_obj_relation_array(:), c_p_index_array(:)
-    integer(KIND=INT32), allocatable :: f_p_obj_relation_array(:), f_p_index_array(:), 
-    integer(KIND=INT32), allocatable :: e_p_obj_relation_array(:)
+    integer(KIND=INT32), allocatable :: f_p_obj_relation_array(:), f_p_index_array(:)
+    integer(KIND=INT32), allocatable :: e_p_obj_relation_array(:), e_p_index_array(:)
     
     ! premapped cell to face and face to edge relations
     ! c_f :: cell index to face index
@@ -74,12 +74,34 @@ module boundary_data
     ! logical arrays of size npoin, nedge, nface, nele with boundary adjacent objects flagged true
     logical, allocatable :: p_bound_array(:) , e_bound_array(:), f_bound_array(:) , c_bound_array(:)
     
+    ! indexing arrays as above, boundaries
+    integer(KIND=INT32), allocatable :: p_bound_indexing_array(:) , e_bound_indexing_array(:), f_bound_indexing_array(:) , c_bound_indexing_array(:)
+    
+    
     ! logical arrays of size npoin, nedge, nface, nele with internal objects flagged true
     ! the logical inverse of x_bound_array
     logical, allocatable :: p_internal_array(:) , e_internal_array(:), f_internal_array(:) , c_internal_array(:)
     
+    ! indexing arrays as above, internals
+    integer(KIND=INT32), allocatable :: p_internal_indexing_array(:) , e_internal_indexing_array(:), f_internal_indexing_array(:) , c_internal_indexing_array(:)
+    
+    
+    ! array for feature edges that define boundaries
+    logical, allocatable :: e_feature(:)
+    
+    ! for boundary normal vectors it makes sense to both calculate  normals for faces, and then derive point normals
+    real(KIND=REAL32), allocatable :: p_normal_vectors(:,:), f_normal_vectors(:,:), e_bound_feature_angle(:)
+    
+    
 end module boundary_data
 
+module barycenter_data
+    use iso_fortran_env
+    implicit none
+    
+    real(KIND=REAL32),parameter :: e_centroid(:,:), f_centroid(:,:), c_centroid(:,:)
+    
+end module barycenter_data
 
 module io_data
     use iso_fortran_env
