@@ -67,6 +67,8 @@ module read_data_serial
         ! but still have it reference the same point in all other point relation arrays
         !
         ! IE.: feature edges that are split will have two different edge IDs despite having the same points inside, e1 = (p1,p2) & e2 = (p1,p2)
+        !
+        ! might have to filter out stuff for kbface?
         
         allocate ( c_f_obj_relation_array(c_f_sum), f_e_obj_relation_array(f_e_sum) )
         
