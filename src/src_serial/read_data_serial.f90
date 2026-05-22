@@ -52,9 +52,6 @@ module read_data_serial
         
         Print*, 'reading edge connectivity array '
         read(10) e_p_obj_relation_array(:)
-        ! note: an assumption here is that I've broken feature edges but not points into two for boundaries in the preprocessor
-        ! this is so I can alternate boundary faces then edges to grow my boundary regions,
-        ! but still have it reference the same point in all other point relation arrays
         
         allocate ( c_f_index_array(0:nele), f_e_index_array(0:nface)  )
         
@@ -65,6 +62,11 @@ module read_data_serial
         print*, 'reading face to edge index array '
         read(10) f_e_sum
         read(10) f_e_index_array(:)
+        ! note: an assumption here is that I've broken feature edges but not points into two for boundaries in the preprocessor
+        ! this is so I can alternate boundary faces then edges to grow my boundary regions,
+        ! but still have it reference the same point in all other point relation arrays
+        !
+        ! IE.: feature edges that are split will have two different edge IDs despite having the same points inside, e1 = (p1,p2) & e2 = (p1,p2)
         
         allocate ( c_f_obj_relation_array(c_f_sum), f_e_obj_relation_array(f_e_sum) )
         
