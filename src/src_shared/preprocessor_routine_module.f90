@@ -13,6 +13,8 @@ module preprocessor_routine_module
     subroutine c_e_preprocess
         integer(KIND=INT32) :: c, cf_index, cf_start_index, cf_end_index, f, fe_index, fe_start_index, fe_end_index, ce_index, n_con_edges
         
+        print *, 'beginning processing cell edge relation array'
+        
         c_start_index = 1
         c_e_sum = 0
         
@@ -80,6 +82,8 @@ module preprocessor_routine_module
         
         call remove_flagged_duplicates(c_e_obj_relation_array)
         
+        print *, 'finished processing cell edge relation array'
+        
     end subroutine c_e_preprocess
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!  obj relation inversion routines below ::
@@ -88,41 +92,53 @@ module preprocessor_routine_module
     
     subroutine p_c_preprocess
     
+        print *, 'beginning processing cell connectivity array inversion'
         call obj_relation_inverter(nele, npoin, c_p_sum, c_p_index_array, c_p_obj_relation_array, p_c_sum, p_c_index_array, p_c_obj_relation_array)
-
+        print *, 'finished processing cell connectivity array inversion'
+        
     end subroutine p_c_preprocess
     
     
     subroutine p_f_preprocess
 
+        print *, 'beginning processing face connectivity array inversion'
         call obj_relation_inverter(nface, npoin, f_p_sum, f_p_index_array, f_p_obj_relation_array, p_f_sum, p_f_index_array, p_f_obj_relation_array)
-    
+        print *, 'finished processing face connectivity array inversion'
+        
     end subroutine p_f_preprocess
     
     subroutine p_e_preprocess
     
+        print *, 'beginning processing edge connectivity array inversion'
         call obj_relation_inverter(nedge, npoin, e_p_sum, e_p_index_array, e_p_obj_relation_array, p_e_sum, p_e_index_array, p_e_obj_relation_array)
-    
+        print *, 'finished processing edge connectivity array inversion'
+        
     end subroutine p_e_preprocess
     
     !!!!!!!!!!! e f c obj relation inversions ::
     
     subroutine f_c_preprocess
     
+        print *, 'beginning processing face cell relation array inversion'
         call obj_relation_inverter(nele, nface, c_f_sum, c_f_index_array, c_f_obj_relation_array, f_c_sum, f_c_index_array, f_c_obj_relation_array)
-
+        print *, 'finished processing face cell relation array inversion'
+        
     end subroutine f_c_preprocess
     
     subroutine e_f_preprocess
     
+        print *, 'beginning processing edge face relation array inversion'
         call obj_relation_inverter(nface, nedge, e_f_sum, e_f_index_array, e_f_obj_relation_array, f_e_sum, f_e_index_array, f_e_obj_relation_array)
-    
+        print *, 'finished processing edge face relation array inversion'
+        
     end subroutine e_f_preprocess
     
     subroutine e_c_preprocess
     
+        print *, 'beginning processing edge cell relation array inversion'
         call obj_relation_inverter(nele, nedge, c_e_sum, c_e_index_array, c_e_obj_relation_array, e_c_sum, e_c_index_array, e_c_obj_relation_array)
-
+        print *, 'finished processing edge cell relation array inversion'
+        
     end subroutine e_c_preprocess
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!! inverter routine below ::

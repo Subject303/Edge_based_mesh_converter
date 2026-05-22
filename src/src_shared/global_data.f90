@@ -55,8 +55,6 @@ module object_relation_data
     integer(KIND=INT32) :: c_e_sum
     integer(KIND=INT32), allocatable :: c_e_obj_relation_array(:) , c_e_index_array(:)
     
-    
-    
 end module object_relation_data
 
 
