@@ -75,6 +75,8 @@ module read_data_serial
         
         close(10)
         
+        print*, 'finished reading raw data'
+        
         print*, 'total memory size of raw data :: ', ( (8*3*npoin) + (4*( 4 + nele + nface + c_p_sum + f_p_sum + (2*nedge) + 2 + nele + nface + c_f_sum + f_e_sum + 4))) ) , ' bytes'
         print*, ' '
         

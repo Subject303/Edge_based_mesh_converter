@@ -9,6 +9,10 @@ module data_preprocessing_serial
     contains
     
     subroutine data_preprocessing
+    
+    
+        print*, 'beginning object relation preprocessing'
+        print*, ' '
         
         ! from inputs we already have 
         ! e_p, f_p, c_p (connectivity arrays)
@@ -41,6 +45,11 @@ module data_preprocessing_serial
         ! c_f, f_e, c_e
         ! f_c, e_f, e_c
 
+        print*, ' '
+        print*, 'finished object relation preprocessing'
+        print*, ' '
+        print*, 'beginning boundary property preprocessing'
+        print*, ' '
 
         ! once this is sorted, we now need to break out the data we need wrt to boundaries
         ! we can identify internal and external faces by whether they are connected to 1, or 2 unique cells this gives us sbb faces
@@ -56,6 +65,9 @@ module data_preprocessing_serial
         call identify_boundary_edges(...)
         call boundary_angle_feature_flagging(...)
         
+        print*, ' '
+        print*, 'finished boundary property preprocessing'
+        print*, ' '
 
     end subroutine data_preprocessing
     
