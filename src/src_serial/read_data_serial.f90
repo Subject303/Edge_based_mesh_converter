@@ -20,7 +20,7 @@ module read_data_serial
         
         open(10,file=raw_data_path,access='stream',action='read',status='old')
         
-        read(10) npoin, nele, nface, nedge
+        read(10) npoin, nedge, nface, nele
         print *, 'mesh contains ', npoin, ' points, ', nele, ' elements, ', nface, ' faces, ', nedge, ' edges '
         print*, ' '
         
