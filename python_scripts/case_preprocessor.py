@@ -15,6 +15,9 @@ VTK_DATA_ROOT = vtkGetDataRoot()
 # set angle to split boundary edges
 feature_angle = 15
 
+
+
+print('reading raw case file')
 # read the raw data
 algo = vtkGenericEnSightReader()
 cdp = vtkCompositeDataPipeline()
@@ -37,6 +40,7 @@ del raw_data
 # freeing up the multiblock view
 
 
+print('cleaning case file')
 # general cleanup
 algo = vtkStaticCleanUnstructuredGrid()
 algo.SetInputData(fluidBlock)
@@ -46,6 +50,7 @@ fluidBlock = algo.GetOutput()
 del algo
 
 
+print('converting element types to polyhedra')
 # convert all cells to polyhedra
 algo = vtkConvertToPolyhedra()
 algo.SetInputData(fluidBlock)
@@ -57,16 +62,17 @@ del fluidBlock
 # I think I can get away deleting the non poly data
 
 
-# this splits the points on feature edges
-# we do this before assigning global IDs so the IDs are seperate
-algo = vtkSplitSharpEdgesPolyData()
-algo.SetInputData(polyblock)
-algo.SetFeatureAngle(feature_angle)
-algo.Update()
-polyblock = algo.GetOutput()
-del algo
+# # this splits the points on feature edges
+# # we do this before assigning global IDs so the IDs are seperate
+# algo = vtkSplitSharpEdgesPolyData()
+# algo.SetInputData(polyblock)
+# algo.SetFeatureAngle(feature_angle)
+# algo.Update()
+# polyblock = algo.GetOutput()
+# del algo
 
 
+print('generating global IDs')
 # create global point IDs that I can reference down the line
 algo = vtkGenerateGlobalIds()
 algo.SetInputData(polyblock)
@@ -75,12 +81,14 @@ polyblock = algo.GetOutput()
 del algo
 
 
+print('extracting point and element counts')
 # Pull general mesh info
 npoin = polyblock.GetNumberOfPoints()
 nelem = polyblock.GetNumberOfCells()
 print(npoin,' nodes ', nelem,' cells')
 
 
+print('initialising output arrays')
 # initialise the output arrays
 x_coords = []
 y_coords = []
@@ -108,6 +116,7 @@ faces = []
 edges = []
 
 
+print('extracting coordinate data')
 # extract coordinate data
 
 for p in range(npoin):
@@ -118,6 +127,7 @@ for p in range(npoin):
 
 # extract cell, face and edge datas from the primary data block
 
+print('extracting cell data')
 for c in range(nelem):
     cells.append(polyblock.GetCell(c))
 
@@ -125,6 +135,7 @@ del polyblock
 
 faceid = 0
 
+print('extracting face data & cell face mappings')
 for cell in cells:
     nfaces_in_cell = cell.GetNumberOfFaces()
     
@@ -137,11 +148,12 @@ for cell in cells:
         faces.append(cell.GetFace(f))
     
 edgeid = 0
-    
+
+print('extracting edge data & face edge mappings')
 for face in faces:
     nedge_in_face = face.GetNumberOfPoints()
     
-    f_p_index.append(cell.GetNumberOfPoints())
+    f_p_index.append(face.GetNumberOfPoints())
     f_e_index.append(nedge_in_face)
     
     for e in range(nedge_in_face):
@@ -152,34 +164,42 @@ for face in faces:
 
 # extract pure connectivity arrays
 
-cellid = 0
+print('extracting cell connectivites')
+cellid = -1
 for cell in cells:
     cellid = cellid + 1
     
-    for p in range(c_p_index(cellid)):
+    for p in range(c_p_index[cellid]):
         c_p_obj_relation_array.append(cell.GetPointId(p))
-
-faceid = 0
+        
+print('extracting face connectivites')
+faceid = -1
 for face in faces:
     faceid = faceid + 1
     
-    for p in range(f_p_index(faceid)):
+    for p in range(f_p_index[faceid]):
         f_p_obj_relation_array.append(face.GetPointId(p))
         
 nface = faceid
 
-edgeid = 0
+print('extracting edge connectivites')
+edgeid = -1
 for edge in edges:
     edgeid = edgeid + 1
     
+    e_p_index.append(2) 
+    # it's known that all edges have two edges
+    # technically I could initialise into somthing nicer but this is convinient for organisation
+    
+    e_p_obj_relation_array.append(edge.GetPointId(0))
     e_p_obj_relation_array.append(edge.GetPointId(1))
-    e_p_obj_relation_array.append(edge.GetPointId(2))
         
 nedge = edgeid
 
 
 
 
+print('generating mapping counts')
 # need to get the obj relation sums
 
 c_p_sum = len(c_p_obj_relation_array)
@@ -196,6 +216,7 @@ f_e_sum = len(f_e_obj_relation_array)
 # I just need to filter out boundary duplicated nodes
 
 
+print('indexifying index arrays')
 # indexifying the index arrays
 index_last = 0
 for index in c_p_index:
@@ -207,8 +228,10 @@ for index in f_p_index:
     index = index_last + index
     index_last = index
 
-e_p_index = 2 * (range(len(edges)) + 1)
-# can be implicitly known
+index_last = 0
+for index in e_p_index:
+    index = index_last + index
+    index_last = index
 
 index_last = 0
 for index in c_f_index:
@@ -221,6 +244,7 @@ for index in f_e_index:
     index_last = index
     
     
+print('sorting internal relation arrays')
 # sorting relation arrays
 index_end = 0
 for index in c_p_index:
@@ -258,8 +282,9 @@ for index in f_e_index:
     f_e_obj_relation_array[index_start:index_end] = sorted(f_e_obj_relation_array[index_start:index_end])
 
 
+print('removing duplicate connectivites')
 # killing duplicate relations 
-nele = len(c_p_index)
+nele = len(c_p_index) - 1
 index_1_start = c_p_index[nele-1]
 index_1_end   = c_p_index[nele] - 1
 for i in range((nele-1),0,-1): # going backwards here means we can kill duplicates in one loop
@@ -271,7 +296,7 @@ for i in range((nele-1),0,-1): # going backwards here means we can kill duplicat
         del c_p_obj_relation_array[index_2_start:index_2_end]
         del c_p_index[i]
 
-nface = len(f_p_index)
+nface = len(f_p_index) - 1
 index_1_start = f_p_index[nface-1]
 index_1_end   = f_p_index[nface] - 1
 for i in range((nface-1),0,-1): # going backwards here means we can kill duplicates in one loop
@@ -283,7 +308,7 @@ for i in range((nface-1),0,-1): # going backwards here means we can kill duplica
         del f_p_obj_relation_array[index_2_start:index_2_end]
         del f_p_index[i]
 
-nedge = len(e_p_index)
+nedge = len(e_p_index) - 1
 index_1_start = e_p_index[nedge-1]
 index_1_end   = e_p_index[nedge] - 1
 for i in range((nedge-1),0,-1): # going backwards here means we can kill duplicates in one loop
@@ -295,7 +320,7 @@ for i in range((nedge-1),0,-1): # going backwards here means we can kill duplica
         del e_p_obj_relation_array[index_2_start:index_2_end]
         del e_p_index[i]
 
-nele = len(c_f_index)
+nele = len(c_f_index) - 1
 index_1_start = c_f_index[nele-1]
 index_1_end   = c_f_index[nele] - 1
 for i in range((nele-1),0,-1): # going backwards here means we can kill duplicates in one loop
@@ -307,7 +332,7 @@ for i in range((nele-1),0,-1): # going backwards here means we can kill duplicat
         del c_f_obj_relation_array[index_2_start:index_2_end]
         del c_f_index[i]
 
-nface = len(f_e_index)
+nface = len(f_e_index) - 1
 index_1_start = f_e_index[nface-1]
 index_1_end   = f_e_index[nface] - 1
 for i in range((nface-1),0,-1): # going backwards here means we can kill duplicates in one loop
@@ -320,6 +345,7 @@ for i in range((nface-1),0,-1): # going backwards here means we can kill duplica
         del f_e_index[i]
 
 
+print('updating counts')
 # update counts with non duplicate objects
 nele  = len(c_p_index)
 nface = len(f_p_index)
@@ -336,18 +362,21 @@ f_e_sum = len(f_e_obj_relation_array)
 
 
 
+print('beginning writing to file')
 # outputting
 
 
+print('creating raw file')
 # opening/creating file
-file_name = 'Raw_mesh_data'
+file_name = 'raw_mesh_data.preprocessed_mesh_file'
 file = open(file_name, "wb")
 
 
+print('writing header')
 # writing header
 file.write(struct.pack('<4d' ,npoin,nedge,nface,nelem))
 
-
+print('writing coordinates')
 # writing coordinate data
 for coord in x_coords:
     file.write(struct.pack('<d' ,coord))
@@ -357,6 +386,7 @@ for coord in z_coords:
     file.write(struct.pack('<d' ,coord))
 
 
+print('writing connectivities')
 # writing object connectivities
 file.write(struct.pack('<2d' ,c_p_sum, 0.0))
 for entry in c_p_index:
@@ -377,6 +407,7 @@ for entry in e_p_obj_relation_array:
     file.write(struct.pack('<d' ,entry))
     
     
+print('writing cell > face, face > edge mappings')
 # writing object relation mappings
 file.write(struct.pack('<2d' ,c_f_sum, 0.0))
 for entry in c_f_index:
