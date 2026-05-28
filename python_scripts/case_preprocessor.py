@@ -2,7 +2,7 @@ from vtk import *
 import pyvista
 import os
 import struct
-import numpy as np
+import gc
 
 from vtkmodules.vtkIOEnSight import *
 from vtkmodules.util.misc import *
@@ -33,7 +33,7 @@ del algo
 
 
 # block 0 is always the primary datablock here
-fluidBlock = raw_data.GetBlock(0)  # vtkUnstructuredGrid format
+polyblock = raw_data.GetBlock(0)  # vtkUnstructuredGrid format
 
 
 del raw_data
@@ -43,23 +43,21 @@ del raw_data
 print('cleaning case file')
 # general cleanup
 algo = vtkStaticCleanUnstructuredGrid()
-algo.SetInputData(fluidBlock)
+algo.SetInputData(polyblock)
 algo.RemoveUnusedPointsOn()
 algo.Update()
-fluidBlock = algo.GetOutput()
+polyblock = algo.GetOutput()
 del algo
 
 
 print('converting element types to polyhedra')
 # convert all cells to polyhedra
 algo = vtkConvertToPolyhedra()
-algo.SetInputData(fluidBlock)
+algo.SetInputData(polyblock)
 algo.OutputAllCellsOn()
 algo.Update()
 polyblock = algo.GetOutput()
 del algo
-del fluidBlock 
-# I think I can get away deleting the non poly data
 
 
 # # this splits the points on feature edges
@@ -72,13 +70,13 @@ del fluidBlock
 # del algo
 
 
-print('generating global IDs')
-# create global point IDs that I can reference down the line
-algo = vtkGenerateGlobalIds()
-algo.SetInputData(polyblock)
-algo.Update()
-polyblock = algo.GetOutput()
-del algo
+# print('generating global IDs')
+# # create global point IDs that I can reference down the line
+# algo = vtkGenerateGlobalIds()
+# algo.SetInputData(polyblock)
+# algo.Update()
+# polyblock = algo.GetOutput()
+# del algo
 
 
 print('extracting point and element counts')
@@ -87,6 +85,7 @@ npoin = polyblock.GetNumberOfPoints()
 nelem = polyblock.GetNumberOfCells()
 print(npoin,' nodes ', nelem,' cells')
 
+gc.collect()
 
 print('initialising output arrays')
 # initialise the output arrays
@@ -97,23 +96,23 @@ z_coords = []
 c_p_sum = 0
 f_p_sum = 0
 e_p_sum = 0
+
 c_p_index = []
 f_p_index = []
 e_p_index = [] 
+
 c_p_obj_relation_array = []
 f_p_obj_relation_array = []
 e_p_obj_relation_array = []
 
 c_f_sum = 0
 f_e_sum = 0
+
 c_f_index = []
 f_e_index = []
+
 c_f_obj_relation_array = []
 f_e_obj_relation_array = []
-
-cells = []
-faces = []
-edges = []
 
 
 print('extracting coordinate data')
@@ -125,89 +124,86 @@ for p in range(npoin):
     z_coords.append(polyblock.GetPoint(p)[2])
     # node: these will include the duplicated points from the boundary data
 
-# extract cell, face and edge datas from the primary data block
 
-print('extracting cell data')
+
+# extract cell, face and edge datas from the primary data block
+faceid = -1
+edgeid = -1
+print('extracting connectivity and mapping data')
 for c in range(nelem):
-    cells.append(polyblock.GetCell(c))
+    
+    print(nelem-c)
+    
+    cell = polyblock.GetCell(c)
+    
+    temp = []
+    for p in range(cell.GetNumberOfPoints()):
+        temp.append(cell.GetPointId(p))
+    c_p_obj_relation_array.append(sorted(temp))
+    temp2=[]
+    for f in range(cell.GetNumberOfFaces()): 
+        faceid = faceid + 1
+        temp2.append(faceid)
+        
+        face = cell.GetFace(f)
+        
+        temp = []
+        for p in range(face.GetNumberOfPoints()):
+            temp.append(cell.GetPointId(p))
+        f_p_obj_relation_array.append(sorted(temp))
+        
+        temp3 = []
+        for e in range(face.GetNumberOfEdges()):
+            edgeid = edgeid + 1
+            temp3.append(edgeid)
+            edge = face.GetEdge(e)
+            temp = []
+            temp.append(edge.GetPointId(0))
+            temp.append(edge.GetPointId(1))
+            f_p_obj_relation_array.append(sorted(temp))
+        f_e_obj_relation_array.append(temp3)
+    c_f_obj_relation_array.append(temp2)
 
 del polyblock
+del temp2
+del temp
+del cell
+del face
+del edge
 
-faceid = 0
-
-print('extracting face data & cell face mappings')
-for cell in cells:
-    nfaces_in_cell = cell.GetNumberOfFaces()
-    
-    c_p_index.append(cell.GetNumberOfPoints())
-    c_f_index.append(nfaces_in_cell)
-    
-    for f in range(nfaces_in_cell): 
-        faceid = faceid + 1
-        c_f_obj_relation_array.append(faceid)
-        faces.append(cell.GetFace(f))
-    
-edgeid = 0
-
-print('extracting edge data & face edge mappings')
-for face in faces:
-    nedge_in_face = face.GetNumberOfPoints()
-    
-    f_p_index.append(face.GetNumberOfPoints())
-    f_e_index.append(nedge_in_face)
-    
-    for e in range(nedge_in_face):
-        edgeid = edgeid + 1
-        f_e_obj_relation_array.append(edgeid)
-        edges.append(face.GetEdge(e))
-
-
-# extract pure connectivity arrays
-
-print('extracting cell connectivites')
-cellid = -1
-for cell in cells:
-    cellid = cellid + 1
-    
-    for p in range(c_p_index[cellid]):
-        c_p_obj_relation_array.append(cell.GetPointId(p))
-        
-print('extracting face connectivites')
-faceid = -1
-for face in faces:
-    faceid = faceid + 1
-    
-    for p in range(f_p_index[faceid]):
-        f_p_obj_relation_array.append(face.GetPointId(p))
-        
 nface = faceid
-
-print('extracting edge connectivites')
-edgeid = -1
-for edge in edges:
-    edgeid = edgeid + 1
-    
-    e_p_index.append(2) 
-    # it's known that all edges have two edges
-    # technically I could initialise into somthing nicer but this is convinient for organisation
-    
-    e_p_obj_relation_array.append(edge.GetPointId(0))
-    e_p_obj_relation_array.append(edge.GetPointId(1))
-        
 nedge = edgeid
 
+gc.collect()
 
+print('sorting relation arrays')
+print('   c_p')
+c_p_obj_relation_array.sort()
+print('   f_p')
+f_p_obj_relation_array.sort()
+print('   e_p')
+e_p_obj_relation_array.sort()
 
+print('   c_f')
+c_f_obj_relation_array.sort()
+print('   f_e')
+f_e_obj_relation_array.sort()
 
-print('generating mapping counts')
-# need to get the obj relation sums
-
-c_p_sum = len(c_p_obj_relation_array)
-f_p_sum = len(f_p_obj_relation_array)
-e_p_sum = len(c_p_obj_relation_array)
-
-c_f_sum = len(c_f_obj_relation_array)
-f_e_sum = len(f_e_obj_relation_array)
+print('generating index arrays')
+for obj in c_p_obj_relation_array:
+    c_p_index.append(len(obj))
+    
+for obj in f_p_obj_relation_array:
+    f_p_index.append(len(obj))
+    
+for obj in e_p_obj_relation_array:
+    e_p_index.append(len(obj))
+    
+for obj in c_f_obj_relation_array:
+    c_f_index.append(len(obj))
+    
+for obj in f_e_obj_relation_array:
+    f_e_index.append(len(obj))
 
 
 # ok I should Have all data I need to output now.
@@ -216,150 +212,143 @@ f_e_sum = len(f_e_obj_relation_array)
 # I just need to filter out boundary duplicated nodes
 
 
+print('removing duplicate connectivites')
+
+temp = []
+temp2 = []
+print('   c_p')
+for i in range(len(c_p_index)-1):
+    if c_p_index[i] == c_p_index[i+1]:    
+        obj1 = c_p_obj_relation_array[i]
+        obj2 = c_p_obj_relation_array[i+1]
+        for p in range(c_p_index[i]-1, 0, -1):
+            if obj1[p]!=obj2[p]:
+                temp.append(obj1)
+                temp2.append(c_p_index[i])
+                break
+            
+c_p_obj_relation_array = temp
+c_p_index = temp2
+del temp
+del temp2
+
+temp = []
+temp2 = []
+print('   f_p')
+for i in range(len(f_p_index)-1):
+    if f_p_index[i] == f_p_index[i+1]:    
+        obj1 = f_p_obj_relation_array[i]
+        obj2 = f_p_obj_relation_array[i+1]
+        for p in range(f_p_index[i]-1, 0, -1):
+            if obj1[p]!=obj2[p]:
+                temp.append(obj1)
+                temp2.append(f_p_index[i])
+                break
+            
+f_p_obj_relation_array = temp 
+f_p_index = temp2
+del temp
+del temp2
+
+temp = []
+temp2 = []
+print('   e_p')
+for i in range(len(e_p_index)-1):
+    if e_p_index[i] == e_p_index[i+1]:    
+        obj1 = e_p_obj_relation_array[i]
+        obj2 = e_p_obj_relation_array[i+1]
+        for p in range(e_p_index[i]-1, 0, -1):
+            if obj1[p]!=obj2[p]:
+                temp.append(obj1)
+                temp2.append(2)
+                break
+        
+e_p_obj_relation_array = temp
+e_p_index = temp2
+del temp
+del temp2
+
+temp = []
+temp2 = []
+print('   c_f')
+for i in range(len(c_f_index)-1):
+    if c_f_index[i] == c_f_index[i+1]:    
+        obj1 = c_f_obj_relation_array[i]
+        obj2 = c_f_obj_relation_array[i+1]
+        for p in range(c_f_index[i]-1, 0, -1):
+            if obj1[p]!=obj2[p]:
+                temp.append(obj1)
+                temp2.append(c_f_index[i])
+                break
+            
+c_f_obj_relation_array = temp
+c_f_index = temp2
+del temp
+del temp2
+
+temp = []
+temp2 = []
+print('   f_e')
+for i in range(len(f_e_index)-1):
+    if f_e_index[i] == f_e_index[i+1]:    
+        obj1 = f_e_obj_relation_array[i]
+        obj2 = f_e_obj_relation_array[i+1]
+        for p in range(f_e_index[i]-1, 0, -1):
+            if obj1[p]!=obj2[p]:
+                temp.append(obj1)
+                temp2.append(f_e_index[i])
+                break
+            
+f_e_obj_relation_array = temp
+f_e_index = temp2
+del temp
+del temp2
+
+
+gc.collect()
+
 print('indexifying index arrays')
 # indexifying the index arrays
 index_last = 0
-for index in c_p_index:
-    index = index_last + index
-    index_last = index
+for index in range(len(c_p_index)):
+    c_p_index[index] = index_last + c_p_index[index]
+    index_last = c_p_index[index]
+
+c_p_sum = index_last
 
 index_last = 0
-for index in f_p_index:
-    index = index_last + index
-    index_last = index
+for index in range(len(f_p_index)):
+    f_p_index[index] = index_last + f_p_index[index]
+    index_last = f_p_index[index]
+    
+f_p_sum = index_last
 
 index_last = 0
-for index in e_p_index:
-    index = index_last + index
-    index_last = index
+for index in range(len(e_p_index)):
+    e_p_index[index] = index_last + e_p_index[index]
+    index_last = e_p_index[index]
+    
+e_p_sum = index_last
 
 index_last = 0
-for index in c_f_index:
-    index = index_last + index
-    index_last = index
+for index in range(len(c_f_index)):
+    c_f_index[index] = index_last + c_f_index[index]
+    index_last = c_f_index[index]
+    
+c_f_sum = index_last
 
 index_last = 0
-for index in f_e_index:
-    index = index_last + index
-    index_last = index
-    
-    
-print('sorting internal relation arrays')
-# sorting relation arrays
-index_end = 0
-for index in c_p_index:
-    index_start = index_end + 1
-    index_end = index
-    
-    c_p_obj_relation_array[index_start:index_end] = sorted(c_p_obj_relation_array[index_start:index_end])
-    
-index_end = 0
-for index in f_p_index:
-    index_start = index_end + 1
-    index_end = index
-    
-    f_p_obj_relation_array[index_start:index_end] = sorted(f_p_obj_relation_array[index_start:index_end])
-    
-index_end = 0
-for index in e_p_index:
-    index_start = index_end + 1
-    index_end = index
-    
-    e_p_obj_relation_array[index_start:index_end] = sorted(e_p_obj_relation_array[index_start:index_end])
-    
-index_end = 0
-for index in c_f_index:
-    index_start = index_end + 1
-    index_end = index
-    
-    c_f_obj_relation_array[index_start:index_end] = sorted(c_f_obj_relation_array[index_start:index_end])
-    
-index_end = 0
-for index in f_e_index:
-    index_start = index_end + 1
-    index_end = index
-    
-    f_e_obj_relation_array[index_start:index_end] = sorted(f_e_obj_relation_array[index_start:index_end])
+for index in range(len(f_e_index)):
+    f_e_index[index] = index_last + f_e_index[index]
+    index_last = f_e_index[index]
 
-
-print('removing duplicate connectivites')
-# killing duplicate relations 
-nele = len(c_p_index) - 1
-index_1_start = c_p_index[nele-1]
-index_1_end   = c_p_index[nele] - 1
-for i in range((nele-1),0,-1): # going backwards here means we can kill duplicates in one loop
-    index_2_start = index_1_start
-    index_2_end   = index_1_end
-    index_1_start = c_p_index[i-1] + 1
-    index_1_end   = c_p_index[i]
-    if c_p_obj_relation_array[index_1_start:index_1_end]==c_p_obj_relation_array[index_2_start:index_2_end]: 
-        del c_p_obj_relation_array[index_2_start:index_2_end]
-        del c_p_index[i]
-
-nface = len(f_p_index) - 1
-index_1_start = f_p_index[nface-1]
-index_1_end   = f_p_index[nface] - 1
-for i in range((nface-1),0,-1): # going backwards here means we can kill duplicates in one loop
-    index_2_start = index_1_start
-    index_2_end   = index_1_end
-    index_1_start = f_p_index[i-1] + 1
-    index_1_end   = f_p_index[i]
-    if f_p_obj_relation_array[index_1_start:index_1_end]==f_p_obj_relation_array[index_2_start:index_2_end]: 
-        del f_p_obj_relation_array[index_2_start:index_2_end]
-        del f_p_index[i]
-
-nedge = len(e_p_index) - 1
-index_1_start = e_p_index[nedge-1]
-index_1_end   = e_p_index[nedge] - 1
-for i in range((nedge-1),0,-1): # going backwards here means we can kill duplicates in one loop
-    index_2_start = index_1_start
-    index_2_end   = index_1_end
-    index_1_start = e_p_index[i-1] + 1
-    index_1_end   = e_p_index[i]
-    if e_p_obj_relation_array[index_1_start:index_1_end]==e_p_obj_relation_array[index_2_start:index_2_end]: 
-        del e_p_obj_relation_array[index_2_start:index_2_end]
-        del e_p_index[i]
-
-nele = len(c_f_index) - 1
-index_1_start = c_f_index[nele-1]
-index_1_end   = c_f_index[nele] - 1
-for i in range((nele-1),0,-1): # going backwards here means we can kill duplicates in one loop
-    index_2_start = index_1_start
-    index_2_end   = index_1_end
-    index_1_start = c_f_index[i-1] + 1
-    index_1_end   = c_f_index[i]
-    if c_f_obj_relation_array[index_1_start:index_1_end]==c_f_obj_relation_array[index_2_start:index_2_end]: 
-        del c_f_obj_relation_array[index_2_start:index_2_end]
-        del c_f_index[i]
-
-nface = len(f_e_index) - 1
-index_1_start = f_e_index[nface-1]
-index_1_end   = f_e_index[nface] - 1
-for i in range((nface-1),0,-1): # going backwards here means we can kill duplicates in one loop
-    index_2_start = index_1_start
-    index_2_end   = index_1_end
-    index_1_start = f_e_index[i-1] + 1
-    index_1_end   = f_e_index[i]
-    if f_e_obj_relation_array[index_1_start:index_1_end]==f_e_obj_relation_array[index_2_start:index_2_end]: 
-        del f_e_obj_relation_array[index_2_start:index_2_end]
-        del f_e_index[i]
-
+f_e_sum = index_last
 
 print('updating counts')
 # update counts with non duplicate objects
 nele  = len(c_p_index)
 nface = len(f_p_index)
 nedge = len(e_p_index)
-
-c_p_sum = len(c_p_obj_relation_array)
-f_p_sum = len(f_p_obj_relation_array)
-e_p_sum = len(e_p_obj_relation_array)
-
-c_f_sum = len(c_f_obj_relation_array)
-f_e_sum = len(f_e_obj_relation_array)
-
-
-
 
 
 print('beginning writing to file')
@@ -368,13 +357,15 @@ print('beginning writing to file')
 
 print('creating raw file')
 # opening/creating file
-file_name = 'raw_mesh_data.preprocessed_mesh_file'
+file_name = '../preprocessed_mesh_folder/raw_mesh_data.preprocessed_mesh_file'
 file = open(file_name, "wb")
 
 
 print('writing header')
 # writing header
-file.write(struct.pack('<4d' ,npoin,nedge,nface,nelem))
+file.write(struct.pack('<4i' ,npoin,nedge,nface,nelem))
+print(npoin,nedge,nface,nelem)
+
 
 print('writing coordinates')
 # writing coordinate data
@@ -384,51 +375,53 @@ for coord in y_coords:
     file.write(struct.pack('<d' ,coord))
 for coord in z_coords:
     file.write(struct.pack('<d' ,coord))
-
-
+    
+    
 print('writing connectivities')
 # writing object connectivities
-file.write(struct.pack('<2d' ,c_p_sum, 0.0))
+file.write(struct.pack('<2i' ,c_p_sum, 0))
 for entry in c_p_index:
-    file.write(struct.pack('<d' ,entry))
+    file.write(struct.pack('<i' ,entry))
     
-file.write(struct.pack('<2d' ,f_p_sum, 0.0))
+file.write(struct.pack('<2i' ,f_p_sum, 0))
 for entry in f_p_index:
-    file.write(struct.pack('<d' ,entry))
+    file.write(struct.pack('<i' ,entry))
 
 
-for entry in c_p_obj_relation_array:
-    file.write(struct.pack('<d' ,entry))
+for obj in c_p_obj_relation_array:
+    for entry in obj:
+        file.write(struct.pack('<i' ,entry))
 
-for entry in f_p_obj_relation_array:
-    file.write(struct.pack('<d' ,entry))
+for obj in f_p_obj_relation_array:
+    for entry in obj:
+        file.write(struct.pack('<i' ,entry))
     
-for entry in e_p_obj_relation_array:
-    file.write(struct.pack('<d' ,entry))
+for obj in e_p_obj_relation_array:
+    for entry in obj:
+        file.write(struct.pack('<i' ,entry))
     
     
 print('writing cell > face, face > edge mappings')
 # writing object relation mappings
-file.write(struct.pack('<2d' ,c_f_sum, 0.0))
+file.write(struct.pack('<2i' ,c_f_sum, 0))
 for entry in c_f_index:
-    file.write(struct.pack('<d' ,entry))
+    file.write(struct.pack('<i' ,entry))
     
-file.write(struct.pack('<2d' ,f_e_sum, 0.0))
+file.write(struct.pack('<2i' ,f_e_sum, 0))
 for entry in f_e_index:
-    file.write(struct.pack('<d' ,entry))
+    file.write(struct.pack('<i' ,entry))
     
     
-for entry in c_f_obj_relation_array:
-    file.write(struct.pack('<d' ,entry))
+for obj in c_f_obj_relation_array:
+    for entry in obj:
+        file.write(struct.pack('<i' ,entry))
 
-for entry in f_e_obj_relation_array:
-    file.write(struct.pack('<d' ,entry))
+for obj in f_e_obj_relation_array:
+    for entry in obj:
+        file.write(struct.pack('<i' ,entry))
     
     
-    
-    
-    
-    
-    
-    
-    
+print('finished writing to file')
+print('finished preprocessing')
+
+
