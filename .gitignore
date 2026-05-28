@@ -2,5 +2,6 @@
 *.o
 
 **.case
+**.geo
 **.preprocessed_mesh_file
 
