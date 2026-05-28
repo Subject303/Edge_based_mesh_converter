@@ -22,7 +22,7 @@ cdp = vtkCompositeDataPipeline()
 # might not be needed
 algo.SetDefaultExecutivePrototype(cdp)
 del cdp
-algo.SetCaseFileName("/case/star.case") 
+algo.SetCaseFileName("../case/star.case") 
 # will want to change to somthing more generic
 algo.Update()
 raw_data = algo.GetOutput()
