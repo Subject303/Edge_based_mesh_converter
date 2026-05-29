@@ -3,6 +3,7 @@ import pyvista
 import os
 import struct
 import gc
+import time
 
 from vtkmodules.vtkIOEnSight import *
 from vtkmodules.util.misc import *
@@ -12,12 +13,11 @@ from vtkmodules.all import *
 
 VTK_DATA_ROOT = vtkGetDataRoot()
 
-# set angle to split boundary edges
-feature_angle = 15
+start = time.time()
 
 
 
-print('reading raw case file')
+print('reading raw case file',time.time()-start)
 # read the raw data
 algo = vtkGenericEnSightReader()
 cdp = vtkCompositeDataPipeline()
@@ -25,7 +25,7 @@ cdp = vtkCompositeDataPipeline()
 # might not be needed
 algo.SetDefaultExecutivePrototype(cdp)
 del cdp
-algo.SetCaseFileName("../case/star.case") 
+algo.SetCaseFileName("../case/star1.case") 
 # will want to change to somthing more generic
 algo.Update()
 raw_data = algo.GetOutput()
@@ -40,7 +40,7 @@ del raw_data
 # freeing up the multiblock view
 
 
-print('cleaning case file')
+print('cleaning case file',time.time()-start)
 # general cleanup
 algo = vtkStaticCleanUnstructuredGrid()
 algo.SetInputData(polyblock)
@@ -50,7 +50,7 @@ polyblock = algo.GetOutput()
 del algo
 
 
-print('converting element types to polyhedra')
+print('converting element types to polyhedra',time.time()-start)
 # convert all cells to polyhedra
 algo = vtkConvertToPolyhedra()
 algo.SetInputData(polyblock)
@@ -79,7 +79,7 @@ del algo
 # del algo
 
 
-print('extracting point and element counts')
+print('extracting point and element counts',time.time()-start)
 # Pull general mesh info
 npoin = polyblock.GetNumberOfPoints()
 nelem = polyblock.GetNumberOfCells()
@@ -87,7 +87,7 @@ print(npoin,' nodes ', nelem,' cells')
 
 gc.collect()
 
-print('initialising output arrays')
+print('initialising output arrays',time.time()-start)
 # initialise the output arrays
 x_coords = []
 y_coords = []
@@ -115,7 +115,7 @@ c_f_obj_relation_array = []
 f_e_obj_relation_array = []
 
 
-print('extracting coordinate data')
+print('extracting coordinate data',time.time()-start)
 # extract coordinate data
 
 for p in range(npoin):
@@ -127,46 +127,40 @@ for p in range(npoin):
 
 
 # extract cell, face and edge datas from the primary data block
-faceid = -1
-edgeid = -1
-print('extracting connectivity and mapping data')
+faceid = 0
+edgeid = 0
+print('extracting connectivity and mapping data',time.time()-start)
 for c in range(nelem):
-    
-    print(nelem-c)
     
     cell = polyblock.GetCell(c)
     
-    temp = []
-    for p in range(cell.GetNumberOfPoints()):
-        temp.append(cell.GetPointId(p))
-    c_p_obj_relation_array.append(sorted(temp))
-    temp2=[]
+    c_p_obj_relation_array.append([cell.GetPointId(p) for p in range(cell.GetNumberOfPoints())])
+    
+    
+    nfaces = cell.GetNumberOfFaces()
+    
+    c_f_obj_relation_array.append( list(range(faceid,(faceid+nfaces-1))))
+    
     for f in range(cell.GetNumberOfFaces()): 
-        faceid = faceid + 1
-        temp2.append(faceid)
         
         face = cell.GetFace(f)
         
-        temp = []
-        for p in range(face.GetNumberOfPoints()):
-            temp.append(cell.GetPointId(p))
-        f_p_obj_relation_array.append(sorted(temp))
+        f_p_obj_relation_array.append([face.GetPointId(p) for p in range(face.GetNumberOfPoints())])
         
-        temp3 = []
-        for e in range(face.GetNumberOfEdges()):
-            edgeid = edgeid + 1
-            temp3.append(edgeid)
+        nedges = face.GetNumberOfEdges()
+        f_e_obj_relation_array.append( list(range(edgeid,(edgeid+nedges-1))))
+    
+        
+        for e in range(nedges):
+            
             edge = face.GetEdge(e)
-            temp = []
-            temp.append(edge.GetPointId(0))
-            temp.append(edge.GetPointId(1))
-            f_p_obj_relation_array.append(sorted(temp))
-        f_e_obj_relation_array.append(temp3)
-    c_f_obj_relation_array.append(temp2)
+            e_p_obj_relation_array.append([edge.GetPointId(0),edge.GetPointId(1)])
+            
+        edgeid = edgeid + nedges - 1
+    
+    faceid = faceid + nfaces - 1
 
 del polyblock
-del temp2
-del temp
 del cell
 del face
 del edge
@@ -176,7 +170,23 @@ nedge = edgeid
 
 gc.collect()
 
-print('sorting relation arrays')
+print('sorting relation arrays',time.time()-start)
+
+for i in range(len(c_p_obj_relation_array)):
+    c_p_obj_relation_array[i]=sorted([c_p_obj_relation_array[i]])
+    
+for i in range(len(f_p_obj_relation_array)):
+    f_p_obj_relation_array[i]=sorted([f_p_obj_relation_array[i]])
+    
+for i in range(len(e_p_obj_relation_array)):
+    e_p_obj_relation_array[i]=sorted([e_p_obj_relation_array[i]])
+    
+for i in range(len(c_f_obj_relation_array)):
+    c_f_obj_relation_array[i]=sorted([c_f_obj_relation_array[i]])
+    
+for i in range(len(f_e_obj_relation_array)):
+    f_e_obj_relation_array[i]=sorted([f_e_obj_relation_array[i]])
+
 print('   c_p')
 c_p_obj_relation_array.sort()
 print('   f_p')
@@ -189,7 +199,7 @@ c_f_obj_relation_array.sort()
 print('   f_e')
 f_e_obj_relation_array.sort()
 
-print('generating index arrays')
+print('generating index arrays',time.time()-start)
 for obj in c_p_obj_relation_array:
     c_p_index.append(len(obj))
     
@@ -212,7 +222,7 @@ for obj in f_e_obj_relation_array:
 # I just need to filter out boundary duplicated nodes
 
 
-print('removing duplicate connectivites')
+print('removing duplicate connectivites',time.time()-start)
 
 temp = []
 temp2 = []
@@ -307,7 +317,7 @@ del temp2
 
 gc.collect()
 
-print('indexifying index arrays')
+print('indexifying index arrays',time.time()-start)
 # indexifying the index arrays
 index_last = 0
 for index in range(len(c_p_index)):
@@ -344,30 +354,30 @@ for index in range(len(f_e_index)):
 
 f_e_sum = index_last
 
-print('updating counts')
+print('updating counts',time.time()-start)
 # update counts with non duplicate objects
 nele  = len(c_p_index)
 nface = len(f_p_index)
 nedge = len(e_p_index)
 
 
-print('beginning writing to file')
+print('beginning writing to file',time.time()-start)
 # outputting
 
 
-print('creating raw file')
+print('creating raw file',time.time()-start)
 # opening/creating file
 file_name = '../preprocessed_mesh_folder/raw_mesh_data.preprocessed_mesh_file'
 file = open(file_name, "wb")
 
 
-print('writing header')
+print('writing header',time.time()-start)
 # writing header
 file.write(struct.pack('<4i' ,npoin,nedge,nface,nelem))
 print(npoin,nedge,nface,nelem)
 
 
-print('writing coordinates')
+print('writing coordinates',time.time()-start)
 # writing coordinate data
 for coord in x_coords:
     file.write(struct.pack('<d' ,coord))
@@ -377,7 +387,7 @@ for coord in z_coords:
     file.write(struct.pack('<d' ,coord))
     
     
-print('writing connectivities')
+print('writing connectivities',time.time()-start)
 # writing object connectivities
 file.write(struct.pack('<2i' ,c_p_sum, 0))
 for entry in c_p_index:
@@ -401,7 +411,7 @@ for obj in e_p_obj_relation_array:
         file.write(struct.pack('<i' ,entry))
     
     
-print('writing cell > face, face > edge mappings')
+print('writing cell > face, face > edge mappings',time.time()-start)
 # writing object relation mappings
 file.write(struct.pack('<2i' ,c_f_sum, 0))
 for entry in c_f_index:
@@ -421,7 +431,7 @@ for obj in f_e_obj_relation_array:
         file.write(struct.pack('<i' ,entry))
     
     
-print('finished writing to file')
+print('finished writing to file',time.time()-start)
 print('finished preprocessing')
 
 
