@@ -7,6 +7,8 @@ module data_outputting_serial
     subroutine data_outputting
         
         
+        implicit none
+        
         
         
         if ((output_requests - binary_internal) .ge. 0) then

@@ -60,7 +60,7 @@ module object_relation_data
     ! e_f :: edge index to face index
     ! e_c :: edge index to cell index
     
-    integer(KIND=INT32) :: f_c_sum, e_f_sum, p_e_sum
+    integer(KIND=INT32) :: f_c_sum, e_f_sum, e_c_sum
     integer(KIND=INT32), allocatable :: f_c_obj_relation_array(:) , f_c_index_array(:)
     integer(KIND=INT32), allocatable :: e_f_obj_relation_array(:) , e_f_index_array(:)
     integer(KIND=INT32), allocatable :: e_c_obj_relation_array(:) , e_c_index_array(:)
@@ -95,7 +95,7 @@ module centroid_data
     use iso_fortran_env
     implicit none
     
-    real(KIND=REAL32) :: e_centroid(:,:), f_centroid(:,:), c_centroid(:,:)
+    real(KIND=REAL32), allocatable :: e_centroid(:,:), f_centroid(:,:), c_centroid(:,:)
     
 end module centroid_data
 

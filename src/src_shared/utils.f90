@@ -10,6 +10,8 @@ module utils
         integer(KIND=INT32) :: array(:), start_index, end_index, indexer, i
         integer(KIND=INT32),allocatable :: temparray(:)
         
+        implicit none
+        
         allocate(temparray,source=array(start_index:end_index))
         
         call quicksort(temparray,1,size(temparray))
@@ -29,6 +31,8 @@ module utils
     subroutine remove_flagged_duplicates(array)
         integer(KIND=INT32) :: array(:)
         logical,allocatable :: mask
+        
+        implicit none
         
         allocate(mask(size(array)))
         

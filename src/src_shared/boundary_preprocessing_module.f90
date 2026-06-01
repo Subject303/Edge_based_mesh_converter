@@ -16,6 +16,8 @@ module boundary_routine_module
     subroutine identify_boundary_faces
         integer(KIND=INT32) :: f, i, b
         
+        implicit none
+        
         ! this one is easy because all faces are connected to between 1 and 2 cells
         ! all faces connected to 2 cells are internal, and all connected to 1 cell are boundaries
         
@@ -55,6 +57,8 @@ module boundary_routine_module
     subroutine identify_boundary_edges
         integer(KIND=INT32) :: f, fe_start, fe_end
         
+        implicit none
+        
         ! this one is still very simple, we're searching boundary faces, and flagging connected edges
         
         allocate(e_bound_array(nedge) ,e_internal_array(nedge), e_bound_indexing_array(nedge))
@@ -88,6 +92,8 @@ module boundary_routine_module
     
     subroutine identify_boundary_points
         integer(KIND=INT32) :: f, fp_start, fp_end
+        
+        implicit none
         
         ! again same thing but points
         
@@ -126,6 +132,8 @@ module boundary_routine_module
         use centroid_data
         integer(KIND=INT32) :: f, bf, fp_start, p1, p2, p3, magnitude, dot_product_of_c_to_f_and_normal, p, bp, pf_start, pf_end, number_of_points, i
         real(KIND=REAL32)   :: v1(3), v2(3)
+        
+        implicit none
         
         allocate(f_normal_vectors(b_nface,3))
         

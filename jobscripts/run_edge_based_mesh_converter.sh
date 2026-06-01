@@ -9,7 +9,8 @@ rm -f $LOG
 touch $LOG
 chmod 777 $LOG
 
-COMPLIST=" ../src/src_shared/* "
+
+COMPLIST=" ../src/src_shared/global_data.f90  ../src/src_shared/* "
 
 COMPLIST=$COMPLIST" ../src/src_serial/*"
 

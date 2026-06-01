@@ -15,6 +15,8 @@ module read_data_serial
     
     subroutine read_data
         
+        implicit none
+        
         print*, ' '
         print *, 'Reading_raw_data'
         

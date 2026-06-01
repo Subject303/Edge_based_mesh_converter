@@ -11,6 +11,8 @@ module data_preprocessing_serial
     
     subroutine data_preprocessing
         
+        implicit none
+        
         print*, 'beginning calculating object centroids'
         print*, ' '
         

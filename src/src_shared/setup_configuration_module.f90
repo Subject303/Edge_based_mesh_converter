@@ -15,6 +15,8 @@ module setup_configuration_module
         & prerocessed_data_file_str, binary_internal_str, ascii_internal_str, vtu_ascii_str, vtu_binary_appended_str
         !character :: current_line*(*)
         
+        implicit none
+        
         output_requests = 0
         
         prerocessed_data_file_str = 'prerocessed_data_file='
