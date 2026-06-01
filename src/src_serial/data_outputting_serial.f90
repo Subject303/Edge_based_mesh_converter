@@ -1,6 +1,6 @@
     
 module data_outputting_serial
-    
+    use io_data
     
     contains
     

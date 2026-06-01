@@ -31,11 +31,11 @@ module quicksort_module
         i = first
         j = last
         
-        select type (a)
+        select type (array)
             type is (integer(KIND=int16))
-                call qsort_swap_i16(array, i, j)
-                if (first < i-1) call qsort_i16(array, first, i-1)
-                if (j+1 < last)  call qsort_i16(array, j+1, last)
+                call qsort_swap_i6(array, i, j)
+                if (first < i-1) call qsort_i6(array, first, i-1)
+                if (j+1 < last)  call qsort_i6(array, j+1, last)
                 
             type is (integer(KIND=int32))
                 call qsort_swap_i32(array, i, j)
@@ -69,7 +69,7 @@ module quicksort_module
         implicit none
         class(*)                     :: array(:), first_unbound , last_unbound
         integer(KIND=int32)          :: first, last, i, j, indexer
-        integer(KIND=int32),allocatable :: Sorted_index
+        integer(KIND=int32),allocatable :: Sorted_index(:)
 
         first = type_bounding(first_unbound)
         last  = type_bounding(last_unbound)
@@ -77,16 +77,16 @@ module quicksort_module
         i = first
         j = last
         
-        Sorted_index = (/first:last/)
+        Sorted_index = (/(i,i=first,last)/)
         
-        select type (a)
+        select type (array)
             type is (integer(KIND=int16))
-                call qsort_swap_i16(array, i, j)
+                call qsort_swap_i6(array, i, j)
                 indexer         = Sorted_index(i)
                 Sorted_index(i) = Sorted_index(j)
                 Sorted_index(j) = indexer
-                if (first < i-1) call qsort_i16(array, first, i-1)
-                if (j+1 < last)  call qsort_i16(array, j+1, last)
+                if (first < i-1) call qsort_i6(array, first, i-1)
+                if (j+1 < last)  call qsort_i6(array, j+1, last)
                 
             type is (integer(KIND=int32))
                 call qsort_swap_i32(array, i, j)
@@ -135,65 +135,66 @@ module quicksort_module
     
         
         implicit none
-        class(*)                        :: array(:), secondary_array(:), first_unbound , last_unbound
-        class(*),optional               :: third_array(:), fourth_array(:), fifth_array(:), sixth_array(:), seventh_array(:), eighth_array(:), ninth_array(:), tenth_array(:)
+        class(*)                        :: array(:), first_unbound , last_unbound
+        class(*),allocatable            :: secondary_array(:)
+        class(*),allocatable,optional   :: third_array(:), fourth_array(:), fifth_array(:), sixth_array(:), seventh_array(:), eighth_array(:), ninth_array(:), tenth_array(:)
         class(*),allocatable            :: tertiary_array_temp(:)
-        integer(KIND=int32),allocatable :: Sorted_index
+        integer(KIND=int32),allocatable :: Sorted_index(:)
         
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
         
-        allocate(tertiary_array_temp,source=secondary_array)
-        secondary_array(:) = tertiary_array_temp(Sorted_index)
-        
-        ! this is probably huge overkill, but it means that I could in theory dump an entire tensor in this and it'll handle it
-        
-        if (present(third_array)) then
-            deallocate(tertiary_array_temp)
-            allocate(tertiary_array_temp,source=third_array)
-            third_array(:) = tertiary_array_temp(Sorted_index)
-        endif 
-        
-        if (present(fourth_array)) then
-            deallocate(tertiary_array_temp)
-            allocate(tertiary_array_temp,source=fourth_array)
-            fourth_array(:) = tertiary_array_temp(Sorted_index)
-        endif 
-        
-        if (present(fifth_array)) then
-            deallocate(tertiary_array_temp)
-            allocate(tertiary_array_temp,source=fifth_array)
-            fifth_array(:) = tertiary_array_temp(Sorted_index)
-        endif 
-        
-        if (present(sixth_array)) then
-            deallocate(tertiary_array_temp)
-            allocate(tertiary_array_temp,source=sixth_array)
-            sixth_array(:) = tertiary_array_temp(Sorted_index)
-        endif 
-        
-        if (present(seventh_array)) then
-            deallocate(tertiary_array_temp)
-            allocate(tertiary_array_temp,source=seventh_array)
-            seventh_array(:) = tertiary_array_temp(Sorted_index)
-        endif 
-        
-        if (present(eighth_array)) then
-            deallocate(tertiary_array_temp)
-            allocate(tertiary_array_temp,source=eighth_array)
-            eighth_array(:) = tertiary_array_temp(Sorted_index)
-        endif 
-        
-        if (present(ninth_array)) then
-            deallocate(tertiary_array_temp)
-            allocate(tertiary_array_temp,source=ninth_array)
-            ninth_array(:) = tertiary_array_temp(Sorted_index)
-        endif 
-        
-        if (present(tenth_array)) then
-            deallocate(tertiary_array_temp)
-            allocate(tertiary_array_temp,source=tenth_array)
-            tenth_array(:) = tertiary_array_temp(Sorted_index)
-        endif 
+!         allocate(tertiary_array_temp,source=secondary_array)
+!         secondary_array(:) = tertiary_array_temp(Sorted_index)
+!         
+!         ! this is probably huge overkill, but it means that I could in theory dump an entire tensor in this and it'll handle it
+!         
+!         if (present(third_array)) then
+!             deallocate(tertiary_array_temp)
+!             allocate(tertiary_array_temp,source=third_array)
+!             third_array(:) = tertiary_array_temp(Sorted_index)
+!         endif 
+!         
+!         if (present(fourth_array)) then
+!             deallocate(tertiary_array_temp)
+!             allocate(tertiary_array_temp,source=fourth_array)
+!             fourth_array(:) = tertiary_array_temp(Sorted_index)
+!         endif 
+!         
+!         if (present(fifth_array)) then
+!             deallocate(tertiary_array_temp)
+!             allocate(tertiary_array_temp,source=fifth_array)
+!             fifth_array(:) = tertiary_array_temp(Sorted_index)
+!         endif 
+!         
+!         if (present(sixth_array)) then
+!             deallocate(tertiary_array_temp)
+!             allocate(tertiary_array_temp,source=sixth_array)
+!             sixth_array(:) = tertiary_array_temp(Sorted_index)
+!         endif 
+!         
+!         if (present(seventh_array)) then
+!             deallocate(tertiary_array_temp)
+!             allocate(tertiary_array_temp,source=seventh_array)
+!             seventh_array(:) = tertiary_array_temp(Sorted_index)
+!         endif 
+!         
+!         if (present(eighth_array)) then
+!             deallocate(tertiary_array_temp)
+!             allocate(tertiary_array_temp,source=eighth_array)
+!             eighth_array(:) = tertiary_array_temp(Sorted_index)
+!         endif 
+!         
+!         if (present(ninth_array)) then
+!             deallocate(tertiary_array_temp)
+!             allocate(tertiary_array_temp,source=ninth_array)
+!             ninth_array(:) = tertiary_array_temp(Sorted_index)
+!         endif 
+!         
+!         if (present(tenth_array)) then
+!             deallocate(tertiary_array_temp)
+!             allocate(tertiary_array_temp,source=tenth_array)
+!             tenth_array(:) = tertiary_array_temp(Sorted_index)
+!         endif 
         
     end subroutine quicksort_arr
     
@@ -201,43 +202,43 @@ module quicksort_module
     
         
         implicit none
-        class(*)                        :: array(:), matrix_one(:,:), first_unbound , last_unbound
-        class(*),optional               :: matrix_two(:,:), matrix_three(:,:)
+        class(*)                        :: array(:), first_unbound , last_unbound
+        class(*),allocatable            :: matrix_one(:,:)
+        class(*),allocatable,optional   :: matrix_two(:,:), matrix_three(:,:)
         class(*),allocatable            :: tertiary_array_temp(:)
-        integer(KIND=int32),allocatable :: Sorted_index
+        integer(KIND=int32),allocatable :: Sorted_index(:)
         integer(KIND=int32)             :: i
         
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
     
-        do i=1,size(matrix_one,2)
-            allocate(tertiary_array_temp,source=matrix_one(:,i))
-            matrix_one(:,i) = tertiary_array_temp(Sorted_index)
-        enddo
-        
-        if (present(matrix_two)) then
-            do i=1,size(matrix_two,2)
-                allocate(tertiary_array_temp,source=matrix_two(:,i))
-                matrix_two(:,i) = tertiary_array_temp(Sorted_index)
-            enddo
-        endif
-        
-        if (present(matrix_three)) then
-            do i=1,size(matrix_three,2)
-                allocate(tertiary_array_temp,source=matrix_three(:,i))
-                matrix_three(:,i) = tertiary_array_temp(Sorted_index)
-            enddo
-        endif
-    
+!         do i=1,size(matrix_one,2)
+!             allocate(tertiary_array_temp,source=matrix_one(:,i))
+!             matrix_one(:,i) = tertiary_array_temp(Sorted_index)
+!         enddo
+!         
+!         if (present(matrix_two)) then
+!             do i=1,size(matrix_two,2)
+!                 allocate(tertiary_array_temp,source=matrix_two(:,i))
+!                 matrix_two(:,i) = tertiary_array_temp(Sorted_index)
+!             enddo
+!         endif
+!         
+!         if (present(matrix_three)) then
+!             do i=1,size(matrix_three,2)
+!                 allocate(tertiary_array_temp,source=matrix_three(:,i))
+!                 matrix_three(:,i) = tertiary_array_temp(Sorted_index)
+!             enddo
+!         endif
+!     
     end subroutine quicksort_matrix
     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TYPE-UNBOUND FUNCTION FOR CONVERTING TO INT32
     
     integer(KIND=int32) function type_bounding(input)
-        class(*) :: input
-        
         implicit none
+        class(*) :: input
     
-        select type (a)
+        select type (input)
             type is (integer(KIND=int16))
                 type_bounding = input
             type is (integer(KIND=int32))
@@ -256,7 +257,7 @@ module quicksort_module
     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TYPE-BOUND QSORT ROUTINES
     
-    recursive subroutine qsort_i16(array, first , last)
+    recursive subroutine qsort_i6(array, first , last)
         
         implicit none
         integer(KIND=int16) :: array(:)
@@ -267,11 +268,11 @@ module quicksort_module
         i = first
         j = last
         
-        call qsort_swap_i16(array, i, j)
+        call qsort_swap_i6(array, i, j)
         
-        if (first < i-1) call qsort_i16(array, first, i-1)
-        if (j+1 < last)  call qsort_i16(array, j+1, last)
-    end subroutine qsort_i16
+        if (first < i-1) call qsort_i6(array, first, i-1)
+        if (j+1 < last)  call qsort_i6(array, j+1, last)
+    end subroutine qsort_i6
     
     recursive subroutine qsort_i32(array, first , last)
         
@@ -343,7 +344,7 @@ module quicksort_module
     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TYPE-BOUND SWAPPING ROUTINES
 
-    subroutine qsort_swap_i16(array,i,j)
+    subroutine qsort_swap_i6(array,i,j)
         
         implicit none
         integer(KIND=int32) :: i, j
@@ -352,22 +353,22 @@ module quicksort_module
         integer(KIND=int16) ::  swap_variable
         pivot = array( (i+j) / 2 )
         do
-            do while (array(i) < x)
+            do while (array(i) < pivot)
                 i=i+1
             end do
-            do while (x < array(j))
+            do while (pivot < array(j))
                 j=j-1
             end do
             if (i >= j) exit
             
-            swap_variable = array(i1)
-            array(i1) = array(i2)
-            array(i2) = swap_variable
+            swap_variable = array(i)
+            array(i) = array(j)
+            array(j) = swap_variable
 
             i=i+1
             j=j-1
         end do
-    end subroutine qsort_swap_i16
+    end subroutine qsort_swap_i6
 
     subroutine qsort_swap_i32(array,i,j)
         
@@ -378,17 +379,17 @@ module quicksort_module
         integer(KIND=int32) ::  swap_variable
         pivot = array( (i+j) / 2 )
         do
-            do while (array(i) < x)
+            do while (array(i) < pivot)
                 i=i+1
             end do
-            do while (x < array(j))
+            do while (pivot < array(j))
                 j=j-1
             end do
             if (i >= j) exit
             
-            swap_variable = array(i1)
-            array(i1) = array(i2)
-            array(i2) = swap_variable
+            swap_variable = array(i)
+            array(i) = array(j)
+            array(j) = swap_variable
 
             i=i+1
             j=j-1
@@ -404,17 +405,17 @@ module quicksort_module
         integer(KIND=int64) ::  swap_variable
         pivot = array( (i+j) / 2 )
         do
-            do while (array(i) < x)
+            do while (array(i) < pivot)
                 i=i+1
             end do
-            do while (x < array(j))
+            do while (pivot < array(j))
                 j=j-1
             end do
             if (i >= j) exit
             
-            swap_variable = array(i1)
-            array(i1) = array(i2)
-            array(i2) = swap_variable
+            swap_variable = array(i)
+            array(i) = array(j)
+            array(j) = swap_variable
 
             i=i+1
             j=j-1
@@ -430,17 +431,17 @@ module quicksort_module
         real(KIND=real32) ::  swap_variable
         pivot = array( (i+j) / 2 )
         do
-            do while (array(i) < x)
+            do while (array(i) < pivot)
                 i=i+1
             end do
-            do while (x < array(j))
+            do while (pivot < array(j))
                 j=j-1
             end do
             if (i >= j) exit
             
-            swap_variable = array(i1)
-            array(i1) = array(i2)
-            array(i2) = swap_variable
+            swap_variable = array(i)
+            array(i) = array(j)
+            array(j) = swap_variable
 
             i=i+1
             j=j-1
@@ -456,22 +457,22 @@ module quicksort_module
         real(KIND=real64)  ::  swap_variable
         pivot = array( (i+j) / 2 )
         do
-            do while (array(i) < x)
+            do while (array(i) < pivot)
                 i=i+1
             end do
-            do while (x < array(j))
+            do while (pivot < array(j))
                 j=j-1
             end do
             if (i >= j) exit
             
-            swap_variable = array(i1)
-            array(i1) = array(i2)
-            array(i2) = swap_variable
+            swap_variable = array(i)
+            array(i) = array(j)
+            array(j) = swap_variable
 
             i=i+1
             j=j-1
         end do
-    end subroutine qsort_swap_i64
+    end subroutine qsort_swap_r64
 
     ! end contains
     

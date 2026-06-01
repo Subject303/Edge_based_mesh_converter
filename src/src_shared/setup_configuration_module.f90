@@ -11,8 +11,9 @@ module setup_configuration_module
     subroutine setup_configuration
         implicit none
         
-        character(:), allocatable :: current_line&
-        & prerocessed_data_file_str, binary_internal_str, ascii_internal_str, vtu_ascii_str, vtu_binary_appended_str
+        character(len = :), allocatable :: current_line, &
+        & prerocessed_data_file_str, binary_internal_str, ascii_internal_str, vtu_ascii_str, vtu_binary_appended_str, temp_str
+        integer(KIND=int32) :: indexer
         !character :: current_line*(*)
         
         output_requests = 0
@@ -31,27 +32,29 @@ module setup_configuration_module
             current_line = trim(adjustL(current_line))
             
             if (len(current_line).gt.0) then
-            
-                select case(current_line)
+                indexer = 1+index(current_line,'=')
+                temp_str = current_line(1:indexer)
                 
-                    case(current_line(1:len(prerocessed_data_file_str)) .eq. prerocessed_data_file_str)
-                        raw_data_path = current_line(len(prerocessed_data_file_str):)
+                select case(temp_str)
+                
+                    case('prerocessed_data_file=')
+                        raw_data_path = current_line(len('prerocessed_data_file='):)
                         
-                    case(current_line(1:len(binary_internal_str)) .eq. binary_internal_str)
-                        if ( trim(adjustL(current_line((1+len(binary_internal_str)):len(current_line)))) .eq. 'true' ) &
-                            & output_requests = output_requests + binary_internal
+                    case('binary_internal=')
+                        indexer = index(current_line,'true')
+                        if (indexer.ne.0) output_requests = output_requests + binary_internal
                         
-                    case(current_line(1:len(ascii_internal_str)) .eq. ascii_internal_str)
-                        if ( trim(adjustL(current_line((1+len(binary_internal_str)):len(current_line)))) .eq. 'true' ) &
-                            & output_requests = output_requests + ascii_internal
+                    case('ascii_internal=')
+                        indexer = index(current_line,'true')
+                        if (indexer.ne.0) output_requests = output_requests + ascii_internal
                         
-                    case(current_line(1:len(vtu_ascii_str)) .eq. vtu_ascii_str)
-                        if ( trim(adjustL(current_line((1+len(binary_internal_str)):len(current_line)))) .eq. 'true' ) &
-                            & output_requests = output_requests + vtu_ascii
+                    case('vtu_ascii=')
+                        indexer = index(current_line,'true')
+                        if (indexer.ne.0) output_requests = output_requests + vtu_ascii
                         
-                    case(current_line(1:len(vtu_binary_appended_str)) .eq. vtu_binary_appended_str)
-                        if ( trim(adjustL(current_line((1+len(binary_internal_str)):len(current_line)))) .eq. 'true' ) &
-                            & output_requests = output_requests + vtu_binary_appended
+                    case('vtu_binary_appended=')
+                        indexer = index(current_line,'true')
+                        if (indexer.ne.0) output_requests = output_requests + vtu_binary_appended
                         
                         ! last line in config file
                         

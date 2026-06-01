@@ -30,12 +30,12 @@ module utils
     subroutine remove_flagged_duplicates(array)
         implicit none
         integer(KIND=INT32) :: array(:)
-        logical,allocatable :: mask
+        logical,allocatable :: mask(:)
         
         allocate(mask(size(array)))
         
-        mask=(/ (GblDomainDisps(:).ge.0) /)
-        GblDomainDisps=pack(GblDomainDisps,mask)
+        mask=(/ (array(:).ge.0) /)
+        array=pack(array,mask)
         
     end subroutine remove_flagged_duplicates
     

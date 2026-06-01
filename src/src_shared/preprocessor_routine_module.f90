@@ -22,14 +22,15 @@ module preprocessor_routine_module
         
         allocate(e_centroid(nedge,3))
         
-        e_p_index_array = (/0:nedge/) * 2
+        e_p_sum = nedge*2
+        e_p_index_array = (/(e,e=0,nedge*2,2)/) 
         
         do e=1,nedge
-            ep_start = (1 + e_p_index_array(f-1))
-            ep_end   = e_p_index_array(f)
+            ep_start = (1 + e_p_index_array(e-1))
+            ep_end   = e_p_index_array(e)
             
             do i=1,3
-                e_centroid(e,i) = sum(coord(e_p_obj_relation_array(ep_start:ep_end),i)) / 2
+                e_centroid(e,i) = sum(coords(e_p_obj_relation_array(ep_start:ep_end),i)) / 2
             enddo
         enddo
         
@@ -51,7 +52,7 @@ module preprocessor_routine_module
             number_of_points = 1 + fp_end - fp_start
             
             do i=1,3
-                f_centroid(f,i) = sum(coord(f_p_obj_relation_array(fp_start:fp_end),i)) / number_of_points
+                f_centroid(f,i) = sum(coords(f_p_obj_relation_array(fp_start:fp_end),i)) / number_of_points
             enddo
         enddo
         
@@ -71,10 +72,10 @@ module preprocessor_routine_module
         do c=1,nedge
             cp_start = (1 + c_p_index_array(c-1))
             cp_end   = c_p_index_array(c)
-            number_of_points = 1 + fp_end - fp_start
+            number_of_points = 1 + cp_start - cp_end
             
             do i=1,3
-                c_centroid(c,i) = sum(coord(c_p_obj_relation_array(cp_start:cp_end),i)) / number_of_points
+                c_centroid(c,i) = sum(coords(c_p_obj_relation_array(cp_start:cp_end),i)) / number_of_points
             enddo
         enddo
         
@@ -87,12 +88,11 @@ module preprocessor_routine_module
     
     subroutine c_e_preprocess
         implicit none
-        integer(KIND=INT32) :: c, cf_index, cf_start_index, cf_end_index, f, fe_index, fe_start_index, fe_end_index, ce_index, n_con_edges
+        integer(KIND=INT32) :: c, cf_index, cf_start_index, cf_end_index, f, fe_index, fe_start_index, fe_end_index, ce_index, n_con_edges, ce_start_index, ce_end_index
         
         
         print *, 'beginning processing cell edge relation array'
         
-        c_start_index = 1
         c_e_sum = 0
         
         allocate(c_e_index_array(0:nele))

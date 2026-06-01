@@ -6,6 +6,7 @@ module boundary_routine_module
     use object_counts
     use raw_data
     use object_relation_data
+    use boundary_data
     
     implicit none
     
@@ -24,7 +25,7 @@ module boundary_routine_module
         
         f_bound_array = .false.
         f_internal_array = .false.
-        f_bound_indexing_array    = (/1:nface/)
+        f_bound_indexing_array    = (/(f, f=1,nface)/)
         allocate(f_internal_indexing_array,source=f_bound_indexing_array)
         
         do f=1,nface
@@ -32,7 +33,7 @@ module boundary_routine_module
             
                 f_bound_array(f) = .true.
                 
-            elseif (f_c_index_array(f) .eq. 2) 
+            elseif (f_c_index_array(f) .eq. 2) then
             ! this elseif is technically overkill and has performance overhead
             ! but belt and braces keeps my arse off the frontpages
             
@@ -64,7 +65,7 @@ module boundary_routine_module
         
         e_bound_array = .false.
         e_internal_array = .false.
-        e_bound_indexing_array    = (/1:nedge/)
+        e_bound_indexing_array    = (/(f, f=1,nedge)/)
         allocate(e_internal_indexing_array,source=e_bound_indexing_array)
         
         do f=1, nface
@@ -74,7 +75,7 @@ module boundary_routine_module
             
             if (f_bound_array(f))then
                 e_bound_array(   f_e_obj_relation_array(fe_start:fe_end)) = .true.
-            elseif (f_internal_array(f))
+            elseif (f_internal_array(f)) then
                 e_internal_array(f_e_obj_relation_array(fe_start:fe_end)) = .true.
             else
                 print*, 'face id : ', f, ' , is not flagged internal or external'
@@ -100,7 +101,7 @@ module boundary_routine_module
         
         p_bound_array = .false.
         p_internal_array = .false.
-        p_bound_indexing_array    = (/1:npoin/)
+        p_bound_indexing_array    = (/(f, f=1,npoin)/)
         allocate(p_internal_indexing_array,source=p_bound_indexing_array)
         
         do f=1, nface
@@ -110,7 +111,7 @@ module boundary_routine_module
             
             if (f_bound_array(f))then
                 p_bound_array(   f_p_obj_relation_array(fp_start:fp_end)) = .true.
-            elseif (f_internal_array(f))
+            elseif (f_internal_array(f)) then
                 p_internal_array(f_p_obj_relation_array(fp_start:fp_end)) = .true.
             else
                 print*, 'face id : ', f, ' , is not flagged internal or external'
@@ -167,7 +168,7 @@ module boundary_routine_module
             
             if (dot_product_of_c_to_f_and_normal .lt. 0) f_normal_vectors(bf,:) = -f_normal_vectors(bf,:)
             
-        endif
+        enddo
         
         ! because I've already split my feature edges in my preprocessor I can then get point normal vectors by just averaging connected face normals
         
