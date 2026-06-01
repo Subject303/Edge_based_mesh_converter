@@ -7,7 +7,6 @@ program converter_serial
     use setup_configuration_module
     
     use read_data_serial
-    use data_preprocessing_serial
     use data_processing_serial
     use data_outputting_serial
     
@@ -21,7 +20,7 @@ program converter_serial
     
     call data_preprocessing
     
-    call data_preprocessing
+    call data_processing
     
     call data_outputting
     

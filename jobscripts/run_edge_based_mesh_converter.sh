@@ -2,7 +2,7 @@
 clear
 set -e
 
-rm -f "../modfiles/*"
+rm -r -f "../modfiles/*.mod"
 rm -f "../converter"
 
 LOG="./logfile.txt"
@@ -15,7 +15,8 @@ COMPLIST=" ../src/src_shared/global_data.f90  ../src/src_shared/* "
 
 COMPLIST=$COMPLIST" ../src/src_serial/read_data_serial.f90 ../src/src_serial/data_outputting_serial.f90 ../src/src_serial/data_preprocessing_serial.f90 ../src/src_serial/main_prog_serial.f90 "
 
-COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -ffpe-trap=zero,overflow  "
+COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -g3 -fcheck=all -fbacktrace -ffpe-trap=zero,overflow  "
+# COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -ffpe-trap=zero,overflow  "
 
 gfortran $COMP_OPTIONS -o "../converter" $COMPLIST -J"../modfiles" 2>&1 | tee $LOG
 
