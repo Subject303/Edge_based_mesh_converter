@@ -8,7 +8,7 @@ COMPLIST=$COMPLIST" ../src/src_serial/*"
 
 COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -ffpe-trap=zero,overflow  "
 
-gfortran $COMP_OPTIONS -o "../converter" $COMPLIST -J"./modfiles" &> $LOG
+gfortran $COMP_OPTIONS -o "../converter" $COMPLIST -J"../modfiles" &> $LOG
 
 echo ' passed compilation ' &>> $LOG
 
