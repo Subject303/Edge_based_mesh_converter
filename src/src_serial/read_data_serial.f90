@@ -14,7 +14,6 @@ module read_data_serial
     contains
     
     subroutine read_data
-        
         implicit none
         
         print*, ' '

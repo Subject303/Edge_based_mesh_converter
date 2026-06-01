@@ -15,9 +15,8 @@ module preprocessor_routine_module
     !!!!!!!!!!!!!!!!!!!!!!!!!!!  centroid routines below ::
     
     subroutine calc_e_centroid
-        integer(KIND=INT32) :: e, i, ep_start, ep_end
-        
         implicit none
+        integer(KIND=INT32) :: e, i, ep_start, ep_end
         
         print*, 'beginning calculating edge centroids'
         
@@ -39,9 +38,8 @@ module preprocessor_routine_module
     end subroutine calc_e_centroid
     
     subroutine calc_f_centroid
-        integer(KIND=INT32) :: f, i, fp_start, fp_end, number_of_points
-        
         implicit none
+        integer(KIND=INT32) :: f, i, fp_start, fp_end, number_of_points
         
         print*, 'beginning calculating face centroids'
         
@@ -62,9 +60,9 @@ module preprocessor_routine_module
     end subroutine calc_f_centroid    
     
     subroutine calc_c_centroid
+        implicit none
         integer(KIND=INT32) :: c, i, cp_start, cp_end, number_of_points
         
-        implicit none
         
         print*, 'beginning calculating cell centroids'
         
@@ -88,9 +86,9 @@ module preprocessor_routine_module
     
     
     subroutine c_e_preprocess
+        implicit none
         integer(KIND=INT32) :: c, cf_index, cf_start_index, cf_end_index, f, fe_index, fe_start_index, fe_end_index, ce_index, n_con_edges
         
-        implicit none
         
         print *, 'beginning processing cell edge relation array'
         
@@ -223,12 +221,12 @@ module preprocessor_routine_module
     !!!!!!!!!!!!!!!!!!!!!!!!!!! inverter routine below ::
     
     subroutine obj_relation_inverter(forward_leading_obj_count, backward_leading_obj_count, forward_sum, forward_index, forward_obj_relation_array, backward_sum, backward_index, backward_obj_relation_array)
+        implicit none
     
         integer(KIND=INT32),allocatable :: forward_index(:), backward_index(:), forward_obj_relation_array(:), backward_obj_relation_array(:)
         integer(KIND=INT32),allocatable :: p_index(:), backward_index_duplicates(:)
         integer(KIND=INT32) :: x, p, x_count, total_x_count, forward_sum, backward_sum, cx_start_index, cx_end_index, forward_leading_obj_count, backward_leading_obj_count
         
-        implicit none
         
         
 

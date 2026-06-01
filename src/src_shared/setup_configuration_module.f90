@@ -9,13 +9,11 @@ module setup_configuration_module
     contains
     
     subroutine setup_configuration
-        
+        implicit none
         
         character(:), allocatable :: current_line&
         & prerocessed_data_file_str, binary_internal_str, ascii_internal_str, vtu_ascii_str, vtu_binary_appended_str
         !character :: current_line*(*)
-        
-        implicit none
         
         output_requests = 0
         

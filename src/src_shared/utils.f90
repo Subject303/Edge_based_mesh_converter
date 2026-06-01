@@ -7,10 +7,9 @@ module utils
     contains
     
     subroutine sort_and_flag_duplicates(array, start_index, end_index)
+        implicit none
         integer(KIND=INT32) :: array(:), start_index, end_index, indexer, i
         integer(KIND=INT32),allocatable :: temparray(:)
-        
-        implicit none
         
         allocate(temparray,source=array(start_index:end_index))
         
@@ -29,10 +28,9 @@ module utils
     end subroutine sort_and_flag_duplicates
     
     subroutine remove_flagged_duplicates(array)
+        implicit none
         integer(KIND=INT32) :: array(:)
         logical,allocatable :: mask
-        
-        implicit none
         
         allocate(mask(size(array)))
         
