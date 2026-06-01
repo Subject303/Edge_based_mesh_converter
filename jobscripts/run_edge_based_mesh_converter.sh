@@ -3,7 +3,7 @@ clear
 set -e
 
 MOD=$(ls ../modfiles/*.mod)
-rm  $MOD
+rm -f $MOD
 rm -f "../converter"
 
 LOG="./logfile.txt"
