@@ -46,7 +46,7 @@ module preprocessor_routine_module
         
         allocate(f_centroid(nface,3))
         
-        do f=1,nedge
+        do f=1,nface
             fp_start = (1 + f_p_index_array(f-1))
             fp_end   = f_p_index_array(f)
             number_of_points = 1 + fp_end - fp_start
@@ -69,7 +69,7 @@ module preprocessor_routine_module
         
         allocate(c_centroid(nele,3))
         
-        do c=1,nedge
+        do c=1,nele
             cp_start = (1 + c_p_index_array(c-1))
             cp_end   = c_p_index_array(c)
             number_of_points = 1 + cp_start - cp_end

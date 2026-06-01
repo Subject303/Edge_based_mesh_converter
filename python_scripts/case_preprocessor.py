@@ -82,8 +82,8 @@ del algo
 print('extracting point and element counts',time.time()-start); sys.stdout.flush()
 # Pull general mesh info
 npoin = polyblock.GetNumberOfPoints()
-nelem = polyblock.GetNumberOfCells()
-print(npoin,' nodes ', nelem,' cells')
+nele = polyblock.GetNumberOfCells()
+print(npoin,' nodes ', nele,' cells')
 
 gc.collect()
 
@@ -130,7 +130,7 @@ for p in range(npoin):
 faceid = 0
 edgeid = 0
 print('extracting connectivity and mapping data',time.time()-start); sys.stdout.flush()
-for c in range(nelem):
+for c in range(nele):
     
     cell = polyblock.GetCell(c)
     
@@ -173,19 +173,19 @@ gc.collect()
 print('sorting relation arrays',time.time()-start); sys.stdout.flush()
 
 for i in range(len(c_p_obj_relation_array)):
-    c_p_obj_relation_array[i]=sorted([c_p_obj_relation_array[i]])
+    c_p_obj_relation_array[i]=sorted(c_p_obj_relation_array[i])
     
 for i in range(len(f_p_obj_relation_array)):
-    f_p_obj_relation_array[i]=sorted([f_p_obj_relation_array[i]])
+    f_p_obj_relation_array[i]=sorted(f_p_obj_relation_array[i])
     
 for i in range(len(e_p_obj_relation_array)):
-    e_p_obj_relation_array[i]=sorted([e_p_obj_relation_array[i]])
+    e_p_obj_relation_array[i]=sorted(e_p_obj_relation_array[i])
     
 for i in range(len(c_f_obj_relation_array)):
-    c_f_obj_relation_array[i]=sorted([c_f_obj_relation_array[i]])
+    c_f_obj_relation_array[i]=sorted(c_f_obj_relation_array[i])
     
 for i in range(len(f_e_obj_relation_array)):
-    f_e_obj_relation_array[i]=sorted([f_e_obj_relation_array[i]])
+    f_e_obj_relation_array[i]=sorted(f_e_obj_relation_array[i])
 
 print('   c_p'); sys.stdout.flush()
 c_p_obj_relation_array.sort()
@@ -373,8 +373,8 @@ file = open(file_name, "wb")
 
 print('writing header',time.time()-start); sys.stdout.flush()
 # writing header
-file.write(struct.pack('<4i' ,npoin,nedge,nface,nelem))
-print(npoin,nedge,nface,nelem)
+file.write(struct.pack('<4i' ,npoin,nedge,nface,nele))
+print(npoin,nedge,nface,nele)
 
 
 print('writing coordinates',time.time()-start); sys.stdout.flush()
@@ -400,15 +400,15 @@ for entry in f_p_index:
 
 for obj in c_p_obj_relation_array:
     for entry in obj:
-        file.write(struct.pack('<i' ,entry))
+        file.write(struct.pack('<i' ,entry + 1))
 
 for obj in f_p_obj_relation_array:
     for entry in obj:
-        file.write(struct.pack('<i' ,entry))
+        file.write(struct.pack('<i' ,entry + 1))
     
 for obj in e_p_obj_relation_array:
     for entry in obj:
-        file.write(struct.pack('<i' ,entry))
+        file.write(struct.pack('<i' ,entry + 1))
     
     
 print('writing cell > face, face > edge mappings',time.time()-start); sys.stdout.flush()
@@ -424,11 +424,11 @@ for entry in f_e_index:
     
 for obj in c_f_obj_relation_array:
     for entry in obj:
-        file.write(struct.pack('<i' ,entry))
+        file.write(struct.pack('<i' ,entry + 1))
 
 for obj in f_e_obj_relation_array:
     for entry in obj:
-        file.write(struct.pack('<i' ,entry))
+        file.write(struct.pack('<i' ,entry + 1))
     
     
 print('finished writing to file',time.time()-start); sys.stdout.flush()
