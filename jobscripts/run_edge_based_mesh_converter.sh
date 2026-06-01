@@ -5,6 +5,7 @@ rm -f "../modfiles/*"
 rm -f "../converter"
 
 LOG="logfile.txt"
+rm -f $LOG
 touch $LOG
 
 COMPLIST=" ../src/src_shared/* "
