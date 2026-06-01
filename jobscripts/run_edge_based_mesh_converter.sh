@@ -4,7 +4,7 @@ set -e
 rm -f "../modfiles/*"
 rm -f "../converter"
 
-LOG="logfile.txt"
+LOG="./logfile.txt"
 rm -f $LOG
 touch $LOG
 
