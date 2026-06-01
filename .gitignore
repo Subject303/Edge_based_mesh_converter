@@ -6,3 +6,6 @@
 **.preprocessed_mesh_file
 
 **/logfile.txt
+
+**.mod
+**/converter
