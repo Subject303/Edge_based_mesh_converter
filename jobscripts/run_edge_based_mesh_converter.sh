@@ -7,6 +7,7 @@ rm -f "../converter"
 LOG="./logfile.txt"
 rm -f $LOG
 touch $LOG
+chmod 777 $LOG
 
 COMPLIST=" ../src/src_shared/* "
 
@@ -17,18 +18,18 @@ COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -ffpe-trap=zero,ove
 gfortran $COMP_OPTIONS -o "../converter" $COMPLIST -J"../modfiles" | $LOG
 
 if [ -f "../converter"  ]; then
-    echo " passed compilation " | $LOG
+    echo " passed compilation "
 else
-    echo "compilation failed" | $LOG
+    echo "compilation failed"
     exit
 fi
 
-echo ' running python preprocessor ' | $LOG
+echo ' running python preprocessor '
 
-python3 "../python_scripts/case_preprocessor.py" | $LOG
+python3 "../python_scripts/case_preprocessor.py"
 
-echo ' running main converter program serial ' | $LOG
+echo ' running main converter program serial '
 
 ../converter | $LOG
 
-echo ' finished. ' | $LOG
+echo ' finished. '
