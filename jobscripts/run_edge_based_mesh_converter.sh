@@ -2,6 +2,7 @@
 set -e
 
 rm -f "../modfiles/*"
+rm -f "../converter"
 
 LOG="logfile.txt"
 
@@ -13,7 +14,12 @@ COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -ffpe-trap=zero,ove
 
 gfortran $COMP_OPTIONS -o "../converter" $COMPLIST -J"../modfiles" &> $LOG
 
-echo ' passed compilation ' &>> $LOG
+if [ -f "../converter"  ]; then
+    echo " passed compilation " &>> $LOG
+else
+    echo "compilation failed" &>> $LOG
+    exit
+fi
 
 echo ' running python preprocessor ' &>> $LOG
 
