@@ -7,7 +7,7 @@ module preprocessor_routine_module
     use raw_data
     use object_relation_data
     use centroid_data
-    
+    use quicksort_module
     implicit none
     
     contains
@@ -87,6 +87,7 @@ module preprocessor_routine_module
     
     
     subroutine c_e_preprocess
+        use utils
         implicit none
         integer(KIND=INT32) :: c, cf_index, cf_start_index, cf_end_index, f, fe_index, fe_start_index, fe_end_index, ce_index, n_con_edges, ce_start_index, ce_end_index
         
@@ -221,6 +222,7 @@ module preprocessor_routine_module
     !!!!!!!!!!!!!!!!!!!!!!!!!!! inverter routine below ::
     
     subroutine obj_relation_inverter(forward_leading_obj_count, backward_leading_obj_count, forward_sum, forward_index, forward_obj_relation_array, backward_sum, backward_index, backward_obj_relation_array)
+        use utils
         implicit none
     
         integer(KIND=INT32),allocatable :: forward_index(:), backward_index(:), forward_obj_relation_array(:), backward_obj_relation_array(:)

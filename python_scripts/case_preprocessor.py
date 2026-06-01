@@ -4,7 +4,7 @@ import os
 import struct
 import gc
 import time
-
+import sys
 from vtkmodules.vtkIOEnSight import *
 from vtkmodules.util.misc import *
 from vtkmodules.vtkFiltersPoints import *
@@ -17,7 +17,7 @@ start = time.time()
 
 
 
-print('reading raw case file',time.time()-start)
+print('reading raw case file',time.time()-start); sys.stdout.flush()
 # read the raw data
 algo = vtkGenericEnSightReader()
 cdp = vtkCompositeDataPipeline()
@@ -40,7 +40,7 @@ del raw_data
 # freeing up the multiblock view
 
 
-print('cleaning case file',time.time()-start)
+print('cleaning case file',time.time()-start); sys.stdout.flush()
 # general cleanup
 algo = vtkStaticCleanUnstructuredGrid()
 algo.SetInputData(polyblock)
@@ -50,7 +50,7 @@ polyblock = algo.GetOutput()
 del algo
 
 
-print('converting element types to polyhedra',time.time()-start)
+print('converting element types to polyhedra',time.time()-start); sys.stdout.flush()
 # convert all cells to polyhedra
 algo = vtkConvertToPolyhedra()
 algo.SetInputData(polyblock)
@@ -79,7 +79,7 @@ del algo
 # del algo
 
 
-print('extracting point and element counts',time.time()-start)
+print('extracting point and element counts',time.time()-start); sys.stdout.flush()
 # Pull general mesh info
 npoin = polyblock.GetNumberOfPoints()
 nelem = polyblock.GetNumberOfCells()
@@ -87,7 +87,7 @@ print(npoin,' nodes ', nelem,' cells')
 
 gc.collect()
 
-print('initialising output arrays',time.time()-start)
+print('initialising output arrays',time.time()-start); sys.stdout.flush()
 # initialise the output arrays
 x_coords = []
 y_coords = []
@@ -115,7 +115,7 @@ c_f_obj_relation_array = []
 f_e_obj_relation_array = []
 
 
-print('extracting coordinate data',time.time()-start)
+print('extracting coordinate data',time.time()-start); sys.stdout.flush()
 # extract coordinate data
 
 for p in range(npoin):
@@ -129,7 +129,7 @@ for p in range(npoin):
 # extract cell, face and edge datas from the primary data block
 faceid = 0
 edgeid = 0
-print('extracting connectivity and mapping data',time.time()-start)
+print('extracting connectivity and mapping data',time.time()-start); sys.stdout.flush()
 for c in range(nelem):
     
     cell = polyblock.GetCell(c)
@@ -170,7 +170,7 @@ nedge = edgeid
 
 gc.collect()
 
-print('sorting relation arrays',time.time()-start)
+print('sorting relation arrays',time.time()-start); sys.stdout.flush()
 
 for i in range(len(c_p_obj_relation_array)):
     c_p_obj_relation_array[i]=sorted([c_p_obj_relation_array[i]])
@@ -187,19 +187,19 @@ for i in range(len(c_f_obj_relation_array)):
 for i in range(len(f_e_obj_relation_array)):
     f_e_obj_relation_array[i]=sorted([f_e_obj_relation_array[i]])
 
-print('   c_p')
+print('   c_p'); sys.stdout.flush()
 c_p_obj_relation_array.sort()
-print('   f_p')
+print('   f_p'); sys.stdout.flush()
 f_p_obj_relation_array.sort()
-print('   e_p')
+print('   e_p'); sys.stdout.flush()
 e_p_obj_relation_array.sort()
 
-print('   c_f')
+print('   c_f'); sys.stdout.flush()
 c_f_obj_relation_array.sort()
-print('   f_e')
+print('   f_e'); sys.stdout.flush()
 f_e_obj_relation_array.sort()
 
-print('generating index arrays',time.time()-start)
+print('generating index arrays',time.time()-start); sys.stdout.flush()
 for obj in c_p_obj_relation_array:
     c_p_index.append(len(obj))
     
@@ -222,11 +222,11 @@ for obj in f_e_obj_relation_array:
 # I just need to filter out boundary duplicated nodes
 
 
-print('removing duplicate connectivites',time.time()-start)
+print('removing duplicate connectivites',time.time()-start); sys.stdout.flush()
 
 temp = []
 temp2 = []
-print('   c_p')
+print('   c_p'); sys.stdout.flush()
 for i in range(len(c_p_index)-1):
     if c_p_index[i] == c_p_index[i+1]:    
         obj1 = c_p_obj_relation_array[i]
@@ -244,7 +244,7 @@ del temp2
 
 temp = []
 temp2 = []
-print('   f_p')
+print('   f_p'); sys.stdout.flush()
 for i in range(len(f_p_index)-1):
     if f_p_index[i] == f_p_index[i+1]:    
         obj1 = f_p_obj_relation_array[i]
@@ -262,7 +262,7 @@ del temp2
 
 temp = []
 temp2 = []
-print('   e_p')
+print('   e_p'); sys.stdout.flush()
 for i in range(len(e_p_index)-1):
     if e_p_index[i] == e_p_index[i+1]:    
         obj1 = e_p_obj_relation_array[i]
@@ -280,7 +280,7 @@ del temp2
 
 temp = []
 temp2 = []
-print('   c_f')
+print('   c_f'); sys.stdout.flush()
 for i in range(len(c_f_index)-1):
     if c_f_index[i] == c_f_index[i+1]:    
         obj1 = c_f_obj_relation_array[i]
@@ -298,7 +298,7 @@ del temp2
 
 temp = []
 temp2 = []
-print('   f_e')
+print('   f_e'); sys.stdout.flush()
 for i in range(len(f_e_index)-1):
     if f_e_index[i] == f_e_index[i+1]:    
         obj1 = f_e_obj_relation_array[i]
@@ -317,7 +317,7 @@ del temp2
 
 gc.collect()
 
-print('indexifying index arrays',time.time()-start)
+print('indexifying index arrays',time.time()-start); sys.stdout.flush()
 # indexifying the index arrays
 index_last = 0
 for index in range(len(c_p_index)):
@@ -354,40 +354,40 @@ for index in range(len(f_e_index)):
 
 f_e_sum = index_last
 
-print('updating counts',time.time()-start)
+print('updating counts',time.time()-start); sys.stdout.flush()
 # update counts with non duplicate objects
 nele  = len(c_p_index)
 nface = len(f_p_index)
 nedge = len(e_p_index)
 
 
-print('beginning writing to file',time.time()-start)
+print('beginning writing to file',time.time()-start); sys.stdout.flush()
 # outputting
 
 
-print('creating raw file',time.time()-start)
+print('creating raw file',time.time()-start); sys.stdout.flush()
 # opening/creating file
 file_name = '../preprocessed_mesh_folder/raw_mesh_data.preprocessed_mesh_file'
 file = open(file_name, "wb")
 
 
-print('writing header',time.time()-start)
+print('writing header',time.time()-start); sys.stdout.flush()
 # writing header
 file.write(struct.pack('<4i' ,npoin,nedge,nface,nelem))
 print(npoin,nedge,nface,nelem)
 
 
-print('writing coordinates',time.time()-start)
+print('writing coordinates',time.time()-start); sys.stdout.flush()
 # writing coordinate data
 for coord in x_coords:
-    file.write(struct.pack('<d' ,coord))
+    file.write(struct.pack('<f' ,coord))
 for coord in y_coords:
-    file.write(struct.pack('<d' ,coord))
+    file.write(struct.pack('<f' ,coord))
 for coord in z_coords:
-    file.write(struct.pack('<d' ,coord))
+    file.write(struct.pack('<f' ,coord))
     
     
-print('writing connectivities',time.time()-start)
+print('writing connectivities',time.time()-start); sys.stdout.flush()
 # writing object connectivities
 file.write(struct.pack('<2i' ,c_p_sum, 0))
 for entry in c_p_index:
@@ -411,7 +411,7 @@ for obj in e_p_obj_relation_array:
         file.write(struct.pack('<i' ,entry))
     
     
-print('writing cell > face, face > edge mappings',time.time()-start)
+print('writing cell > face, face > edge mappings',time.time()-start); sys.stdout.flush()
 # writing object relation mappings
 file.write(struct.pack('<2i' ,c_f_sum, 0))
 for entry in c_f_index:
@@ -431,7 +431,7 @@ for obj in f_e_obj_relation_array:
         file.write(struct.pack('<i' ,entry))
     
     
-print('finished writing to file',time.time()-start)
-print('finished preprocessing')
+print('finished writing to file',time.time()-start); sys.stdout.flush()
+print('finished preprocessing'); sys.stdout.flush()
 
 

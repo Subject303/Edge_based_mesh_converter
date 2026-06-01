@@ -11,34 +11,31 @@ module setup_configuration_module
     subroutine setup_configuration
         implicit none
         
-        character(len = :), allocatable :: current_line, &
-        & prerocessed_data_file_str, binary_internal_str, ascii_internal_str, vtu_ascii_str, vtu_binary_appended_str, temp_str
+        character(len = :), allocatable :: current_line, temp_str
         integer(KIND=int32) :: indexer
-        !character :: current_line*(*)
+        logical :: file_end
         
         output_requests = 0
         
-        prerocessed_data_file_str = 'prerocessed_data_file='
-        binary_internal_str = 'binary_internal='
-        ascii_internal_str = 'ascii_internal='
-        vtu_ascii_str = 'vtu_ascii='
-        vtu_binary_appended_str = 'vtu_binary_appended='
+        open(10,file='../config.cfg',access='sequential',action='read',status='old')
         
-        open(10,file='config.cfg',access='sequential',action='read',status='old')
+        file_end = .false.
         
-        do 
-            read(10,*) current_line
+        do while(.not.file_end)
+            allocate(character(len=512) :: current_line)
+            
+            read(10,'(A)') current_line
             
             current_line = trim(adjustL(current_line))
             
             if (len(current_line).gt.0) then
-                indexer = 1+index(current_line,'=')
+                indexer = index(current_line,'=')
                 temp_str = current_line(1:indexer)
                 
                 select case(temp_str)
                 
                     case('prerocessed_data_file=')
-                        raw_data_path = current_line(len('prerocessed_data_file='):)
+                        raw_data_path = current_line(indexer+1:)
                         
                     case('binary_internal=')
                         indexer = index(current_line,'true')
@@ -57,13 +54,13 @@ module setup_configuration_module
                         if (indexer.ne.0) output_requests = output_requests + vtu_binary_appended
                         
                         ! last line in config file
-                        
-                        exit
+                        file_end = .true.
                         
                 end select
-                
             endif
+            deallocate(current_line)
         enddo
+        
         
         if (.not.allocated(raw_data_path)) print*, 'no raw data file found', raw_data_path
         

@@ -18,7 +18,7 @@ module raw_data
     use iso_fortran_env
     implicit none
     
-    real(KIND=REAL64), allocatable :: coords(:,:)
+    real(KIND=REAL32), allocatable :: coords(:,:)
     
     ! raw connectivity arrays 
     integer(KIND=INT32) :: c_p_sum, f_p_sum, e_p_sum

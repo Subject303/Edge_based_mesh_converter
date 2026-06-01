@@ -12,19 +12,19 @@ module data_outputting_serial
         
         
         if ((output_requests - binary_internal) .ge. 0) then
-                call output_binary_internal
+!                 call output_binary_internal
         endif
         
         if ((output_requests - ascii_internal) .ge. 0) then
-                call output_ascii_internal
+!                 call output_ascii_internal
         endif
         
         if ((output_requests - vtu_ascii) .ge. 0) then
-                call output_vtu_ascii
+!                 call output_vtu_ascii
         endif
         
         if ((output_requests - vtu_binary_appended) .ge. 0) then
-                call output_vtu_binary_appended
+!                 call output_vtu_binary_appended
         endif
         
         

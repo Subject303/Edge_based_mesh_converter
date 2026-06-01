@@ -7,6 +7,7 @@ module utils
     contains
     
     subroutine sort_and_flag_duplicates(array, start_index, end_index)
+        use quicksort_module
         implicit none
         integer(KIND=INT32) :: array(:), start_index, end_index, indexer, i
         integer(KIND=INT32),allocatable :: temparray(:)

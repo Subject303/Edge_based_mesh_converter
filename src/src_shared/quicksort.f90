@@ -136,65 +136,47 @@ module quicksort_module
         
         implicit none
         class(*)                        :: array(:), first_unbound , last_unbound
-        class(*),allocatable            :: secondary_array(:)
-        class(*),allocatable,optional   :: third_array(:), fourth_array(:), fifth_array(:), sixth_array(:), seventh_array(:), eighth_array(:), ninth_array(:), tenth_array(:)
-        class(*),allocatable            :: tertiary_array_temp(:)
+        class(*)                        :: secondary_array(:)
+        class(*),optional               :: third_array(:), fourth_array(:), fifth_array(:), sixth_array(:), seventh_array(:), eighth_array(:), ninth_array(:), tenth_array(:)
         integer(KIND=int32),allocatable :: Sorted_index(:)
         
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
         
-!         allocate(tertiary_array_temp,source=secondary_array)
-!         secondary_array(:) = tertiary_array_temp(Sorted_index)
-!         
-!         ! this is probably huge overkill, but it means that I could in theory dump an entire tensor in this and it'll handle it
-!         
-!         if (present(third_array)) then
-!             deallocate(tertiary_array_temp)
-!             allocate(tertiary_array_temp,source=third_array)
-!             third_array(:) = tertiary_array_temp(Sorted_index)
-!         endif 
-!         
-!         if (present(fourth_array)) then
-!             deallocate(tertiary_array_temp)
-!             allocate(tertiary_array_temp,source=fourth_array)
-!             fourth_array(:) = tertiary_array_temp(Sorted_index)
-!         endif 
-!         
-!         if (present(fifth_array)) then
-!             deallocate(tertiary_array_temp)
-!             allocate(tertiary_array_temp,source=fifth_array)
-!             fifth_array(:) = tertiary_array_temp(Sorted_index)
-!         endif 
-!         
-!         if (present(sixth_array)) then
-!             deallocate(tertiary_array_temp)
-!             allocate(tertiary_array_temp,source=sixth_array)
-!             sixth_array(:) = tertiary_array_temp(Sorted_index)
-!         endif 
-!         
-!         if (present(seventh_array)) then
-!             deallocate(tertiary_array_temp)
-!             allocate(tertiary_array_temp,source=seventh_array)
-!             seventh_array(:) = tertiary_array_temp(Sorted_index)
-!         endif 
-!         
-!         if (present(eighth_array)) then
-!             deallocate(tertiary_array_temp)
-!             allocate(tertiary_array_temp,source=eighth_array)
-!             eighth_array(:) = tertiary_array_temp(Sorted_index)
-!         endif 
-!         
-!         if (present(ninth_array)) then
-!             deallocate(tertiary_array_temp)
-!             allocate(tertiary_array_temp,source=ninth_array)
-!             ninth_array(:) = tertiary_array_temp(Sorted_index)
-!         endif 
-!         
-!         if (present(tenth_array)) then
-!             deallocate(tertiary_array_temp)
-!             allocate(tertiary_array_temp,source=tenth_array)
-!             tenth_array(:) = tertiary_array_temp(Sorted_index)
-!         endif 
+        call tertiary_array_swapper(secondary_array, Sorted_index)
+        
+        ! this is probably huge overkill, but it means that I could in theory dump an entire tensor in this and it'll handle it
+        
+        if (present(third_array)) then
+            call tertiary_array_swapper(third_array, Sorted_index)
+        endif 
+        
+        if (present(fourth_array)) then
+            call tertiary_array_swapper(fourth_array, Sorted_index)
+        endif 
+        
+        if (present(fifth_array)) then
+            call tertiary_array_swapper(fifth_array, Sorted_index)
+        endif 
+        
+        if (present(sixth_array)) then
+            call tertiary_array_swapper(sixth_array, Sorted_index)
+        endif 
+        
+        if (present(seventh_array)) then
+            call tertiary_array_swapper(seventh_array, Sorted_index)
+        endif 
+        
+        if (present(eighth_array)) then
+            call tertiary_array_swapper(eighth_array, Sorted_index)
+        endif 
+        
+        if (present(ninth_array)) then
+            call tertiary_array_swapper(ninth_array, Sorted_index)
+        endif 
+        
+        if (present(tenth_array)) then
+            call tertiary_array_swapper(tenth_array, Sorted_index)
+        endif 
         
     end subroutine quicksort_arr
     
@@ -203,33 +185,29 @@ module quicksort_module
         
         implicit none
         class(*)                        :: array(:), first_unbound , last_unbound
-        class(*),allocatable            :: matrix_one(:,:)
-        class(*),allocatable,optional   :: matrix_two(:,:), matrix_three(:,:)
-        class(*),allocatable            :: tertiary_array_temp(:)
+        class(*)            :: matrix_one(:,:)
+        class(*),optional   :: matrix_two(:,:), matrix_three(:,:)
         integer(KIND=int32),allocatable :: Sorted_index(:)
         integer(KIND=int32)             :: i
         
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
     
-!         do i=1,size(matrix_one,2)
-!             allocate(tertiary_array_temp,source=matrix_one(:,i))
-!             matrix_one(:,i) = tertiary_array_temp(Sorted_index)
-!         enddo
-!         
-!         if (present(matrix_two)) then
-!             do i=1,size(matrix_two,2)
-!                 allocate(tertiary_array_temp,source=matrix_two(:,i))
-!                 matrix_two(:,i) = tertiary_array_temp(Sorted_index)
-!             enddo
-!         endif
-!         
-!         if (present(matrix_three)) then
-!             do i=1,size(matrix_three,2)
-!                 allocate(tertiary_array_temp,source=matrix_three(:,i))
-!                 matrix_three(:,i) = tertiary_array_temp(Sorted_index)
-!             enddo
-!         endif
-!     
+        do i=1,size(matrix_one,2)
+            call tertiary_array_swapper(matrix_one(:,i),Sorted_index)
+        enddo
+        
+        if (present(matrix_two)) then
+            do i=1,size(matrix_two,2)
+                call tertiary_array_swapper(matrix_one(:,i),Sorted_index)
+            enddo
+        endif
+        
+        if (present(matrix_three)) then
+            do i=1,size(matrix_three,2)
+                call tertiary_array_swapper(matrix_one(:,i),Sorted_index)
+            enddo
+        endif
+        
     end subroutine quicksort_matrix
     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TYPE-UNBOUND FUNCTION FOR CONVERTING TO INT32
@@ -474,6 +452,39 @@ module quicksort_module
         end do
     end subroutine qsort_swap_r64
 
+    subroutine tertiary_array_swapper(tertiary_array_temp, Sorted_index)
+        implicit none
+        class(*) :: tertiary_array_temp(:)
+        integer(KIND=int16),allocatable :: temp_arrayi2(:)
+        integer(KIND=int32),allocatable :: temp_arrayi4(:)
+        integer(KIND=int64),allocatable :: temp_arrayi8(:)
+        real(KIND=real32),allocatable   :: temp_arrayr4(:)
+        real(KIND=real64),allocatable   :: temp_arrayr8(:)
+        integer(KIND=int32), intent(in)  :: Sorted_index(:)
+        
+        select type (tertiary_array_temp)
+            type is (integer(KIND=int16))
+                allocate(temp_arrayi2, source=tertiary_array_temp)
+                tertiary_array_temp(:) = temp_arrayi2(Sorted_index(:))
+            type is (integer(KIND=int32))
+                allocate(temp_arrayi4, source=tertiary_array_temp)
+                tertiary_array_temp(:) = temp_arrayi4(Sorted_index(:))
+            type is (integer(KIND=int64))
+                allocate(temp_arrayi8, source=tertiary_array_temp)
+                tertiary_array_temp(:) = temp_arrayi8(Sorted_index(:))
+            type is (real(KIND=real32))
+                allocate(temp_arrayr4, source=tertiary_array_temp)
+                tertiary_array_temp(:) = temp_arrayr4(Sorted_index(:))
+            type is (real(KIND=real64))
+                allocate(temp_arrayr8, source=tertiary_array_temp)
+                tertiary_array_temp(:) = temp_arrayr8(Sorted_index(:))
+            class default
+                print*,"MISSING TYPING DEFINITON IN tertiary_array_swapper"
+                STOP
+        end select
+    
+    end subroutine tertiary_array_swapper
+    
     ! end contains
     
 end module quicksort_module
