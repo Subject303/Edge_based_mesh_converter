@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+LOG="logfile.txt"
 
 COMPLIST=" ../src/src_shared/* "
 
@@ -8,19 +8,16 @@ COMPLIST=$COMPLIST" ../src/src_serial/*"
 
 COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -ffpe-trap=zero,overflow  "
 
-module purge
-module load GCC
+gfortran $COMP_OPTIONS -o "../converter" $COMPLIST -J"./modfiles" &> $LOG
 
-gfortran $COMP_OPTIONS -o "../converter" $COMPLIST -J"./modfiles"
+echo ' passed compilation ' &>> $LOG
 
-echo ' passed compilation '
+echo ' running python preprocessor ' &>> $LOG
 
-echo ' running python preprocessor '
+python3 "../python_scripts/case_preprocessor.py" &>> $LOG
 
-python3 "../python_scripts/case_preprocessor.py"
+echo ' running main converter program serial ' &>> $LOG
 
-echo ' running main converter program serial '
+../converter &>> $LOG
 
-../converter
-
-echo ' finished. '
+echo ' finished. ' &>> $LOG
