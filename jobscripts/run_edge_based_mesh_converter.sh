@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-rm "../modfiles/*"
+rm -f "../modfiles/*"
 
 LOG="logfile.txt"
 
