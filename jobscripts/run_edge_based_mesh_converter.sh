@@ -15,21 +15,21 @@ COMPLIST=$COMPLIST" ../src/src_serial/*"
 
 COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -ffpe-trap=zero,overflow  "
 
-gfortran $COMP_OPTIONS -o "../converter" $COMPLIST -J"../modfiles" | $LOG
+gfortran $COMP_OPTIONS -o "../converter" $COMPLIST -J"../modfiles" 2>&1 | tee $LOG
 
 if [ -f "../converter"  ]; then
-    echo " passed compilation "
+    echo " passed compilation " 2>&1 | tee -a $LOG
 else
-    echo "compilation failed"
+    echo "compilation failed" 2>&1 | tee -a $LOG
     exit
 fi
 
-echo ' running python preprocessor '
+echo ' running python preprocessor ' 2>&1 | tee -a $LOG
 
-python3 "../python_scripts/case_preprocessor.py"
+python3 "../python_scripts/case_preprocessor.py" 2>&1 | tee -a $LOG
 
-echo ' running main converter program serial '
+echo ' running main converter program serial ' 2>&1 | tee -a $LOG
 
-../converter | $LOG
+../converter 2>&1 | tee -a $LOG
 
-echo ' finished. '
+echo ' finished. ' 2>&1 | tee -a $LOG
