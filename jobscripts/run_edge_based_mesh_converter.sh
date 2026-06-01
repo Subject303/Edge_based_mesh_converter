@@ -2,7 +2,8 @@
 clear
 set -e
 
-rm -r -f "../modfiles/*.mod"
+MOD=$(ls ../modfiles/*.mod)
+rm  $MOD
 rm -f "../converter"
 
 LOG="./logfile.txt"
