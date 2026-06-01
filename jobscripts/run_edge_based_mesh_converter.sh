@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+rm "../modfiles/*"
+
 LOG="logfile.txt"
 
 COMPLIST=" ../src/src_shared/* "
