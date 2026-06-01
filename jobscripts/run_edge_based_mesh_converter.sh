@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 LOG="logfile.txt"
 
