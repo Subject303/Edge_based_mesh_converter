@@ -45,7 +45,7 @@ module preprocessor_routine_module
         print*, 'beginning calculating face centroids'
         
         allocate(f_centroid(nface,3))
-        
+
         do f=1,nface
             fp_start = (1 + f_p_index_array(f-1))
             fp_end   = f_p_index_array(f)
@@ -94,6 +94,13 @@ module preprocessor_routine_module
         
         print *, 'beginning processing cell edge relation array'
         
+        print *, c_f_index_array
+        print *, 'AAAAAAAAAAAAAA1'
+        print *, c_f_obj_relation_array
+        print *, 'AAAAAAAAAAAAAA'
+        print *, f_e_index_array
+        
+        
         c_e_sum = 0
         
         allocate(c_e_index_array(0:nele))
@@ -107,6 +114,8 @@ module preprocessor_routine_module
             n_con_edges = 0
             do cf_index = cf_start_index, cf_end_index
                 f = c_f_obj_relation_array(cf_index)
+                
+                print*, f, cf_index
                 
                 n_con_edges =  n_con_edges + f_e_index_array(f) - f_e_index_array(f-1) ! all index arrays start at 0
             enddo

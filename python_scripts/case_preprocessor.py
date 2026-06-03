@@ -139,7 +139,8 @@ for c in range(nele):
     
     nfaces = cell.GetNumberOfFaces()
     
-    c_f_obj_relation_array.append( list(range(faceid,(faceid+nfaces-1))))
+    
+    c_f_obj_relation_array.append( list(range(faceid,(faceid+nfaces))))
     
     for f in range(cell.GetNumberOfFaces()): 
         
@@ -148,7 +149,7 @@ for c in range(nele):
         f_p_obj_relation_array.append([face.GetPointId(p) for p in range(face.GetNumberOfPoints())])
         
         nedges = face.GetNumberOfEdges()
-        f_e_obj_relation_array.append( list(range(edgeid,(edgeid+nedges-1))))
+        f_e_obj_relation_array.append( list(range(edgeid,(edgeid+nedges))))
     
         
         for e in range(nedges):
@@ -164,7 +165,7 @@ del polyblock
 del cell
 del face
 del edge
-
+    
 nface = faceid
 nedge = edgeid
 
@@ -224,6 +225,11 @@ for obj in f_e_obj_relation_array:
 
 print('removing duplicate connectivites',time.time()-start); sys.stdout.flush()
 
+edge_to_del=[]
+face_to_del=[]
+cell_to_del=[]
+
+
 temp = []
 temp2 = []
 print('   c_p'); sys.stdout.flush()
@@ -235,8 +241,16 @@ for i in range(len(c_p_index)-1):
             if obj1[p]!=obj2[p]:
                 temp.append(obj1)
                 temp2.append(c_p_index[i])
+                unique = True
                 break
+            unique = False
+        
+        if unique==False:
+            cell_to_del.append(i)
+                
             
+temp.append(c_p_obj_relation_array[i+1])
+temp2.append(c_p_index[i+1])
 c_p_obj_relation_array = temp
 c_p_index = temp2
 del temp
@@ -254,7 +268,13 @@ for i in range(len(f_p_index)-1):
                 temp.append(obj1)
                 temp2.append(f_p_index[i])
                 break
+            unique = False
+        
+        if unique==False:
+            face_to_del.append(i)
             
+temp.append(f_p_obj_relation_array[i+1])
+temp2.append(f_p_index[i+1])
 f_p_obj_relation_array = temp 
 f_p_index = temp2
 del temp
@@ -272,12 +292,30 @@ for i in range(len(e_p_index)-1):
                 temp.append(obj1)
                 temp2.append(2)
                 break
+            unique = False
         
+        if unique==False:
+            edge_to_del.append(i)
+        
+temp.append(e_p_obj_relation_array[i+1])
+temp2.append(e_p_index[i+1])
 e_p_obj_relation_array = temp
 e_p_index = temp2
 del temp
 del temp2
 
+for i in reversed(cell_to_del):
+    for p in range(c_p_index[i]-1, 0, -1):
+        c_f_obj_relation_array.pop(p)
+    c_f_index.pop(i)
+    
+for i in reversed(face_to_del):
+    for p in range(f_p_index[i]-1, 0, -1):
+        f_e_obj_relation_array.pop(p)
+    f_e_index.pop(i)
+  
+sys.exit()
+  
 temp = []
 temp2 = []
 print('   c_f'); sys.stdout.flush()
@@ -291,6 +329,8 @@ for i in range(len(c_f_index)-1):
                 temp2.append(c_f_index[i])
                 break
             
+temp.append(c_f_obj_relation_array[i+1])
+temp2.append(c_f_index[i+1])
 c_f_obj_relation_array = temp
 c_f_index = temp2
 del temp
@@ -309,6 +349,8 @@ for i in range(len(f_e_index)-1):
                 temp2.append(f_e_index[i])
                 break
             
+temp.append(f_e_obj_relation_array[i+1])
+temp2.append(f_e_index[i+1])
 f_e_obj_relation_array = temp
 f_e_index = temp2
 del temp
@@ -324,35 +366,30 @@ for index in range(len(c_p_index)):
     c_p_index[index] = index_last + c_p_index[index]
     index_last = c_p_index[index]
 
-c_p_sum = index_last
 
 index_last = 0
 for index in range(len(f_p_index)):
     f_p_index[index] = index_last + f_p_index[index]
     index_last = f_p_index[index]
     
-f_p_sum = index_last
 
 index_last = 0
 for index in range(len(e_p_index)):
     e_p_index[index] = index_last + e_p_index[index]
     index_last = e_p_index[index]
     
-e_p_sum = index_last
 
 index_last = 0
 for index in range(len(c_f_index)):
     c_f_index[index] = index_last + c_f_index[index]
     index_last = c_f_index[index]
     
-c_f_sum = index_last
 
 index_last = 0
 for index in range(len(f_e_index)):
     f_e_index[index] = index_last + f_e_index[index]
     index_last = f_e_index[index]
 
-f_e_sum = index_last
 
 print('updating counts',time.time()-start); sys.stdout.flush()
 # update counts with non duplicate objects
@@ -360,6 +397,13 @@ nele  = len(c_p_index)
 nface = len(f_p_index)
 nedge = len(e_p_index)
 
+c_p_sum=c_p_index[-1]
+f_p_sum=f_p_index[-1]
+e_p_sum=e_p_index[-1]
+c_f_sum=c_f_index[-1]
+f_e_sum=f_e_index[-1]
+
+print()
 
 print('beginning writing to file',time.time()-start); sys.stdout.flush()
 # outputting
@@ -410,7 +454,6 @@ for obj in e_p_obj_relation_array:
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
     
-    
 print('writing cell > face, face > edge mappings',time.time()-start); sys.stdout.flush()
 # writing object relation mappings
 file.write(struct.pack('<2i' ,c_f_sum, 0))
@@ -421,6 +464,7 @@ file.write(struct.pack('<2i' ,f_e_sum, 0))
 for entry in f_e_index:
     file.write(struct.pack('<i' ,entry))
     
+print(f_e_index, len(f_e_index), nface)
     
 for obj in c_f_obj_relation_array:
     for entry in obj:
@@ -429,7 +473,6 @@ for obj in c_f_obj_relation_array:
 for obj in f_e_obj_relation_array:
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
-    
     
 print('finished writing to file',time.time()-start); sys.stdout.flush()
 print('finished preprocessing'); sys.stdout.flush()

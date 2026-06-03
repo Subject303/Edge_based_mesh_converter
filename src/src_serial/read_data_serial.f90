@@ -39,7 +39,6 @@ module read_data_serial
         read(10) c_p_index_array(:)
         
         Print*, 'reading face connectivity index array '
-        
         read(10) f_p_sum
         read(10) f_p_index_array(:)
         
@@ -76,9 +75,11 @@ module read_data_serial
         print*, 'reading cell to face relation array '
         read(10) c_f_obj_relation_array(:)
         
+        print *, 'AAAAAAAAAAAAAA1'
+        print *, f_e_index_array
+        
         print*, 'reading face to edge relation array '
         read(10) f_e_obj_relation_array(:)
-        
         
         close(10)
         
