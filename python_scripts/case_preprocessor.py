@@ -191,7 +191,7 @@ print('   f_p'); sys.stdout.flush()
 temp = list(range(len(f_p_obj_relation_array)))
 f_sort = temp
 coupled = sorted(zip(f_p_obj_relation_array,f_sort,f_e_obj_relation_array))
-f_p_obj_relation_array, f_sort = list(zip(*coupled))
+f_p_obj_relation_array, f_sort, f_e_obj_relation_array = list(zip(*coupled))
 coupled = sorted(zip(f_sort,temp))
 temp, f_sort = list(zip(*coupled))
 f_p_obj_relation_array = list(f_p_obj_relation_array)
