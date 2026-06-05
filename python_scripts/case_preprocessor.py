@@ -25,7 +25,9 @@ cdp = vtkCompositeDataPipeline()
 # might not be needed
 algo.SetDefaultExecutivePrototype(cdp)
 del cdp
-algo.SetCaseFileName("../case/square.case") 
+# algo.SetCaseFileName("../case/2.case") 
+algo.SetCaseFileName("../case/star1.case") 
+# algo.SetCaseFileName("../case/2.case") 
 # will want to change to somthing more generic
 algo.Update()
 raw_data = algo.GetOutput()
@@ -65,15 +67,6 @@ del algo
 # algo = vtkSplitSharpEdgesPolyData()
 # algo.SetInputData(polyblock)
 # algo.SetFeatureAngle(feature_angle)
-# algo.Update()
-# polyblock = algo.GetOutput()
-# del algo
-
-
-# print('generating global IDs')
-# # create global point IDs that I can reference down the line
-# algo = vtkGenerateGlobalIds()
-# algo.SetInputData(polyblock)
 # algo.Update()
 # polyblock = algo.GetOutput()
 # del algo
@@ -122,8 +115,8 @@ for p in range(npoin):
     x_coords.append(polyblock.GetPoint(p)[0])
     y_coords.append(polyblock.GetPoint(p)[1])
     z_coords.append(polyblock.GetPoint(p)[2])
+    
     # node: these will include the duplicated points from the boundary data
-
 
 
 # extract cell, face and edge datas from the primary data block
@@ -134,32 +127,39 @@ for c in range(nele):
     
     cell = polyblock.GetCell(c)
     
-    c_p_obj_relation_array.append([cell.GetPointId(p) for p in range(cell.GetNumberOfPoints())])
+    c_p_obj_relation_array.append(sorted([cell.GetPointId(p) for p in range(cell.GetNumberOfPoints())]))
     
     
     nfaces = cell.GetNumberOfFaces()
     
-    
-    c_f_obj_relation_array.append( list(range(faceid,(faceid+nfaces))))
+    f_array = []
     
     for f in range(cell.GetNumberOfFaces()): 
         
         face = cell.GetFace(f)
         
-        f_p_obj_relation_array.append([face.GetPointId(p) for p in range(face.GetNumberOfPoints())])
+        f_p_obj_relation_array.append(sorted([face.GetPointId(p) for p in range(face.GetNumberOfPoints())]))
         
         nedges = face.GetNumberOfEdges()
-        f_e_obj_relation_array.append( list(range(edgeid,(edgeid+nedges))))
-    
+        
+        e_array = []
         
         for e in range(nedges):
             
             edge = face.GetEdge(e)
-            e_p_obj_relation_array.append([edge.GetPointId(0),edge.GetPointId(1)])
             
-        edgeid = edgeid + nedges - 1
+            e_p_obj_relation_array.append(sorted([edge.GetPointId(0),edge.GetPointId(1)]))
+            
+            e_array.append(edgeid)
+            edgeid = edgeid + 1
     
-    faceid = faceid + nfaces - 1
+        f_array.append(faceid)
+        faceid = faceid + 1
+        
+        f_e_obj_relation_array.append(e_array)
+        
+    c_f_obj_relation_array.append(f_array)
+    
 
 del polyblock
 del cell
@@ -171,34 +171,60 @@ nedge = edgeid
 
 gc.collect()
 
-print('sorting relation arrays',time.time()-start); sys.stdout.flush()
-
-for i in range(len(c_p_obj_relation_array)):
-    c_p_obj_relation_array[i]=sorted(c_p_obj_relation_array[i])
-    
-for i in range(len(f_p_obj_relation_array)):
-    f_p_obj_relation_array[i]=sorted(f_p_obj_relation_array[i])
-    
-for i in range(len(e_p_obj_relation_array)):
-    e_p_obj_relation_array[i]=sorted(e_p_obj_relation_array[i])
-    
-for i in range(len(c_f_obj_relation_array)):
-    c_f_obj_relation_array[i]=sorted(c_f_obj_relation_array[i])
-    
-for i in range(len(f_e_obj_relation_array)):
-    f_e_obj_relation_array[i]=sorted(f_e_obj_relation_array[i])
+print('sorting connectivities',time.time()-start); sys.stdout.flush()
 
 print('   c_p'); sys.stdout.flush()
-c_p_obj_relation_array.sort()
-print('   f_p'); sys.stdout.flush()
-f_p_obj_relation_array.sort()
-print('   e_p'); sys.stdout.flush()
-e_p_obj_relation_array.sort()
+temp = list(range(len(c_p_obj_relation_array)))
+c_sort = temp
+coupled = sorted(zip(c_p_obj_relation_array,c_sort,c_f_obj_relation_array))
+c_p_obj_relation_array, c_sort, c_f_obj_relation_array = list(zip(*coupled))
+coupled = sorted(zip(c_sort,temp))
+temp, c_sort = list(zip(*coupled))
+c_p_obj_relation_array = list(c_p_obj_relation_array)
+c_f_obj_relation_array = list(c_f_obj_relation_array)
 
-print('   c_f'); sys.stdout.flush()
-c_f_obj_relation_array.sort()
-print('   f_e'); sys.stdout.flush()
-f_e_obj_relation_array.sort()
+del temp
+del c_sort
+del coupled
+
+print('   f_p'); sys.stdout.flush()
+temp = list(range(len(f_p_obj_relation_array)))
+f_sort = temp
+coupled = sorted(zip(f_p_obj_relation_array,f_sort,f_e_obj_relation_array))
+f_p_obj_relation_array, f_sort = list(zip(*coupled))
+coupled = sorted(zip(f_sort,temp))
+temp, f_sort = list(zip(*coupled))
+f_p_obj_relation_array = list(f_p_obj_relation_array)
+f_e_obj_relation_array= list(f_e_obj_relation_array)
+
+for i in range(len(c_f_obj_relation_array)):
+    obj = c_f_obj_relation_array[i]
+    for j in range(len(obj)):
+        obj[j] = f_sort[obj[j]] 
+    c_f_obj_relation_array[i] = sorted(obj)
+
+del temp
+del f_sort
+del coupled
+
+print('   e_p'); sys.stdout.flush()
+temp = list(range(len(e_p_obj_relation_array)))
+e_sort = temp
+coupled = sorted(zip(e_p_obj_relation_array,e_sort))
+e_p_obj_relation_array, e_sort = list(zip(*coupled))
+coupled = sorted(zip(e_sort,temp))
+temp, e_sort = list(zip(*coupled))
+e_p_obj_relation_array = list(e_p_obj_relation_array)
+
+for i in range(len(f_e_obj_relation_array)):
+    obj = f_e_obj_relation_array[i]
+    for j in range(len(obj)):
+        obj[j] = e_sort[obj[j]] 
+    f_e_obj_relation_array[i] = sorted(obj)
+
+del temp
+del e_sort
+del coupled
 
 print('generating index arrays',time.time()-start); sys.stdout.flush()
 for obj in c_p_obj_relation_array:
@@ -216,24 +242,23 @@ for obj in c_f_obj_relation_array:
 for obj in f_e_obj_relation_array:
     f_e_index.append(len(obj))
 
-
 # ok I should Have all data I need to output now.
 # and indexify the index arrays
 # and sort the relation arrays and delete duplicated stuff
 # I just need to filter out boundary duplicated nodes
 
-
 print('removing duplicate connectivites',time.time()-start); sys.stdout.flush()
 
-edge_to_del=[]
-face_to_del=[]
-cell_to_del=[]
-
+edge_to_rep=[]
+face_to_rep=[]
+cell_to_rep=[]
 
 temp = []
 temp2 = []
+j=0
 print('   c_p'); sys.stdout.flush()
 for i in range(len(c_p_index)-1):
+    cell_to_rep.append(j)
     if c_p_index[i] == c_p_index[i+1]:    
         obj1 = c_p_obj_relation_array[i]
         obj2 = c_p_obj_relation_array[i+1]
@@ -241,16 +266,13 @@ for i in range(len(c_p_index)-1):
             if obj1[p]!=obj2[p]:
                 temp.append(obj1)
                 temp2.append(c_p_index[i])
-                unique = True
+                j=j+1
                 break
-            unique = False
-        
-        if unique==False:
-            cell_to_del.append(i)
                 
-            
+
 temp.append(c_p_obj_relation_array[i+1])
 temp2.append(c_p_index[i+1])
+cell_to_rep.append(j+1)
 c_p_obj_relation_array = temp
 c_p_index = temp2
 del temp
@@ -258,8 +280,10 @@ del temp2
 
 temp = []
 temp2 = []
+j=0
 print('   f_p'); sys.stdout.flush()
 for i in range(len(f_p_index)-1):
+    face_to_rep.append(j)
     if f_p_index[i] == f_p_index[i+1]:    
         obj1 = f_p_obj_relation_array[i]
         obj2 = f_p_obj_relation_array[i+1]
@@ -267,55 +291,58 @@ for i in range(len(f_p_index)-1):
             if obj1[p]!=obj2[p]:
                 temp.append(obj1)
                 temp2.append(f_p_index[i])
+                j=j+1
                 break
-            unique = False
-        
-        if unique==False:
-            face_to_del.append(i)
             
 temp.append(f_p_obj_relation_array[i+1])
 temp2.append(f_p_index[i+1])
+face_to_rep.append(j+1)
 f_p_obj_relation_array = temp 
 f_p_index = temp2
 del temp
 del temp2
 
+
 temp = []
 temp2 = []
+j=0
 print('   e_p'); sys.stdout.flush()
 for i in range(len(e_p_index)-1):
-    if e_p_index[i] == e_p_index[i+1]:    
-        obj1 = e_p_obj_relation_array[i]
-        obj2 = e_p_obj_relation_array[i+1]
-        for p in range(e_p_index[i]-1, 0, -1):
-            if obj1[p]!=obj2[p]:
-                temp.append(obj1)
-                temp2.append(2)
-                break
-            unique = False
+    edge_to_rep.append(j)
+    
+    obj1 = e_p_obj_relation_array[i]
+    obj2 = e_p_obj_relation_array[i+1]
+    
+    if obj1 !=obj2:
+        temp.append(obj1)
+        temp2.append(2)
+        j=j+1
         
-        if unique==False:
-            edge_to_del.append(i)
-        
+    
 temp.append(e_p_obj_relation_array[i+1])
-temp2.append(e_p_index[i+1])
+temp2.append(2)
+edge_to_rep.append(j+1)
 e_p_obj_relation_array = temp
 e_p_index = temp2
 del temp
 del temp2
-
-for i in reversed(cell_to_del):
-    for p in range(c_p_index[i]-1, 0, -1):
-        c_f_obj_relation_array.pop(p)
-    c_f_index.pop(i)
     
-for i in reversed(face_to_del):
-    for p in range(f_p_index[i]-1, 0, -1):
-        f_e_obj_relation_array.pop(p)
-    f_e_index.pop(i)
-  
-sys.exit()
-  
+print('updating mappings',time.time()-start); sys.stdout.flush()
+
+for i in range(len(f_e_obj_relation_array)):
+    obj = f_e_obj_relation_array[i]
+    for j in range(len(obj)):
+        obj[j] = edge_to_rep[obj[j]] 
+    f_e_obj_relation_array[i] = sorted(obj)
+    
+for i in range(len(c_f_obj_relation_array)):
+    obj = c_f_obj_relation_array[i]
+    for j in range(len(obj)):
+        obj[j] = face_to_rep[obj[j]] 
+    c_f_obj_relation_array[i] = sorted(obj)
+
+print('removing duplicate mappings',time.time()-start); sys.stdout.flush()
+
 temp = []
 temp2 = []
 print('   c_f'); sys.stdout.flush()
@@ -356,7 +383,6 @@ f_e_index = temp2
 del temp
 del temp2
 
-
 gc.collect()
 
 print('indexifying index arrays',time.time()-start); sys.stdout.flush()
@@ -389,7 +415,6 @@ index_last = 0
 for index in range(len(f_e_index)):
     f_e_index[index] = index_last + f_e_index[index]
     index_last = f_e_index[index]
-
 
 print('updating counts',time.time()-start); sys.stdout.flush()
 # update counts with non duplicate objects
@@ -463,8 +488,6 @@ for entry in c_f_index:
 file.write(struct.pack('<2i' ,f_e_sum, 0))
 for entry in f_e_index:
     file.write(struct.pack('<i' ,entry))
-    
-print(f_e_index, len(f_e_index), nface)
     
 for obj in c_f_obj_relation_array:
     for entry in obj:
