@@ -2,6 +2,8 @@
 clear
 set -e
 
+cd      $PBS_O_WORKDIR
+
 MOD=$(ls ../modfiles/*.mod)
 rm -f $MOD
 rm -f "../converter"
