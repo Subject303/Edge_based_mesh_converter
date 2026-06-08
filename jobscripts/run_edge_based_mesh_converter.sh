@@ -52,7 +52,7 @@ echo ' beginning compilation ' 2>&1 | tee $LOG
 
 echo ' running python preprocessor ' 2>&1 | tee -a $LOG
 
-python3 "~/python_scripts/case_preprocessor.py" 2>&1 | tee -a $LOG
+python3 "~/Edge_based_mesh_converter/python_scripts/case_preprocessor.py" 2>&1 | tee -a $LOG
 
 echo ' running main converter program serial ' 2>&1 | tee -a $LOG
 
