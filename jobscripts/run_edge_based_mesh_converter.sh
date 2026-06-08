@@ -37,7 +37,7 @@ COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -ffpe-trap=zero,ove
 
 echo ' beginning compilation ' 2>&1 | tee $LOG
 
-gfortran $COMP_OPTIONS -o "./converter" $COMPLIST -J"../modfiles" 2>&1 | tee -a $LOG
+gfortran $COMP_OPTIONS -o "./converter" $COMPLIST -J"./modfiles" 2>&1 | tee -a $LOG
 
 if [ -f "./converter"  ]; then
     echo " passed compilation " 2>&1 | tee -a $LOG
