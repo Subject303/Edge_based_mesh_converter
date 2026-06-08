@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -N Mesh_converter
-#PBS -e ./jobscripts/logfile2.txt
+#PBS -e logfile2.txt
 #PBS -j eo
 #PBS -m bf
 #PBS -M j.thomas@lboro.ac.uk
