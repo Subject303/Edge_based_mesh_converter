@@ -17,6 +17,7 @@ set -e
 cd      ..
 
 echo $(ls)
+echo $(pwd)
 
 # MOD=$(ls ./modfiles/*.mod)
 # MOD='~/edge_based_mesh_converter/modfiles/*.mod'
