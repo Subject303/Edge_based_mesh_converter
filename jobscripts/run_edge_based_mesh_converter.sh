@@ -4,7 +4,7 @@
 #PBS -j eo
 #PBS -m bf
 #PBS -M j.thomas@lboro.ac.uk
-#PBS -l walltime=100:00:00
+#PBS -l walltime=50:00:00
 #PBS -l nodes=1:ppn=40
 #PBS -A Szmelter2025b
 
