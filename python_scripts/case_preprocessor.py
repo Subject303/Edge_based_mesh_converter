@@ -176,7 +176,7 @@ for x, z in coupled:
     c_f_obj_relation_array[i] = z
     i=i+1
 
-del coupled
+del coupled; gc.collect()
 
 # del temp
 # del c_sort
@@ -195,7 +195,7 @@ for x, y, z in coupled:
     f_e_obj_relation_array[i] = z
     i=i+1
 
-del coupled
+del coupled; gc.collect()
 
 coupled = sorted(zip(f_sort, temp), key=lambda element: element[0])
 
@@ -207,7 +207,7 @@ for x, y in coupled:
     # temp[i] = y
     i=i+1
     
-del coupled
+del coupled; gc.collect()
 
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
@@ -231,7 +231,7 @@ for x, y in coupled:
     e_sort[i] = y
     i=i+1
 
-del coupled
+del coupled; gc.collect()
 
 coupled = sorted(zip(e_sort, temp), key=lambda element: element[0])
 
@@ -243,7 +243,7 @@ for x, y in coupled:
     # temp[i] = y
     i=i+1
     
-del coupled
+del coupled; gc.collect()
 
 for i in range(len(f_e_obj_relation_array)):
     obj = f_e_obj_relation_array[i]
@@ -332,7 +332,7 @@ cell_to_rep.append(j+1)
 c_p_obj_relation_array = temp
 c_p_index = temp2
 del temp
-del temp2
+del temp2; gc.collect()
 
 temp = []
 temp2 = []
@@ -356,7 +356,7 @@ face_to_rep.append(j+1)
 f_p_obj_relation_array = temp 
 f_p_index = temp2
 del temp
-del temp2
+del temp2; gc.collect()
 
 
 temp = []
@@ -381,7 +381,7 @@ edge_to_rep.append(j+1)
 e_p_obj_relation_array = temp
 e_p_index = temp2
 del temp
-del temp2
+del temp2; gc.collect()
     
 print('updating mappings',time.time()-start); sys.stdout.flush()
 
@@ -417,7 +417,7 @@ temp2.append(c_f_index[i+1])
 c_f_obj_relation_array = temp
 c_f_index = temp2
 del temp
-del temp2
+del temp2; gc.collect()
 
 temp = []
 temp2 = []
@@ -437,7 +437,7 @@ temp2.append(f_e_index[i+1])
 f_e_obj_relation_array = temp
 f_e_index = temp2
 del temp
-del temp2
+del temp2; gc.collect()
 
 gc.collect()
 
