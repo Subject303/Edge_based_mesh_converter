@@ -8,7 +8,7 @@ import sys
 from vtkmodules.vtkIOEnSight import *
 from vtkmodules.util.misc import *
 from vtkmodules.vtkFiltersPoints import *
-
+import numpy as np
 from vtkmodules.all import *
 
 VTK_DATA_ROOT = vtkGetDataRoot()
@@ -83,27 +83,14 @@ gc.collect()
 
 print('initialising output arrays',time.time()-start); sys.stdout.flush()
 # initialise the output arrays
-x_coords = []
-y_coords = []
-z_coords = []
+x_coords = [0.0]*npoin
+y_coords = [0.0]*npoin
+z_coords = [0.0]*npoin
 
-c_p_sum = 0
-f_p_sum = 0
-e_p_sum = 0
-
-c_p_index = []
-f_p_index = []
-e_p_index = [] 
-
-c_p_obj_relation_array = []
+c_p_obj_relation_array = [[]]*nele
 f_p_obj_relation_array = []
 e_p_obj_relation_array = []
 
-c_f_sum = 0
-f_e_sum = 0
-
-c_f_index = []
-f_e_index = []
 
 c_f_obj_relation_array = []
 f_e_obj_relation_array = []
@@ -113,12 +100,15 @@ print('extracting coordinate data',time.time()-start); sys.stdout.flush()
 # extract coordinate data
 
 for p in range(npoin):
-    x_coords.append(polyblock.GetPoint(p)[0])
-    y_coords.append(polyblock.GetPoint(p)[1])
-    z_coords.append(polyblock.GetPoint(p)[2])
+    # x_coords.append(struct.pack('<f' ,polyblock.GetPoint(p)[0]))
+    # y_coords.append(struct.pack('<f' ,polyblock.GetPoint(p)[1]))
+    # z_coords.append(struct.pack('<f' ,polyblock.GetPoint(p)[2]))
+    
+    x_coords[p] = struct.pack('<f' ,polyblock.GetPoint(p)[0])
+    y_coords[p] = struct.pack('<f' ,polyblock.GetPoint(p)[1])
+    z_coords[p] = struct.pack('<f' ,polyblock.GetPoint(p)[2])
     
     # node: these will include the duplicated points from the boundary data
-
 
 # extract cell, face and edge datas from the primary data block
 faceid = 0
@@ -128,7 +118,7 @@ for c in range(nele):
     
     cell = polyblock.GetCell(c)
     
-    c_p_obj_relation_array.append(sorted([cell.GetPointId(p) for p in range(cell.GetNumberOfPoints())]))
+    c_p_obj_relation_array [c] = sorted([cell.GetPointId(p) for p in range(cell.GetNumberOfPoints())]))
     
     
     nfaces = cell.GetNumberOfFaces()
@@ -306,22 +296,50 @@ del e_sort
 # del e_sort
 # del coupled
 
-print('generating index arrays',time.time()-start); sys.stdout.flush()
-for obj in c_p_obj_relation_array:
-    c_p_index.append(len(obj))
-    
-for obj in f_p_obj_relation_array:
-    f_p_index.append(len(obj))
-    
-for obj in e_p_obj_relation_array:
-    e_p_index.append(len(obj))
-    
-for obj in c_f_obj_relation_array:
-    c_f_index.append(len(obj))
-    
-for obj in f_e_obj_relation_array:
-    f_e_index.append(len(obj))
+nele  = len(c_p_obj_relation_array)
+nface = len(f_p_obj_relation_array)
+nedge = len(e_p_obj_relation_array)
 
+c_p_sum = 0
+f_p_sum = 0
+e_p_sum = 0
+
+c_p_index = [0]*nele
+f_p_index = [0]*nface
+e_p_index = [0]*nedge
+
+c_f_sum = 0
+f_e_sum = 0
+
+c_f_index = [0]*nele
+f_e_index = [0]*nface
+
+print('generating index arrays',time.time()-start); sys.stdout.flush()
+i=0
+for obj in c_p_obj_relation_array:
+    c_p_index[i] = len(obj)
+    i=i+1
+    
+i=0
+for obj in f_p_obj_relation_array:
+    f_p_index[i] = len(obj)
+    i=i+1
+    
+i=0
+for obj in e_p_obj_relation_array:
+    e_p_index[i] = len(obj)
+    i=i+1
+    
+i=0
+for obj in c_f_obj_relation_array:
+    c_f_index[i] = len(obj)
+    i=i+1
+    
+i=0
+for obj in f_e_obj_relation_array:
+    f_e_index[i] = len(obj)
+    i=i+1
+    
 # ok I should Have all data I need to output now.
 # and indexify the index arrays
 # and sort the relation arrays and delete duplicated stuff
@@ -529,11 +547,11 @@ print(npoin,nedge,nface,nele)
 print('writing coordinates',time.time()-start); sys.stdout.flush()
 # writing coordinate data
 for coord in x_coords:
-    file.write(struct.pack('<f' ,coord))
+    file.write(coord)
 for coord in y_coords:
-    file.write(struct.pack('<f' ,coord))
+    file.write(coord)
 for coord in z_coords:
-    file.write(struct.pack('<f' ,coord))
+    file.write(coord)
     
     
 print('writing connectivities',time.time()-start); sys.stdout.flush()
