@@ -1,4 +1,15 @@
 #!/bin/bash
+#PBS -N Mesh_converter
+#PBS -e Logfolder/logfile2.txt
+#PBS -j eo
+#PBS -m bf
+#PBS -M j.thomas@lboro.ac.uk
+#PBS -l walltime=100:00:00
+#PBS -l nodes=1:ppn=40
+#PBS -A Szmelter2025b
+
+
+
 clear
 set -e
 
