@@ -52,6 +52,6 @@ python3 "./python_scripts/case_preprocessor.py" 2>&1 | tee -a $LOG
 
 echo ' running main converter program serial ' 2>&1 | tee -a $LOG
 
-# ./converter 2>&1 | tee -a $LOG
+./converter 2>&1 | tee -a $LOG
 
 echo ' finished. ' 2>&1 | tee -a $LOG
