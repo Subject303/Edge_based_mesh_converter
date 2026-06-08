@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -N Mesh_converter
-#PBS -e logfile2.txt
+#PBS -e ./jobscripts/logfile2.txt
 #PBS -j eo
 #PBS -m bf
 #PBS -M j.thomas@lboro.ac.uk
@@ -42,9 +42,9 @@ COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -ffpe-trap=zero,ove
 
 echo ' beginning compilation ' 2>&1 | tee $LOG
 
-# gfortran $COMP_OPTIONS -o "../converter" $COMPLIST -J"../modfiles" 2>&1 | tee -a $LOG
+# gfortran $COMP_OPTIONS -o "./converter" $COMPLIST -J"../modfiles" 2>&1 | tee -a $LOG
 
-# if [ -f "../converter"  ]; then
+# if [ -f "./converter"  ]; then
 #     echo " passed compilation " 2>&1 | tee -a $LOG
 # else
 #     echo "compilation failed" 2>&1 | tee -a $LOG
@@ -57,6 +57,6 @@ python3 "./python_scripts/case_preprocessor.py" 2>&1 | tee -a $LOG
 
 echo ' running main converter program serial ' 2>&1 | tee -a $LOG
 
-# ../converter 2>&1 | tee -a $LOG
+# ./converter 2>&1 | tee -a $LOG
 
 echo ' finished. ' 2>&1 | tee -a $LOG
