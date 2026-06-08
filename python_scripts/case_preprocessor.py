@@ -174,29 +174,54 @@ gc.collect()
 
 print('sorting connectivities',time.time()-start); sys.stdout.flush()
 
-print('   c_p'); sys.stdout.flush()
-temp = list(range(len(c_p_obj_relation_array)))
-c_sort = temp
-coupled = sorted(zip(c_p_obj_relation_array,c_sort,c_f_obj_relation_array))
-c_p_obj_relation_array, c_sort, c_f_obj_relation_array = list(zip(*coupled))
-coupled = sorted(zip(c_sort,temp))
-temp, c_sort = list(zip(*coupled))
-c_p_obj_relation_array = list(c_p_obj_relation_array)
-c_f_obj_relation_array = list(c_f_obj_relation_array)
+print('   c_p',time.time()-start); sys.stdout.flush()
+# temp = list(range(len(c_p_obj_relation_array)))
+# c_sort = temp
 
-del temp
-del c_sort
+# coupled = zip(c_p_obj_relation_array, c_sort, c_f_obj_relation_array)
+coupled = zip(c_p_obj_relation_array, c_f_obj_relation_array)
+
+coupled = sorted(coupled, key=lambda element: element[0][0])
+
+i=0
+for x, z in coupled:
+    c_p_obj_relation_array[i] = x
+    # c_sort[i] = y
+    c_f_obj_relation_array[i] = z
+    i=i+1
+
 del coupled
 
-print('   f_p'); sys.stdout.flush()
+# del temp
+# del c_sort
+
+print('   f_p',time.time()-start); sys.stdout.flush()
+
 temp = list(range(len(f_p_obj_relation_array)))
 f_sort = temp
-coupled = sorted(zip(f_p_obj_relation_array,f_sort,f_e_obj_relation_array))
-f_p_obj_relation_array, f_sort, f_e_obj_relation_array = list(zip(*coupled))
-coupled = sorted(zip(f_sort,temp))
-temp, f_sort = list(zip(*coupled))
-f_p_obj_relation_array = list(f_p_obj_relation_array)
-f_e_obj_relation_array= list(f_e_obj_relation_array)
+
+coupled = sorted(zip(f_p_obj_relation_array, f_sort, f_e_obj_relation_array), key=lambda element: element[0][0])
+
+i=0
+for x, y, z in coupled:
+    f_p_obj_relation_array[i] = x
+    f_sort[i] = y
+    f_e_obj_relation_array[i] = z
+    i=i+1
+
+del coupled
+
+coupled = sorted(zip(f_sort, temp), key=lambda element: element[0])
+
+del temp
+
+i=0
+for x, y in coupled:
+    f_sort[i] = x
+    # temp[i] = y
+    i=i+1
+    
+del coupled
 
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
@@ -204,18 +229,35 @@ for i in range(len(c_f_obj_relation_array)):
         obj[j] = f_sort[obj[j]] 
     c_f_obj_relation_array[i] = sorted(obj)
 
-del temp
 del f_sort
-del coupled
 
-print('   e_p'); sys.stdout.flush()
+
+print('   e_p',time.time()-start); sys.stdout.flush()
+
 temp = list(range(len(e_p_obj_relation_array)))
 e_sort = temp
-coupled = sorted(zip(e_p_obj_relation_array,e_sort))
-e_p_obj_relation_array, e_sort = list(zip(*coupled))
-coupled = sorted(zip(e_sort,temp))
-temp, e_sort = list(zip(*coupled))
-e_p_obj_relation_array = list(e_p_obj_relation_array)
+
+coupled = sorted(zip(e_p_obj_relation_array, e_sort), key=lambda element: element[0][0])
+
+i=0
+for x, y in coupled:
+    e_p_obj_relation_array[i] = x
+    e_sort[i] = y
+    i=i+1
+
+del coupled
+
+coupled = sorted(zip(e_sort, temp), key=lambda element: element[0])
+
+del temp
+
+i=0
+for x, y in coupled:
+    e_sort[i] = x
+    # temp[i] = y
+    i=i+1
+    
+del coupled
 
 for i in range(len(f_e_obj_relation_array)):
     obj = f_e_obj_relation_array[i]
@@ -223,9 +265,46 @@ for i in range(len(f_e_obj_relation_array)):
         obj[j] = e_sort[obj[j]] 
     f_e_obj_relation_array[i] = sorted(obj)
 
-del temp
 del e_sort
-del coupled
+
+# print('   f_p',time.time()-start); sys.stdout.flush()
+# temp = list(range(len(f_p_obj_relation_array)))
+# f_sort = temp
+# coupled = sorted(zip(f_p_obj_relation_array,f_sort,f_e_obj_relation_array))
+# f_p_obj_relation_array, f_sort, f_e_obj_relation_array = list(zip(*coupled))
+# coupled = sorted(zip(f_sort,temp))
+# temp, f_sort = list(zip(*coupled))
+# f_p_obj_relation_array = list(f_p_obj_relation_array)
+# f_e_obj_relation_array= list(f_e_obj_relation_array)
+# 
+# for i in range(len(c_f_obj_relation_array)):
+#     obj = c_f_obj_relation_array[i]
+#     for j in range(len(obj)):
+#         obj[j] = f_sort[obj[j]] 
+#     c_f_obj_relation_array[i] = sorted(obj)
+# 
+# del temp
+# del f_sort
+# del coupled
+
+# print('   e_p'); sys.stdout.flush()
+# temp = list(range(len(e_p_obj_relation_array)))
+# e_sort = temp
+# coupled = sorted(zip(e_p_obj_relation_array,e_sort))
+# e_p_obj_relation_array, e_sort = list(zip(*coupled))
+# coupled = sorted(zip(e_sort,temp))
+# temp, e_sort = list(zip(*coupled))
+# e_p_obj_relation_array = list(e_p_obj_relation_array)
+# 
+# for i in range(len(f_e_obj_relation_array)):
+#     obj = f_e_obj_relation_array[i]
+#     for j in range(len(obj)):
+#         obj[j] = e_sort[obj[j]] 
+#     f_e_obj_relation_array[i] = sorted(obj)
+# 
+# del temp
+# del e_sort
+# del coupled
 
 print('generating index arrays',time.time()-start); sys.stdout.flush()
 for obj in c_p_obj_relation_array:
