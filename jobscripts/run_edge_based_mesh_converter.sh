@@ -4,6 +4,8 @@ set -e
 
 cd      $PBS_O_WORKDIR
 
+echo $(pwd)
+
 # MOD=$(ls ../modfiles/*.mod)
 MOD='~/edge_based_mesh_converter/modfiles/*.mod'
 rm -f $MOD
