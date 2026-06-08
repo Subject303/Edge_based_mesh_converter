@@ -8,7 +8,6 @@ import sys
 from vtkmodules.vtkIOEnSight import *
 from vtkmodules.util.misc import *
 from vtkmodules.vtkFiltersPoints import *
-import numpy as np
 from vtkmodules.all import *
 
 VTK_DATA_ROOT = vtkGetDataRoot()
@@ -37,8 +36,6 @@ del algo
 
 # block 0 is always the primary datablock here
 polyblock = raw_data.GetBlock(0)  # vtkUnstructuredGrid format
-
-
 del raw_data
 # freeing up the multiblock view
 
