@@ -2,7 +2,7 @@
 clear
 set -e
 
-cd      $PBS_O_WORKDIR
+# cd      $PBS_O_WORKDIR
 
 echo $(pwd)
 
