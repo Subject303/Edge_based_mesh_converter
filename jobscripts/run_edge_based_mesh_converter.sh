@@ -8,21 +8,13 @@
 #PBS -l nodes=1:ppn=40
 #PBS -A Szmelter2025b
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-
-echo $SCRIPT_DIR
-
-
 clear
 set -e
 
-# cd      $PBS_O_WORKDIR
+cd      $PBS_O_WORKDIR
 cd      ..
 
-echo $(ls)
-
-# MOD=$(ls ./modfiles/*.mod)
-# MOD='~/edge_based_mesh_converter/modfiles/*.mod'
+MOD=$(ls "./modfiles/*.mod")
 rm -f $MOD
 rm -f "./converter"
 
