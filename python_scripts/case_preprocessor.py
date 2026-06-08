@@ -83,16 +83,15 @@ gc.collect()
 
 print('initialising output arrays',time.time()-start); sys.stdout.flush()
 # initialise the output arrays
-x_coords = [0.0]*npoin
-y_coords = [0.0]*npoin
-z_coords = [0.0]*npoin
+x_coords = [0]*npoin
+y_coords = [0]*npoin
+z_coords = [0]*npoin
 
 c_p_obj_relation_array = [[]]*nele
 f_p_obj_relation_array = []
 e_p_obj_relation_array = []
 
-
-c_f_obj_relation_array = []
+c_f_obj_relation_array = [[]]*nele
 f_e_obj_relation_array = []
 
 
@@ -118,7 +117,7 @@ for c in range(nele):
     
     cell = polyblock.GetCell(c)
     
-    c_p_obj_relation_array [c] = sorted([cell.GetPointId(p) for p in range(cell.GetNumberOfPoints())]))
+    c_p_obj_relation_array [c] = sorted([cell.GetPointId(p) for p in range(cell.GetNumberOfPoints())])
     
     
     nfaces = cell.GetNumberOfFaces()
@@ -149,7 +148,7 @@ for c in range(nele):
         
         f_e_obj_relation_array.append(e_array)
         
-    c_f_obj_relation_array.append(f_array)
+    c_f_obj_relation_array[c] = f_array
     
 
 del polyblock
@@ -257,44 +256,7 @@ for i in range(len(f_e_obj_relation_array)):
 
 del e_sort
 
-# print('   f_p',time.time()-start); sys.stdout.flush()
-# temp = list(range(len(f_p_obj_relation_array)))
-# f_sort = temp
-# coupled = sorted(zip(f_p_obj_relation_array,f_sort,f_e_obj_relation_array))
-# f_p_obj_relation_array, f_sort, f_e_obj_relation_array = list(zip(*coupled))
-# coupled = sorted(zip(f_sort,temp))
-# temp, f_sort = list(zip(*coupled))
-# f_p_obj_relation_array = list(f_p_obj_relation_array)
-# f_e_obj_relation_array= list(f_e_obj_relation_array)
-# 
-# for i in range(len(c_f_obj_relation_array)):
-#     obj = c_f_obj_relation_array[i]
-#     for j in range(len(obj)):
-#         obj[j] = f_sort[obj[j]] 
-#     c_f_obj_relation_array[i] = sorted(obj)
-# 
-# del temp
-# del f_sort
-# del coupled
-
-# print('   e_p'); sys.stdout.flush()
-# temp = list(range(len(e_p_obj_relation_array)))
-# e_sort = temp
-# coupled = sorted(zip(e_p_obj_relation_array,e_sort))
-# e_p_obj_relation_array, e_sort = list(zip(*coupled))
-# coupled = sorted(zip(e_sort,temp))
-# temp, e_sort = list(zip(*coupled))
-# e_p_obj_relation_array = list(e_p_obj_relation_array)
-# 
-# for i in range(len(f_e_obj_relation_array)):
-#     obj = f_e_obj_relation_array[i]
-#     for j in range(len(obj)):
-#         obj[j] = e_sort[obj[j]] 
-#     f_e_obj_relation_array[i] = sorted(obj)
-# 
-# del temp
-# del e_sort
-# del coupled
+print('generating index arrays',time.time()-start); sys.stdout.flush()
 
 nele  = len(c_p_obj_relation_array)
 nface = len(f_p_obj_relation_array)
@@ -314,7 +276,6 @@ f_e_sum = 0
 c_f_index = [0]*nele
 f_e_index = [0]*nface
 
-print('generating index arrays',time.time()-start); sys.stdout.flush()
 i=0
 for obj in c_p_obj_relation_array:
     c_p_index[i] = len(obj)
