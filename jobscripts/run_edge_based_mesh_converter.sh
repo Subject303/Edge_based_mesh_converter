@@ -13,9 +13,9 @@
 clear
 set -e
 
-# cd      $PBS_O_WORKDIR
+cd      $PBS_O_WORKDIR
 
-echo $(pwd)
+echo $(ls)
 
 # MOD=$(ls ../modfiles/*.mod)
 # MOD='~/edge_based_mesh_converter/modfiles/*.mod'
