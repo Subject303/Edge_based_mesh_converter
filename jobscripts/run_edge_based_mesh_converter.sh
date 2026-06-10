@@ -15,9 +15,9 @@ main_path=$(pwd)
 # MOD=$(find . -name $main_path"/modfiles/*.prj")
 MOD=' '$(ls $main_path'/modfiles')
 MOD=${MOD//"dum"/}
-# cd "./modfiles"
-rm -f "./modfiles/"$MOD
-# cd      ..
+cd "./modfiles"
+rm -f $MOD
+cd      ..
 rm -f "./converter"
 
 # LOG="./jobscripts/logfolder/logfile.txt"
