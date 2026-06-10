@@ -11,7 +11,7 @@
 cd      $PBS_O_WORKDIR
 cd      ..
 
-cwp=pwd
+cwp=$(pwd)
 
 MOD=$(ls $cwp'/modfiles/*.mod')
 rm -f $MOD
