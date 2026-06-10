@@ -17,7 +17,7 @@ module setup_configuration_module
         
         output_requests = 0
         
-        open(10,file='../config.cfg',access='sequential',action='read',status='old')
+        open(10,file='./config.cfg',access='sequential',action='read',status='old')
         
         file_end = .false.
         
