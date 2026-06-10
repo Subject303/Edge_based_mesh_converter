@@ -8,9 +8,6 @@
 #PBS -l nodes=1:ppn=40
 #PBS -A Szmelter2025b
 
-clear
-set -e
-
 cd      $PBS_O_WORKDIR
 cd      ..
 
