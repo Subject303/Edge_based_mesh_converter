@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -N Mesh_converter
-#PBS -e ./jobscripts/logfolder/log.$PBS_JOBID.txt
+#PBS -e logfolder/log.$PBS_JOBID.txt
 #PBS -j eo
 #PBS -m bf
 #PBS -M j.thomas@lboro.ac.uk
