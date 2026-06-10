@@ -11,8 +11,8 @@
 cd      $PBS_O_WORKDIR
 cd      ..
 
-# MOD=$(ls "./modfiles/*.mod")
-# rm -f $MOD
+MOD=$(ls "./modfiles/*.mod")
+rm -f $MOD
 rm -f "./converter"
 
 # LOG="./jobscripts/logfolder/logfile.txt"
