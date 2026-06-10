@@ -330,7 +330,7 @@ for i in range(len(c_p_index)-1):
 
 temp.append(c_p_obj_relation_array[i+1])
 temp2.append(c_p_index[i+1])
-cell_to_rep.append(j+1)
+cell_to_rep.append(j)
 c_p_obj_relation_array = temp
 c_p_index = temp2
 del temp
@@ -354,7 +354,7 @@ for i in range(len(f_p_index)-1):
             
 temp.append(f_p_obj_relation_array[i+1])
 temp2.append(f_p_index[i+1])
-face_to_rep.append(j+1)
+face_to_rep.append(j)
 f_p_obj_relation_array = temp 
 f_p_index = temp2
 del temp
@@ -379,7 +379,7 @@ for i in range(len(e_p_index)-1):
     
 temp.append(e_p_obj_relation_array[i+1])
 temp2.append(2)
-edge_to_rep.append(j+1)
+edge_to_rep.append(j)
 e_p_obj_relation_array = temp
 e_p_index = temp2
 del temp
