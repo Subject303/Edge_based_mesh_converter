@@ -24,9 +24,9 @@ cdp = vtkCompositeDataPipeline()
 # might not be needed
 algo.SetDefaultExecutivePrototype(cdp)
 del cdp
-# algo.SetCaseFileName("../case/2.case") 
+algo.SetCaseFileName("./case/2.case") 
 # algo.SetCaseFileName("../case/star1.case") 
-algo.SetCaseFileName("./case/star.case") 
+# algo.SetCaseFileName("./case/star.case") 
 # algo.SetCaseFileName("../case/2.case") 
 # will want to change to somthing more generic
 algo.Update()
