@@ -13,8 +13,9 @@ cd      ..
 
 main_path=$(pwd)
 # MOD=$(find . -name $main_path"/modfiles/*.prj")
-MOD=$(ls $main_path'/modfiles')
+MOD=' '$(ls $main_path'/modfiles')
 MOD=${MOD//"dum"/}
+MOD=${MOD//" "/" ./"}
 echo $MOD
 rm -f $MOD
 rm -f "./converter"
