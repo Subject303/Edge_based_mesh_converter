@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -N Mesh_converter
-#PBS -e log.$PBS_JOBID.txt
+#PBS -e ./jobscripts/logfolder/log.$PBS_JOBID.txt
 #PBS -j eo
 #PBS -m bf
 #PBS -M j.thomas@lboro.ac.uk
@@ -18,7 +18,7 @@ cd      ..
 # rm -f $MOD
 rm -f "./converter"
 
-LOG="./logfile.txt"
+LOG="./jobscripts/logfolder/logfile.txt"
 rm -f $LOG
 touch $LOG
 chmod 777 $LOG
