@@ -146,6 +146,7 @@ for c in range(nele):
         
     c_f_obj_relation_array[c] = f_array
     
+print(c_f_obj_relation_array[0:100])
 
 del polyblock
 del cell
@@ -544,6 +545,8 @@ file.write(struct.pack('<2i' ,f_e_sum, 0))
 for entry in f_e_index:
     file.write(struct.pack('<i' ,entry))
     
+print(c_f_obj_relation_array[0:100])
+
 for obj in c_f_obj_relation_array:
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
