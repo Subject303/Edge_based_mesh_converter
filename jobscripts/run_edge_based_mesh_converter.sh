@@ -15,10 +15,10 @@ cd      ..
 # rm -f $MOD
 rm -f "./converter"
 
-LOG="./jobscripts/logfolder/logfile.txt"
-rm -f $LOG
-touch $LOG
-chmod 777 $LOG
+# LOG="./jobscripts/logfolder/logfile.txt"
+# rm -f $LOG
+# touch $LOG
+# chmod 777 $LOG
 
 module purge
 module load GCC
@@ -32,23 +32,23 @@ COMPLIST=$COMPLIST" ./src/src_serial/read_data_serial.f90 ./src/src_serial/data_
 COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -g3 -fcheck=all -fbacktrace -ffpe-trap=zero,overflow  "
 # COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -ffpe-trap=zero,overflow  "
 
-echo ' beginning compilation ' 2>&1 | tee $LOG
+echo ' beginning compilation ' # 2>&1 | tee $LOG
 
-gfortran $COMP_OPTIONS -o "./converter" $COMPLIST -J"./modfiles" 2>&1 | tee -a $LOG
+gfortran $COMP_OPTIONS -o "./converter" $COMPLIST -J"./modfiles" # 2>&1 | tee -a $LOG
 
 if [ -f "./converter"  ]; then
-    echo " passed compilation " 2>&1 | tee -a $LOG
+    echo " passed compilation " # 2>&1 | tee -a $LOG
 else
-    echo "compilation failed" 2>&1 | tee -a $LOG
+    echo "compilation failed" # 2>&1 | tee -a $LOG
     exit
 fi
 
-echo ' running python preprocessor ' 2>&1 | tee -a $LOG
+echo ' running python preprocessor ' # 2>&1 | tee -a $LOG
 
-python3 "./python_scripts/case_preprocessor.py" 2>&1 | tee -a $LOG
+python3 "./python_scripts/case_preprocessor.py" # 2>&1 | tee -a $LOG
 
-echo ' running main converter program serial ' 2>&1 | tee -a $LOG
+echo ' running main converter program serial ' # 2>&1 | tee -a $LOG
 
-#./converter 2>&1 | tee -a $LOG
+#./converter # 2>&1 | tee -a $LOG
 
-echo ' finished. ' 2>&1 | tee -a $LOG
+echo ' finished. ' # 2>&1 | tee -a $LOG
