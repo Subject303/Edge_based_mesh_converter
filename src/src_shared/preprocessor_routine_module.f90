@@ -94,11 +94,11 @@ module preprocessor_routine_module
         
         print *, 'beginning processing cell edge relation array'
         
-        print *, c_f_index_array
-        print *, 'AAAAAAAAAAAAAA1'
-        print *, c_f_obj_relation_array
-        print *, 'AAAAAAAAAAAAAA'
-        print *, f_e_index_array
+!         print *, c_f_index_array
+!         print *, 'AAAAAAAAAAAAAA1'
+!         print *, c_f_obj_relation_array
+!         print *, 'AAAAAAAAAAAAAA'
+!         print *, f_e_index_array
         
         
         c_e_sum = 0
