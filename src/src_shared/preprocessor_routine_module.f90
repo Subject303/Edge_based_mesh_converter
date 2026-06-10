@@ -257,15 +257,15 @@ module preprocessor_routine_module
         backward_index(0) = 0
         backward_index_duplicates = 0
         total_x_count = 0
-        x_count=0
+        x_count=1
         do p=1, backward_leading_obj_count
         
             ! count the number of cells adjacent to each point
 
-            do while (p .eq. p_index(x_count+1))
+            do while (p .lt. p_index(x_count))
                 x_count = x_count + 1
             enddo
-
+            
             ! flag duplicates
 
             call sort_and_flag_duplicates(backward_obj_relation_array, backward_index(p-1)+1, x_count)
