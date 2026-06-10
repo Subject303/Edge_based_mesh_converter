@@ -16,7 +16,7 @@ module utils
         
         print*, start_index, end_index, size(temparray)
         
-        call quicksort(temparray,start_index,end_index) ! must be start_index because indexing arrays start at zero
+        call quicksort(temparray,1,size(temparray)) ! must be start_index because indexing arrays start at zero
         
         
         indexer = start_index + 1
