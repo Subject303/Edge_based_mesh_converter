@@ -235,7 +235,7 @@ module preprocessor_routine_module
         implicit none
     
         integer(KIND=INT32),allocatable :: forward_index(:), backward_index(:), forward_obj_relation_array(:), backward_obj_relation_array(:)
-        integer(KIND=INT32),allocatable :: p_index(:), backward_index_duplicates(:)
+        integer(KIND=INT32),allocatable :: y_index(:), backward_index_duplicates(:)
         integer(KIND=INT32) :: x, y, x_count, total_x_count, forward_sum, backward_sum, xy_start_index, xy_end_index, forward_leading_obj_count, backward_leading_obj_count
         
         
@@ -262,7 +262,7 @@ module preprocessor_routine_module
         
             ! count the number of cells adjacent to each point
 
-            do while (y .lt. p_index(x_count))
+            do while (y .lt. y_index(x_count))
                 x_count = x_count + 1
             enddo
             
