@@ -11,7 +11,9 @@
 cd      $PBS_O_WORKDIR
 cd      ..
 
-MOD=$(ls $PBS_O_WORKDIR'/../modfiles/*.mod')
+cwp=pwd
+
+MOD=$(ls $cwp'/modfiles/*.mod')
 rm -f $MOD
 rm -f "./converter"
 
