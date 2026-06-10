@@ -236,48 +236,48 @@ module preprocessor_routine_module
     
         integer(KIND=INT32),allocatable :: forward_index(:), backward_index(:), forward_obj_relation_array(:), backward_obj_relation_array(:)
         integer(KIND=INT32),allocatable :: p_index(:), backward_index_duplicates(:)
-        integer(KIND=INT32) :: x, p, x_count, total_x_count, forward_sum, backward_sum, cx_start_index, cx_end_index, forward_leading_obj_count, backward_leading_obj_count
+        integer(KIND=INT32) :: x, y, x_count, total_x_count, forward_sum, backward_sum, xy_start_index, xy_end_index, forward_leading_obj_count, backward_leading_obj_count
         
         
         
 
         allocate(backward_obj_relation_array(forward_sum), backward_index(0:npoin), backward_index_duplicates(0:npoin) )
-        allocate(p_index,source=forward_obj_relation_array)
+        allocate(y_index,source=forward_obj_relation_array)
 
         do x=1, forward_leading_obj_count
-            cx_start_index = 1 + forward_index(x-1)
-            cx_end_index   = forward_index(x)
+            xy_start_index = 1 + forward_index(x-1)
+            xy_end_index   = forward_index(x)
 
-            backward_obj_relation_array(cx_start_index:cx_end_index) = x
+            backward_obj_relation_array(xy_start_index:xy_end_index) = x
 
         enddo
         
-        call quicksort(p_index , 1 , forward_sum , backward_obj_relation_array)
+        call quicksort(y_index , 1 , forward_sum , backward_obj_relation_array)
 
         backward_index(0) = 0
         backward_index_duplicates = 0
         total_x_count = 0
         x_count=1
-        do p=1, backward_leading_obj_count
+        do y=1, backward_leading_obj_count
         
             ! count the number of cells adjacent to each point
 
-            do while (p .lt. p_index(x_count))
+            do while (y .lt. p_index(x_count))
                 x_count = x_count + 1
             enddo
             
             ! flag duplicates
 
-            call sort_and_flag_duplicates(backward_obj_relation_array, backward_index(p-1)+1, x_count)
+            call sort_and_flag_duplicates(backward_obj_relation_array, backward_index(y-1)+1, x_count)
 
             ! adjust x_count
 
-            backward_index(p) = x_count
+            backward_index(y) = x_count
             
             
             backward_index_duplicates = x_count - 1 ! starts looping at beginning of a point and counts up
-            do while (backward_obj_relation_array(backward_index(p)-backward_index_duplicates(p)) .lt. 0)
-                backward_index_duplicates(p) = backward_index_duplicates(p) - 1
+            do while (backward_obj_relation_array(backward_index(y)-backward_index_duplicates(y)) .lt. 0)
+                backward_index_duplicates(y) = backward_index_duplicates(y) - 1
             enddo
 
             ! I'ma be real here
