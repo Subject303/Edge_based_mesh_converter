@@ -12,8 +12,8 @@ cd      $PBS_O_WORKDIR
 cd      ..
 
 main_path=$(pwd)
-MOD=$(find . -name $main_path"/modfiles/*.prj")
-# MOD=$(ls $cwp'/modfiles/*.mod')
+# MOD=$(find . -name $main_path"/modfiles/*.prj")
+MOD=$(ls $cwp'/modfiles')
 rm -f $MOD
 rm -f "./converter"
 
