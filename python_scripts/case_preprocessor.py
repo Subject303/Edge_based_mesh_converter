@@ -312,7 +312,7 @@ cell_to_rep=[]
 temp = []
 temp2 = []
 j=0
-print('   c_p'),time.time()-start); sys.stdout.flush()
+print('   c_p',time.time()-start); sys.stdout.flush()
 for i in range(len(c_p_index)-1):
     cell_to_rep.append(j)
     if c_p_index[i] == c_p_index[i+1]:    
@@ -337,7 +337,7 @@ del temp2; gc.collect()
 temp = []
 temp2 = []
 j=0
-print('   f_p'),time.time()-start); sys.stdout.flush()
+print('   f_p',time.time()-start); sys.stdout.flush()
 for i in range(len(f_p_index)-1):
     face_to_rep.append(j)
     if f_p_index[i] == f_p_index[i+1]:    
@@ -362,7 +362,7 @@ del temp2; gc.collect()
 temp = []
 temp2 = []
 j=0
-print('   e_p'),time.time()-start); sys.stdout.flush()
+print('   e_p',time.time()-start); sys.stdout.flush()
 for i in range(len(e_p_index)-1):
     edge_to_rep.append(j)
     
