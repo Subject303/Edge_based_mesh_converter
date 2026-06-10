@@ -52,3 +52,6 @@ echo ' running main converter program serial ' # 2>&1 | tee -a $LOG
 ./converter # 2>&1 | tee -a $LOG
 
 echo ' finished. ' # 2>&1 | tee -a $LOG
+
+rm -f $MOD
+rm -f "./converter"
