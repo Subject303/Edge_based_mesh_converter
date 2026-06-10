@@ -399,6 +399,7 @@ for i in range(len(c_f_obj_relation_array)):
         obj[j] = face_to_rep[obj[j]] 
     c_f_obj_relation_array[i] = sorted(obj)
 
+print(face_to_rep)
 print(c_f_obj_relation_array)
 
 print('removing duplicate mappings',time.time()-start); sys.stdout.flush()
