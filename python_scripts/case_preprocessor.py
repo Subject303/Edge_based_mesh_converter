@@ -24,10 +24,9 @@ cdp = vtkCompositeDataPipeline()
 # might not be needed
 algo.SetDefaultExecutivePrototype(cdp)
 del cdp
-algo.SetCaseFileName("./case/2.case") 
-# algo.SetCaseFileName("../case/star1.case") 
-# algo.SetCaseFileName("./case/star.case") 
-# algo.SetCaseFileName("../case/2.case") 
+# algo.SetCaseFileName("./case/2.case") #tiny cube
+algo.SetCaseFileName("./case/star1.case") # 0.75 mil mesh
+# algo.SetCaseFileName("./case/star.case") # 24 mil mesh
 # will want to change to somthing more generic
 algo.Update()
 raw_data = algo.GetOutput()
