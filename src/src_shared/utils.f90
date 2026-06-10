@@ -9,21 +9,22 @@ module utils
     subroutine sort_and_flag_duplicates(array, start_index, end_index)
         use quicksort_module
         implicit none
-        integer(KIND=INT32) :: array(:), start_index, end_index, indexer, i
+        integer(KIND=INT32) :: array(:), start_index, end_index, indexer
         integer(KIND=INT32),allocatable :: temparray(:)
         
         allocate(temparray,source=array(start_index:end_index))
         
-        call quicksort(temparray,start_index,end_index) ! must be start_index because indexing arrays start at zero
-        
         print*, start_index, end_index, size(temparray)
         
+        call quicksort(temparray,start_index,end_index) ! must be start_index because indexing arrays start at zero
+        
+        
         indexer = start_index + 1
-        i=1
+        
         do 
             if (array(indexer-1) .eq. array(indexer)) array(indexer-1) = -1
             
-            i=i+1
+            
             indexer = indexer + 1
             if (indexer.gt.end_index) exit
         enddo
