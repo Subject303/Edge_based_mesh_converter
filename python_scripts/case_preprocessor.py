@@ -492,7 +492,7 @@ print('beginning writing to file',time.time()-start); sys.stdout.flush()
 
 print('creating raw file',time.time()-start); sys.stdout.flush()
 # opening/creating file
-file_name = '../preprocessed_mesh_folder/raw_mesh_data.preprocessed_mesh_file'
+file_name = './preprocessed_mesh_folder/raw_mesh_data.preprocessed_mesh_file'
 file = open(file_name, "wb")
 
 
