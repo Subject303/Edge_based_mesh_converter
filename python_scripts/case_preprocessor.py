@@ -209,8 +209,8 @@ del coupled; gc.collect()
 #     f_sort[i] = x
 #     # temp[i] = y
 #     i=i+1
-    
-del coupled; gc.collect()
+#     
+# del coupled; gc.collect()
 
 print(c_f_obj_relation_array)
 print(f_p_obj_relation_array)
