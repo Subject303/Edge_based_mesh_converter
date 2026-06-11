@@ -171,7 +171,7 @@ module preprocessor_routine_module
         
         
         print*, 'AAAA'
-        print*, c_e_sum
+        print*, c_e_sum, size(c_e_index_array), size(c_e_obj_relation_array), nele, nedge
         print*, 'AAAA'
         print*, c_e_index_array
         print*, 'AAAA'
