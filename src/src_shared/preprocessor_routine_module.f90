@@ -259,8 +259,6 @@ module preprocessor_routine_module
         do y=1, backward_leading_obj_count
         
             ! count the number of cells adjacent to each point
-
-            print*, y, y_index(x_count), x_count
                 
             do while (y .eq. y_index(x_count))
                 x_count = x_count + 1
