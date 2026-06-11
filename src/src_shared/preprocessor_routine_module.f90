@@ -265,11 +265,12 @@ module preprocessor_routine_module
             enddo
             
             
-            print*, backward_index(y-1)+1, x_count
             
             ! adjust x_count
                 
             backward_index(y) = x_count
+            
+            print*, backward_index(y-1)+1, backward_index(y)
             
             ! check if there exists any possible duplicates
             if (backward_index(y-1)+1 .ne. x_count) then
