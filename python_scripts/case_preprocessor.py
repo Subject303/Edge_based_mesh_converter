@@ -533,6 +533,7 @@ for obj in f_p_obj_relation_array:
         file.write(struct.pack('<i' ,entry + 1))
     
 for obj in e_p_obj_relation_array:
+    print(obj)
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
     
