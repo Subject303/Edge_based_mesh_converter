@@ -275,6 +275,7 @@ module preprocessor_routine_module
 
             backward_index(y) = x_count
             
+            print*, backward_index
             
             backward_index_duplicates(y) = x_count ! starts looping at beginning of a point and counts up
             do while (backward_obj_relation_array(backward_index(y)-backward_index_duplicates(y)) .lt. 0)
