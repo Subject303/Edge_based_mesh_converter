@@ -360,6 +360,7 @@ print('updating mappings',time.time()-start); sys.stdout.flush()
 print(len(f_e_index))
 
 for i in range(len(f_e_index),0,-1):
+    print(i,face_to_del[i])
     if 1 != face_to_del[i]:
         f_e_obj_relation_array.pop(i)
         f_e_index.pop(i)
