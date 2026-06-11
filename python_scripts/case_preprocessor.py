@@ -208,6 +208,8 @@ for x, y in coupled:
     
 del coupled; gc.collect()
 
+print(f_sort)
+
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
     for j in range(len(obj)):
