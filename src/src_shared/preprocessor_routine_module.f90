@@ -237,9 +237,7 @@ module preprocessor_routine_module
         integer(KIND=INT32) :: x, y, x_count, total_x_count, forward_sum, backward_sum, xy_start_index, xy_end_index, forward_leading_obj_count, backward_leading_obj_count
         
         
-        print*, forward_leading_obj_count, backward_leading_obj_count, forward_sum, backward_sum
-
-        allocate(backward_obj_relation_array(forward_sum), backward_index(0:npoin), backward_index_duplicates(0:npoin) )
+        allocate(backward_obj_relation_array(forward_sum), backward_index(0:backward_leading_obj_count), backward_index_duplicates(0:backward_leading_obj_count) )
         allocate(y_index,source=forward_obj_relation_array)
 
         do x=1, forward_leading_obj_count
