@@ -374,6 +374,9 @@ for i in range((len(c_f_index)-1),0,-1):
         c_f_obj_relation_array.pop(i)
         c_f_index.pop(i)
     
+print(f_e_index)
+print(f_e_obj_relation_array)
+    
 print(len(f_e_index))
 print(len(c_f_index))
 
