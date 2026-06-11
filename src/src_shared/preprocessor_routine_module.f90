@@ -161,9 +161,6 @@ module preprocessor_routine_module
             ce_start_index = 1 + c_e_index_array(c-1)
             ce_end_index   = c_e_index_array(c)
             
-            print*, ce_start_index, ce_end_index
-            print*, c_e_obj_relation_array(ce_start_index:ce_end_index)
-            
             call sort_and_flag_duplicates(c_e_obj_relation_array(ce_start_index:ce_end_index))
             
             !call sort_and_flag_duplicates(c_e_obj_relation_array, ce_start_index, ce_end_index)
@@ -275,8 +272,6 @@ module preprocessor_routine_module
                 if (x_count .eq. forward_sum) exit
             enddo
             
-            if (x_count .ne. forward_sum) print*, y, y_index(x_count + 1)
-            
             ! adjust x_count
                 
             backward_index(y) = x_count
@@ -287,7 +282,6 @@ module preprocessor_routine_module
             if (backward_index(y-1)+1 .ne. x_count) then
             
                 ! flag duplicates
-                print*, '       ', backward_index(y-1)+1, x_count
                 
                 call sort_and_flag_duplicates(backward_obj_relation_array((backward_index(y-1)+1):x_count))
                 
