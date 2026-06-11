@@ -14,8 +14,6 @@ module utils
         
         allocate(temparray,source=array(start_index:end_index))
         
-        print*, start_index, end_index, size(temparray)
-        
         call quicksort(temparray,1,size(temparray)) ! must be start_index because indexing arrays start at zero
         
         
