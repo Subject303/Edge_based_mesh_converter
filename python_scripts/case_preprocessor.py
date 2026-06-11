@@ -275,9 +275,9 @@ edge_to_rep=[]
 face_to_rep=[]
 cell_to_rep=[]
 
-edge_to_del=[1]*len(e_p_index)
-face_to_del=[1]*len(f_p_index)
-cell_to_del=[1]*len(c_p_index)
+edge_to_del=[-1]*len(e_p_index)
+face_to_del=[-1]*len(f_p_index)
+cell_to_del=[-1]*len(c_p_index)
 
 temp = []
 temp2 = []
@@ -293,8 +293,8 @@ for i in range(len(c_p_index)-1):
                 temp.append(obj1)
                 temp2.append(c_p_index[i])
                 j=j+1
+                cell_to_del[i] = 1
                 break
-                cell_to_del[i] = -1
 
 temp.append(c_p_obj_relation_array[i+1])
 temp2.append(c_p_index[i+1])
@@ -318,8 +318,8 @@ for i in range(len(f_p_index)-1):
                 temp.append(obj1)
                 temp2.append(f_p_index[i])
                 j=j+1
+                face_to_del[i] = 1
                 break
-                face_to_del[i] = -1
             
 temp.append(f_p_obj_relation_array[i+1])
 temp2.append(f_p_index[i+1])
@@ -343,8 +343,7 @@ for i in range(len(e_p_index)-1):
         temp.append(obj1)
         temp2.append(2)
         j=j+1
-    else:
-        edge_to_del[i] = -1
+        edge_to_del[i] = 1
         
     
 temp.append(e_p_obj_relation_array[i+1])
@@ -357,17 +356,13 @@ del temp2; gc.collect()
    
 print('updating mappings',time.time()-start); sys.stdout.flush()
 
-print(len(f_e_index),len(face_to_del),face_to_del)
-
-for i in range(len(f_e_index),0,-1):
+for i in range((len(f_e_index)-1),0,-1):
     print(i)
     if 1 != face_to_del[i]:
         f_e_obj_relation_array.pop(i)
         f_e_index.pop(i)
         
-print(len(f_e_index))
-
-for i in range(len(c_f_index),0,-1):
+for i in range((len(c_f_index)-1),0,-1):
     if 1 != cell_to_del[i]:
         c_f_obj_relation_array.pop(i)
         c_f_index.pop(i)
