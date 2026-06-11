@@ -221,7 +221,7 @@ print('   e_p',time.time()-start); sys.stdout.flush()
 temp = list(range(len(e_p_obj_relation_array)))
 e_sort = temp
 
-coupled = sorted(zip(e_p_obj_relation_array, e_sort), key=lambda element: element[0][0])
+coupled = sorted(zip(e_p_obj_relation_array, e_sort), key=lambda element: element[0])
 
 i=0
 for x, y in coupled:
