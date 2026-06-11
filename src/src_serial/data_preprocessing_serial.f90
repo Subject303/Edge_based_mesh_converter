@@ -32,19 +32,28 @@ module data_processing_serial
         
         ! so four more object mapping arrays are needed to provide full, immediate access to all connected objects
         
+        print*, npoin, nedge, nface, nele
+        
         call c_e_preprocess ! conjoined from c_f and f_e
+        print*, npoin, nedge, nface, nele
         
         call p_c_preprocess ! don't think p_c is ever actually needed but weh
+        print*, npoin, nedge, nface, nele
         call p_f_preprocess
+        print*, npoin, nedge, nface, nele
         call p_e_preprocess
+        print*, npoin, nedge, nface, nele
 
         ! I now need the last three directions,
         ! the inverse of the e f c relations
         ! e_c, e_f, e_c 
 
         call f_c_preprocess
+        print*, npoin, nedge, nface, nele
         call e_f_preprocess
+        print*, npoin, nedge, nface, nele
         call e_c_preprocess ! remember this specific one must be synced in the mpi implementation
+        print*, npoin, nedge, nface, nele
 
         ! we will then have 
 
