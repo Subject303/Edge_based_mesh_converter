@@ -262,6 +262,8 @@ module preprocessor_routine_module
 
             do while (y .lt. y_index(x_count))
                 x_count = x_count + 1
+                print*, y, y_index(x_count)
+                
             enddo
             
             ! flag duplicates
