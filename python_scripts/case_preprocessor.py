@@ -299,8 +299,7 @@ for i in range(len(c_p_index)-1):
                 j=j+1
                 cell_to_del[i] = 1
                 break
-    print(i,cell_to_del[i])
-
+            
 temp.append(c_p_obj_relation_array[i+1])
 temp2.append(c_p_index[i+1])
 cell_to_rep.append(j)
@@ -325,10 +324,8 @@ for i in range(len(f_p_index)-1):
                 j=j+1
                 face_to_del[i] = 1
                 break
-    print(i,face_to_del[i])
             
-print(face_to_del)
-
+    
 temp.append(f_p_obj_relation_array[i+1])
 temp2.append(f_p_index[i+1])
 face_to_rep.append(j)
@@ -377,12 +374,6 @@ for i in reversed(cell_to_del):
     if 1 != i:
         c_f_obj_relation_array.pop(j)
         c_f_index.pop(j)
-    
-print(f_e_index)
-print(f_e_obj_relation_array)
-    
-print(len(f_e_index))
-print(len(c_f_index))
 
 for i in range(len(f_e_obj_relation_array)):
     obj = f_e_obj_relation_array[i]
@@ -439,9 +430,6 @@ del temp
 del temp2; gc.collect()
 
 gc.collect()
-
-print(len(f_e_index))
-print(f_e_index)
 
 print('indexifying index arrays',time.time()-start); sys.stdout.flush()
 # indexifying the index arrays
