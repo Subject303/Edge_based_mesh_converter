@@ -166,7 +166,7 @@ print('   c_p',time.time()-start); sys.stdout.flush()
 # coupled = zip(c_p_obj_relation_array, c_sort, c_f_obj_relation_array)
 coupled = zip(c_p_obj_relation_array, c_f_obj_relation_array)
 
-coupled = sorted(coupled, key=lambda element: element[0][0])
+coupled = sorted(coupled, key=lambda element: element[0])
 
 i=0
 for x, z in coupled:
@@ -185,7 +185,7 @@ print('   f_p',time.time()-start); sys.stdout.flush()
 temp = list(range(len(f_p_obj_relation_array)))
 f_sort = temp
 
-coupled = sorted(zip(f_p_obj_relation_array, f_sort, f_e_obj_relation_array), key=lambda element: element[0][0])
+coupled = sorted(zip(f_p_obj_relation_array, f_sort, f_e_obj_relation_array), key=lambda element: element[0])
 
 i=0
 for x, y, z in coupled:
@@ -228,8 +228,6 @@ for x, y in coupled:
     e_p_obj_relation_array[i] = x
     e_sort[i] = y
     i=i+1
-
-print(e_p_obj_relation_array)
 
 del coupled; gc.collect()
 
@@ -381,7 +379,6 @@ temp.append(e_p_obj_relation_array[i+1])
 temp2.append(2)
 edge_to_rep.append(j)
 e_p_obj_relation_array = temp
-print(len(temp2),len(e_p_index))
 e_p_index = temp2
 del temp
 del temp2; gc.collect()
@@ -535,7 +532,6 @@ for obj in f_p_obj_relation_array:
         file.write(struct.pack('<i' ,entry + 1))
     
 for obj in e_p_obj_relation_array:
-    print(obj)
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
     
