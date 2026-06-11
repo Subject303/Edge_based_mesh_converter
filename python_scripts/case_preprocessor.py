@@ -296,6 +296,8 @@ for obj in f_e_obj_relation_array:
     f_e_index[i] = len(obj)
     i=i+1
     
+print(nedge, len(e_p_index))
+    
 # ok I should Have all data I need to output now.
 # and indexify the index arrays
 # and sort the relation arrays and delete duplicated stuff
@@ -377,6 +379,7 @@ temp.append(e_p_obj_relation_array[i+1])
 temp2.append(2)
 edge_to_rep.append(j)
 e_p_obj_relation_array = temp
+print(len(temp2),len(e_p_index)
 e_p_index = temp2
 del temp
 del temp2; gc.collect()
