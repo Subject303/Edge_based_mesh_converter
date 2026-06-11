@@ -269,11 +269,11 @@ module preprocessor_routine_module
             
             print*, backward_index(y-1)+1, x_count
             
-            call sort_and_flag_duplicates(backward_obj_relation_array, backward_index(y-1)+1, x_count)
+            call sort_and_flag_duplicates(backward_obj_relation_array, backward_index(y-1)+1, x_count - 1)
 
             ! adjust x_count
 
-            backward_index(y) = x_count
+            backward_index(y) = x_count - 1
             
             
             backward_index_duplicates(y) = x_count - 1 ! starts looping at beginning of a point and counts up
