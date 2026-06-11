@@ -379,7 +379,7 @@ temp.append(e_p_obj_relation_array[i+1])
 temp2.append(2)
 edge_to_rep.append(j)
 e_p_obj_relation_array = temp
-print(len(temp2),len(e_p_index)
+print(len(temp2),len(e_p_index))
 e_p_index = temp2
 del temp
 del temp2; gc.collect()
