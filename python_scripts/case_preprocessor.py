@@ -511,6 +511,7 @@ for entry in f_e_index:
     file.write(struct.pack('<i' ,entry))
 
 print(c_f_obj_relation_array)
+print(f_e_obj_relation_array)
 
 for obj in c_f_obj_relation_array:
     for entry in obj:
