@@ -391,11 +391,15 @@ for i in range(len(f_e_obj_relation_array)):
         obj[j] = edge_to_rep[obj[j]] 
     f_e_obj_relation_array[i] = sorted(obj)
     
+print(c_f_obj_relation_array)
+    
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
     for j in range(len(obj)):
         obj[j] = face_to_rep[obj[j]] 
     c_f_obj_relation_array[i] = sorted(obj)
+
+print(c_f_obj_relation_array)
 
 print('removing duplicate mappings',time.time()-start); sys.stdout.flush()
 
@@ -418,6 +422,8 @@ c_f_obj_relation_array = temp
 c_f_index = temp2
 del temp
 del temp2; gc.collect()
+
+print(c_f_obj_relation_array)
 
 temp = []
 temp2 = []
@@ -546,7 +552,6 @@ for entry in f_e_index:
     file.write(struct.pack('<i' ,entry))
 
 for obj in c_f_obj_relation_array:
-    print(c_f_obj_relation_array)
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
 
