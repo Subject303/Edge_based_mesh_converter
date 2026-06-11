@@ -163,6 +163,8 @@ print('   c_p',time.time()-start); sys.stdout.flush()
 # temp = list(range(len(c_p_obj_relation_array)))
 # c_sort = temp
 
+print(c_f_obj_relation_array)
+
 # coupled = zip(c_p_obj_relation_array, c_sort, c_f_obj_relation_array)
 coupled = zip(c_p_obj_relation_array, c_f_obj_relation_array)
 
@@ -176,6 +178,8 @@ for x, z in coupled:
     i=i+1
 
 del coupled; gc.collect()
+
+print(c_f_obj_relation_array)
 
 # del temp
 # del c_sort
