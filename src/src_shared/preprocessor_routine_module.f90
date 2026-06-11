@@ -261,7 +261,7 @@ module preprocessor_routine_module
                 
             do while (y .eq. y_index(x_count + 1))
                 x_count = x_count + 1
-                if (x_count .eq. forward_leading_obj_count) exit
+                if (x_count .eq. forward_sum) exit
             enddo
             
             
