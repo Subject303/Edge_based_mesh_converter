@@ -347,7 +347,7 @@ e_p_obj_relation_array = temp
 e_p_index = temp2
 del temp
 del temp2; gc.collect()
-    
+   
 print('updating mappings',time.time()-start); sys.stdout.flush()
 
 for i in range(len(f_e_obj_relation_array)):
@@ -384,6 +384,9 @@ c_f_index = temp2
 del temp
 del temp2; gc.collect()
 
+print(len(e_f_index))
+print(e_f_index)
+
 temp = []
 temp2 = []
 print('   f_e'); sys.stdout.flush()
@@ -405,6 +408,9 @@ del temp
 del temp2; gc.collect()
 
 gc.collect()
+
+print(len(e_f_index))
+print(e_f_index)
 
 print('indexifying index arrays',time.time()-start); sys.stdout.flush()
 # indexifying the index arrays
