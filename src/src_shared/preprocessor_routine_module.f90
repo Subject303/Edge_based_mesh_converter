@@ -115,8 +115,6 @@ module preprocessor_routine_module
             do cf_index = cf_start_index, cf_end_index
                 f = c_f_obj_relation_array(cf_index)
                 
-                print*,c_f_obj_relation_array
-                
                 n_con_edges =  n_con_edges + f_e_index_array(f) - f_e_index_array(f-1) ! all index arrays start at 0
             enddo
             
@@ -172,14 +170,6 @@ module preprocessor_routine_module
         call remove_flagged_duplicates(c_e_obj_relation_array)
         
         print *, 'finished processing cell edge relation array'
-        
-        
-        print*, 'AAAA'
-        print*, c_e_sum, size(c_e_index_array), size(c_e_obj_relation_array), nele, nedge
-        print*, 'AAAA'
-        print*, c_e_index_array
-        print*, 'AAAA'
-        print*, c_e_obj_relation_array
         
     end subroutine c_e_preprocess
     
