@@ -262,7 +262,7 @@ module preprocessor_routine_module
 
             print*, y, y_index(x_count), x_count
                 
-            do while (y .lt. y_index(x_count))
+            do while (y .eq. y_index(x_count))
                 x_count = x_count + 1
                 
             enddo
