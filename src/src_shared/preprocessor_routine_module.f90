@@ -164,7 +164,9 @@ module preprocessor_routine_module
             print*, ce_start_index, ce_end_index
             print*, c_e_obj_relation_array(ce_start_index:ce_end_index)
             
-            call sort_and_flag_duplicates(c_e_obj_relation_array, ce_start_index, ce_end_index)
+            call sort_and_flag_duplicates(c_e_obj_relation_array(ce_start_index:ce_end_index))
+            
+            !call sort_and_flag_duplicates(c_e_obj_relation_array, ce_start_index, ce_end_index)
             
         enddo
         
@@ -286,7 +288,9 @@ module preprocessor_routine_module
             
                 ! flag duplicates
             
-                call sort_and_flag_duplicates(backward_obj_relation_array, backward_index(y-1)+1, x_count)
+                call sort_and_flag_duplicates(backward_obj_relation_array((backward_index(y-1)+1):x_count))
+                
+!                 call sort_and_flag_duplicates(backward_obj_relation_array, backward_index(y-1)+1, x_count)
                 
                 backward_index_duplicates(y) = x_count - 1 ! starts looping at beginning of a point and counts up
                 do while (backward_obj_relation_array(backward_index(y)-backward_index_duplicates(y)) .lt. 0)
