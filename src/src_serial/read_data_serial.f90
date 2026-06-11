@@ -78,14 +78,6 @@ module read_data_serial
         print*, 'reading face to edge relation array '
         read(10) f_e_obj_relation_array(:)
         
-        print*,c_f_index_array
-        print*,f_e_index_array
-
-        print*,"aaaa"
-
-        print*,c_f_obj_relation_array
-        print*,f_e_obj_relation_array
-        
         close(10)
         
         print*, 'finished reading raw data'
