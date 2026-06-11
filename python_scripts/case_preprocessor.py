@@ -275,6 +275,10 @@ edge_to_rep=[]
 face_to_rep=[]
 cell_to_rep=[]
 
+edge_to_del=list(range(len(e_p_index)))
+face_to_del=list(range(len(f_p_index)))
+cell_to_del=list(range(len(c_p_index)))
+
 temp = []
 temp2 = []
 j=0
@@ -290,7 +294,7 @@ for i in range(len(c_p_index)-1):
                 temp2.append(c_p_index[i])
                 j=j+1
                 break
-                
+                cell_to_del[i] = -1
 
 temp.append(c_p_obj_relation_array[i+1])
 temp2.append(c_p_index[i+1])
@@ -315,6 +319,7 @@ for i in range(len(f_p_index)-1):
                 temp2.append(f_p_index[i])
                 j=j+1
                 break
+                face_to_del[i] = -1
             
 temp.append(f_p_obj_relation_array[i+1])
 temp2.append(f_p_index[i+1])
@@ -338,6 +343,8 @@ for i in range(len(e_p_index)-1):
         temp.append(obj1)
         temp2.append(2)
         j=j+1
+    else
+        edge_to_del[i] = -1
         
     
 temp.append(e_p_obj_relation_array[i+1])
@@ -350,6 +357,16 @@ del temp2; gc.collect()
    
 print('updating mappings',time.time()-start); sys.stdout.flush()
 
+for i in range(len(f_e_obj_relation_array),0,-1):
+    if i != face_to_del[i]:
+        f_e_obj_relation_array.pop(i)
+        f_e_index.pop(i)
+        
+for i in range(len(c_e_obj_relation_array),0,-1):
+    if i != cell_to_del[i]:
+        c_f_obj_relation_array.pop(i)
+        c_f_index.pop(i)
+    
 for i in range(len(f_e_obj_relation_array)):
     obj = f_e_obj_relation_array[i]
     for j in range(len(obj)):
@@ -363,9 +380,6 @@ for i in range(len(c_f_obj_relation_array)):
     c_f_obj_relation_array[i] = sorted(obj)
 
 print('removing duplicate mappings',time.time()-start); sys.stdout.flush()
-
-print(len(c_f_index))
-print(c_f_index)
 
 temp = []
 temp2 = []
@@ -386,12 +400,6 @@ c_f_obj_relation_array = temp
 c_f_index = temp2
 del temp
 del temp2; gc.collect()
-
-print(len(c_f_index))
-print(c_f_index)
-
-print(len(f_e_index))
-print(f_e_index)
 
 temp = []
 temp2 = []
