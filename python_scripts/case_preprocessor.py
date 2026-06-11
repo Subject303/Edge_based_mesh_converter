@@ -212,6 +212,8 @@ for x, y in coupled:
     
 del coupled; gc.collect()
 
+print(c_f_obj_relation_array)
+
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
     for j in range(len(obj)):
@@ -219,6 +221,8 @@ for i in range(len(c_f_obj_relation_array)):
     c_f_obj_relation_array[i] = sorted(obj)
 
 del f_sort
+
+print(c_f_obj_relation_array)
 
 print('   e_p',time.time()-start); sys.stdout.flush()
 
