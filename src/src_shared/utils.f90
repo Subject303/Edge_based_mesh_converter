@@ -46,6 +46,8 @@ module utils
         
         array=pack(array,mask)
         
+        print*, array
+        
     end subroutine remove_flagged_duplicates
     
     !end contains
