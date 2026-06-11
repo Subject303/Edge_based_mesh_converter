@@ -203,7 +203,9 @@ module preprocessor_routine_module
     !!!!!!!!!!! e f c obj relation inversions ::
     
     subroutine f_c_preprocess
-    
+        
+        print*, nele, nface, c_f_sum, f_c_sum
+        
         print *, 'beginning processing face cell relation array inversion'
         call obj_relation_inverter(nele, nface, c_f_sum, c_f_index_array, c_f_obj_relation_array, f_c_sum, f_c_index_array, f_c_obj_relation_array)
         print *, 'finished processing face cell relation array inversion'
