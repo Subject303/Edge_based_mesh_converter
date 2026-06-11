@@ -384,8 +384,8 @@ c_f_index = temp2
 del temp
 del temp2; gc.collect()
 
-print(len(e_f_index))
-print(e_f_index)
+print(len(f_e_index))
+print(f_e_index)
 
 temp = []
 temp2 = []
@@ -409,8 +409,8 @@ del temp2; gc.collect()
 
 gc.collect()
 
-print(len(e_f_index))
-print(e_f_index)
+print(len(f_e_index))
+print(f_e_index)
 
 print('indexifying index arrays',time.time()-start); sys.stdout.flush()
 # indexifying the index arrays
