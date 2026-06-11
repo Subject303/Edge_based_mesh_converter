@@ -200,15 +200,15 @@ for x, y, z in coupled:
 
 del coupled; gc.collect()
 
-coupled = sorted(zip(f_sort, temp), key=lambda element: element[0])
-
-del temp
-
-i=0
-for x, y in coupled:
-    f_sort[i] = x
-    # temp[i] = y
-    i=i+1
+# coupled = sorted(zip(f_sort, temp), key=lambda element: element[0])
+# 
+# del temp
+# 
+# i=0
+# for x, y in coupled:
+#     f_sort[i] = x
+#     # temp[i] = y
+#     i=i+1
     
 del coupled; gc.collect()
 
