@@ -121,11 +121,11 @@ module preprocessor_routine_module
             c_e_index_array(c) = n_con_edges
         enddo
         
-        c_e_sum = sum(c_e_index_array)
-        
         do c=1,nele
             c_e_index_array(c) = c_e_index_array(c-1) + c_e_index_array(c)
         enddo
+        
+        c_e_sum = c_e_index_array(nele)
         
         allocate( c_e_obj_relation_array(c_e_sum) )
         
