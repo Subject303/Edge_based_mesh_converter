@@ -279,6 +279,10 @@ edge_to_del=[-1]*len(e_p_index)
 face_to_del=[-1]*len(f_p_index)
 cell_to_del=[-1]*len(c_p_index)
 
+edge_to_del[-1]=1
+face_to_del[-1]=1
+cell_to_del[-1]=1
+
 temp = []
 temp2 = []
 j=0
@@ -295,8 +299,6 @@ for i in range(len(c_p_index)-1):
                 j=j+1
                 cell_to_del[i] = 1
                 break
-
-print(cell_to_del)
 
 temp.append(c_p_obj_relation_array[i+1])
 temp2.append(c_p_index[i+1])
@@ -323,6 +325,8 @@ for i in range(len(f_p_index)-1):
                 face_to_del[i] = 1
                 break
             
+print(face_to_del)
+
 temp.append(f_p_obj_relation_array[i+1])
 temp2.append(f_p_index[i+1])
 face_to_rep.append(j)
