@@ -279,10 +279,6 @@ edge_to_del=[-1]*len(e_p_index)
 face_to_del=[-1]*len(f_p_index)
 cell_to_del=[-1]*len(c_p_index)
 
-edge_to_del[0]=1
-face_to_del[0]=1
-cell_to_del[0]=1
-
 temp = []
 temp2 = []
 j=0
