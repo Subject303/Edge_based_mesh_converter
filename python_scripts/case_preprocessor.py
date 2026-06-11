@@ -160,8 +160,6 @@ gc.collect()
 print('sorting connectivities',time.time()-start); sys.stdout.flush()
 
 print('   c_p',time.time()-start); sys.stdout.flush()
-
-# coupled = zip(c_p_obj_relation_array, c_sort, c_f_obj_relation_array)
 coupled = zip(c_p_obj_relation_array, c_f_obj_relation_array)
 
 coupled = sorted(coupled, key=lambda element: element[0])
@@ -169,7 +167,6 @@ coupled = sorted(coupled, key=lambda element: element[0])
 i=0
 for x, z in coupled:
     c_p_obj_relation_array[i] = x
-    # c_sort[i] = y
     c_f_obj_relation_array[i] = z
     i=i+1
 
@@ -512,6 +509,8 @@ for entry in c_f_index:
 file.write(struct.pack('<2i' ,f_e_sum, 0))
 for entry in f_e_index:
     file.write(struct.pack('<i' ,entry))
+
+print(c_f_obj_relation_array)
 
 for obj in c_f_obj_relation_array:
     for entry in obj:
