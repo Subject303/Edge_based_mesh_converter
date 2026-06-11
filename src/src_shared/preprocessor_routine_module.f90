@@ -275,7 +275,7 @@ module preprocessor_routine_module
                 if (x_count .eq. forward_sum) exit
             enddo
             
-            print*, y, y_index(x_count + 1)
+            if (x_count .ne. forward_sum) print*, y, y_index(x_count + 1)
             
             ! adjust x_count
                 
