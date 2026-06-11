@@ -260,9 +260,10 @@ module preprocessor_routine_module
         
             ! count the number of cells adjacent to each point
 
+            print*, y, y_index(x_count), x_count
+                
             do while (y .lt. y_index(x_count))
                 x_count = x_count + 1
-                print*, y, y_index(x_count)
                 
             enddo
             
