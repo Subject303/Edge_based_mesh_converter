@@ -279,6 +279,10 @@ edge_to_del=[-1]*len(e_p_index)
 face_to_del=[-1]*len(f_p_index)
 cell_to_del=[-1]*len(c_p_index)
 
+edge_to_del[-1]=1
+face_to_del[-1]=1
+cell_to_del[-1]=1
+
 temp = []
 temp2 = []
 j=0
@@ -356,14 +360,10 @@ del temp2; gc.collect()
    
 print('updating mappings',time.time()-start); sys.stdout.flush()
 
-print( len(f_p_index), len(f_e_index) )
-
 for i in range((len(f_e_index)-1),0,-1):
     if 1 != face_to_del[i]:
         f_e_obj_relation_array.pop(i)
         f_e_index.pop(i)
-        
-print( len(f_p_index), len(f_e_index) )
         
 for i in range((len(c_f_index)-1),0,-1):
     if 1 != cell_to_del[i]:
