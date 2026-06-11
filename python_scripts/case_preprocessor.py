@@ -275,9 +275,9 @@ edge_to_rep=[]
 face_to_rep=[]
 cell_to_rep=[]
 
-edge_to_del=list(range(len(e_p_index)))
-face_to_del=list(range(len(f_p_index)))
-cell_to_del=list(range(len(c_p_index)))
+edge_to_del=list(range(1,len(e_p_index),1))
+face_to_del=list(range(1,len(f_p_index),1))
+cell_to_del=list(range(1,len(c_p_index),1))
 
 temp = []
 temp2 = []
@@ -359,14 +359,14 @@ print('updating mappings',time.time()-start); sys.stdout.flush()
 
 print(len(f_e_index))
 
-for i in range(len(f_e_obj_relation_array),0,-1):
+for i in range(len(f_e_index),0,-1):
     if i != face_to_del[i]:
         f_e_obj_relation_array.pop(i)
         f_e_index.pop(i)
         
 print(len(f_e_index))
 
-for i in range(len(c_e_obj_relation_array),0,-1):
+for i in range(len(c_f_index),0,-1):
     if i != cell_to_del[i]:
         c_f_obj_relation_array.pop(i)
         c_f_index.pop(i)
