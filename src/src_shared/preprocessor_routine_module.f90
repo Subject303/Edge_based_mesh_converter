@@ -161,6 +161,9 @@ module preprocessor_routine_module
             ce_start_index = 1 + c_e_index_array(c-1)
             ce_end_index   = c_e_index_array(c)
             
+            print*, ce_start_index, ce_end_index
+            print*, c_e_obj_relation_array(ce_start_index:ce_end_index)
+            
             call sort_and_flag_duplicates(c_e_obj_relation_array, ce_start_index, ce_end_index)
             
         enddo
