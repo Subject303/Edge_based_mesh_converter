@@ -364,6 +364,9 @@ for i in range(len(c_f_obj_relation_array)):
 
 print('removing duplicate mappings',time.time()-start); sys.stdout.flush()
 
+print(len(c_f_index))
+print(c_f_index)
+
 temp = []
 temp2 = []
 print('   c_f'); sys.stdout.flush()
@@ -383,6 +386,9 @@ c_f_obj_relation_array = temp
 c_f_index = temp2
 del temp
 del temp2; gc.collect()
+
+print(len(c_f_index))
+print(c_f_index)
 
 print(len(f_e_index))
 print(f_e_index)
