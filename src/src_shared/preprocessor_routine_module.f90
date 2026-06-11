@@ -265,11 +265,12 @@ module preprocessor_routine_module
             enddo
             
             
-            ! flag duplicates
-            
             print*, backward_index(y-1)+1, x_count
-            
+            ! check if there exists any possible duplicates
             if (backward_index(y-1)+1 .ne. x_count) then
+            
+                ! flag duplicates
+            
                 call sort_and_flag_duplicates(backward_obj_relation_array, backward_index(y-1)+1, x_count)
                 
                 ! adjust x_count
