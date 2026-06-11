@@ -161,8 +161,6 @@ print('sorting connectivities',time.time()-start); sys.stdout.flush()
 
 print('   c_p',time.time()-start); sys.stdout.flush()
 
-print(c_f_obj_relation_array)
-
 # coupled = zip(c_p_obj_relation_array, c_sort, c_f_obj_relation_array)
 coupled = zip(c_p_obj_relation_array, c_f_obj_relation_array)
 
@@ -176,9 +174,6 @@ for x, z in coupled:
     i=i+1
 
 del coupled; gc.collect()
-
-print(c_f_obj_relation_array)
-print(f_p_obj_relation_array)
 
 print('   f_p',time.time()-start); sys.stdout.flush()
 
@@ -195,9 +190,6 @@ for x, y, z in coupled:
 
 del coupled; gc.collect()
 
-print(c_f_obj_relation_array)
-print(f_p_obj_relation_array)
-
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
     for j in range(len(obj)):
@@ -205,8 +197,6 @@ for i in range(len(c_f_obj_relation_array)):
     c_f_obj_relation_array[i] = sorted(obj)
 
 del f_sort
-
-print(c_f_obj_relation_array)
 
 print('   e_p',time.time()-start); sys.stdout.flush()
 
@@ -339,10 +329,6 @@ f_p_index = temp2
 del temp
 del temp2; gc.collect()
 
-print(f_p_obj_relation_array)
-
-print(face_to_rep)
-
 temp = []
 temp2 = []
 j=0
@@ -380,9 +366,6 @@ print(c_f_obj_relation_array)
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
     for j in range(len(obj)):
-        
-        print(obj[j],face_to_rep[obj[j]] )
-        
         obj[j] = face_to_rep[obj[j]] 
     c_f_obj_relation_array[i] = sorted(obj)
 
@@ -409,8 +392,6 @@ c_f_obj_relation_array = temp
 c_f_index = temp2
 del temp
 del temp2; gc.collect()
-
-print(c_f_obj_relation_array)
 
 temp = []
 temp2 = []
