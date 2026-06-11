@@ -208,8 +208,6 @@ for x, y in coupled:
     
 del coupled; gc.collect()
 
-print(f_sort)
-
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
     for j in range(len(obj)):
@@ -548,6 +546,7 @@ for entry in f_e_index:
     file.write(struct.pack('<i' ,entry))
 
 for obj in c_f_obj_relation_array:
+    print(c_f_obj_relation_array)
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
 
