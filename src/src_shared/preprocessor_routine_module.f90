@@ -263,7 +263,7 @@ module preprocessor_routine_module
             do while (y .eq. y_index(x_count))
                 x_count = x_count + 1
             enddo
-            x_count = x_count - 1
+!             x_count = x_count - 1
             
             ! flag duplicates
             
@@ -276,7 +276,7 @@ module preprocessor_routine_module
             backward_index(y) = x_count
             
             
-            backward_index_duplicates(y) = x_count! - 1 ! starts looping at beginning of a point and counts up
+            backward_index_duplicates(y) = x_count - 1 ! starts looping at beginning of a point and counts up
             do while (backward_obj_relation_array(backward_index(y)-backward_index_duplicates(y)) .lt. 0)
                 backward_index_duplicates(y) = backward_index_duplicates(y) - 1
             enddo
