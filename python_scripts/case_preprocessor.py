@@ -401,6 +401,7 @@ print(c_f_obj_relation_array)
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
     for j in range(len(obj)):
+        print(obj[j],face_to_rep[obj[j]] )
         obj[j] = face_to_rep[obj[j]] 
     c_f_obj_relation_array[i] = sorted(obj)
 
