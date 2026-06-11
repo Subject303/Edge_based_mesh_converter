@@ -222,7 +222,7 @@ module preprocessor_routine_module
     subroutine e_c_preprocess
     
         print *, 'beginning processing edge cell relation array inversion'
-        call obj_relation_inverter(nedge, nele, c_e_sum, c_e_index_array, c_e_obj_relation_array, e_c_sum, e_c_index_array, e_c_obj_relation_array)
+        call obj_relation_inverter(nele, nedge, c_e_sum, c_e_index_array, c_e_obj_relation_array, e_c_sum, e_c_index_array, e_c_obj_relation_array)
         print *, 'finished processing edge cell relation array inversion'
         
     end subroutine e_c_preprocess
