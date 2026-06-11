@@ -364,16 +364,19 @@ del temp2; gc.collect()
    
 print('updating mappings',time.time()-start); sys.stdout.flush()
 
-for i in range(len(f_e_index),0,-1):
-    print(i, face_to_del[i])
-    if 1 != face_to_del[i]:
-        f_e_obj_relation_array.pop(i)
-        f_e_index.pop(i)
+j=len(f_e_index)
+for i in reversed(face_to_del):
+    j=j-1
+    if 1 != i:
+        f_e_obj_relation_array.pop(j)
+        f_e_index.pop(j)
         
-for i in range((len(c_f_index)-1),0,-1):
-    if 1 != cell_to_del[i]:
-        c_f_obj_relation_array.pop(i)
-        c_f_index.pop(i)
+j=len(c_f_index)
+for i in reversed(cell_to_del):
+    j=j-1
+    if 1 != i:
+        c_f_obj_relation_array.pop(j)
+        c_f_index.pop(j)
     
 print(f_e_index)
 print(f_e_obj_relation_array)
