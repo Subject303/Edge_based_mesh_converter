@@ -357,7 +357,7 @@ del temp2; gc.collect()
    
 print('updating mappings',time.time()-start); sys.stdout.flush()
 
-print(len(f_e_index),len(face_to_del))
+print(len(f_e_index),len(face_to_del),face_to_del)
 
 for i in range(len(f_e_index),0,-1):
     print(i)
