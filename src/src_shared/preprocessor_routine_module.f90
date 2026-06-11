@@ -275,7 +275,7 @@ module preprocessor_routine_module
                 if (x_count .eq. forward_sum) exit
             enddo
             
-            
+            print*, y, y_index(x_count + 1)
             
             ! adjust x_count
                 
@@ -287,7 +287,7 @@ module preprocessor_routine_module
             if (backward_index(y-1)+1 .ne. x_count) then
             
                 ! flag duplicates
-                print*, backward_index(y-1)+1, x_count
+                print*, '       ', backward_index(y-1)+1, x_count
                 
                 call sort_and_flag_duplicates(backward_obj_relation_array((backward_index(y-1)+1):x_count))
                 
