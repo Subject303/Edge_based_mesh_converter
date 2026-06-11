@@ -343,7 +343,7 @@ for i in range(len(e_p_index)-1):
         temp.append(obj1)
         temp2.append(2)
         j=j+1
-    else
+    else:
         edge_to_del[i] = -1
         
     
