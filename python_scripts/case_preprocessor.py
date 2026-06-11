@@ -159,6 +159,8 @@ gc.collect()
 
 print('sorting connectivities',time.time()-start); sys.stdout.flush()
 
+print(e_p_obj_relation_array)
+
 print('   c_p',time.time()-start); sys.stdout.flush()
 # temp = list(range(len(c_p_obj_relation_array)))
 # c_sort = temp
