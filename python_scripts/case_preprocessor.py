@@ -522,12 +522,10 @@ for obj in c_f_obj_relation_array:
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
 
-j=1
 for obj in f_e_obj_relation_array:
     for entry in obj:
         j=j+1
         file.write(struct.pack('<i' ,entry + 1))
-print(j)
   
 print('finished writing to file',time.time()-start); sys.stdout.flush()
 print('finished preprocessing'); sys.stdout.flush()
