@@ -299,6 +299,7 @@ for i in range(len(c_p_index)-1):
                 j=j+1
                 cell_to_del[i] = 1
                 break
+    print(i,cell_to_del[i])
 
 temp.append(c_p_obj_relation_array[i+1])
 temp2.append(c_p_index[i+1])
@@ -324,6 +325,7 @@ for i in range(len(f_p_index)-1):
                 j=j+1
                 face_to_del[i] = 1
                 break
+    print(i,face_to_del[i])
             
 print(face_to_del)
 
