@@ -334,6 +334,8 @@ c_p_index = temp2
 del temp
 del temp2; gc.collect()
 
+print(f_p_obj_relation_array)
+
 temp = []
 temp2 = []
 j=0
@@ -357,6 +359,8 @@ f_p_obj_relation_array = temp
 f_p_index = temp2
 del temp
 del temp2; gc.collect()
+
+print(f_p_obj_relation_array)
 
 print(face_to_rep)
 
