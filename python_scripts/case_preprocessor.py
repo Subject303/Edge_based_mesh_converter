@@ -296,6 +296,8 @@ for i in range(len(c_p_index)-1):
                 cell_to_del[i] = 1
                 break
 
+print(cell_to_del)
+
 temp.append(c_p_obj_relation_array[i+1])
 temp2.append(c_p_index[i+1])
 cell_to_rep.append(j)
