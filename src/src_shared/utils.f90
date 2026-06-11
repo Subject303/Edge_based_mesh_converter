@@ -10,7 +10,8 @@ module utils
     subroutine sort_and_flag_duplicates(array)!, start_index, end_index)
         use quicksort_module
         implicit none
-        integer(KIND=INT32) :: array(:), start_index, end_index, indexer
+        integer(KIND=INT32),allocatable :: array(:)
+        integer(KIND=INT32) :: start_index, end_index, indexer
         !integer(KIND=INT32),allocatable :: temparray(:)
         
         !allocate(temparray,source=array(start_index:end_index))
@@ -36,7 +37,7 @@ module utils
     
     subroutine remove_flagged_duplicates(array)
         implicit none
-        integer(KIND=INT32) :: array(:)
+        integer(KIND=INT32),allocatable :: array(:)
         logical,allocatable :: mask(:)
         
         allocate(mask(size(array)))
