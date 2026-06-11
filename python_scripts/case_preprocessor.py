@@ -358,6 +358,7 @@ f_p_index = temp2
 del temp
 del temp2; gc.collect()
 
+print(face_to_rep)
 
 temp = []
 temp2 = []
