@@ -536,19 +536,6 @@ file.write(struct.pack('<2i' ,f_e_sum, 0))
 for entry in f_e_index:
     file.write(struct.pack('<i' ,entry))
 
-print(len(c_f_index))
-print(len(f_e_index))
-
-print("aaaa")
-
-print(c_f_index)
-print(f_e_index)
-
-print("aaaa")
-
-print(c_f_obj_relation_array)
-print(f_e_obj_relation_array)
-
 for obj in c_f_obj_relation_array:
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
