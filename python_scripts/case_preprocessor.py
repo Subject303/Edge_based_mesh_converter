@@ -160,8 +160,6 @@ gc.collect()
 print('sorting connectivities',time.time()-start); sys.stdout.flush()
 
 print('   c_p',time.time()-start); sys.stdout.flush()
-# temp = list(range(len(c_p_obj_relation_array)))
-# c_sort = temp
 
 print(c_f_obj_relation_array)
 
@@ -181,13 +179,10 @@ del coupled; gc.collect()
 
 print(c_f_obj_relation_array)
 print(f_p_obj_relation_array)
-# del temp
-# del c_sort
 
 print('   f_p',time.time()-start); sys.stdout.flush()
 
-temp = list(range(len(f_p_obj_relation_array)))
-f_sort = temp
+f_sort = list(range(len(e_p_obj_relation_array)))
 
 coupled = sorted(zip(f_p_obj_relation_array, f_sort, f_e_obj_relation_array), key=lambda element: element[0])
 
@@ -199,18 +194,6 @@ for x, y, z in coupled:
     i=i+1
 
 del coupled; gc.collect()
-
-# coupled = sorted(zip(f_sort, temp), key=lambda element: element[0])
-# 
-# del temp
-# 
-# i=0
-# for x, y in coupled:
-#     f_sort[i] = x
-#     # temp[i] = y
-#     i=i+1
-#     
-# del coupled; gc.collect()
 
 print(c_f_obj_relation_array)
 print(f_p_obj_relation_array)
@@ -227,8 +210,7 @@ print(c_f_obj_relation_array)
 
 print('   e_p',time.time()-start); sys.stdout.flush()
 
-temp = list(range(len(e_p_obj_relation_array)))
-e_sort = temp
+e_sort = list(range(len(e_p_obj_relation_array)))
 
 coupled = sorted(zip(e_p_obj_relation_array, e_sort), key=lambda element: element[0])
 
@@ -238,18 +220,6 @@ for x, y in coupled:
     e_sort[i] = y
     i=i+1
 
-del coupled; gc.collect()
-
-coupled = sorted(zip(e_sort, temp), key=lambda element: element[0])
-
-del temp
-
-i=0
-for x, y in coupled:
-    e_sort[i] = x
-    # temp[i] = y
-    i=i+1
-    
 del coupled; gc.collect()
 
 for i in range(len(f_e_obj_relation_array)):
