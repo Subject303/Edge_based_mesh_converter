@@ -6,31 +6,18 @@ module utils
     
     contains
     
-!     subroutine sort_and_flag_duplicates(array, start_index, end_index)
-    subroutine sort_and_flag_duplicates(array)!, start_index, end_index)
+    subroutine sort_and_flag_duplicates(array)
         use quicksort_module
         implicit none
-        integer(KIND=INT32) :: array(:)
-        integer(KIND=INT32) :: start_index, end_index, indexer
-        !integer(KIND=INT32),allocatable :: temparray(:)
+        integer(KIND=INT32) :: array(:), start_index, end_index, indexer
         
-        !allocate(temparray,source=array(start_index:end_index))
         
         !call quicksort(temparray,1,size(temparray)) ! must be start_index because indexing arrays start at zero
         
-        start_index = 1
-        end_index = size(array)
+        call quicksort(array,1 ,size(array) ) ! must be start_index because indexing arrays start at zero
         
-        call quicksort(array,start_index,end_index) ! must be start_index because indexing arrays start at zero
-        
-        indexer = start_index + 1
-        
-        do 
+        do indexer=2,size(array)
             if (array(indexer-1) .eq. array(indexer)) array(indexer-1) = -1
-            
-            
-            indexer = indexer + 1
-            if (indexer.gt.end_index) exit
         enddo
         
     end subroutine sort_and_flag_duplicates
