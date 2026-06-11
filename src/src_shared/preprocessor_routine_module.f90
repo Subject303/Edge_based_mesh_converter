@@ -213,7 +213,8 @@ module preprocessor_routine_module
     subroutine e_f_preprocess
     
         print *, 'beginning processing edge face relation array inversion'
-        call obj_relation_inverter(nface, nedge, e_f_sum, e_f_index_array, e_f_obj_relation_array, f_e_sum, f_e_index_array, f_e_obj_relation_array)
+!         call obj_relation_inverter(nface, nedge, e_f_sum, e_f_index_array, e_f_obj_relation_array, f_e_sum, f_e_index_array, f_e_obj_relation_array)
+        call obj_relation_inverter(nface, nedge, f_e_sum, f_e_index_array, f_e_obj_relation_array, e_f_sum, e_f_index_array, e_f_obj_relation_array)
         print *, 'finished processing edge face relation array inversion'
         
     end subroutine e_f_preprocess
