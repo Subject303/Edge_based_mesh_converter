@@ -42,6 +42,8 @@ module utils
         allocate(mask(size(array)))
         
         mask=(/ (array(:).ge.0) /)
+        print*, mask
+        
         array=pack(array,mask)
         
     end subroutine remove_flagged_duplicates
