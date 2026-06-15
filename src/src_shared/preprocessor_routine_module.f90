@@ -262,11 +262,13 @@ module preprocessor_routine_module
 
         enddo
         
+        print*,forward_obj_relation_array
         print*,y_index
         print*,backward_obj_relation_array
         
         call quicksort(y_index , 1 , forward_sum , backward_obj_relation_array)
 
+        print*,forward_obj_relation_array
         print*,y_index
         print*,backward_obj_relation_array
         
