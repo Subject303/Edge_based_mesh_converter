@@ -313,6 +313,7 @@ module preprocessor_routine_module
 
         backward_sum = size(backward_obj_relation_array)
         
+        print*,backward_index
         
         ! based on ::
 !         integer(KIND=INT32),allocatable :: p_index, p_c_index_array_duplicates
