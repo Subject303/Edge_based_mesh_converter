@@ -147,37 +147,21 @@ module quicksort_module
         
         ! this is probably huge overkill, but it means that I could in theory dump an entire tensor in this and it'll handle it
         
-        if (present(third_array)) then
-            call tertiary_array_swapper(third_array, Sorted_index)
-        endif 
+        if (present(third_array))   call tertiary_array_swapper(third_array,  Sorted_index)
         
-        if (present(fourth_array)) then
-            call tertiary_array_swapper(fourth_array, Sorted_index)
-        endif 
+        if (present(fourth_array))  call tertiary_array_swapper(fourth_array, Sorted_index)
         
-        if (present(fifth_array)) then
-            call tertiary_array_swapper(fifth_array, Sorted_index)
-        endif 
+        if (present(fifth_array))   call tertiary_array_swapper(fifth_array,  Sorted_index)
         
-        if (present(sixth_array)) then
-            call tertiary_array_swapper(sixth_array, Sorted_index)
-        endif 
+        if (present(sixth_array))   call tertiary_array_swapper(sixth_array,  Sorted_index)
         
-        if (present(seventh_array)) then
-            call tertiary_array_swapper(seventh_array, Sorted_index)
-        endif 
+        if (present(seventh_array)) call tertiary_array_swapper(seventh_array,Sorted_index)
         
-        if (present(eighth_array)) then
-            call tertiary_array_swapper(eighth_array, Sorted_index)
-        endif 
+        if (present(eighth_array))  call tertiary_array_swapper(eighth_array, Sorted_index)
         
-        if (present(ninth_array)) then
-            call tertiary_array_swapper(ninth_array, Sorted_index)
-        endif 
+        if (present(ninth_array))   call tertiary_array_swapper(ninth_array,  Sorted_index)
         
-        if (present(tenth_array)) then
-            call tertiary_array_swapper(tenth_array, Sorted_index)
-        endif 
+        if (present(tenth_array))   call tertiary_array_swapper(tenth_array,  Sorted_index) 
         
     end subroutine quicksort_arr
     
@@ -515,6 +499,7 @@ module quicksort_module
                 allocate(temp_arrayi4, source=tertiary_array_temp)
                 print*,temp_arrayi4
                 print*,Sorted_index
+                print*,temp_arrayi4(Sorted_index(:))
                 tertiary_array_temp(:) = temp_arrayi4(Sorted_index(:))
                 print*,tertiary_array_temp
                 print*,Sorted_index
