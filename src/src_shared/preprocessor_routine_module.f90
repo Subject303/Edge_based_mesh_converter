@@ -157,8 +157,6 @@ module preprocessor_routine_module
             enddo
         enddo
         
-        print*, size(c_e_obj_relation_array)
-        
         backward_index_duplicates = 0
         
         do c=1,nele
@@ -179,13 +177,9 @@ module preprocessor_routine_module
         enddo
         
         c_e_index_array(:) = c_e_index_array(:) - backward_index_duplicates(:)
-        
-        print*, c_e_index_array(nele)
+        c_e_sum = c_e_index_array(nele)
         
         call remove_flagged_duplicates(c_e_obj_relation_array)
-        
-        
-        print*, size(c_e_obj_relation_array)
         
         print *, 'finished processing cell edge relation array'
         
