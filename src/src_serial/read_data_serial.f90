@@ -54,6 +54,7 @@ module read_data_serial
         read(10) e_p_obj_relation_array(:)
         
         allocate ( c_f_index_array(0:nele), f_e_index_array(0:nface)  )
+        e_p_sum = nedge*2
         
         print*, 'reading cell to face index array '
         read(10) c_f_sum
