@@ -143,8 +143,6 @@ module quicksort_module
         
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
         
-        print*, 'array qsort'
-        
         call tertiary_array_swapper(secondary_array, Sorted_index)
         
         ! this is probably huge overkill, but it means that I could in theory dump an entire tensor in this and it'll handle it
@@ -515,7 +513,12 @@ module quicksort_module
                 tertiary_array_temp(:) = temp_arrayi2(Sorted_index(:))
             type is (integer(KIND=int32))
                 allocate(temp_arrayi4, source=tertiary_array_temp)
+                print*,temp_arrayi4
+                print*,Sorted_index
                 tertiary_array_temp(:) = temp_arrayi4(Sorted_index(:))
+                print*,tertiary_array_temp
+                print*,Sorted_index
+                
             type is (integer(KIND=int64))
                 allocate(temp_arrayi8, source=tertiary_array_temp)
                 tertiary_array_temp(:) = temp_arrayi8(Sorted_index(:))
