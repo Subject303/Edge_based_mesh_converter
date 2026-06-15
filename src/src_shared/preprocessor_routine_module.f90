@@ -174,9 +174,13 @@ module preprocessor_routine_module
             
         enddo
         
-        print*, sum(backward_index_duplicates)
+        do c=1,nele
+            backward_index_duplicates(c) = backward_index_duplicates(c-1) + backward_index_duplicates(c)
+        enddo
         
-!         c_e_index_array(:) = c_e_index_array(:) - backward_index_duplicates(:)
+        c_e_index_array(:) = c_e_index_array(:) - backward_index_duplicates(:)
+        
+        print*, c_e_index_array(nele)
         
         call remove_flagged_duplicates(c_e_obj_relation_array)
         
