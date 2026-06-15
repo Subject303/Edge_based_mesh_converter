@@ -32,6 +32,8 @@ module boundary_routine_module
         
             nfaces = f_c_index_array(f) - f_c_index_array(f-1)
             
+            print*, f, nfaces
+            
             if (nfaces .eq. 1) then
             
                 f_bound_array(f) = .true.
