@@ -51,6 +51,9 @@ module boundary_routine_module
             endif
         enddo
         
+        print*, f_bound_array
+        print*, f_internal_array
+        
         f_bound_indexing_array   =pack(f_bound_indexing_array   ,f_bound_array)
         f_internal_indexing_array=pack(f_internal_indexing_array,f_internal_array)
         b_nface = size(f_bound_indexing_array)
