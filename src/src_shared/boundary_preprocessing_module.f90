@@ -83,15 +83,10 @@ module boundary_routine_module
             fe_start = (1 + f_e_index_array(f-1))
             fe_end   = f_e_index_array(f)
             
-            print*, f_bound_array(f), f, fe_start, fe_end
-            print*,f_e_obj_relation_array(fe_start:fe_end)
-            print*, 'aa'
             if (f_bound_array(f))then
                 e_bound_array(   f_e_obj_relation_array(fe_start:fe_end)) = .true.
                 
-!             elseif (f_internal_array(f)) then
-!                 e_internal_array(f_e_obj_relation_array(fe_start:fe_end)) = .true.
-                
+             elseif (f_internal_array(f)) then
             else
                 print*, 'face id : ', f, ' , is not flagged internal or external'
             endif
@@ -100,8 +95,8 @@ module boundary_routine_module
         
         e_internal_array = .not. e_bound_array
         
-        print*, e_bound_array
-        print*, e_internal_array
+        print*, b_nedge
+        print*, i_nedge
         
         e_bound_indexing_array   =pack(e_bound_indexing_array   ,e_bound_array)
         e_internal_indexing_array=pack(e_internal_indexing_array,e_internal_array)
