@@ -76,7 +76,7 @@ module quicksort_module
         
         i = first
         j = last
-!         
+        
         Sorted_index = (/(i,i=first,last)/)
         
         select type (array)
@@ -144,8 +144,6 @@ module quicksort_module
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
         
         print*, 'array qsort'
-        
-        print*, Sorted_index
         
         call tertiary_array_swapper(secondary_array, Sorted_index)
         
