@@ -71,13 +71,13 @@ module quicksort_module
         integer(KIND=int32)          :: first, last, i, j, indexer
         integer(KIND=int32),allocatable :: Sorted_index(:)
 
-        first = type_bounding(first_unbound)
-        last  = type_bounding(last_unbound)
-        
+!         first = type_bounding(first_unbound)
+!         last  = type_bounding(last_unbound)
+!         
         i = first
         j = last
-        
-        Sorted_index = (/(i,i=first,last)/)
+!         
+!         Sorted_index = (/(i,i=first,last)/)
         
         select type (array)
             type is (integer(KIND=int16))
@@ -153,6 +153,8 @@ module quicksort_module
         class(*)                        :: secondary_array(:)
         class(*),optional               :: third_array(:), fourth_array(:), fifth_array(:), sixth_array(:), seventh_array(:), eighth_array(:), ninth_array(:), tenth_array(:)
         integer(KIND=int32),allocatable :: Sorted_index(:)
+        
+        Sorted_index = (/(i,i=type_bounding(first_unbound),type_bounding(last_unbound))/)
         
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
         
