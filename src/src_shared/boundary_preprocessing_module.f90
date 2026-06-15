@@ -134,17 +134,22 @@ module boundary_routine_module
             if (f_bound_array(f))then
                 p_bound_array(   f_p_obj_relation_array(fp_start:fp_end)) = .true.
             elseif (f_internal_array(f)) then
-                p_internal_array(f_p_obj_relation_array(fp_start:fp_end)) = .true.
+                ! again purely a convinient place to track if the internal array has been flagged right
             else
                 print*, 'face id : ', f, ' , is not flagged internal or external'
             endif
             
         enddo
         
+        p_internal_array = .not. p_bound_array
+        
         p_bound_indexing_array   =pack(p_bound_indexing_array   ,p_bound_array)
         p_internal_indexing_array=pack(p_internal_indexing_array,p_internal_array)
         b_npoin = size(p_bound_indexing_array)
         i_npoin = size(p_internal_indexing_array)
+        
+        print*, b_npoin
+        print*, i_npoin
         
         if (b_npoin+i_npoin .ne. npoin)then
             print*, 'ERROR ERROR'
