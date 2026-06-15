@@ -89,7 +89,7 @@ module preprocessor_routine_module
     subroutine c_e_preprocess
         use utils
         implicit none
-        integer(KIND=INT32) :: c, cf_index, cf_start_index, cf_end_index, f, fe_index, fe_start_index, fe_end_index, ce_index, n_con_edges, ce_start_index, ce_end_index, backward_index_duplicates(nele), i
+        integer(KIND=INT32) :: c, cf_index, cf_start_index, cf_end_index, f, fe_index, fe_start_index, fe_end_index, ce_index, n_con_edges, ce_start_index, ce_end_index, backward_index_duplicates(0:nele), i
         
         
         print *, 'beginning processing cell edge relation array'
