@@ -107,8 +107,8 @@ module quicksort_module
                 
 !                 if (first < i-1) call qsort_i32(array, first, i-1)
 !                 if (j+1 < last)  call qsort_i32(array, j+1, last)
-                if (first < i-1) call qsort_swap_i32(array, first, i-1)
-                if (j+1 < last)  call qsort_swap_i32(array, j+1, last)
+                if (first < i-1) call quicksort_with_indexer(array, first, i-1, Sorted_index)
+                if (j+1 < last)  call quicksort_with_indexer(array, j+1, last,  Sorted_index)
                 
             type is (integer(KIND=int64))
                 call qsort_swap_i64(array, i, j)
