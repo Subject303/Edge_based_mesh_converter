@@ -233,13 +233,14 @@ module quicksort_module
         i = first
         j = last
         
-        call qsort_swap_i6(array, i, j)
-        
         if (present(sorted_index)) then
-            call indexer_swap(sorted_index,first,last,i,j)
+            call qsort_swap_i6_indexer(array, i, j, sorted_index)
+            
             if (first < i-1) call qsort_i6(array, first, i-1, sorted_index)
             if (j+1 < last)  call qsort_i6(array, j+1, last,  sorted_index)
         else
+            call qsort_swap_i6(array, i, j)
+            
             if (first < i-1) call qsort_i6(array, first, i-1)
             if (j+1 < last)  call qsort_i6(array, j+1, last)
         endif
@@ -257,13 +258,14 @@ module quicksort_module
         i = first
         j = last
         
-        call qsort_swap_i32(array, i, j)
-        
         if (present(sorted_index)) then
-            call indexer_swap(sorted_index,first,last,i,j)
+            call qsort_swap_i32_indexer(array, i, j, sorted_index)
+        
             if (first < i-1) call qsort_i32(array, first, i-1, sorted_index)
             if (j+1 < last)  call qsort_i32(array, j+1, last,  sorted_index)
         else
+            call qsort_swap_i32(array, i, j)
+        
             if (first < i-1) call qsort_i32(array, first, i-1)
             if (j+1 < last)  call qsort_i32(array, j+1, last)
         endif
@@ -280,13 +282,14 @@ module quicksort_module
         i = first
         j = last
         
-        call qsort_swap_i64(array, i, j)
-        
         if (present(sorted_index)) then
-            call indexer_swap(sorted_index,first,last,i,j)
+            call qsort_swap_i64_indexer(array, i, j, sorted_index)
+            
             if (first < i-1) call qsort_i64(array, first, i-1, sorted_index)
             if (j+1 < last)  call qsort_i64(array, j+1, last,  sorted_index)
         else
+            call qsort_swap_i64(array, i, j)
+            
             if (first < i-1) call qsort_i64(array, first, i-1)
             if (j+1 < last)  call qsort_i64(array, j+1, last)
         endif
@@ -303,13 +306,14 @@ module quicksort_module
         i = first
         j = last
         
-        call qsort_swap_r32(array, i, j)
-        
         if (present(sorted_index)) then
-            call indexer_swap(sorted_index,first,last,i,j)
+            call qsort_swap_r32_indexer(array, i, j, sorted_index)
+            
             if (first < i-1) call qsort_r32(array, first, i-1, sorted_index)
             if (j+1 < last)  call qsort_r32(array, j+1, last,  sorted_index)
         else
+            call qsort_swap_r32(array, i, j)
+            
             if (first < i-1) call qsort_r32(array, first, i-1)
             if (j+1 < last)  call qsort_r32(array, j+1, last)
         endif
@@ -326,13 +330,15 @@ module quicksort_module
         i = first
         j = last
         
-        call qsort_swap_r64(array, i, j)
-        
         if (present(sorted_index)) then
-            call indexer_swap(sorted_index,first,last,i,j)
+            
+            call qsort_swap_r64_indexer(array, i, j, sorted_index)
+            
             if (first < i-1) call qsort_r64(array, first, i-1, sorted_index)
             if (j+1 < last)  call qsort_r64(array, j+1, last,  sorted_index)
         else
+            call qsort_swap_r64(array, i, j)
+        
             if (first < i-1) call qsort_r64(array, first, i-1)
             if (j+1 < last)  call qsort_r64(array, j+1, last)
         endif
@@ -469,21 +475,162 @@ module quicksort_module
             j=j-1
         end do
     end subroutine qsort_swap_r64
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    subroutine qsort_swap_i6_indexer(array,i,j,sorted_index)
+        
+        implicit none
+        integer(KIND=int32) :: i, j
+        integer(KIND=int32) :: sorted_index(:)
+        real(kind=real32)   :: pivot
+        integer(KIND=int16) ::  array(:)
+        integer(KIND=int16) ::  swap_variable
+        pivot = array( (i+j) / 2 )
+        do
+            do while (array(i) < pivot)
+                i=i+1
+            end do
+            do while (pivot < array(j))
+                j=j-1
+            end do
+            if (i >= j) exit
+            
+            swap_variable = array(i)
+            array(i) = array(j)
+            array(j) = swap_variable
+            
+            call indexer_swap(sorted_index, i, j)
+
+            i=i+1
+            j=j-1
+        end do
+    end subroutine qsort_swap_i6_indexer
+
+    subroutine qsort_swap_i32_indexer(array,i,j,sorted_index)
+        
+        implicit none
+        integer(KIND=int32) :: i, j
+        integer(KIND=int32) :: sorted_index(:)
+        real(kind=real32)   :: pivot
+        integer(KIND=int32) ::  array(:)
+        integer(KIND=int32) ::  swap_variable
+        pivot = array( (i+j) / 2 )
+        do
+            do while (array(i) < pivot)
+                i=i+1
+            end do
+            do while (pivot < array(j))
+                j=j-1
+            end do
+            if (i >= j) exit
+            
+            swap_variable = array(i)
+            array(i) = array(j)
+            array(j) = swap_variable
+            
+            call indexer_swap(sorted_index, i, j)
+
+            i=i+1
+            j=j-1
+        end do
+    end subroutine qsort_swap_i32_indexer
+
+    subroutine qsort_swap_i64_indexer(array,i,j,sorted_index)
+        
+        implicit none
+        integer(KIND=int32) :: i, j
+        integer(KIND=int32) :: sorted_index(:)
+        real(kind=real32)   :: pivot
+        integer(KIND=int64) ::  array(:)
+        integer(KIND=int64) ::  swap_variable
+        pivot = array( (i+j) / 2 )
+        do
+            do while (array(i) < pivot)
+                i=i+1
+            end do
+            do while (pivot < array(j))
+                j=j-1
+            end do
+            if (i >= j) exit
+            
+            swap_variable = array(i)
+            array(i) = array(j)
+            array(j) = swap_variable
+            
+            call indexer_swap(sorted_index, i, j)
+
+            i=i+1
+            j=j-1
+        end do
+    end subroutine qsort_swap_i64_indexer
+
+    subroutine qsort_swap_r32_indexer(array,i,j,sorted_index)
+        
+        implicit none
+        integer(KIND=int32) :: i, j
+        integer(KIND=int32) :: sorted_index(:)
+        real(kind=real32)   :: pivot
+        real(KIND=real32) ::  array(:)
+        real(KIND=real32) ::  swap_variable
+        pivot = array( (i+j) / 2 )
+        do
+            do while (array(i) < pivot)
+                i=i+1
+            end do
+            do while (pivot < array(j))
+                j=j-1
+            end do
+            if (i >= j) exit
+            
+            swap_variable = array(i)
+            array(i) = array(j)
+            array(j) = swap_variable
+            
+            call indexer_swap(sorted_index, i, j)
+
+            i=i+1
+            j=j-1
+        end do
+    end subroutine qsort_swap_r32_indexer
+
+    subroutine qsort_swap_r64_indexer(array,i,j,sorted_index)
+        
+        implicit none
+        integer(KIND=int32) :: i, j
+        integer(KIND=int32) :: sorted_index(:)
+        real(kind=real32)   :: pivot
+        real(KIND=real64)  ::  array(:)
+        real(KIND=real64)  ::  swap_variable
+        pivot = array( (i+j) / 2 )
+        do
+            do while (array(i) < pivot)
+                i=i+1
+            end do
+            do while (pivot < array(j))
+                j=j-1
+            end do
+            if (i >= j) exit
+            
+            swap_variable = array(i)
+            array(i) = array(j)
+            array(j) = swap_variable
+            
+            call indexer_swap(sorted_index, i, j)
+            
+            i=i+1
+            j=j-1
+        end do
+    end subroutine qsort_swap_r64_indexer
     
-    subroutine indexer_swap(array, old_i, old_j, i, j)
+    subroutine indexer_swap(array, i, j)
         
         implicit none
         integer(KIND=int32) :: i, j, old_i, old_j
         integer(KIND=int32)  ::  array(:)
         integer(KIND=int32)  ::  swap_variable
 
-! c         swap_variable = array(i-1)
-! c         array(i-1) = array(j+1)
-! c         array(j+1) = swap_variable
-        
-!         swap_variable = array(i)
-        array(i) = array(old_i)
-        array(j) = array(old_j)
+        swap_variable = array(i)
+        array(i) = array(j)
+        array(j) = swap_variable
 
     end subroutine indexer_swap
 
