@@ -28,7 +28,6 @@ module boundary_routine_module
         f_bound_indexing_array    = (/(f, f=1,nface)/)
         allocate(f_internal_indexing_array,source=f_bound_indexing_array)
         
-        print*,f_c_index_array
         
         do f=1,nface
             if (f_c_index_array(f) .eq. 1) then
