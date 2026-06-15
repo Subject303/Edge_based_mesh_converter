@@ -496,18 +496,18 @@ module quicksort_module
                 tertiary_array_temp(:) = temp_arrayi2(Sorted_index(:))
             type is (integer(KIND=int32))
                 allocate(temp_arrayi4, source=tertiary_array_temp)
-                print*,temp_arrayi4
-                print*,tertiary_array_temp
-                print*,Sorted_index
-                print*,'AAA'
-                do i=1,size(tertiary_array_temp)
-                    temp_arrayi4(i) = tertiary_array_temp(Sorted_index(i))
-                enddo
-                tertiary_array_temp = temp_arrayi4
-!                 tertiary_array_temp(:) = temp_arrayi4(Sorted_index(:))
-                print*,temp_arrayi4
-                print*,tertiary_array_temp
-                print*,Sorted_index
+!                 print*,temp_arrayi4
+!                 print*,tertiary_array_temp
+!                 print*,Sorted_index
+!                 print*,'AAA'
+!                 do i=1,size(tertiary_array_temp)
+!                     temp_arrayi4(i) = tertiary_array_temp(Sorted_index(i))
+!                 enddo
+!                 tertiary_array_temp = temp_arrayi4
+                tertiary_array_temp(:) = temp_arrayi4(Sorted_index(:))
+!                 print*,temp_arrayi4
+!                 print*,tertiary_array_temp
+!                 print*,Sorted_index
                 
             type is (integer(KIND=int64))
                 allocate(temp_arrayi8, source=tertiary_array_temp)
