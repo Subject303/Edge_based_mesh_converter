@@ -84,7 +84,8 @@ module boundary_routine_module
             fe_end   = f_e_index_array(f)
             
             print*, f_bound_array(f), f, fe_start, fe_end
-            
+            print*,f_e_obj_relation_array(fe_start:fe_end)
+            print*, 'aa'
             if (f_bound_array(f))then
                 e_bound_array(   f_e_obj_relation_array(fe_start:fe_end)) = .true.
                 
