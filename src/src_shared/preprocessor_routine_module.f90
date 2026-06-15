@@ -159,17 +159,25 @@ module preprocessor_routine_module
         
         print*, size(c_e_obj_relation_array)
         
+!         backward_index_duplicates = 0
+        
         do c=1,nele
             ce_start_index = 1 + c_e_index_array(c-1)
             ce_end_index   = c_e_index_array(c)
             
             call sort_and_flag_duplicates(c_e_obj_relation_array(ce_start_index:ce_end_index))
             
-            !call sort_and_flag_duplicates(c_e_obj_relation_array, ce_start_index, ce_end_index)
+            
+!             do i=ce_start_index,ce_end_index
+!                 if (c_e_obj_relation_array .lt. 0) backward_index_duplicates(c) + 1 
+!             enddo
             
         enddo
         
+!         c_e_index_array(:) = c_e_index_array(:) - backward_index_duplicates(:)
+        
         call remove_flagged_duplicates(c_e_obj_relation_array)
+        
         
         print*, size(c_e_obj_relation_array)
         
