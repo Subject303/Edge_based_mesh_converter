@@ -102,42 +102,22 @@ module quicksort_module
         
         select type (array)
             type is (integer(KIND=int16))
-                call qsort_swap_i6(array, i, j)
-                indexer         = Sorted_index(i)
-                Sorted_index(i) = Sorted_index(j)
-                Sorted_index(j) = indexer
-                if (first < i-1) call qsort_i6(array, first, i-1, Sorted_index)
-                if (j+1 < last)  call qsort_i6(array, j+1, last,  Sorted_index)
+                call qsort_i6(array, i, j, Sorted_index)
                 
             type is (integer(KIND=int32))
-!                 call qsort_swap_i32(array, i, j)
                 call qsort_i32(array, i, j, Sorted_index)
-!                 if (first < i-1) call qsort_i32(array, first, i-1, Sorted_index)
-!                 if (j+1 < last)  call qsort_i32(array, j+1, last,  Sorted_index)
+                print*, 'qsort indexer'
+                print*, array
+                print*, Sorted_index
                 
             type is (integer(KIND=int64))
-                call qsort_swap_i64(array, i, j)
-                indexer         = Sorted_index(i)
-                Sorted_index(i) = Sorted_index(j)
-                Sorted_index(j) = indexer
-                if (first < i-1) call qsort_i64(array, first, i-1, Sorted_index)
-                if (j+1 < last)  call qsort_i64(array, j+1, last,  Sorted_index)
+                call qsort_i64(array, i, j, Sorted_index)
                 
             type is (real(KIND=real32))
-                call qsort_swap_r32(array, i, j)
-                indexer         = Sorted_index(i)
-                Sorted_index(i) = Sorted_index(j)
-                Sorted_index(j) = indexer
-                if (first < i-1) call qsort_r32(array, first, i-1, Sorted_index)
-                if (j+1 < last)  call qsort_r32(array, j+1, last,  Sorted_index)
+                call qsort_r32(array, i, j, Sorted_index)
                 
             type is (real(KIND=real64))
-                call qsort_swap_r64(array, i, j)
-                indexer         = Sorted_index(i)
-                Sorted_index(i) = Sorted_index(j)
-                Sorted_index(j) = indexer
-                if (first < i-1) call qsort_r64(array, first, i-1, Sorted_index)
-                if (j+1 < last)  call qsort_r64(array, j+1, last,  Sorted_index)
+                call qsort_r64(array, i, j, Sorted_index)
                 
             class default
                 print*,"MISSING TYPING DEFINITON IN quicksort_with_indexer"
