@@ -33,34 +33,55 @@ module quicksort_module
         
         select type (array)
             type is (integer(KIND=int16))
-                call qsort_swap_i6(array, i, j)
-                if (first < i-1) call qsort_i6(array, first, i-1)
-                if (j+1 < last)  call qsort_i6(array, j+1, last)
+                call qsort_i6(array, i, j)
                 
             type is (integer(KIND=int32))
-                call qsort_swap_i32(array, i, j)
-                if (first < i-1) call qsort_i32(array, first, i-1)
-                if (j+1 < last)  call qsort_i32(array, j+1, last)
+                call qsort_i32(array, i, j)
                 
             type is (integer(KIND=int64))
-                call qsort_swap_i64(array, i, j)
-                if (first < i-1) call qsort_i64(array, first, i-1)
-                if (j+1 < last)  call qsort_i64(array, j+1, last)
+                call qsort_i64(array, i, j)
                 
             type is (real(KIND=real32))
-                call qsort_swap_r32(array, i, j)
-                if (first < i-1) call qsort_r32(array, first, i-1)
-                if (j+1 < last)  call qsort_r32(array, j+1, last)
+                call qsort_r32(array, i, j)
                 
             type is (real(KIND=real64))
-                call qsort_swap_r64(array, i, j)
-                if (first < i-1) call qsort_r64(array, first, i-1)
-                if (j+1 < last)  call qsort_r64(array, j+1, last)
+                call qsort_r64(array, i, j)
                 
             class default
                 print*,"MISSING TYPING DEFINITON IN quicksort_unindexed"
                 STOP
         end select
+        
+!         select type (array)
+!             type is (integer(KIND=int16))
+!                 call qsort_swap_i6(array, i, j)
+!                 if (first < i-1) call qsort_i6(array, first, i-1)
+!                 if (j+1 < last)  call qsort_i6(array, j+1, last)
+!                 
+!             type is (integer(KIND=int32))
+!                 call qsort_swap_i32(array, i, j)
+!                 if (first < i-1) call qsort_i32(array, first, i-1)
+!                 if (j+1 < last)  call qsort_i32(array, j+1, last)
+!                 
+!             type is (integer(KIND=int64))
+!                 call qsort_swap_i64(array, i, j)
+!                 if (first < i-1) call qsort_i64(array, first, i-1)
+!                 if (j+1 < last)  call qsort_i64(array, j+1, last)
+!                 
+!             type is (real(KIND=real32))
+!                 call qsort_swap_r32(array, i, j)
+!                 if (first < i-1) call qsort_r32(array, first, i-1)
+!                 if (j+1 < last)  call qsort_r32(array, j+1, last)
+!                 
+!             type is (real(KIND=real64))
+!                 call qsort_swap_r64(array, i, j)
+!                 if (first < i-1) call qsort_r64(array, first, i-1)
+!                 if (j+1 < last)  call qsort_r64(array, j+1, last)
+!                 
+!             class default
+!                 print*,"MISSING TYPING DEFINITON IN quicksort_unindexed"
+!                 STOP
+!         end select
         
     end subroutine quicksort_unindexed
     
