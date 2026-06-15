@@ -143,10 +143,7 @@ module quicksort_module
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
         
         print*, 'array qsort'
-        
-        print*, array
-        print*, secondary_array
-        print*, Sorted_index
+        Print*, Sorted_index
         
         call tertiary_array_swapper(secondary_array, Sorted_index)
         
@@ -488,7 +485,8 @@ module quicksort_module
                 print*,"MISSING TYPING DEFINITON IN tertiary_array_swapper"
                 STOP
         end select
-    
+        
+        
     end subroutine tertiary_array_swapper
     
     ! end contains
