@@ -56,6 +56,12 @@ module boundary_routine_module
         b_nface = size(f_bound_indexing_array)
         i_nface = size(f_internal_indexing_array)
         
+        if (b_nface+i_nface .ne. nface)then
+            print*, 'ERROR ERROR'
+            print*, 'sum of internal and external faces is different to the total count of faces.'
+            stop
+        endif
+        
     end subroutine identify_boundary_faces
     
     subroutine identify_boundary_edges
@@ -92,6 +98,12 @@ module boundary_routine_module
         b_nedge = size(e_bound_indexing_array)
         i_nedge = size(e_internal_indexing_array)
         
+        if (b_nedge+i_nedge .ne. nedge)then
+            print*, 'ERROR ERROR'
+            print*, 'sum of internal and external edges is different to the total count of edges.'
+            stop
+        endif
+        
     end subroutine identify_boundary_edges
     
     subroutine identify_boundary_points
@@ -127,6 +139,12 @@ module boundary_routine_module
         p_internal_indexing_array=pack(p_internal_indexing_array,p_internal_array)
         b_npoin = size(p_bound_indexing_array)
         i_npoin = size(p_internal_indexing_array)
+        
+        if (b_npoin+i_npoin .ne. npoin)then
+            print*, 'ERROR ERROR'
+            print*, 'sum of internal and external edges is different to the total count of edges.'
+            stop
+        endif
         
     end subroutine identify_boundary_points
     
