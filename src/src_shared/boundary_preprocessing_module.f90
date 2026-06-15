@@ -32,8 +32,6 @@ module boundary_routine_module
         
             nfaces = f_c_index_array(f) - f_c_index_array(f-1)
             
-            print*, f, nfaces
-            
             if (nfaces .eq. 1) then
             
                 f_bound_array(f) = .true.
@@ -42,7 +40,7 @@ module boundary_routine_module
             ! this elseif is technically overkill and has performance overhead
             ! but belt and braces keeps my arse off the frontpages
             
-                f_internal_array = .true.
+                f_internal_array(f) = .true.
                 
             else
                 print*, 'ERROR ERROR'
@@ -52,9 +50,6 @@ module boundary_routine_module
                 
             endif
         enddo
-        
-        print*, f_bound_array
-        print*, f_internal_array
         
         f_bound_indexing_array   =pack(f_bound_indexing_array   ,f_bound_array)
         f_internal_indexing_array=pack(f_internal_indexing_array,f_internal_array)
