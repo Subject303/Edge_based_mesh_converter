@@ -316,10 +316,6 @@ module preprocessor_routine_module
                     if (backward_obj_relation_array(i) .lt. 0) backward_index_duplicates(y) = backward_index_duplicates(y) + 1 
                 enddo
                 
-!                 backward_index_duplicates(y) = x_count - 1 ! starts looping at beginning of a point and counts up
-!                 do while (backward_obj_relation_array(backward_index(y)-backward_index_duplicates(y)) .lt. 0)
-!                     backward_index_duplicates(y) = backward_index_duplicates(y) - 1
-!                 enddo
                 
             endif
             
