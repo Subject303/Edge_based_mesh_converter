@@ -4,6 +4,7 @@ module data_processing_serial
     
     use preprocessor_routine_module
     use boundary_routine_module
+    use object_counts
     
     implicit none
     
@@ -86,6 +87,8 @@ module data_processing_serial
         print*, 'finished calculating boundary normal vectors'
         print*, ' '
 
+        print*, i_npoin, b_npoin, i_nedge, b_nedge, i_nface, b_nface, i_nele, b_nele
+        
     end subroutine data_preprocessing
     
     subroutine data_processing
