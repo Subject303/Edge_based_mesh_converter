@@ -20,6 +20,8 @@ module preprocessor_routine_module
         
         print*, 'beginning calculating edge centroids'
         
+        call quicksort((/5,4,3,2,1/), 1, 5, (/2,4,6,8,10/))
+        stop
         allocate(e_centroid(nedge,3))
         
         e_p_sum = nedge*2
