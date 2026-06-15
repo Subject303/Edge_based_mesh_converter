@@ -265,6 +265,7 @@ module preprocessor_routine_module
         call quicksort(y_index , 1 , forward_sum , backward_obj_relation_array)
 
         backward_index = 0
+        backward_index_duplicates = 0
         total_x_count = 0
         x_count=0
         do y=1, backward_leading_obj_count
