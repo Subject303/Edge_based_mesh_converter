@@ -152,6 +152,7 @@ module boundary_routine_module
         print*, i_npoin
         
         print*, coords(p_internal_indexing_array,:)
+        print*, maxval(coords(:,1)),maxval(coords(:,2)),maxval(coords(:,3)),minval(coords(:,1)),minval(coords(:,2)),minval(coords(:,3))
         
         if (b_npoin+i_npoin .ne. npoin)then
             print*, 'ERROR ERROR'
