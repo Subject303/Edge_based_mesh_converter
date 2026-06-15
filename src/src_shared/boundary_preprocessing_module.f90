@@ -101,7 +101,7 @@ module boundary_routine_module
         
         ! again same thing but points
         
-        allocate(p_bound_array(npoin) ,p_internal_array(npoin), e_bound_indexing_array(npoin))
+        allocate(p_bound_array(npoin) ,p_internal_array(npoin), p_bound_indexing_array(npoin))
         
         p_bound_array = .false.
         p_internal_array = .false.
