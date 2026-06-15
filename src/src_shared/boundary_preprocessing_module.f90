@@ -16,7 +16,7 @@ module boundary_routine_module
     
     subroutine identify_boundary_faces
         implicit none
-        integer(KIND=INT32) :: f, i, b
+        integer(KIND=INT32) :: f, i, b, nfaces
         
         ! this one is easy because all faces are connected to between 1 and 2 cells
         ! all faces connected to 2 cells are internal, and all connected to 1 cell are boundaries
@@ -31,11 +31,14 @@ module boundary_routine_module
         print*,f_c_index_array
         
         do f=1,nface
-            if (f_c_index_array(f) .eq. 1) then
+        
+            nfaces = f_c_index_array(f) - f_c_index_array(f-1)
+            
+            if (nfaces .eq. 1) then
             
                 f_bound_array(f) = .true.
                 
-            elseif (f_c_index_array(f) .eq. 2) then
+            elseif (nfaces .eq. 2) then
             ! this elseif is technically overkill and has performance overhead
             ! but belt and braces keeps my arse off the frontpages
             
