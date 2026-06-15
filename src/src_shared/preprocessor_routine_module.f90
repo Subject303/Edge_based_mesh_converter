@@ -16,12 +16,30 @@ module preprocessor_routine_module
     
     subroutine calc_e_centroid
         implicit none
+        
+        integer(KIND=INT32),allocatable :: temp, temp2
+        print*, 'beginning calculating edge centroids'
+        
+        temp = (/3,5,4,3,2,1/)
+        
+        temp2 = (/77,2,4,6,8,10/)
+        
+        call quicksort(temp, 1, 5, temp2)
+        print*, 'aaa'
+        print*, temp
+        print*, temp2
+        
+        stop
+
+        
+    end subroutine calc_e_centroid
+    
+    subroutine calc_e_centroid
+        implicit none
         integer(KIND=INT32) :: e, i, ep_start, ep_end
         
         print*, 'beginning calculating edge centroids'
         
-        call quicksort((/5,4,3,2,1/), 1, 5, (/2,4,6,8,10/))
-        stop
         allocate(e_centroid(nedge,3))
         
         e_p_sum = nedge*2
