@@ -142,6 +142,8 @@ module quicksort_module
         
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
         
+        print*, 'array qsort'
+        
         call tertiary_array_swapper(secondary_array, Sorted_index)
         
         ! this is probably huge overkill, but it means that I could in theory dump an entire tensor in this and it'll handle it
