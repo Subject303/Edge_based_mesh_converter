@@ -21,7 +21,7 @@ module boundary_routine_module
         ! this one is easy because all faces are connected to between 1 and 2 cells
         ! all faces connected to 2 cells are internal, and all connected to 1 cell are boundaries
         
-        allocate(f_bound_array(nface) ,f_internal_array(nface), f_bound_indexing_array(nface), f_internal_indexing_array(nface))
+        allocate(f_bound_array(nface) ,f_internal_array(nface), f_bound_indexing_array(nface))
         
         f_bound_array = .false.
         f_internal_array = .false.
