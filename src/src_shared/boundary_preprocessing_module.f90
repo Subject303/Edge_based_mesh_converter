@@ -151,6 +151,8 @@ module boundary_routine_module
         print*, b_npoin
         print*, i_npoin
         
+        print*, coords(p_internal_indexing_array,:)
+        
         if (b_npoin+i_npoin .ne. npoin)then
             print*, 'ERROR ERROR'
             print*, 'sum of internal and external points is different to the total count of points.'
