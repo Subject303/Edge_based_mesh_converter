@@ -482,8 +482,8 @@ module quicksort_module
 ! c         array(j+1) = swap_variable
         
 !         swap_variable = array(i)
-        array(i-1) = array(old_i)
-        array(j+1) = array(old_j)
+        array(i) = array(old_i)
+        array(j) = array(old_j)
 
     end subroutine indexer_swap
 
