@@ -286,6 +286,8 @@ module preprocessor_routine_module
             
                 ! flag duplicates
                 
+                print*,backward_obj_relation_array((backward_index(y-1)+1):x_count)
+                
                 call sort_and_flag_duplicates(backward_obj_relation_array((backward_index(y-1)+1):x_count))
                 
                 print*,backward_obj_relation_array((backward_index(y-1)+1):x_count)
