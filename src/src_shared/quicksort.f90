@@ -196,9 +196,12 @@ module quicksort_module
         class(*)            :: matrix_one(:,:)
         class(*),optional   :: matrix_two(:,:), matrix_three(:,:)
         integer(KIND=int32),allocatable :: Sorted_index(:)
-        integer(KIND=int32)             :: i
+        integer(KIND=int32)             :: i, first, last
         
-        Sorted_index = (/(i,i=first_unbound , last_unbound)/)
+        first = type_bounding(first_unbound)
+        last  = type_bounding(last_unbound)
+        
+        Sorted_index = (/(i,i=first , last)/)
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
     
         do i=1,size(matrix_one,2)
