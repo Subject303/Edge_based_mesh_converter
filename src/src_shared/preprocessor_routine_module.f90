@@ -248,7 +248,7 @@ module preprocessor_routine_module
     
         integer(KIND=INT32),allocatable :: forward_index(:), backward_index(:), forward_obj_relation_array(:), backward_obj_relation_array(:)
         integer(KIND=INT32),allocatable :: y_index(:), backward_index_duplicates(:)
-        integer(KIND=INT32) :: x, y, x_count, total_x_count, forward_sum, backward_sum, xy_start_index, xy_end_index, forward_leading_obj_count, backward_leading_obj_count
+        integer(KIND=INT32) :: x, y, x_count, total_x_count, forward_sum, backward_sum, xy_start_index, xy_end_index, forward_leading_obj_count, backward_leading_obj_count, i
         
         
         allocate(backward_obj_relation_array(forward_sum), backward_index(0:backward_leading_obj_count), backward_index_duplicates(0:backward_leading_obj_count) )
@@ -289,7 +289,7 @@ module preprocessor_routine_module
                 call sort_and_flag_duplicates(backward_obj_relation_array((backward_index(y-1)+1):x_count))
                 
                 do i=(backward_index(y-1)+1),x_count
-                    if (backward_obj_relation_array(i) .lt. 0) backward_index_duplicates(c) = backward_index_duplicates(c) + 1 
+                    if (backward_obj_relation_array(i) .lt. 0) backward_index_duplicates(y) = backward_index_duplicates(y) + 1 
                 enddo
                 
 !                 backward_index_duplicates(y) = x_count - 1 ! starts looping at beginning of a point and counts up
