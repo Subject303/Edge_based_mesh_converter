@@ -288,18 +288,28 @@ module preprocessor_routine_module
                 
                 call sort_and_flag_duplicates(backward_obj_relation_array((backward_index(y-1)+1):x_count))
                 
-                backward_index_duplicates(y) = x_count - 1 ! starts looping at beginning of a point and counts up
-                do while (backward_obj_relation_array(backward_index(y)-backward_index_duplicates(y)) .lt. 0)
-                    backward_index_duplicates(y) = backward_index_duplicates(y) - 1
+                do i=(backward_index(y-1)+1),x_count
+                    if (backward_obj_relation_array(i) .lt. 0) backward_index_duplicates(c) = backward_index_duplicates(c) + 1 
                 enddo
                 
+!                 backward_index_duplicates(y) = x_count - 1 ! starts looping at beginning of a point and counts up
+!                 do while (backward_obj_relation_array(backward_index(y)-backward_index_duplicates(y)) .lt. 0)
+!                     backward_index_duplicates(y) = backward_index_duplicates(y) - 1
+!                 enddo
+                
             endif
+            
+                
             ! I'ma be real here
             ! I'm pretty smug about this loop
             ! update: less so now
 
         enddo
-
+        
+        do i=1,backward_leading_obj_count
+            backward_index_duplicates(i) = backward_index_duplicates(i-1) + backward_index_duplicates(i)
+        enddo
+        
         print*,backward_index
         print*,backward_index_duplicates
         
@@ -307,7 +317,7 @@ module preprocessor_routine_module
 
         call remove_flagged_duplicates(backward_obj_relation_array)
 
-        backward_sum = size(backward_obj_relation_array)
+        backward_sum = backward_index(backward_leading_obj_count)
         
         print*,backward_index
         
