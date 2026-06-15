@@ -288,6 +288,8 @@ module preprocessor_routine_module
                 
                 call sort_and_flag_duplicates(backward_obj_relation_array((backward_index(y-1)+1):x_count))
                 
+                print*,backward_obj_relation_array((backward_index(y-1)+1):x_count)
+                
                 do i=(backward_index(y-1)+1),x_count
                     if (backward_obj_relation_array(i) .lt. 0) backward_index_duplicates(y) = backward_index_duplicates(y) + 1 
                 enddo
