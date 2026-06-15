@@ -93,7 +93,7 @@ module quicksort_module
                 indexer         = Sorted_index(i)
                 Sorted_index(i) = Sorted_index(j)
                 Sorted_index(j) = indexer
-                print*, i,k,Sorted_index(i),Sorted_index(j)
+                print*, i,j,Sorted_index(i),Sorted_index(j)
                 if (first < i-1) call qsort_i32(array, first, i-1)
                 if (j+1 < last)  call qsort_i32(array, j+1, last)
                 
