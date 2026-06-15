@@ -477,9 +477,13 @@ module quicksort_module
         integer(KIND=int32)  ::  array(:)
         integer(KIND=int32)  ::  swap_variable
 
-        swap_variable = array(i-1)
-        array(i-1) = array(j+1)
-        array(j+1) = swap_variable
+! c         swap_variable = array(i-1)
+! c         array(i-1) = array(j+1)
+! c         array(j+1) = swap_variable
+        
+        swap_variable = array(i)
+        array(i) = array(j)
+        array(j) = swap_variable
 
     end subroutine indexer_swap
 
