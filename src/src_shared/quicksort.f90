@@ -104,9 +104,12 @@ module quicksort_module
             type is (integer(KIND=int16))
                 call qsort_i6(array, i, j, Sorted_index)
                 
-            type is (integer(KIND=int32))
+            type is (integer(KIND=int32))                
+                print*, 'qsort indexer 1'
+                print*, array
+                print*, Sorted_index
                 call qsort_i32(array, i, j, Sorted_index)
-                print*, 'qsort indexer'
+                print*, 'qsort indexer 2'
                 print*, array
                 print*, Sorted_index
                 
