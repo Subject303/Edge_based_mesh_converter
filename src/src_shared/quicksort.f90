@@ -499,7 +499,7 @@ module quicksort_module
         array(i-1) = array(j+1)
         array(j+1) = swap_variable
 
-    end subroutine qsort_swap_r64
+    end subroutine indexer_swap
 
     subroutine tertiary_array_swapper(tertiary_array_temp, Sorted_index)
         implicit none
