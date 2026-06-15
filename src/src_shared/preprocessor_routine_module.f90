@@ -14,7 +14,7 @@ module preprocessor_routine_module
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!  centroid routines below ::
     
-    subroutine calc_e_centroid
+    subroutine qsort_test
         implicit none
         
         integer(KIND=INT32),allocatable :: temp, temp2
@@ -32,7 +32,7 @@ module preprocessor_routine_module
         stop
 
         
-    end subroutine calc_e_centroid
+    end subroutine qsort_test
     
     subroutine calc_e_centroid
         implicit none
