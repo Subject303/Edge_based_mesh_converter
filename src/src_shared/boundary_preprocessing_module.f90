@@ -83,6 +83,8 @@ module boundary_routine_module
             fe_start = (1 + f_e_index_array(f-1))
             fe_end   = f_e_index_array(f)
             
+            print*, f, fe_start, fe_end
+            
             if (f_bound_array(f))then
                 e_bound_array(   f_e_obj_relation_array(fe_start:fe_end)) = .true.
             elseif (f_internal_array(f)) then
@@ -142,7 +144,7 @@ module boundary_routine_module
         
         if (b_npoin+i_npoin .ne. npoin)then
             print*, 'ERROR ERROR'
-            print*, 'sum of internal and external edges is different to the total count of edges.'
+            print*, 'sum of internal and external points is different to the total count of points.'
             stop
         endif
         
