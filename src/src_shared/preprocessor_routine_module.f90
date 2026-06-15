@@ -301,6 +301,7 @@ module preprocessor_routine_module
         enddo
 
         print*,backward_index
+        print*,backward_index_duplicates
         
         backward_index(:) = backward_index(:) - backward_index_duplicates(:)
 
