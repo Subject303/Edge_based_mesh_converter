@@ -490,7 +490,7 @@ module quicksort_module
         real(KIND=real32),allocatable   :: temp_arrayr4(:)
         real(KIND=real64),allocatable   :: temp_arrayr8(:)
         integer(KIND=int32), intent(in)  :: Sorted_index(:)
-        
+        integer(KIND=int32) :: i
         select type (tertiary_array_temp)
             type is (integer(KIND=int16))
                 allocate(temp_arrayi2, source=tertiary_array_temp)
@@ -498,9 +498,15 @@ module quicksort_module
             type is (integer(KIND=int32))
                 allocate(temp_arrayi4, source=tertiary_array_temp)
                 print*,temp_arrayi4
+                print*,tertiary_array_temp
                 print*,Sorted_index
-                print*,temp_arrayi4(Sorted_index(:))
-                tertiary_array_temp(:) = temp_arrayi4(Sorted_index(:))
+                print*,'AAA'
+                do i=1,size(tertiary_array_temp)
+                    temp_arrayi4(i) = tertiary_array_temp(Sorted_index(i))
+                enddo
+                tertiary_array_temp = temp_arrayi4
+!                 tertiary_array_temp(:) = temp_arrayi4(Sorted_index(:))
+                print*,temp_arrayi4
                 print*,tertiary_array_temp
                 print*,Sorted_index
                 
