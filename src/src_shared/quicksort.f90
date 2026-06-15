@@ -77,7 +77,7 @@ module quicksort_module
         i = first
         j = last
         
-        Sorted_index = (/(i,i=first,last)/)
+!         Sorted_index = (/(i,i=first,last)/)
         
         select type (array)
             type is (integer(KIND=int16))
@@ -140,6 +140,7 @@ module quicksort_module
         class(*),optional               :: third_array(:), fourth_array(:), fifth_array(:), sixth_array(:), seventh_array(:), eighth_array(:), ninth_array(:), tenth_array(:)
         integer(KIND=int32),allocatable :: Sorted_index(:)
         
+        Sorted_index = (/(i,i=first_unbound , last_unbound)/)
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
         
         print*, 'array qsort'
@@ -193,6 +194,7 @@ module quicksort_module
         integer(KIND=int32),allocatable :: Sorted_index(:)
         integer(KIND=int32)             :: i
         
+        Sorted_index = (/(i,i=first_unbound , last_unbound)/)
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
     
         do i=1,size(matrix_one,2)
