@@ -300,6 +300,8 @@ module preprocessor_routine_module
 
         enddo
 
+        print*,backward_index
+        
         backward_index(:) = backward_index(:) - backward_index_duplicates(:)
 
         call remove_flagged_duplicates(backward_obj_relation_array)
