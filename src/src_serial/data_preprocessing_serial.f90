@@ -75,6 +75,8 @@ module data_processing_serial
         call identify_boundary_edges
         call identify_boundary_points
         
+        print*, i_npoin, b_npoin, i_nedge, b_nedge, i_nface, b_nface, i_nele, b_nele
+        
         print*, ' '
         print*, 'finished boundary identification'
         print*, ' '
@@ -86,8 +88,6 @@ module data_processing_serial
         print*, ' '
         print*, 'finished calculating boundary normal vectors'
         print*, ' '
-
-        print*, i_npoin, b_npoin, i_nedge, b_nedge, i_nface, b_nface, i_nele, b_nele
         
     end subroutine data_preprocessing
     
