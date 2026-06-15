@@ -23,11 +23,15 @@ module preprocessor_routine_module
         temp = (/3,5,4,3,2,1/)
         
         temp2 = (/77,2,4,6,8,10/)
-        
+        print*, 'aaa'
+        print*, temp
+        print*, temp2
+        print*, 'aaa'
         call quicksort(temp, 1, 6, temp2)
         print*, 'aaa'
         print*, temp
         print*, temp2
+        print*, 'aaa'
         
         stop
 
