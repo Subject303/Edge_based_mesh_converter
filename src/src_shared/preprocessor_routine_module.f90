@@ -17,7 +17,7 @@ module preprocessor_routine_module
     subroutine qsort_test
         implicit none
         
-        integer(KIND=INT32),allocatable :: temp, temp2
+        integer(KIND=INT32),allocatable :: temp(:), temp2(:)
         print*, 'beginning calculating edge centroids'
         
         temp = (/3,5,4,3,2,1/)
