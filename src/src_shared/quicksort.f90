@@ -236,7 +236,7 @@ module quicksort_module
         call qsort_swap_i6(array, i, j)
         
         if (present(sorted_index)) then
-            call indexer_swap(sorted_index,i,j)
+            call indexer_swap(sorted_index,first,last,i,j)
             if (first < i-1) call qsort_i6(array, first, i-1, sorted_index)
             if (j+1 < last)  call qsort_i6(array, j+1, last,  sorted_index)
         else
@@ -260,7 +260,7 @@ module quicksort_module
         call qsort_swap_i32(array, i, j)
         
         if (present(sorted_index)) then
-            call indexer_swap(sorted_index,i,j)
+            call indexer_swap(sorted_index,first,last,i,j)
             if (first < i-1) call qsort_i32(array, first, i-1, sorted_index)
             if (j+1 < last)  call qsort_i32(array, j+1, last,  sorted_index)
         else
@@ -283,7 +283,7 @@ module quicksort_module
         call qsort_swap_i64(array, i, j)
         
         if (present(sorted_index)) then
-            call indexer_swap(sorted_index,i,j)
+            call indexer_swap(sorted_index,first,last,i,j)
             if (first < i-1) call qsort_i64(array, first, i-1, sorted_index)
             if (j+1 < last)  call qsort_i64(array, j+1, last,  sorted_index)
         else
@@ -306,7 +306,7 @@ module quicksort_module
         call qsort_swap_r32(array, i, j)
         
         if (present(sorted_index)) then
-            call indexer_swap(sorted_index,i,j)
+            call indexer_swap(sorted_index,first,last,i,j)
             if (first < i-1) call qsort_r32(array, first, i-1, sorted_index)
             if (j+1 < last)  call qsort_r32(array, j+1, last,  sorted_index)
         else
@@ -329,7 +329,7 @@ module quicksort_module
         call qsort_swap_r64(array, i, j)
         
         if (present(sorted_index)) then
-            call indexer_swap(sorted_index,i,j)
+            call indexer_swap(sorted_index,first,last,i,j)
             if (first < i-1) call qsort_r64(array, first, i-1, sorted_index)
             if (j+1 < last)  call qsort_r64(array, j+1, last,  sorted_index)
         else
@@ -470,10 +470,10 @@ module quicksort_module
         end do
     end subroutine qsort_swap_r64
     
-    subroutine indexer_swap(array,i,j)
+    subroutine indexer_swap(array, old_i, old_j, i, j)
         
         implicit none
-        integer(KIND=int32) :: i, j
+        integer(KIND=int32) :: i, j, old_i, old_j
         integer(KIND=int32)  ::  array(:)
         integer(KIND=int32)  ::  swap_variable
 
@@ -481,9 +481,9 @@ module quicksort_module
 ! c         array(i-1) = array(j+1)
 ! c         array(j+1) = swap_variable
         
-        swap_variable = array(i)
-        array(i) = array(j)
-        array(j) = swap_variable
+!         swap_variable = array(i)
+        array(i-1) = array(old_i)
+        array(j+1) = array(old_j)
 
     end subroutine indexer_swap
 
