@@ -169,7 +169,7 @@ module preprocessor_routine_module
             
             
             do i=ce_start_index,ce_end_index
-                if (c_e_obj_relation_array(i) .lt. 0) backward_index_duplicates(c) + 1 
+                if (c_e_obj_relation_array(i) .lt. 0) backward_index_duplicates(c) = backward_index_duplicates(c) + 1 
             enddo
             
         enddo
