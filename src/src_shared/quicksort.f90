@@ -77,7 +77,7 @@ module quicksort_module
         i = first
         j = last
         
-!         Sorted_index = (/(i,i=first,last)/)
+        Sorted_index = (/(i,i=first,last)/)
         
         select type (array)
             type is (integer(KIND=int16))
@@ -93,6 +93,7 @@ module quicksort_module
                 indexer         = Sorted_index(i)
                 Sorted_index(i) = Sorted_index(j)
                 Sorted_index(j) = indexer
+                print*, i,k,Sorted_index(i),Sorted_index(j)
                 if (first < i-1) call qsort_i32(array, first, i-1)
                 if (j+1 < last)  call qsort_i32(array, j+1, last)
                 
@@ -139,16 +140,12 @@ module quicksort_module
         class(*)                        :: secondary_array(:)
         class(*),optional               :: third_array(:), fourth_array(:), fifth_array(:), sixth_array(:), seventh_array(:), eighth_array(:), ninth_array(:), tenth_array(:)
         integer(KIND=int32),allocatable :: Sorted_index(:)
-        integer(KIND=int32)             :: i, first, last
         
-        first = type_bounding(first_unbound)
-        last  = type_bounding(last_unbound)
-        
-        Sorted_index = (/(i,i=first , last)/)
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
         
         print*, 'array qsort'
-        Print*, Sorted_index
+        
+        print*, Sorted_index
         
         call tertiary_array_swapper(secondary_array, Sorted_index)
         
@@ -196,12 +193,8 @@ module quicksort_module
         class(*)            :: matrix_one(:,:)
         class(*),optional   :: matrix_two(:,:), matrix_three(:,:)
         integer(KIND=int32),allocatable :: Sorted_index(:)
-        integer(KIND=int32)             :: i, first, last
+        integer(KIND=int32)             :: i
         
-        first = type_bounding(first_unbound)
-        last  = type_bounding(last_unbound)
-        
-        Sorted_index = (/(i,i=first , last)/)
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
     
         do i=1,size(matrix_one,2)
@@ -251,7 +244,6 @@ module quicksort_module
         
         implicit none
         integer(KIND=int16) :: array(:)
-        real(kind=real32)   pivot
         integer(KIND=int32) first, last
         integer(KIND=int32) i, j
         
@@ -268,7 +260,6 @@ module quicksort_module
         
         implicit none
         integer(KIND=int32) :: array(:)
-        real(kind=real32)   pivot
         integer(KIND=int32) first, last
         integer(KIND=int32) i, j
         
@@ -285,7 +276,6 @@ module quicksort_module
         
         implicit none
         integer(KIND=int64) :: array(:)
-        real(kind=real32)   pivot
         integer(KIND=int32) first, last
         integer(KIND=int32) i, j
         
@@ -302,7 +292,6 @@ module quicksort_module
         
         implicit none
         real(KIND=real32) :: array(:)
-        real(kind=real32)   pivot
         integer(KIND=int32) first, last
         integer(KIND=int32) i, j
         
@@ -319,7 +308,6 @@ module quicksort_module
         
         implicit none
         real(KIND=real64) :: array(:)
-        real(kind=real32)   pivot
         integer(KIND=int32) first, last
         integer(KIND=int32) i, j
         
@@ -494,8 +482,7 @@ module quicksort_module
                 print*,"MISSING TYPING DEFINITON IN tertiary_array_swapper"
                 STOP
         end select
-        
-        
+    
     end subroutine tertiary_array_swapper
     
     ! end contains
