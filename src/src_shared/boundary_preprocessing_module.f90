@@ -89,14 +89,16 @@ module boundary_routine_module
             if (f_bound_array(f))then
                 e_bound_array(   f_e_obj_relation_array(fe_start:fe_end)) = .true.
                 
-            elseif (f_internal_array(f)) then
-                e_internal_array(f_e_obj_relation_array(fe_start:fe_end)) = .true.
+!             elseif (f_internal_array(f)) then
+!                 e_internal_array(f_e_obj_relation_array(fe_start:fe_end)) = .true.
                 
             else
                 print*, 'face id : ', f, ' , is not flagged internal or external'
             endif
             
         enddo
+        
+        e_internal_array = .not. e_bound_array
         
         print*, e_bound_array
         print*, e_internal_array
