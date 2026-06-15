@@ -28,6 +28,8 @@ module boundary_routine_module
         f_bound_indexing_array    = (/(f, f=1,nface)/)
         allocate(f_internal_indexing_array,source=f_bound_indexing_array)
         
+        print*,f_c_index_array
+        
         do f=1,nface
             if (f_c_index_array(f) .eq. 1) then
             
@@ -40,6 +42,7 @@ module boundary_routine_module
                 f_internal_array = .true.
                 
             else
+                print*, 'ERROR ERROR'
                 print*, 'face id : ', f, ' , is connected to more than 2 cells or is not connected at all'
                 print*, 'impressive considering faces are usually 2 dimensional'
                 stop
