@@ -144,6 +144,10 @@ module quicksort_module
         
         print*, 'array qsort'
         
+        print*, array
+        print*, secondary_array
+        print*, Sorted_index
+        
         call tertiary_array_swapper(secondary_array, Sorted_index)
         
         ! this is probably huge overkill, but it means that I could in theory dump an entire tensor in this and it'll handle it

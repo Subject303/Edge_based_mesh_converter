@@ -266,8 +266,12 @@ module preprocessor_routine_module
         print*,y_index
         print*,backward_obj_relation_array
         
+        print*, 'AAAAAAAAAAAAAAAAAAAAA'
+        
         call quicksort(y_index , 1 , forward_sum , backward_obj_relation_array)
 
+        print*, 'AAAAAAAAAAAAAAAAAAAAA'
+        
         print*,forward_obj_relation_array
         print*,y_index
         print*,backward_obj_relation_array
