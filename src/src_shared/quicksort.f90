@@ -89,12 +89,13 @@ module quicksort_module
                 if (j+1 < last)  call qsort_i6(array, j+1, last,  Sorted_index)
                 
             type is (integer(KIND=int32))
-                call qsort_swap_i32(array, i, j)
-                indexer         = Sorted_index(i)
-                Sorted_index(i) = Sorted_index(j)
-                Sorted_index(j) = indexer
-                if (first < i-1) call qsort_i32(array, first, i-1, Sorted_index)
-                if (j+1 < last)  call qsort_i32(array, j+1, last,  Sorted_index)
+                call qsort_i32(array, first, last, Sorted_index)
+!                 call qsort_swap_i32(array, i, j)
+!                 indexer         = Sorted_index(i)
+!                 Sorted_index(i) = Sorted_index(j)
+!                 Sorted_index(j) = indexer
+!                 if (first < i-1) call qsort_i32(array, first, i-1, Sorted_index)
+!                 if (j+1 < last)  call qsort_i32(array, j+1, last,  Sorted_index)
                 
             type is (integer(KIND=int64))
                 call qsort_swap_i64(array, i, j)
