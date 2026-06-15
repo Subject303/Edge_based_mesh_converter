@@ -264,7 +264,7 @@ module quicksort_module
             
     end subroutine qsort_i6
     
-    recursive subroutine qsort_i32(array, first , last)
+    recursive subroutine qsort_i32(array, first , last, sorted_index)
         
         implicit none
         integer(KIND=int32) :: array(:)
@@ -287,7 +287,7 @@ module quicksort_module
         endif
     end subroutine qsort_i32
     
-    recursive subroutine qsort_i64(array, first , last)
+    recursive subroutine qsort_i64(array, first , last, sorted_index)
         
         implicit none
         integer(KIND=int64) :: array(:)
@@ -310,7 +310,7 @@ module quicksort_module
         endif
     end subroutine qsort_i64
     
-    recursive subroutine qsort_r32(array, first , last)
+    recursive subroutine qsort_r32(array, first , last, sorted_index)
         
         implicit none
         real(KIND=real32) :: array(:)
@@ -333,7 +333,7 @@ module quicksort_module
         endif
     end subroutine qsort_r32
     
-    recursive subroutine qsort_r64(array, first , last)
+    recursive subroutine qsort_r64(array, first , last, sorted_index)
         
         implicit none
         real(KIND=real64) :: array(:)
