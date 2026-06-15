@@ -285,21 +285,9 @@ module preprocessor_routine_module
             backward_obj_relation_array(xy_start_index:xy_end_index) = x
 
         enddo
-        
-        print*,forward_obj_relation_array
-        print*,y_index
-        print*,backward_obj_relation_array
-        
-        print*, 'AAAAAAAAAAAAAAAAAAAAA'
-        
+
         call quicksort(y_index , 1 , forward_sum , backward_obj_relation_array)
 
-        print*, 'AAAAAAAAAAAAAAAAAAAAA'
-        
-        print*,forward_obj_relation_array
-        print*,y_index
-        print*,backward_obj_relation_array
-        
         backward_index = 0
         backward_index_duplicates = 0
         total_x_count = 0
@@ -322,11 +310,7 @@ module preprocessor_routine_module
             
                 ! flag duplicates
                 
-                print*,backward_obj_relation_array((backward_index(y-1)+1):x_count)
-                
                 call sort_and_flag_duplicates(backward_obj_relation_array((backward_index(y-1)+1):x_count))
-                
-                print*,backward_obj_relation_array((backward_index(y-1)+1):x_count)
                 
                 do i=(backward_index(y-1)+1),x_count
                     if (backward_obj_relation_array(i) .lt. 0) backward_index_duplicates(y) = backward_index_duplicates(y) + 1 
@@ -350,16 +334,11 @@ module preprocessor_routine_module
             backward_index_duplicates(i) = backward_index_duplicates(i-1) + backward_index_duplicates(i)
         enddo
         
-        print*,backward_index
-        print*,backward_index_duplicates
-        
         backward_index(:) = backward_index(:) - backward_index_duplicates(:)
 
         call remove_flagged_duplicates(backward_obj_relation_array)
 
         backward_sum = backward_index(backward_leading_obj_count)
-        
-        print*,backward_index
         
         ! based on ::
 !         integer(KIND=INT32),allocatable :: p_index, p_c_index_array_duplicates
