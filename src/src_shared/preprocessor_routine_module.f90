@@ -14,29 +14,29 @@ module preprocessor_routine_module
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!  centroid routines below ::
     
-    subroutine qsort_test
-        implicit none
-        
-        integer(KIND=INT32),allocatable :: temp(:), temp2(:)
-        print*, 'beginning calculating edge centroids'
-        
-        temp = (/3,5,4,3,2,1/)
-        
-        temp2 = (/77,2,4,6,8,10/)
-        print*, 'aaa'
-        print*, temp
-        print*, temp2
-        print*, 'aaa'
-        call quicksort(temp, 1, 6, temp2)
-        print*, 'aaa'
-        print*, temp
-        print*, temp2
-        print*, 'aaa'
-        
-        stop
-
-        
-    end subroutine qsort_test
+!     subroutine qsort_test
+!         implicit none
+!         
+!         integer(KIND=INT32),allocatable :: temp(:), temp2(:)
+!         print*, 'beginning calculating edge centroids'
+!         
+!         temp = (/3,5,4,3,2,1/)
+!         
+!         temp2 = (/77,2,4,6,8,10/)
+!         print*, 'aaa'
+!         print*, temp
+!         print*, temp2
+!         print*, 'aaa'
+!         call quicksort(temp, 1, 6, temp2)
+!         print*, 'aaa'
+!         print*, temp
+!         print*, temp2
+!         print*, 'aaa'
+!         
+!         stop
+! 
+!         
+!     end subroutine qsort_test
     
     subroutine calc_e_centroid
         implicit none

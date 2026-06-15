@@ -104,14 +104,8 @@ module quicksort_module
             type is (integer(KIND=int16))
                 call qsort_i6(array, i, j, Sorted_index)
                 
-            type is (integer(KIND=int32))                
-                print*, 'qsort indexer 1'
-                print*, array
-                print*, Sorted_index
+            type is (integer(KIND=int32))
                 call qsort_i32(array, i, j, Sorted_index)
-                print*, 'qsort indexer 2'
-                print*, array
-                print*, Sorted_index
                 
             type is (integer(KIND=int64))
                 call qsort_i64(array, i, j, Sorted_index)
@@ -624,7 +618,7 @@ module quicksort_module
     subroutine indexer_swap(array, i, j)
         
         implicit none
-        integer(KIND=int32) :: i, j, old_i, old_j
+        integer(KIND=int32) :: i, j
         integer(KIND=int32)  ::  array(:)
         integer(KIND=int32)  ::  swap_variable
 

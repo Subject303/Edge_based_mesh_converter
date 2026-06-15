@@ -16,8 +16,6 @@ module data_processing_serial
         print*, 'beginning calculating object centroids'
         print*, ' '
         
-        call qsort_test
-        
         call calc_e_centroid
         call calc_f_centroid
         call calc_c_centroid
