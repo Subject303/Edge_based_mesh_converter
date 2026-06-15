@@ -71,13 +71,13 @@ module quicksort_module
         integer(KIND=int32)          :: first, last, i, j, indexer
         integer(KIND=int32),allocatable :: Sorted_index(:)
 
-!         first = type_bounding(first_unbound)
-!         last  = type_bounding(last_unbound)
-!         
+        first = type_bounding(first_unbound)
+        last  = type_bounding(last_unbound)
+        
         i = first
         j = last
 !         
-!         Sorted_index = (/(i,i=first,last)/)
+        Sorted_index = (/(i,i=first,last)/)
         
         select type (array)
             type is (integer(KIND=int16))
@@ -85,54 +85,40 @@ module quicksort_module
                 indexer         = Sorted_index(i)
                 Sorted_index(i) = Sorted_index(j)
                 Sorted_index(j) = indexer
-                if (first < i-1) call qsort_i6(array, first, i-1)
-                if (j+1 < last)  call qsort_i6(array, j+1, last)
+                if (first < i-1) call qsort_i6(array, first, i-1, Sorted_index)
+                if (j+1 < last)  call qsort_i6(array, j+1, last,  Sorted_index)
                 
             type is (integer(KIND=int32))
                 call qsort_swap_i32(array, i, j)
                 indexer         = Sorted_index(i)
                 Sorted_index(i) = Sorted_index(j)
                 Sorted_index(j) = indexer
-                print*, i,j,Sorted_index(i),Sorted_index(j)
-                
-        
-!         i = first
-!         j = last
-!         
-!         call qsort_swap_i32(array, i, j)
-!         
-!         if (first < i-1) call qsort_i32(array, first, i-1)
-!         if (j+1 < last)  call qsort_i32(array, j+1, last)
-                
-                
-!                 if (first < i-1) call qsort_i32(array, first, i-1)
-!                 if (j+1 < last)  call qsort_i32(array, j+1, last)
-                if (first < i-1) call quicksort_with_indexer(array, first, i-1, Sorted_index)
-                if (j+1 < last)  call quicksort_with_indexer(array, j+1, last,  Sorted_index)
+                if (first < i-1) call qsort_i32(array, first, i-1, Sorted_index)
+                if (j+1 < last)  call qsort_i32(array, j+1, last,  Sorted_index)
                 
             type is (integer(KIND=int64))
                 call qsort_swap_i64(array, i, j)
                 indexer         = Sorted_index(i)
                 Sorted_index(i) = Sorted_index(j)
                 Sorted_index(j) = indexer
-                if (first < i-1) call qsort_i64(array, first, i-1)
-                if (j+1 < last)  call qsort_i64(array, j+1, last)
+                if (first < i-1) call qsort_i64(array, first, i-1, Sorted_index)
+                if (j+1 < last)  call qsort_i64(array, j+1, last,  Sorted_index)
                 
             type is (real(KIND=real32))
                 call qsort_swap_r32(array, i, j)
                 indexer         = Sorted_index(i)
                 Sorted_index(i) = Sorted_index(j)
                 Sorted_index(j) = indexer
-                if (first < i-1) call qsort_r32(array, first, i-1)
-                if (j+1 < last)  call qsort_r32(array, j+1, last)
+                if (first < i-1) call qsort_r32(array, first, i-1, Sorted_index)
+                if (j+1 < last)  call qsort_r32(array, j+1, last,  Sorted_index)
                 
             type is (real(KIND=real64))
                 call qsort_swap_r64(array, i, j)
                 indexer         = Sorted_index(i)
                 Sorted_index(i) = Sorted_index(j)
                 Sorted_index(j) = indexer
-                if (first < i-1) call qsort_r64(array, first, i-1)
-                if (j+1 < last)  call qsort_r64(array, j+1, last)
+                if (first < i-1) call qsort_r64(array, first, i-1, Sorted_index)
+                if (j+1 < last)  call qsort_r64(array, j+1, last,  Sorted_index)
                 
             class default
                 print*,"MISSING TYPING DEFINITON IN quicksort_with_indexer"
@@ -154,7 +140,6 @@ module quicksort_module
         class(*),optional               :: third_array(:), fourth_array(:), fifth_array(:), sixth_array(:), seventh_array(:), eighth_array(:), ninth_array(:), tenth_array(:)
         integer(KIND=int32),allocatable :: Sorted_index(:)
         
-        Sorted_index = (/(i,i=type_bounding(first_unbound),type_bounding(last_unbound))/)
         
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
         
@@ -255,20 +240,28 @@ module quicksort_module
     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TYPE-BOUND QSORT ROUTINES
     
-    recursive subroutine qsort_i6(array, first , last)
+    recursive subroutine qsort_i6(array, first , last, sorted_index)
         
         implicit none
         integer(KIND=int16) :: array(:)
         integer(KIND=int32) first, last
-        integer(KIND=int32) i, j
+        integer(KIND=int32) i, j, indexer
+        integer(KIND=int32), optional :: sorted_index(:)
         
         i = first
         j = last
         
         call qsort_swap_i6(array, i, j)
         
-        if (first < i-1) call qsort_i6(array, first, i-1)
-        if (j+1 < last)  call qsort_i6(array, j+1, last)
+        if (present(sorted_index)) then
+            call indexer_swap(sorted_index,i,j)
+            if (first < i-1) call qsort_i6(array, first, i-1, sorted_index)
+            if (j+1 < last)  call qsort_i6(array, j+1, last,  sorted_index)
+        else
+            if (first < i-1) call qsort_i6(array, first, i-1)
+            if (j+1 < last)  call qsort_i6(array, j+1, last)
+        endif
+            
     end subroutine qsort_i6
     
     recursive subroutine qsort_i32(array, first , last)
@@ -276,15 +269,22 @@ module quicksort_module
         implicit none
         integer(KIND=int32) :: array(:)
         integer(KIND=int32) first, last
-        integer(KIND=int32) i, j
+        integer(KIND=int32) i, j, indexer
+        integer(KIND=int32), optional :: sorted_index(:)
         
         i = first
         j = last
         
         call qsort_swap_i32(array, i, j)
         
-        if (first < i-1) call qsort_i32(array, first, i-1)
-        if (j+1 < last)  call qsort_i32(array, j+1, last)
+        if (present(sorted_index)) then
+            call indexer_swap(sorted_index,i,j)
+            if (first < i-1) call qsort_i32(array, first, i-1, sorted_index)
+            if (j+1 < last)  call qsort_i32(array, j+1, last,  sorted_index)
+        else
+            if (first < i-1) call qsort_i32(array, first, i-1)
+            if (j+1 < last)  call qsort_i32(array, j+1, last)
+        endif
     end subroutine qsort_i32
     
     recursive subroutine qsort_i64(array, first , last)
@@ -292,15 +292,22 @@ module quicksort_module
         implicit none
         integer(KIND=int64) :: array(:)
         integer(KIND=int32) first, last
-        integer(KIND=int32) i, j
+        integer(KIND=int32) i, j, indexer
+        integer(KIND=int32), optional :: sorted_index(:)
         
         i = first
         j = last
         
         call qsort_swap_i64(array, i, j)
         
-        if (first < i-1) call qsort_i64(array, first, i-1)
-        if (j+1 < last)  call qsort_i64(array, j+1, last)
+        if (present(sorted_index)) then
+            call indexer_swap(sorted_index,i,j)
+            if (first < i-1) call qsort_i64(array, first, i-1, sorted_index)
+            if (j+1 < last)  call qsort_i64(array, j+1, last,  sorted_index)
+        else
+            if (first < i-1) call qsort_i64(array, first, i-1)
+            if (j+1 < last)  call qsort_i64(array, j+1, last)
+        endif
     end subroutine qsort_i64
     
     recursive subroutine qsort_r32(array, first , last)
@@ -308,15 +315,22 @@ module quicksort_module
         implicit none
         real(KIND=real32) :: array(:)
         integer(KIND=int32) first, last
-        integer(KIND=int32) i, j
+        integer(KIND=int32) i, j, indexer
+        integer(KIND=int32), optional :: sorted_index(:)
         
         i = first
         j = last
         
         call qsort_swap_r32(array, i, j)
         
-        if (first < i-1) call qsort_r32(array, first, i-1)
-        if (j+1 < last)  call qsort_r32(array, j+1, last)
+        if (present(sorted_index)) then
+            call indexer_swap(sorted_index,i,j)
+            if (first < i-1) call qsort_r32(array, first, i-1, sorted_index)
+            if (j+1 < last)  call qsort_r32(array, j+1, last,  sorted_index)
+        else
+            if (first < i-1) call qsort_r32(array, first, i-1)
+            if (j+1 < last)  call qsort_r32(array, j+1, last)
+        endif
     end subroutine qsort_r32
     
     recursive subroutine qsort_r64(array, first , last)
@@ -324,15 +338,22 @@ module quicksort_module
         implicit none
         real(KIND=real64) :: array(:)
         integer(KIND=int32) first, last
-        integer(KIND=int32) i, j
+        integer(KIND=int32) i, j, indexer
+        integer(KIND=int32), optional :: sorted_index(:)
         
         i = first
         j = last
         
         call qsort_swap_r64(array, i, j)
         
-        if (first < i-1) call qsort_r64(array, first, i-1)
-        if (j+1 < last)  call qsort_r64(array, j+1, last)
+        if (present(sorted_index)) then
+            call indexer_swap(sorted_index,i,j)
+            if (first < i-1) call qsort_r64(array, first, i-1, sorted_index)
+            if (j+1 < last)  call qsort_r64(array, j+1, last,  sorted_index)
+        else
+            if (first < i-1) call qsort_r64(array, first, i-1)
+            if (j+1 < last)  call qsort_r64(array, j+1, last)
+        endif
     end subroutine qsort_r64
     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TYPE-BOUND SWAPPING ROUTINES
@@ -465,6 +486,19 @@ module quicksort_module
             i=i+1
             j=j-1
         end do
+    end subroutine qsort_swap_r64
+    
+    subroutine indexer_swap(array,i,j)
+        
+        implicit none
+        integer(KIND=int32) :: i, j
+        integer(KIND=int32)  ::  array(:)
+        integer(KIND=int32)  ::  swap_variable
+
+        swap_variable = array(i-1)
+        array(i-1) = array(j+1)
+        array(j+1) = swap_variable
+
     end subroutine qsort_swap_r64
 
     subroutine tertiary_array_swapper(tertiary_array_temp, Sorted_index)
