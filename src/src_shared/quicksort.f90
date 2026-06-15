@@ -139,6 +139,7 @@ module quicksort_module
         class(*)                        :: secondary_array(:)
         class(*),optional               :: third_array(:), fourth_array(:), fifth_array(:), sixth_array(:), seventh_array(:), eighth_array(:), ninth_array(:), tenth_array(:)
         integer(KIND=int32),allocatable :: Sorted_index(:)
+        integer(KIND=int32)             :: i
         
         Sorted_index = (/(i,i=first_unbound , last_unbound)/)
         call quicksort_with_indexer(array, first_unbound , last_unbound, Sorted_index)
