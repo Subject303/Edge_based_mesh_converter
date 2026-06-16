@@ -66,7 +66,7 @@ module boundary_routine_module
     
     subroutine identify_boundary_edges
         implicit none
-        integer(KIND=INT32) :: f, fe_start, fe_end
+        integer(KIND=INT32) :: e, fe_start, fe_end
         
         
         ! this one is still very simple, we're searching boundary faces, and flagging connected edges
@@ -106,8 +106,21 @@ module boundary_routine_module
         
         print*, 'aa'
         
-        print*,e_p_obj_relation_array(e_internal_indexing_array)
-        print*,e_p_obj_relation_array(e_bound_indexing_array)
+        do f=1,b_nedge
+        
+            fe_start = (1 + e_p_index_array(e_bound_indexing_array(f)-1))
+            fe_end   = e_p_index_array(e_bound_indexing_array(f))
+            
+            print*,e_p_obj_relation_array(fe_start:fe_end)
+        enddo
+        
+        do f=1,b_nedge
+        
+            fe_start = (1 + e_p_index_array(e_internal_indexing_array(f)-1))
+            fe_end   = e_p_index_array(e_internal_indexing_array(f))
+            
+            print*,e_p_obj_relation_array(fe_start:fe_end)
+        enddo
         
         print*, 'aa'
         
@@ -157,7 +170,7 @@ module boundary_routine_module
         
         print*, b_npoin
         print*, i_npoin
-        
+    
         print*, coords(p_internal_indexing_array,:)
         print*, maxval(coords(:,1)),maxval(coords(:,2)),maxval(coords(:,3)),minval(coords(:,1)),minval(coords(:,2)),minval(coords(:,3))
         
