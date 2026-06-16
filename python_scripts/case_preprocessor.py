@@ -547,7 +547,7 @@ for obj in f_e_obj_relation_array:
 for f in range(nface):
     obj = f_e_obj_relation_array[f]
     print(' face: ', f , ' edges: ' , obj, ' points: ', f_p_obj_relation_array[f])
-    for e in range(len(obj)):
+    for e in obj:
         print(' edge: ',e, ' points: ', e_p_obj_relation_array[e])
   
   
