@@ -66,7 +66,7 @@ module boundary_routine_module
     
     subroutine identify_boundary_edges
         implicit none
-        integer(KIND=INT32) :: e, fe_start, fe_end
+        integer(KIND=INT32) :: f, fe_start, fe_end
         
         
         ! this one is still very simple, we're searching boundary faces, and flagging connected edges
