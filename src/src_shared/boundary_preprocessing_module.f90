@@ -81,12 +81,21 @@ module boundary_routine_module
         
         do f=1, nface
             
+            fe_start = (1 + f_p_index_array(f-1))
+            fe_end   = f_p_index_array(f)
+            
+            print*, f_p_obj_relation_array(fe_start:fe_end)
+            
+        enddo
+        
+        do f=1, nface
+            
             fe_start = (1 + f_e_index_array(f-1))
             fe_end   = f_e_index_array(f)
             
             if (f_bound_array(f))then
                 
-                print*, f_e_obj_relation_array(fe_start:fe_end)
+!                 print*, f_e_obj_relation_array(fe_start:fe_end)
                 
                 e_bound_array(   f_e_obj_relation_array(fe_start:fe_end)) = .true.
                 
