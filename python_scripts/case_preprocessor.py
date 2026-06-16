@@ -546,9 +546,9 @@ for obj in f_e_obj_relation_array:
   
 for f in range(nface):
     obj = f_e_obj_relation_array[f]
-    print(' face: ', f , ' edges: ' , obj, ' points: ', f_p_obj_relation_array[f]+1)
+    print(' face: ', f , ' edges: ' , obj, ' points: ', f_p_obj_relation_array[f])
     for e in range(len(obj)):
-        print(' edge: ',e, ' points: ', e_p_obj_relation_array[e]+1)
+        print(' edge: ',e, ' points: ', e_p_obj_relation_array[e])
   
   
 print('finished writing to file',time.time()-start); sys.stdout.flush()
