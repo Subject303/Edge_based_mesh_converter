@@ -104,8 +104,12 @@ module boundary_routine_module
         print*, b_nedge
         print*, i_nedge
         
-        print*,e_internal_indexing_array
-        print*,e_bound_indexing_array
+        print*, 'aa'
+        
+        print*,e_p_obj_relation_array(e_internal_indexing_array)
+        print*,e_p_obj_relation_array(e_bound_indexing_array)
+        
+        print*, 'aa'
         
         if (b_nedge+i_nedge .ne. nedge)then
             print*, 'ERROR ERROR'
