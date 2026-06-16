@@ -78,6 +78,8 @@ module boundary_routine_module
         e_bound_indexing_array    = (/(f, f=1,nedge)/)
         allocate(e_internal_indexing_array,source=e_bound_indexing_array)
         
+        print*,f_bound_array
+        
         do f=1, nface
             
             fe_start = (1 + f_e_index_array(f-1))
