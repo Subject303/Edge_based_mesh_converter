@@ -84,7 +84,11 @@ module boundary_routine_module
             fe_start = (1 + f_p_index_array(f-1))
             fe_end   = f_p_index_array(f)
             
-            print*, f_p_obj_relation_array(fe_start:fe_end)
+            if (f_bound_array) then
+                print*, 'bound', f, f_p_obj_relation_array(fe_start:fe_end)
+            else
+                print*, 'intnl', f, f_p_obj_relation_array(fe_start:fe_end)
+            endif
             
         enddo
         
