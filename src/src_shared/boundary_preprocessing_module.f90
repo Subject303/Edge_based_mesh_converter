@@ -79,6 +79,9 @@ module boundary_routine_module
         allocate(e_internal_indexing_array,source=e_bound_indexing_array)
         
         
+        print*,f_e_obj_relation_array
+        print*,'aa'
+        
         do f=1, nface
             
             fe_start = (1 + f_p_index_array(f-1))
