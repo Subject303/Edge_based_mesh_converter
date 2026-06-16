@@ -104,6 +104,9 @@ module boundary_routine_module
         print*, b_nedge
         print*, i_nedge
         
+        print*,e_internal_indexing_array
+        print*,e_bound_indexing_array
+        
         if (b_nedge+i_nedge .ne. nedge)then
             print*, 'ERROR ERROR'
             print*, 'sum of internal and external edges is different to the total count of edges.'
