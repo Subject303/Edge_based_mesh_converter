@@ -544,6 +544,13 @@ for obj in f_e_obj_relation_array:
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
   
+for f in nface:
+    obj = f_e_obj_relation_array[f]
+    print(' face: ', f , ' edges: ' , obj, ' points: ', f_p_obj_relation_array[f])
+    for e in range(len(obj)):
+        print(e_p_obj_relation_array[e])
+  
+  
 print('finished writing to file',time.time()-start); sys.stdout.flush()
 print('finished preprocessing'); sys.stdout.flush()
 
