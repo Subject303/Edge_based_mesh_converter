@@ -544,6 +544,8 @@ for obj in f_e_obj_relation_array:
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
   
+print(min(f_e_obj_relation_array),min(c_f_obj_relation_array),min(c_p_obj_relation_array),min(f_p_obj_relation_array),min(e_p_obj_relation_array))
+  
 for e in range(nedge):
     print(e, ' edge, points: ', e_p_obj_relation_array[e])
     
@@ -551,7 +553,7 @@ for f in range(nface):
     obj = f_e_obj_relation_array[f]
     print(' face: ', f , ' edges: ' , obj, ' points: ', f_p_obj_relation_array[f])
     for e in obj:
-        print(' edge: ', e-1 , ' points: ', e_p_obj_relation_array[e-1])
+        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
   
   
 print('finished writing to file',time.time()-start); sys.stdout.flush()
