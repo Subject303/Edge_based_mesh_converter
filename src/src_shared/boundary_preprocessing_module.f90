@@ -126,7 +126,7 @@ module boundary_routine_module
         
         print*, 'aa'
         
-        do f=1,b_nedge
+        do f=1,i_nedge
         
             fe_start = (1 + e_p_index_array(e_internal_indexing_array(f)-1))
             fe_end   = e_p_index_array(e_internal_indexing_array(f))
