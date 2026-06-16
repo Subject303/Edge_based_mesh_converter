@@ -550,12 +550,13 @@ for e in range(nedge):
     print(e, ' edge, points: ', e_p_obj_relation_array[e])
     
 for f in range(nface):
-    obj = f_e_obj_relation_array[f]
-    print(' face: ', f , ' edges: ' , obj, ' points: ', f_p_obj_relation_array[f])
-    for e in obj:
-        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
+    
+    print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
+    
+    for e in f_e_obj_relation_array[f]:
+        print(' edge: ', e-1 , ' points: ', e_p_obj_relation_array[e-1])
   
-  
+   
 print('finished writing to file',time.time()-start); sys.stdout.flush()
 print('finished preprocessing'); sys.stdout.flush()
 
