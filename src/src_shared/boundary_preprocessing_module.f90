@@ -114,6 +114,8 @@ module boundary_routine_module
             print*,e_p_obj_relation_array(fe_start:fe_end)
         enddo
         
+        print*, 'aa'
+        
         do f=1,b_nedge
         
             fe_start = (1 + e_p_index_array(e_internal_indexing_array(f)-1))
