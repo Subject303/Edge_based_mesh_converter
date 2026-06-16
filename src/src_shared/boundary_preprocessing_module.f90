@@ -78,7 +78,6 @@ module boundary_routine_module
         e_bound_indexing_array    = (/(f, f=1,nedge)/)
         allocate(e_internal_indexing_array,source=e_bound_indexing_array)
         
-        print*,f_bound_array
         
         do f=1, nface
             
@@ -86,6 +85,9 @@ module boundary_routine_module
             fe_end   = f_e_index_array(f)
             
             if (f_bound_array(f))then
+                
+                print*, f_e_obj_relation_array(fe_start:fe_end)
+                
                 e_bound_array(   f_e_obj_relation_array(fe_start:fe_end)) = .true.
                 
             elseif (f_internal_array(f)) then
@@ -102,6 +104,8 @@ module boundary_routine_module
         e_internal_indexing_array=pack(e_internal_indexing_array,e_internal_array)
         b_nedge = size(e_bound_indexing_array)
         i_nedge = size(e_internal_indexing_array)
+        
+        print*, 'aa'
         
         print*, b_nedge
         print*, i_nedge
