@@ -155,6 +155,18 @@ del edge
 nface = faceid
 nedge = edgeid
 
+
+
+for f in range(nface):
+    
+    print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
+    
+    for e in f_e_obj_relation_array[f]:
+        print(' edge: ', e-1 , ' points: ', e_p_obj_relation_array[e-1])
+
+
+
+
 gc.collect()
 
 print('sorting connectivities',time.time()-start); sys.stdout.flush()
