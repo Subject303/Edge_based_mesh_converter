@@ -283,13 +283,7 @@ edge_to_del[-1]=1
 face_to_del[-1]=1
 cell_to_del[-1]=1
 
-for f in range(nface):
-    
-    print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
-    
-    for e in f_e_obj_relation_array[f]:
-        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
-        
+
 temp = []
 temp2 = []
 j=0
@@ -393,6 +387,14 @@ for i in range(len(c_f_obj_relation_array)):
     for j in range(len(obj)):
         obj[j] = face_to_rep[obj[j]] 
     c_f_obj_relation_array[i] = sorted(obj)
+
+for f in range(nface):
+    
+    print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
+    
+    for e in f_e_obj_relation_array[f]:
+        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
+        
 
 print('removing duplicate mappings',time.time()-start); sys.stdout.flush()
 
