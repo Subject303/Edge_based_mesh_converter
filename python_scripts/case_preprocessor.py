@@ -347,6 +347,10 @@ f_p_index = temp2
 del temp
 del temp2; gc.collect()
 
+print('aaaa')
+print(f_p_obj_relation_array[0])
+print('aaaa')
+
 temp = []
 temp2 = []
 j=0
