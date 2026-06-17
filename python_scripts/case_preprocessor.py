@@ -156,16 +156,6 @@ nface = faceid
 nedge = edgeid
 
 
-for e in range(nedge):
-    print(e, e_p_obj_relation_array[e])
-
-for f in range(nface):
-    
-    print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
-    
-    for e in f_e_obj_relation_array[f]:
-        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
-        
         
 gc.collect()
 
@@ -229,6 +219,18 @@ for i in range(len(f_e_obj_relation_array)):
 
 del e_sort
 
+for e in range(nedge):
+    print(e, e_p_obj_relation_array[e])
+
+for f in range(nface):
+    
+    print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
+    
+    for e in f_e_obj_relation_array[f]:
+        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
+        
+        
+        
 print('generating index arrays',time.time()-start); sys.stdout.flush()
 
 nele  = len(c_p_obj_relation_array)
