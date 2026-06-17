@@ -388,6 +388,8 @@ for i in range(len(c_f_obj_relation_array)):
         obj[j] = face_to_rep[obj[j]] 
     c_f_obj_relation_array[i] = sorted(obj)
 
+print(nedge)
+
 for e in range(nedge-1):
     print(e, e_p_obj_relation_array[e])
 
