@@ -155,8 +155,8 @@ del edge
 nface = faceid
 nedge = edgeid
 
-for e in range(nedge):
-    print(e, e_p_obj_relation_array[e])
+# for e in range(nedge):
+#     print(e, e_p_obj_relation_array[e])
 
 for f in range(nface):
     
@@ -227,8 +227,8 @@ for i in range(len(f_e_obj_relation_array)):
 
 del e_sort
 
-for e in range(nedge):
-    print(e, e_p_obj_relation_array[e])
+# for e in range(nedge):
+#     print(e, e_p_obj_relation_array[e])
 
 for f in range(nface):
     
