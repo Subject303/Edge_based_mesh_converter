@@ -155,18 +155,6 @@ del edge
 nface = faceid
 nedge = edgeid
 
-
-
-for f in range(nface):
-    
-    print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
-    
-    for e in f_e_obj_relation_array[f]:
-        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
-
-
-
-
 gc.collect()
 
 print('sorting connectivities',time.time()-start); sys.stdout.flush()
@@ -295,6 +283,13 @@ edge_to_del[-1]=1
 face_to_del[-1]=1
 cell_to_del[-1]=1
 
+for f in range(nface):
+    
+    print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
+    
+    for e in f_e_obj_relation_array[f]:
+        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
+        
 temp = []
 temp2 = []
 j=0
