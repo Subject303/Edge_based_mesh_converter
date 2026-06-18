@@ -57,7 +57,7 @@ module boundary_routine_module
         b_nface = size(f_bound_indexing_array)
         i_nface = size(f_internal_indexing_array)
         
-        reversed_f_bound_indexing_array = (/i,i=1,b_nface/)
+        reversed_f_bound_indexing_array = (/(i,i=1,b_nface)/)
         call quicksort(f_bound_indexing_array, 1, b_nface, reversed_f_bound_indexing_array)
         call quicksort(f_internal_indexing_array, 1, i_nface)
         
@@ -107,7 +107,7 @@ module boundary_routine_module
         b_nedge = size(e_bound_indexing_array)
         i_nedge = size(e_internal_indexing_array)
         
-        reversed_e_bound_indexing_array = (/i,i=1,b_nedge/)
+        reversed_e_bound_indexing_array = (/(i,i=1,b_nedge)/)
         call quicksort(e_bound_indexing_array, 1, b_nedge, reversed_e_bound_indexing_array)
         call quicksort(e_internal_indexing_array, 1, i_nedge)
         
@@ -155,7 +155,7 @@ module boundary_routine_module
         b_npoin = size(p_bound_indexing_array)
         i_npoin = size(p_internal_indexing_array)
         
-        reversed_p_bound_indexing_array = (/i,i=1,b_npoin/)
+        reversed_p_bound_indexing_array = (/(i,i=1,b_npoin)/)
         call quicksort(p_bound_indexing_array, 1, b_npoin, reversed_p_bound_indexing_array)
         call quicksort(p_internal_indexing_array, 1, i_npoin)
         
