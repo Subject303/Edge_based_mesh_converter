@@ -128,6 +128,9 @@ module volume_processing
                 
             enddo
             
+            centroid_index_array(centroid_array_count) = centroid_index_array(1)
+            
+            
             centroid_array_count_old = centroid_array_count
             
             
