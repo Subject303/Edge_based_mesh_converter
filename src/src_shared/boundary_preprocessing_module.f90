@@ -22,7 +22,7 @@ module boundary_routine_module
         ! this one is easy because all faces are connected to between 1 and 2 cells
         ! all faces connected to 2 cells are internal, and all connected to 1 cell are boundaries
         
-        allocate(f_bound_array(nface) ,f_internal_array(nface), f_bound_indexing_array(nface))
+        allocate(f_bound_array(nface) ,f_internal_array(nface), f_bound_indexing_array(nface), reversed_f_bound_indexing_array(nface))
         
         f_bound_array = .false.
         f_internal_array = .false.
@@ -52,14 +52,19 @@ module boundary_routine_module
             endif
         enddo
         
+        reversed_f_bound_indexing_array = 0
+        do i=1,nface
+            if (f_internal_array) reversed_f_bound_indexing_array(i) = reversed_f_bound_indexing_array(i) + 1
+        enddo
+        do i=2,nface
+            reversed_f_bound_indexing_array(i) = reversed_f_bound_indexing_array(i-1) + reversed_f_bound_indexing_array(i)
+        enddo
+        reversed_f_bound_indexing_array = f_bound_indexing_array - reversed_f_bound_indexing_array
+        
         f_bound_indexing_array   =pack(f_bound_indexing_array   ,f_bound_array)
         f_internal_indexing_array=pack(f_internal_indexing_array,f_internal_array)
         b_nface = size(f_bound_indexing_array)
         i_nface = size(f_internal_indexing_array)
-        
-        reversed_f_bound_indexing_array = (/(i,i=1,b_nface)/)
-        call quicksort(f_bound_indexing_array, 1, b_nface, reversed_f_bound_indexing_array)
-        call quicksort(f_internal_indexing_array, 1, i_nface)
         
         if (b_nface+i_nface .ne. nface)then
             print*, 'ERROR ERROR'
@@ -76,7 +81,7 @@ module boundary_routine_module
         
         ! this one is still very simple, we're searching boundary faces, and flagging connected edges
         
-        allocate(e_bound_array(nedge) ,e_internal_array(nedge), e_bound_indexing_array(nedge))
+        allocate(e_bound_array(nedge) ,e_internal_array(nedge), e_bound_indexing_array(nedge), reversed_e_bound_indexing_array(nedge))
         
         e_bound_array = .false.
         e_internal_array = .false.
@@ -102,14 +107,19 @@ module boundary_routine_module
         
         e_internal_array = .not. e_bound_array
         
+        reversed_e_bound_indexing_array = 0
+        do i=1,nedge
+            if (e_internal_array) reversed_e_bound_indexing_array(i) = reversed_e_bound_indexing_array(i) + 1
+        enddo
+        do i=2,nedge
+            reversed_e_bound_indexing_array(i) = reversed_e_bound_indexing_array(i-1) + reversed_e_bound_indexing_array(i)
+        enddo
+        reversed_e_bound_indexing_array = e_bound_indexing_array - reversed_e_bound_indexing_array
+        
         e_bound_indexing_array   =pack(e_bound_indexing_array   ,e_bound_array)
         e_internal_indexing_array=pack(e_internal_indexing_array,e_internal_array)
         b_nedge = size(e_bound_indexing_array)
         i_nedge = size(e_internal_indexing_array)
-        
-        reversed_e_bound_indexing_array = (/(i,i=1,b_nedge)/)
-        call quicksort(e_bound_indexing_array, 1, b_nedge, reversed_e_bound_indexing_array)
-        call quicksort(e_internal_indexing_array, 1, i_nedge)
         
         if (b_nedge+i_nedge .ne. nedge)then
             print*, 'ERROR ERROR'
@@ -126,7 +136,7 @@ module boundary_routine_module
         
         ! again same thing but points
         
-        allocate(p_bound_array(npoin) ,p_internal_array(npoin), p_bound_indexing_array(npoin))
+        allocate(p_bound_array(npoin) ,p_internal_array(npoin), p_bound_indexing_array(npoin),reversed_p_bound_indexing_array(npoin))
         
         p_bound_array = .false.
         p_internal_array = .false.
@@ -150,14 +160,19 @@ module boundary_routine_module
         
         p_internal_array = .not. p_bound_array
         
+        reversed_p_bound_indexing_array = 0
+        do i=1,npoin
+            if (p_internal_array) reversed_p_bound_indexing_array(i) = reversed_p_bound_indexing_array(i) + 1
+        enddo
+        do i=2,npoin
+            reversed_p_bound_indexing_array(i) = reversed_p_bound_indexing_array(i-1) + reversed_p_bound_indexing_array(i)
+        enddo
+        reversed_p_bound_indexing_array = p_bound_indexing_array - reversed_p_bound_indexing_array
+        
         p_bound_indexing_array   =pack(p_bound_indexing_array   ,p_bound_array)
         p_internal_indexing_array=pack(p_internal_indexing_array,p_internal_array)
         b_npoin = size(p_bound_indexing_array)
         i_npoin = size(p_internal_indexing_array)
-        
-        reversed_p_bound_indexing_array = (/(i,i=1,b_npoin)/)
-        call quicksort(p_bound_indexing_array, 1, b_npoin, reversed_p_bound_indexing_array)
-        call quicksort(p_internal_indexing_array, 1, i_npoin)
         
         if (b_npoin+i_npoin .ne. npoin)then
             print*, 'ERROR ERROR'
