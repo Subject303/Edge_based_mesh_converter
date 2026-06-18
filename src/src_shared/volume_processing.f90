@@ -96,8 +96,6 @@ module volume_processing
                 else
                     ef=ef+1
                 endif
-                
-                print*, ef, current_face, cell_1, cell_2 , prev_cell
 
                 
                 if (non_viable_faces(ef)) cycle
@@ -130,6 +128,8 @@ module volume_processing
                     
                 else
                 endif
+                
+                print*, ef, current_face, cell_1, cell_2 , prev_cell
                 
             enddo
             
