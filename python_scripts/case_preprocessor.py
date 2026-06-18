@@ -155,16 +155,6 @@ del edge
 nface = faceid
 nedge = edgeid
 
-for e in range(nedge):
-    print(e, e_p_obj_relation_array[e])
-
-for f in range(nface):
-    
-    print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
-    
-    for e in f_e_obj_relation_array[f]:
-        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
-        
 gc.collect()
 
 print('sorting connectivities',time.time()-start); sys.stdout.flush()
@@ -182,38 +172,35 @@ for x, z in coupled:
 
 del coupled; gc.collect()
 
-# print('   f_p',time.time()-start); sys.stdout.flush()
-# 
-# f_sort = list(range(len(e_p_obj_relation_array)))
-# 
-# coupled = sorted(zip(f_p_obj_relation_array, f_sort, f_e_obj_relation_array), key=lambda element: element[0])
-# 
-# i=0
-# for x, y, z in coupled:
-#     f_p_obj_relation_array[i] = x
-#     f_sort[i] = y
-#     f_e_obj_relation_array[i] = z
-#     i=i+1
-# 
-# del coupled; gc.collect()
-# 
-# for i in range(len(c_f_obj_relation_array)):
-#     obj = c_f_obj_relation_array[i]
-#     for j in range(len(obj)):
-#         obj[j] = f_sort[obj[j]] 
-#     c_f_obj_relation_array[i] = sorted(obj)
-# 
-# del f_sort
+print('   f_p',time.time()-start); sys.stdout.flush()
 
-print('   e_p',time.time()-start); sys.stdout.flush()
+f_sort = list(range(len(e_p_obj_relation_array)))
 
-balls = e_p_obj_relation_array
+coupled = sorted(zip(f_p_obj_relation_array, f_sort, f_e_obj_relation_array), key=lambda element: element[0])
 
-e_sort = list(range(len(e_p_obj_relation_array)))
+i=0
+for x, y, z in coupled:
+    f_p_obj_relation_array[i] = x
+    f_sort[i] = y
+    f_e_obj_relation_array[i] = z
+    i=i+1
 
-coupled = sorted(zip(e_p_obj_relation_array, e_sort), key=lambda element: element[0])
+coupled = sorted(zip(f_sort, list(range(len(f_p_obj_relation_array)))), key=lambda element: element[0])
 
-print(coupled)
+i=0
+for x, y in coupled:
+    f_sort[i] = y
+    i=i+1
+
+del coupled; gc.collect()
+
+for i in range(len(c_f_obj_relation_array)):
+    obj = c_f_obj_relation_array[i]
+    for j in range(len(obj)):
+        obj[j] = f_sort[obj[j]] 
+    c_f_obj_relation_array[i] = sorted(obj)
+
+del f_sort
 
 i=0
 for x, y in coupled:
@@ -223,8 +210,6 @@ for x, y in coupled:
     
     
 coupled = sorted(zip(e_sort, list(range(len(e_p_obj_relation_array)))), key=lambda element: element[0])
-
-print(coupled)
 
 i=0
 for x, y in coupled:
@@ -239,20 +224,8 @@ for i in range(len(f_e_obj_relation_array)):
         obj[j] = e_sort[obj[j]] 
     f_e_obj_relation_array[i] = sorted(obj)
 
-# del e_sort
+del e_sort
 
-for e in range(nedge):
-    print(e, e_p_obj_relation_array[e], e_sort[e], balls[e_sort[e]])
-
-for f in range(nface):
-    
-    print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
-    
-    for e in f_e_obj_relation_array[f]:
-        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
-        
-        
-        
 print('generating index arrays',time.time()-start); sys.stdout.flush()
 
 nele  = len(c_p_obj_relation_array)
@@ -297,8 +270,6 @@ i=0
 for obj in f_e_obj_relation_array:
     f_e_index[i] = len(obj)
     i=i+1
-    
-print(nedge, len(e_p_index))
     
 # ok I should Have all data I need to output now.
 # and indexify the index arrays
@@ -371,10 +342,6 @@ f_p_index = temp2
 del temp
 del temp2; gc.collect()
 
-print('aaaa')
-print(f_p_obj_relation_array[0])
-print('aaaa')
-
 temp = []
 temp2 = []
 j=0
@@ -427,23 +394,6 @@ for i in range(len(c_f_obj_relation_array)):
     for j in range(len(obj)):
         obj[j] = face_to_rep[obj[j]] 
     c_f_obj_relation_array[i] = sorted(obj)
-
-nele  = len(c_p_obj_relation_array)
-nface = len(f_p_obj_relation_array)
-nedge = len(e_p_obj_relation_array)
-
-for e in range(nedge):
-    print(e, e_p_obj_relation_array[e])
-
-for f in range(nface):
-    
-    print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
-    
-    for e in f_e_obj_relation_array[f]:
-        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
-        
-
-print('removing duplicate mappings',time.time()-start); sys.stdout.flush()
 
 temp = []
 temp2 = []
