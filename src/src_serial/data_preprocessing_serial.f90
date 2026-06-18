@@ -35,10 +35,14 @@ module data_processing_serial
         
         call c_e_preprocess ! conjoined from c_f and f_e
         
+        print*, 'c > e relation array sums: '
+        print*, 'c_e_sum'
+        print*,  c_e_sum
+        
         call p_c_preprocess ! don't think p_c is ever actually needed but weh
         call p_f_preprocess
         call p_e_preprocess
-
+        
         ! I now need the last three directions,
         ! the inverse of the e f c relations
         ! e_c, e_f, e_c 
@@ -46,7 +50,11 @@ module data_processing_serial
         call f_c_preprocess
         call e_f_preprocess
         call e_c_preprocess ! remember this specific one must be synced in the mpi implementation
-
+        
+        print*, 'Inverted relation array sums: '
+        print*, 'p_c_sum,  p_f_sum,  p_e_sum,  f_c_sum,  e_f_sum,  e_c_sum'
+        print*,  p_c_sum,  p_f_sum,  p_e_sum,  f_c_sum,  e_f_sum,  e_c_sum
+        
         ! we will then have 
 
         ! connectivities and inverses

@@ -117,20 +117,10 @@ module boundary_routine_module
         
         e_internal_array = .not. e_bound_array
         
-        print*, e_bound_array
-        print*, e_internal_array
-        
         e_bound_indexing_array   =pack(e_bound_indexing_array   ,e_bound_array)
         e_internal_indexing_array=pack(e_internal_indexing_array,e_internal_array)
         b_nedge = size(e_bound_indexing_array)
         i_nedge = size(e_internal_indexing_array)
-        
-        print*, 'aa'
-        
-        print*, b_nedge
-        print*, i_nedge
-        
-        print*, 'aa'
         
         if (b_nedge+i_nedge .ne. nedge)then
             print*, 'ERROR ERROR'
