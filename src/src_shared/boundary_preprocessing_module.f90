@@ -253,9 +253,13 @@ module boundary_routine_module
             
         enddo
         
-        print*, f_normal_vectors
-        print*, 'aa'
-        print*, p_normal_vectors
+        do f=1,b_nface
+            print*, f, f_bound_indexing_array(f), f_normal_vectors(f,:)
+        enddo
+        print*, 'aa'        
+        do f=1,b_npoin
+            print*, f, p_bound_indexing_array(f), p_normal_vectors(f,:)
+        enddo
         
         
     end subroutine calculate_normal_vectors
