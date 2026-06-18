@@ -159,8 +159,8 @@ module boundary_routine_module
     subroutine calculate_normal_vectors
         use centroid_data
         implicit none
-        integer(KIND=INT32) :: f, bf, fp_start, p1, p2, p3, magnitude, dot_product_of_c_to_f_and_normal, p, bp, pf_start, pf_end, number_of_points, i
-        real(KIND=REAL32)   :: v1(3), v2(3)
+        integer(KIND=INT32) :: f, bf, fp_start, p1, p2, p3, magnitude, dot_product_of_c_to_f_and_normal, p, bp, pf_start, pf_end, number_of_points, i, j
+        real(KIND=REAL32)   :: v1(3), v2(3), sumV
         
         
         allocate(f_normal_vectors(b_nface,3))
@@ -211,10 +211,16 @@ module boundary_routine_module
             number_of_points = 1 + pf_end - pf_start
             
             do i=1,3
-                p_normal_vectors(bp,i) = sum(f_normal_vectors(p_f_obj_relation_array(pf_start:pf_end),i)) / number_of_points
+                sumV = 0.
+                
+                do f=pf_start,pf_end
+                    if (f_bound_array(f)) sumV = sumV + f_normal_vectors(p_f_obj_relation_array(f),i)
+                enddo
+                
+                p_normal_vectors(bp,i) = sumV / number_of_points
             enddo
             
-            ! fuck this is elegant
+            ! this is pretty elegant
             ! I'm dickriding myself pretty hard over this
             
         enddo
