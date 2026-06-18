@@ -202,6 +202,12 @@ for i in range(len(c_f_obj_relation_array)):
 
 del f_sort
 
+print('   e_p',time.time()-start); sys.stdout.flush()
+
+e_sort = list(range(len(e_p_obj_relation_array)))
+
+coupled = sorted(zip(e_p_obj_relation_array, e_sort), key=lambda element: element[0])
+
 i=0
 for x, y in coupled:
     e_p_obj_relation_array[i] = x
