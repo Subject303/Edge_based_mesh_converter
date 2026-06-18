@@ -87,6 +87,8 @@ module volume_processing
             
             ef = 1
             
+            print*, ef, current_face, cell_1, cell_2 , prev_cell
+            
             do
                 
                 if (ef.eq.face_count) then
@@ -95,7 +97,7 @@ module volume_processing
                     ef=ef+1
                 endif
                 
-                print*, current_face, cell_1, cell_2 , prev_cell
+                print*, ef, current_face, cell_1, cell_2 , prev_cell
 
                 
                 if (non_viable_faces(ef)) cycle
