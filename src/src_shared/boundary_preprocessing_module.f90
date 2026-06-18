@@ -78,32 +78,12 @@ module boundary_routine_module
         e_bound_indexing_array    = (/(f, f=1,nedge)/)
         allocate(e_internal_indexing_array,source=e_bound_indexing_array)
         
-        
-!         print*,f_e_index_array
-!         print*,f_e_obj_relation_array
-!         print*,'aa'
-        
-!         do f=1, nface
-!             
-!             fe_start = (1 + f_p_index_array(f-1))
-!             fe_end   = f_p_index_array(f)
-!             
-!             if (f_bound_array(f)) then
-!                 print*, 'bound', f, f_p_obj_relation_array(fe_start:fe_end)
-!             else
-!                 print*, 'intnl', f, f_p_obj_relation_array(fe_start:fe_end)
-!             endif
-!             
-!         enddo
-        
         do f=1, nface
             
             fe_start = (1 + f_e_index_array(f-1))
             fe_end   = f_e_index_array(f)
             
             if (f_bound_array(f))then
-                
-!                 print*, f_e_obj_relation_array(fe_start:fe_end)
                 
                 e_bound_array(   f_e_obj_relation_array(fe_start:fe_end)) = .true.
                 
