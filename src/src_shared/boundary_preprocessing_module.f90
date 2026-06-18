@@ -254,11 +254,11 @@ module boundary_routine_module
         enddo
         
         do f=1,b_nface
-            print*, f, f_bound_indexing_array(f), f_normal_vectors(f,:), sum(f_normal_vectors(f,:))/3
+            print*, f, f_bound_indexing_array(f), f_normal_vectors(f,:), sqrt(f_normal_vectors(f,1)**2 + f_normal_vectors(f,2)**2 + f_normal_vectors(f,3)**2)
         enddo
         print*, 'aa'        
         do f=1,b_npoin
-            print*, f, p_bound_indexing_array(f), p_normal_vectors(f,:), sum(p_normal_vectors(f,:))/3
+            print*, f, p_bound_indexing_array(f), p_normal_vectors(f,:), sqrt(p_normal_vectors(f,1)**2 + p_normal_vectors(f,2)**2 + p_normal_vectors(f,3)**2)
         enddo
         
         
