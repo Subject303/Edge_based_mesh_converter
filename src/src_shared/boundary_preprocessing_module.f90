@@ -256,15 +256,6 @@ module boundary_routine_module
             p_normal_vectors(p,:) = p_normal_vectors(p,:) / sqrt(p_normal_vectors(p,1)**2 + p_normal_vectors(p,2)**2 + p_normal_vectors(p,3)**2)
         enddo
         
-        do f=1,b_nface
-            print*, f, f_bound_indexing_array(f), f_normal_vectors(f,:), sqrt(f_normal_vectors(f,1)**2 + f_normal_vectors(f,2)**2 + f_normal_vectors(f,3)**2)
-        enddo
-        print*, 'aa'        
-        do f=1,b_npoin
-            print*, f, p_bound_indexing_array(f), p_normal_vectors(f,:), sqrt(p_normal_vectors(f,1)**2 + p_normal_vectors(f,2)**2 + p_normal_vectors(f,3)**2)
-        enddo
-        
-        
     end subroutine calculate_normal_vectors
     
     subroutine boundary_angle_feature_flagging

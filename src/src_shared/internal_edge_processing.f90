@@ -1,5 +1,5 @@
 
 
-module internal_edge_processing
+module volume_processing
 
-end module internal_edge_processing
+end module volume_processing
