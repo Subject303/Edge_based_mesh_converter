@@ -87,7 +87,7 @@ module volume_processing
             
             ef = 1
             
-            print*, ef, current_face, cell_1, cell_2 , prev_cell
+            print*, ef, current_face, cell_1, cell_2 , 'prev_cell'
             
             do
                 
@@ -113,6 +113,8 @@ module volume_processing
                     prev_cell = centroid_index_array(i-1)
                     i=i+2 
                     
+                    print*, 'i-1 = cell_1, i+1 = cell_2'
+                    
                     if (i.eq.centroid_array_count+1) exit
                     
                 elseif (prev_cell .eq. cell_2) then
@@ -123,6 +125,8 @@ module volume_processing
                     
                     prev_cell = centroid_index_array(i-1)
                     i=i+2 
+                    
+                    print*, 'swapped'
                     
                     if (i.eq.centroid_array_count+1) exit
                     
