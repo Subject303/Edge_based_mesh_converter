@@ -218,7 +218,15 @@ for x, y in coupled:
     e_p_obj_relation_array[i] = x
     e_sort[i] = y
     i=i+1
+    
+    
+coupled = sorted(zip(e_sort, list(range(len(e_p_obj_relation_array)))), key=lambda element: element[0])
 
+i=0
+for x, y in coupled:
+    e_sort[i] = y
+    i=i+1
+    
 del coupled; gc.collect()
 
 for i in range(len(f_e_obj_relation_array)):
