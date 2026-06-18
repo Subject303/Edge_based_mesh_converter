@@ -253,6 +253,11 @@ module boundary_routine_module
             
         enddo
         
+        print*, f_normal_vectors
+        print*, 'aa'
+        print*, p_normal_vectors
+        
+        
     end subroutine calculate_normal_vectors
     
     subroutine boundary_angle_feature_flagging
