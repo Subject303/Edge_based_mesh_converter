@@ -82,15 +82,15 @@ module volume_processing
                 cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
                 cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
                 
-                if (centroid_index_array(i-1) .eq. cell_1) then
+                print*, current_face, cell_1, cell_2
                 
-                    centroid_index_array(i-1) = cell_1
+                if (centroid_index_array(i-1) .eq. cell_1) then
+                    
                     centroid_index_array(i)   = current_face
                     centroid_index_array(i+1) = cell_2
                     
                 else
                     
-                    centroid_index_array(i-1) = cell_2
                     centroid_index_array(i)   = current_face
                     centroid_index_array(i+1) = cell_1
                     
