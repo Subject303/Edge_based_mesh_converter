@@ -5,6 +5,7 @@ module data_processing_serial
     use preprocessor_routine_module
     use boundary_routine_module
     use object_counts
+    use volume_processing
     
     implicit none
     
