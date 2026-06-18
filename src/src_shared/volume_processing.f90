@@ -43,6 +43,9 @@ module volume_processing
         
         allocate(sn(i_nedge,3))
         
+        centroid_array_count_old = -1
+        
+        
         do ie = 1, i_nedge
             e = e_internal_indexing_array(ie)
             ! this is a loop of all internal edges.
