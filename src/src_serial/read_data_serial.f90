@@ -81,7 +81,9 @@ module read_data_serial
         
         close(10)
         
-        print*,c_p_sum,f_p_sum,e_p_sum,c_f_sum,f_e_sum
+        print*, 'Relation array sums: '
+        print*, 'c_p_sum,  f_p_sum,  e_p_sum,  c_f_sum,  f_e_sum'
+        print*,  c_p_sum,f_p_sum,e_p_sum,c_f_sum,f_e_sum
         
         print*, 'finished reading raw data'
         
