@@ -610,8 +610,8 @@ for f in range(nface):
     print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
     
     for e in f_e_obj_relation_array[f]:
-        print(' edge: ', e-1 , ' points: ', e_p_obj_relation_array[e-1])
-  
+        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
+
    
 print('finished writing to file',time.time()-start); sys.stdout.flush()
 print('finished preprocessing'); sys.stdout.flush()
