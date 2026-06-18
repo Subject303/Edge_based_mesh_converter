@@ -83,7 +83,12 @@ module data_processing_serial
         call identify_boundary_edges
         call identify_boundary_points
         
-        print*, i_npoin, b_npoin, i_nedge, b_nedge, i_nface, b_nface, i_nele, b_nele
+        print*, 'Boundary objects total as follow: '
+        print*, 'internal-boundry edges, internal-boundry faces, internal-boundry cells'
+        print*, i_npoin, b_npoin, i_nedge, b_nedge, i_nface, b_nface
+        print*, 'Total object sums folow: '
+        print *, npoin, ' points, ', nedge, ' edges ', nface, ' faces, '
+        
         
         print*, ' '
         print*, 'finished boundary identification'
