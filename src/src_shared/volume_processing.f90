@@ -24,11 +24,11 @@ module volume_processing
         
     subroutine internal_edge_volume_processing
         implicit none
-        integer(KIND=INT32) :: ie, e, i, i1, i2, centroid_array_count, centroid_array_count_old, ef, ec, ef_start, ec_start, ef_end, ec_end
-        integer(KIND=INT32) :: cell_count, face_count, current_face, current_cell, cell_1, cell_2
+        integer(KIND=INT32) :: ie, e, i, j, i1, i2, centroid_array_count, centroid_array_count_old, ef, ec, ef_start, ec_start, ef_end, ec_end
+        integer(KIND=INT32) :: cell_count, face_count, current_face, current_cell, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:)
-        
+        logical, allocatable :: viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
         
@@ -44,7 +44,7 @@ module volume_processing
         allocate(sn(i_nedge,3))
         
         centroid_array_count_old = -1
-        allocate(centroid_index_array(0))
+        allocate(centroid_index_array(0),viable_faces(0))
         
         do ie = 1, i_nedge
             e = e_internal_indexing_array(ie)
@@ -67,40 +67,103 @@ module volume_processing
             ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
             
             if (centroid_array_count_old .ne. centroid_array_count) then
-                deallocate(centroid_index_array)
-                allocate(centroid_index_array(centroid_array_count))
+                deallocate(centroid_index_array,viable_faces)
+                allocate(centroid_index_array(centroid_array_count), viable_faces(face_count+1))
             endif
             
             current_face = e_f_obj_relation_array(ef_start+1)
-            centroid_index_array(1) = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
+            cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
+            cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
+            prev_cell = centroid_index_array(i-1)
+            
+            centroid_index_array(1) = cell_1
+            centroid_index_array(2) = current_face
+            centroid_index_array(3) = cell_2
             
             print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
             
             i=2
-            do ef=1,face_count
-                current_face = e_f_obj_relation_array(ef_start + ef)
-                
-                cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
-                cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
+            viable_faces = .false.
+            ef = 1
+            do while ((prev_cell .ne. cell_1) .or.(prev_cell .ne. cell_2))
                 
                 print*, current_face, cell_1, cell_2
                 
-                if (centroid_index_array(i-1) .eq. cell_1) then
+                if (prev_cell .eq. cell_1) then
                     
                     centroid_index_array(i)   = current_face
                     centroid_index_array(i+1) = cell_2
+                    viable_faces(ef) = .true.
                     
-                elseif (centroid_index_array(i-1) .eq. cell_2) then
+                elseif (prev_cell .eq. cell_2) then
                     
                     centroid_index_array(i)   = current_face
                     centroid_index_array(i+1) = cell_1
+                    viable_faces(ef) = .true.
+                    
                 else
+                    ! ok we have the wrong face
+                    
                     print*, 'FUCK'
                 endif
                 
+                current_face = e_f_obj_relation_array(ef_start + ef)
+                cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
+                cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
+                prev_cell = centroid_index_array(i-1)
+                
                 i=i+2
+                
+                do while (viable_faces(ef))
+                    ef=ef+1
+                    
+                    if (ef.eq.centroid_array_count)then
+                        ef = 1
+                    else
+                        ef=ef+1
+                    endif
+                enddo
+                
+                if (i .eq. centroid_array_count) break
+                
             enddo
             
+            
+!             i=2
+!             do ef=1,face_count
+!                 current_face = e_f_obj_relation_array(ef_start + ef)
+!                 
+!                 cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
+!                 cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
+!                 prev_cell = centroid_index_array(i-1)
+!                 
+!                 print*, current_face, cell_1, cell_2
+!                 
+!                 if (prev_cell .eq. cell_1) then
+!                     
+!                     centroid_index_array(i)   = current_face
+!                     centroid_index_array(i+1) = cell_2
+!                     
+!                 elseif (prev_cell .eq. cell_2) then
+!                     
+!                     centroid_index_array(i)   = current_face
+!                     centroid_index_array(i+1) = cell_1
+!                 else
+!                     ! ok now we need to swap with a previous face
+!                     
+!                     do while ((prev_cell .ne. cell_1) .or.(prev_cell .ne. cell_2))
+!                     
+!                         cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
+!                         cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
+!                         prev_cell = centroid_index_array(i-1)
+!                         
+!                     enddo
+!                     
+!                     print*, 'FUCK'
+!                 endif
+!                 
+!                 i=i+2
+!             enddo
             centroid_array_count_old = centroid_array_count
             
             
