@@ -74,6 +74,7 @@ module volume_processing
             current_face = e_f_obj_relation_array(ef_start+1)
             centroid_index_array(1) = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
             
+            print*, 'number of faces ', face_count, 'number of cells ', cell_count
             
             i=2
             do ef=1,face_count
