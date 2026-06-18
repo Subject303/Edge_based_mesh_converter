@@ -155,13 +155,6 @@ del edge
 nface = faceid
 nedge = edgeid
 
-for f in range(nface):
-    
-    print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
-    
-    for e in f_e_obj_relation_array[f]:
-        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
-        
 gc.collect()
 
 print('sorting connectivities',time.time()-start); sys.stdout.flush()
@@ -562,18 +555,6 @@ for obj in c_f_obj_relation_array:
 for obj in f_e_obj_relation_array:
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
-  
-print(min(f_e_obj_relation_array),min(c_f_obj_relation_array),min(c_p_obj_relation_array),min(f_p_obj_relation_array),min(e_p_obj_relation_array))
-  
-for e in range(nedge):
-    print(e, ' edge, points: ', e_p_obj_relation_array[e])
-    
-for f in range(nface):
-    
-    print(' face: ', f , ' edges: ' , f_e_obj_relation_array[f], ' points: ', f_p_obj_relation_array[f])
-    
-    for e in f_e_obj_relation_array[f]:
-        print(' edge: ', e , ' points: ', e_p_obj_relation_array[e])
 
    
 print('finished writing to file',time.time()-start); sys.stdout.flush()
