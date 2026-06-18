@@ -253,7 +253,7 @@ module boundary_routine_module
         enddo
         
         do p=1,b_npoin
-            p_normal_vectors(f,:) = p_normal_vectors(f,:) / sqrt(p_normal_vectors(f,1)**2 + p_normal_vectors(f,2)**2 + p_normal_vectors(f,3)**2)
+            p_normal_vectors(p,:) = p_normal_vectors(p,:) / sqrt(p_normal_vectors(p,1)**2 + p_normal_vectors(p,2)**2 + p_normal_vectors(p,3)**2)
         enddo
         
         do f=1,b_nface
