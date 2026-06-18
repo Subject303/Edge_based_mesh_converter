@@ -182,28 +182,28 @@ for x, z in coupled:
 
 del coupled; gc.collect()
 
-print('   f_p',time.time()-start); sys.stdout.flush()
-
-f_sort = list(range(len(e_p_obj_relation_array)))
-
-coupled = sorted(zip(f_p_obj_relation_array, f_sort, f_e_obj_relation_array), key=lambda element: element[0])
-
-i=0
-for x, y, z in coupled:
-    f_p_obj_relation_array[i] = x
-    f_sort[i] = y
-    f_e_obj_relation_array[i] = z
-    i=i+1
-
-del coupled; gc.collect()
-
-for i in range(len(c_f_obj_relation_array)):
-    obj = c_f_obj_relation_array[i]
-    for j in range(len(obj)):
-        obj[j] = f_sort[obj[j]] 
-    c_f_obj_relation_array[i] = sorted(obj)
-
-del f_sort
+# print('   f_p',time.time()-start); sys.stdout.flush()
+# 
+# f_sort = list(range(len(e_p_obj_relation_array)))
+# 
+# coupled = sorted(zip(f_p_obj_relation_array, f_sort, f_e_obj_relation_array), key=lambda element: element[0])
+# 
+# i=0
+# for x, y, z in coupled:
+#     f_p_obj_relation_array[i] = x
+#     f_sort[i] = y
+#     f_e_obj_relation_array[i] = z
+#     i=i+1
+# 
+# del coupled; gc.collect()
+# 
+# for i in range(len(c_f_obj_relation_array)):
+#     obj = c_f_obj_relation_array[i]
+#     for j in range(len(obj)):
+#         obj[j] = f_sort[obj[j]] 
+#     c_f_obj_relation_array[i] = sorted(obj)
+# 
+# del f_sort
 
 print('   e_p',time.time()-start); sys.stdout.flush()
 
