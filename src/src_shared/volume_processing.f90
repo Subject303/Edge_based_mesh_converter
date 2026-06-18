@@ -90,11 +90,12 @@ module volume_processing
                     centroid_index_array(i)   = current_face
                     centroid_index_array(i+1) = cell_2
                     
-                else
+                elseif (centroid_index_array(i-1) .eq. cell_2) then
                     
                     centroid_index_array(i)   = current_face
                     centroid_index_array(i+1) = cell_1
-                    
+                else
+                    print*, 'FUCK'
                 endif
                 
                 i=i+2
