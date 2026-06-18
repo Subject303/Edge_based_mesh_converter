@@ -229,6 +229,7 @@ module boundary_routine_module
         ! because I've already split my feature edges in my preprocessor I can then get point normal vectors by just averaging connected face normals
         
         allocate(p_normal_vectors(b_npoin,3))
+        p_normal_vectors = 0.
         
         do bp=1,b_npoin
         
@@ -239,18 +240,20 @@ module boundary_routine_module
             number_of_points = 1 + pf_end - pf_start
             
             do i=1,3
-                sumV = 0.
                 
                 do p=pf_start,pf_end
-                    if (f_bound_array(p_f_obj_relation_array(p))) sumV = sumV + f_normal_vectors(reversed_f_bound_indexing_array(p_f_obj_relation_array(p)),i)
+                    if (f_bound_array(p_f_obj_relation_array(p))) p_normal_vectors(bp,i) = p_normal_vectors(bp,i) + f_normal_vectors(reversed_f_bound_indexing_array(p_f_obj_relation_array(p)),i)
                 enddo
                 
-                p_normal_vectors(bp,i) = sumV / number_of_points
             enddo
             
             ! this is pretty elegant
             ! I'm dickriding myself pretty hard over this
             
+        enddo
+        
+        do p=1,b_npoin
+            p_normal_vectors(f,:) = p_normal_vectors(f,:) / sqrt(p_normal_vectors(f,1)**2 + p_normal_vectors(f,2)**2 + p_normal_vectors(f,3)**2)
         enddo
         
         do f=1,b_nface
