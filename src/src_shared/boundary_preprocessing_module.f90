@@ -56,6 +56,10 @@ module boundary_routine_module
         b_nface = size(f_bound_indexing_array)
         i_nface = size(f_internal_indexing_array)
         
+        reversed_f_bound_indexing_array = (/i=1,b_nface/)
+        call quicksort(f_bound_indexing_array, 1, b_nface, reversed_f_bound_indexing_array)
+        call quicksort(f_internal_indexing_array, 1, i_nface)
+        
         if (b_nface+i_nface .ne. nface)then
             print*, 'ERROR ERROR'
             print*, 'sum of internal and external faces is different to the total count of faces.'
@@ -102,6 +106,10 @@ module boundary_routine_module
         b_nedge = size(e_bound_indexing_array)
         i_nedge = size(e_internal_indexing_array)
         
+        reversed_e_bound_indexing_array = (/i=1,b_nedge/)
+        call quicksort(e_bound_indexing_array, 1, b_nedge, reversed_e_bound_indexing_array)
+        call quicksort(e_internal_indexing_array, 1, i_nedge)
+        
         if (b_nedge+i_nedge .ne. nedge)then
             print*, 'ERROR ERROR'
             print*, 'sum of internal and external edges is different to the total count of edges.'
@@ -145,6 +153,10 @@ module boundary_routine_module
         p_internal_indexing_array=pack(p_internal_indexing_array,p_internal_array)
         b_npoin = size(p_bound_indexing_array)
         i_npoin = size(p_internal_indexing_array)
+        
+        reversed_p_bound_indexing_array = (/i=1,b_npoin/)
+        call quicksort(p_bound_indexing_array, 1, b_npoin, reversed_p_bound_indexing_array)
+        call quicksort(p_internal_indexing_array, 1, i_npoin)
         
         if (b_npoin+i_npoin .ne. npoin)then
             print*, 'ERROR ERROR'
@@ -214,8 +226,7 @@ module boundary_routine_module
                 sumV = 0.
                 
                 do p=pf_start,pf_end
-                
-                    if (f_bound_array(p_f_obj_relation_array(p))) sumV = sumV + f_normal_vectors(p_f_obj_relation_array(p),i)
+                    if (f_bound_array(p_f_obj_relation_array(p))) sumV = sumV + f_normal_vectors(reversed_f_bound_indexing_array(p_f_obj_relation_array(p)),i)
                 enddo
                 
                 p_normal_vectors(bp,i) = sumV / number_of_points

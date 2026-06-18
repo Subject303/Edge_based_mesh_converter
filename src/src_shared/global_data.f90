@@ -85,9 +85,12 @@ module boundary_data
     ! indexing arrays as above, internals
     integer(KIND=INT32), allocatable :: p_internal_indexing_array(:) , e_internal_indexing_array(:), f_internal_indexing_array(:) , c_internal_indexing_array(:)
     
+    
+    ! index arrays for moving from global object index to boundary index
+    integer(KIND=INT32), allocatable :: reversed_p_bound_indexing_array(:) , reversed_e_bound_indexing_array(:), reversed_f_bound_indexing_array(:)
+    
     ! for boundary normal vectors it makes sense to both calculate  normals for faces, and then derive point normals
     real(KIND=REAL32), allocatable :: p_normal_vectors(:,:), f_normal_vectors(:,:)
-    
     
 end module boundary_data
 
