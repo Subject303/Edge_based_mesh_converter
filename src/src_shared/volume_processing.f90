@@ -28,7 +28,7 @@ module volume_processing
         integer(KIND=INT32) :: cell_count, face_count, current_face, current_cell, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:)
-        logical, allocatable :: viable_faces(:)
+        logical, allocatable :: non_viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
         
@@ -44,7 +44,7 @@ module volume_processing
         allocate(sn(i_nedge,3))
         
         centroid_array_count_old = -1
-        allocate(centroid_index_array(0),viable_faces(0))
+        allocate(centroid_index_array(0),non_viable_faces(0))
         
         do ie = 1, i_nedge
             e = e_internal_indexing_array(ie)
@@ -67,8 +67,8 @@ module volume_processing
             ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
             
             if (centroid_array_count_old .ne. centroid_array_count) then
-                deallocate(centroid_index_array,viable_faces)
-                allocate(centroid_index_array(centroid_array_count), viable_faces(face_count+1))
+                deallocate(centroid_index_array,non_viable_faces)
+                allocate(centroid_index_array(centroid_array_count), non_viable_faces(face_count+1))
             endif
             
             current_face = e_f_obj_relation_array(ef_start+1)
@@ -83,7 +83,7 @@ module volume_processing
             print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
             
             i=2
-            viable_faces = .false.
+            non_viable_faces = .false.
             
             ef = 1
             
@@ -91,13 +91,13 @@ module volume_processing
                 
                 ef=ef+1
                 
-                if (viable_faces(ef)) cycle
-                
                 if (ef.eq.face_count)then
                     ef = 1
                 else
                     cycle
                 endif
+                
+                if (non_viable_faces(ef)) cycle
                 
                 current_face = e_f_obj_relation_array(ef_start + ef)
                 cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
@@ -107,24 +107,26 @@ module volume_processing
             
                     centroid_index_array(i)   = current_face
                     centroid_index_array(i+1) = cell_2
-                    viable_faces(ef) = .true.
+                    non_viable_faces(ef) = .true.
                     
                     prev_cell = centroid_index_array(i-1)
                     i=i+2 
+                    
+                    if (i.eq.centroid_array_count-1) exit
                     
                 elseif (prev_cell .eq. cell_2) then
                     
                     centroid_index_array(i)   = current_face
                     centroid_index_array(i+1) = cell_1
-                    viable_faces(ef) = .true.
+                    non_viable_faces(ef) = .true.
                     
                     prev_cell = centroid_index_array(i-1)
                     i=i+2 
                     
+                    if (i.eq.centroid_array_count-1) exit
+                    
                 else
                 endif
-                
-                if (i.eq.centroid_array_count-1) exit
                 
             enddo
             
