@@ -94,6 +94,14 @@ module boundary_data
     
 end module boundary_data
 
+module projection_data
+    use iso_fortran_env
+    implicit none
+    
+    real(KIND=REAL32), allocatable :: sn(:,:), sb(:,:), sbb(:,:), vol(:)
+    
+end module projection_data
+
 module centroid_data
     use iso_fortran_env
     implicit none

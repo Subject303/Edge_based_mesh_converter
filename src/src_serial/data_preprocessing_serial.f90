@@ -106,9 +106,40 @@ module data_processing_serial
     
     subroutine data_processing
         implicit none
+                
+        print*, ' '
+        print*, 'Moving to primary volume processing. '
+        print*, ' '
+        
         
         
     end subroutine data_processing
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 end module data_processing_serial
