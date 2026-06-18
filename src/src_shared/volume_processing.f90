@@ -95,7 +95,7 @@ module volume_processing
                     ef=ef+1
                 endif
                 
-                print*, i, ef, centroid_array_count-1
+                print*, i, ef, centroid_array_count
 
                 
                 if (non_viable_faces(ef)) cycle
@@ -113,7 +113,7 @@ module volume_processing
                     prev_cell = centroid_index_array(i-1)
                     i=i+2 
                     
-                    if (i.eq.centroid_array_count-1) exit
+                    if (i.eq.centroid_array_count+1) exit
                     
                 elseif (prev_cell .eq. cell_2) then
                     
@@ -124,7 +124,7 @@ module volume_processing
                     prev_cell = centroid_index_array(i-1)
                     i=i+2 
                     
-                    if (i.eq.centroid_array_count-1) exit
+                    if (i.eq.centroid_array_count+1) exit
                     
                 else
                 endif
