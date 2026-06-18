@@ -82,7 +82,7 @@ module volume_processing
             
             print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
             
-            i=2
+            i=4
             non_viable_faces = .false.
             
             ef = 1
