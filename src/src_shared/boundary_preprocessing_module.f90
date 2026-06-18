@@ -54,7 +54,7 @@ module boundary_routine_module
         
         reversed_f_bound_indexing_array = 0
         do i=1,nface
-            if (f_internal_array) reversed_f_bound_indexing_array(i) = reversed_f_bound_indexing_array(i) + 1
+            if (f_internal_array(i)) reversed_f_bound_indexing_array(i) = reversed_f_bound_indexing_array(i) + 1
         enddo
         do i=2,nface
             reversed_f_bound_indexing_array(i) = reversed_f_bound_indexing_array(i-1) + reversed_f_bound_indexing_array(i)
@@ -109,7 +109,7 @@ module boundary_routine_module
         
         reversed_e_bound_indexing_array = 0
         do i=1,nedge
-            if (e_internal_array) reversed_e_bound_indexing_array(i) = reversed_e_bound_indexing_array(i) + 1
+            if (e_internal_array(i)) reversed_e_bound_indexing_array(i) = reversed_e_bound_indexing_array(i) + 1
         enddo
         do i=2,nedge
             reversed_e_bound_indexing_array(i) = reversed_e_bound_indexing_array(i-1) + reversed_e_bound_indexing_array(i)
@@ -162,7 +162,7 @@ module boundary_routine_module
         
         reversed_p_bound_indexing_array = 0
         do i=1,npoin
-            if (p_internal_array) reversed_p_bound_indexing_array(i) = reversed_p_bound_indexing_array(i) + 1
+            if (p_internal_array(i)) reversed_p_bound_indexing_array(i) = reversed_p_bound_indexing_array(i) + 1
         enddo
         do i=2,npoin
             reversed_p_bound_indexing_array(i) = reversed_p_bound_indexing_array(i-1) + reversed_p_bound_indexing_array(i)
