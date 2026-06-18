@@ -91,11 +91,7 @@ module volume_processing
                 
                 ef=ef+1
                 
-                if (ef.eq.face_count)then
-                    ef = 1
-                else
-                    cycle
-                endif
+                if (ef.eq.face_count) ef = 1
                 
                 if (non_viable_faces(ef)) cycle
                 
