@@ -79,22 +79,22 @@ module boundary_routine_module
         allocate(e_internal_indexing_array,source=e_bound_indexing_array)
         
         
-        print*,f_e_index_array
-        print*,f_e_obj_relation_array
-        print*,'aa'
+!         print*,f_e_index_array
+!         print*,f_e_obj_relation_array
+!         print*,'aa'
         
-        do f=1, nface
-            
-            fe_start = (1 + f_p_index_array(f-1))
-            fe_end   = f_p_index_array(f)
-            
-            if (f_bound_array(f)) then
-                print*, 'bound', f, f_p_obj_relation_array(fe_start:fe_end)
-            else
-                print*, 'intnl', f, f_p_obj_relation_array(fe_start:fe_end)
-            endif
-            
-        enddo
+!         do f=1, nface
+!             
+!             fe_start = (1 + f_p_index_array(f-1))
+!             fe_end   = f_p_index_array(f)
+!             
+!             if (f_bound_array(f)) then
+!                 print*, 'bound', f, f_p_obj_relation_array(fe_start:fe_end)
+!             else
+!                 print*, 'intnl', f, f_p_obj_relation_array(fe_start:fe_end)
+!             endif
+!             
+!         enddo
         
         do f=1, nface
             
@@ -126,36 +126,6 @@ module boundary_routine_module
         
         print*, b_nedge
         print*, i_nedge
-        
-        print*, 'aa'
-        
-        do f=1,nedge
-        
-            fe_start = (1 + e_p_index_array(f-1))
-            fe_end   = e_p_index_array(f)
-            
-            print*,e_p_obj_relation_array(fe_start:fe_end)
-        enddo
-        
-        print*, 'aa'
-        
-        do f=1,b_nedge
-        
-            fe_start = (1 + e_p_index_array(e_bound_indexing_array(f)-1))
-            fe_end   = e_p_index_array(e_bound_indexing_array(f))
-            
-            print*,e_p_obj_relation_array(fe_start:fe_end)
-        enddo
-        
-        print*, 'aa'
-        
-        do f=1,i_nedge
-        
-            fe_start = (1 + e_p_index_array(e_internal_indexing_array(f)-1))
-            fe_end   = e_p_index_array(e_internal_indexing_array(f))
-            
-            print*,e_p_obj_relation_array(fe_start:fe_end)
-        enddo
         
         print*, 'aa'
         
@@ -202,12 +172,6 @@ module boundary_routine_module
         p_internal_indexing_array=pack(p_internal_indexing_array,p_internal_array)
         b_npoin = size(p_bound_indexing_array)
         i_npoin = size(p_internal_indexing_array)
-        
-        print*, b_npoin
-        print*, i_npoin
-    
-        print*, coords(p_internal_indexing_array,:)
-        print*, maxval(coords(:,1)),maxval(coords(:,2)),maxval(coords(:,3)),minval(coords(:,1)),minval(coords(:,2)),minval(coords(:,3))
         
         if (b_npoin+i_npoin .ne. npoin)then
             print*, 'ERROR ERROR'
