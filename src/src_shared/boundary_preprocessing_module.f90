@@ -202,7 +202,7 @@ module boundary_routine_module
         
         allocate(p_normal_vectors(b_npoin,3))
         
-        do bp=1,npoin
+        do bp=1,b_npoin
             
             p = p_bound_indexing_array(bp)
             
