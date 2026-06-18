@@ -111,6 +111,8 @@ module data_processing_serial
         print*, 'Moving to primary volume processing. '
         print*, ' '
         
+        call volume_alloc
+        
         
         
     end subroutine data_processing
