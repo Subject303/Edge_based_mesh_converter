@@ -214,6 +214,7 @@ module boundary_routine_module
                 sumV = 0.
                 
                 do f=pf_start,pf_end
+                    print*,f
                     if (f_bound_array(f)) sumV = sumV + f_normal_vectors(p_f_obj_relation_array(f),i)
                 enddo
                 
