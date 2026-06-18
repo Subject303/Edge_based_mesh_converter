@@ -65,7 +65,7 @@ module volume_processing
             
             allocate(centroid_index_array(centroid_array_count))
             
-            current_face = e_f_obj_relation_array(ef_start + ef)
+            current_face = e_f_obj_relation_array(ef_start+1)
             centroid_index_array(1) = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
             
             
