@@ -124,7 +124,7 @@ module volume_processing
                 else
                 endif
                 
-                if (i.eq.centroid_array_count) break
+                if (i.eq.centroid_array_count) exit
                 
             enddo
             
