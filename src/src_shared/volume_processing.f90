@@ -112,7 +112,7 @@ module volume_processing
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
     subroutine centroid_array_routine(obj_projection, obj_centroid, centroid_array_count, centroid_array, i1, i2)
-        use shared
+        implicit none
         integer(KIND=INT32)          :: i, centroid_array_count, i1
         integer(KIND=INT32),optional :: i2
         real(KIND=REAL32) :: obj_projection(3), centroid_array(:,:), obj_centroid(3)
@@ -125,7 +125,7 @@ module volume_processing
     end subroutine
     
     subroutine cvolume(sn, vol1, vol2, i1, i2, i3, i4, i5)
-        use shared
+        implicit none
         real(KIND=REAL32) :: vol1,vol2
         real(KIND=REAL32),dimension(3) :: v13,v14,v15,v32,v42,v52,c1415,c4252
         real(KIND=REAL32),dimension(3) :: sn, i3, i4, i5
