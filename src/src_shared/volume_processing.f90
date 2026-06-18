@@ -118,7 +118,7 @@ module volume_processing
         real(KIND=REAL32) :: obj_projection(3), centroid_array(:,:), obj_centroid(3)
         
         do i=2,centroid_array_count
-            call cvolume(obj_projection, vol(i1), vol(i2), coords(i1,:), coords(i2,:), obj_centroid, centroid_array(i-1,:), centroid_array(i,:))
+            call cvolume(obj_projection, vol(i1), vol(i2), i1, i2, obj_centroid, centroid_array(i-1,:), centroid_array(i,:))
         enddo
         
         
