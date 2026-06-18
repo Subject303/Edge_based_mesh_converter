@@ -203,7 +203,7 @@ module boundary_routine_module
         allocate(p_normal_vectors(b_npoin,3))
         
         do bp=1,b_npoin
-            
+        
             p = p_bound_indexing_array(bp)
             
             pf_start = (1 + p_f_index_array(p-1))
@@ -214,7 +214,7 @@ module boundary_routine_module
                 sumV = 0.
                 
                 do f=pf_start,pf_end
-                    print*,f
+                    print*,f,pf_start,pf_end
                     if (f_bound_array(f)) sumV = sumV + f_normal_vectors(p_f_obj_relation_array(f),i)
                 enddo
                 
