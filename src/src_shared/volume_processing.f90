@@ -24,7 +24,7 @@ module volume_processing
         
     subroutine internal_edge_volume_processing
         implicit none
-        integer(KIND=INT32) :: ie, e, i, i1, i2, centroid_array_count, ef, ec, ef_start, ec_start, ef_end, ec_end
+        integer(KIND=INT32) :: ie, e, i, i1, i2, centroid_array_count, centroid_array_count_old, ef, ec, ef_start, ec_start, ef_end, ec_end
         integer(KIND=INT32) :: cell_count, face_count, current_face, current_cell, cell_1, cell_2
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:)
@@ -63,7 +63,10 @@ module volume_processing
             
             ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
             
-            allocate(centroid_index_array(centroid_array_count))
+            if (centroid_array_count_old .ne. centroid_array_count) then
+                deallocate(centroid_index_array)
+                allocate(centroid_index_array(centroid_array_count))
+            endif
             
             current_face = e_f_obj_relation_array(ef_start+1)
             centroid_index_array(1) = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
@@ -93,10 +96,15 @@ module volume_processing
                 i=i+2
             enddo
             
+            centroid_array_count_old = centroid_array_count
+            
+            
             if (i.ne.centroid_array_count) print*, 'centroid array count broken'
             if (centroid_index_array(1).ne.centroid_index_array(centroid_array_count)) print*, 'internal centroid array start and end wrong'
             
             print*, centroid_index_array
+            
+            
             
             !call centroid_array_routine(sn(e,:), e_centroid(e,:), centroid_array_count, centroid_array, i1, i2)
             
