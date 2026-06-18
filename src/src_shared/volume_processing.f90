@@ -44,7 +44,7 @@ module volume_processing
         allocate(sn(i_nedge,3))
         
         centroid_array_count_old = -1
-        
+        allocate(centroid_index_array(0))
         
         do ie = 1, i_nedge
             e = e_internal_indexing_array(ie)
