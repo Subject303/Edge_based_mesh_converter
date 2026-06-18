@@ -207,6 +207,8 @@ del f_sort
 
 print('   e_p',time.time()-start); sys.stdout.flush()
 
+balls = e_p_obj_relation_array
+
 e_sort = list(range(len(e_p_obj_relation_array)))
 
 coupled = sorted(zip(e_p_obj_relation_array, e_sort), key=lambda element: element[0])
@@ -225,10 +227,10 @@ for i in range(len(f_e_obj_relation_array)):
         obj[j] = e_sort[obj[j]] 
     f_e_obj_relation_array[i] = sorted(obj)
 
-del e_sort
+# del e_sort
 
-# for e in range(nedge):
-#     print(e, e_p_obj_relation_array[e])
+for e in range(nedge):
+    print(e, e_p_obj_relation_array[e], e_sort[e], balls[e_sort[e]])
 
 for f in range(nface):
     
