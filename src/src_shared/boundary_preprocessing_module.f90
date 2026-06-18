@@ -202,6 +202,9 @@ module boundary_routine_module
         
         allocate(p_normal_vectors(b_npoin,3))
         
+        print*, p_f_index_array
+        print*, p_f_obj_relation_array
+        
         do bp=1,b_npoin
         
             p = p_bound_indexing_array(bp)
