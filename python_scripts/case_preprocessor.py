@@ -238,7 +238,7 @@ for i in range(len(f_e_obj_relation_array)):
 # del e_sort
 
 for e in range(nedge):
-    print(e, e_p_obj_relation_array[e], e_sort[e]-1, balls[e_sort[e]-1])
+    print(e, e_p_obj_relation_array[e], e_sort[e], balls[e_sort[e]])
 
 for f in range(nface):
     
