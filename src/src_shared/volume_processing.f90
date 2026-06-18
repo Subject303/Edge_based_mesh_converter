@@ -91,9 +91,9 @@ module volume_processing
                 
                 ef=ef+1
                 
-                if (viable_faces(i/2)) cycle
+                if (viable_faces(ef)) cycle
                 
-                if (ef.eq.centroid_array_count)then
+                if (ef.eq.face_count)then
                     ef = 1
                 else
                     cycle
