@@ -112,6 +112,8 @@ module volume_processing
                     prev_cell = centroid_index_array(i-1)
                     i=i+2 
                     
+                    print*, i, centroid_array_count-1
+                    
                     if (i.eq.centroid_array_count-1) exit
                     
                 elseif (prev_cell .eq. cell_2) then
@@ -122,6 +124,8 @@ module volume_processing
                     
                     prev_cell = centroid_index_array(i-1)
                     i=i+2 
+                    
+                    print*, i, centroid_array_count-1
                     
                     if (i.eq.centroid_array_count-1) exit
                     
