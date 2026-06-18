@@ -74,26 +74,43 @@ module volume_processing
             current_face = e_f_obj_relation_array(ef_start+1)
             cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
             cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
-            prev_cell = centroid_index_array(i-1)
             
             centroid_index_array(1) = cell_1
             centroid_index_array(2) = current_face
             centroid_index_array(3) = cell_2
+            prev_cell = cell_1
             
             print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
             
             i=2
             viable_faces = .false.
+            
             ef = 1
-            do while ((prev_cell .ne. cell_1) .or.(prev_cell .ne. cell_2))
+            
+            do
                 
-                print*, current_face, cell_1, cell_2
+                ef=ef+1
+                
+                if (viable_faces(ef)) cycle
+                
+                if (ef.eq.centroid_array_count)then
+                    ef = 1
+                else
+                    cycle
+                endif
+                
+                current_face = e_f_obj_relation_array(ef_start + ef)
+                cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
+                cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
                 
                 if (prev_cell .eq. cell_1) then
-                    
+            
                     centroid_index_array(i)   = current_face
                     centroid_index_array(i+1) = cell_2
                     viable_faces(ef) = .true.
+                    
+                    prev_cell = centroid_index_array(i-1)
+                    i=i+2 
                     
                 elseif (prev_cell .eq. cell_2) then
                     
@@ -101,69 +118,16 @@ module volume_processing
                     centroid_index_array(i+1) = cell_1
                     viable_faces(ef) = .true.
                     
-                else
-                    ! ok we have the wrong face
+                    prev_cell = centroid_index_array(i-1)
+                    i=i+2 
                     
-                    print*, 'FUCK'
+                else
                 endif
                 
-                current_face = e_f_obj_relation_array(ef_start + ef)
-                cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
-                cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
-                prev_cell = centroid_index_array(i-1)
-                
-                i=i+2
-                
-                do while (viable_faces(ef))
-                    ef=ef+1
-                    
-                    if (ef.eq.centroid_array_count)then
-                        ef = 1
-                    else
-                        ef=ef+1
-                    endif
-                enddo
-                
-                if (i .eq. centroid_array_count) break
+                if (i.eq.centroid_array_count) break
                 
             enddo
             
-            
-!             i=2
-!             do ef=1,face_count
-!                 current_face = e_f_obj_relation_array(ef_start + ef)
-!                 
-!                 cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
-!                 cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
-!                 prev_cell = centroid_index_array(i-1)
-!                 
-!                 print*, current_face, cell_1, cell_2
-!                 
-!                 if (prev_cell .eq. cell_1) then
-!                     
-!                     centroid_index_array(i)   = current_face
-!                     centroid_index_array(i+1) = cell_2
-!                     
-!                 elseif (prev_cell .eq. cell_2) then
-!                     
-!                     centroid_index_array(i)   = current_face
-!                     centroid_index_array(i+1) = cell_1
-!                 else
-!                     ! ok now we need to swap with a previous face
-!                     
-!                     do while ((prev_cell .ne. cell_1) .or.(prev_cell .ne. cell_2))
-!                     
-!                         cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
-!                         cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
-!                         prev_cell = centroid_index_array(i-1)
-!                         
-!                     enddo
-!                     
-!                     print*, 'FUCK'
-!                 endif
-!                 
-!                 i=i+2
-!             enddo
             centroid_array_count_old = centroid_array_count
             
             
