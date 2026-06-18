@@ -222,6 +222,8 @@ for x, y in coupled:
     
 coupled = sorted(zip(e_sort, list(range(len(e_p_obj_relation_array)))), key=lambda element: element[0])
 
+print(coupled)
+
 i=0
 for x, y in coupled:
     e_sort[i] = y
