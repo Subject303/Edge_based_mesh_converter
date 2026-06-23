@@ -87,7 +87,7 @@ module volume_processing
             
             ef = 1
             
-            print*, ef, current_face, cell_1, cell_2 , 'prev_cell'
+            print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
             
             do
                 
