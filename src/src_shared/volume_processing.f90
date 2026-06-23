@@ -321,7 +321,7 @@ module volume_processing
             !if (i.ne.centroid_array_count+1) print*, 'centroid array count broken'
             !if (centroid_index_array(1).ne.centroid_index_array(centroid_array_count)) print*, 'internal centroid array start and end wrong'
             
-            !print*, centroid_index_array
+            print*, centroid_index_array
             
             in_progress_projection(:) = 0.0
             in_progress_centroid = e_centroid(e,:)
