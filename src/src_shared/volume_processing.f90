@@ -170,7 +170,7 @@ module volume_processing
             
         enddo
         
-        
+        print*, sn
         
     end subroutine internal_edge_volume_processing
     
