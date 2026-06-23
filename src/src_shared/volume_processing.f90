@@ -183,7 +183,7 @@ module volume_processing
         
     subroutine boundary_edge_volume_processing
         implicit none
-        integer(KIND=INT32) :: ie, e, i, j, i1, i2, centroid_array_count, centroid_array_count_old, ef, ec, ef_start, ec_start, ef_end, ec_end
+        integer(KIND=INT32) :: be, e, i, j, i1, i2, centroid_array_count, centroid_array_count_old, ef, ec, ef_start, ec_start, ef_end, ec_end
         integer(KIND=INT32) :: cell_count, face_count, current_face, current_cell, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
@@ -206,8 +206,8 @@ module volume_processing
         centroid_array_count_old = -1
         allocate(centroid_index_array(0),non_viable_faces(0),centroid_array(0,0))
         
-        do ie = 1, b_nedge
-            e = e_bound_indexing_array(ie)
+        do be = 1, b_nedge
+            e = e_bound_indexing_array(be)
             ! this is a loop of all boundary edges.
             
             i1 = e_p_obj_relation_array(e_p_index_array(e)-1)
@@ -328,15 +328,12 @@ module volume_processing
             
             call centroid_array_routine(in_progress_projection, in_progress_centroid, centroid_array_count, centroid_array, i1, i2)
             
-            sb(e,:) = in_progress_projection
+            sb(be,:) = in_progress_projection
             
-            print*, e, sqrt(sb(e,1)*sb(e,1) + sb(e,2)*sb(e,2) + sb(e,3)*sb(e,3)), sb(e,:)
+            print*, be, sqrt(sb(be,1)*sb(be,1) + sb(be,2)*sb(be,2) + sb(be,3)*sb(be,3)), sb(be,:)
             
         enddo
         
-        do i=1,b_nedge
-            print*, i, sqrt(sb(i,1)*sb(i,1) + sb(i,2)*sb(i,2) + sb(i,3)*sb(i,3)), sb(i,:)
-        enddo
         
     end subroutine boundary_edge_volume_processing
     
