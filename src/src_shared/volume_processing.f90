@@ -334,6 +334,9 @@ module volume_processing
             
         enddo
         
+        do i=1,b_nedge
+            print*, i, sqrt(sb(i,1)*sb(i,1) + sb(i,2)*sb(i,2) + sb(i,3)*sb(i,3)), sb(i,:)
+        enddo
         
     end subroutine boundary_edge_volume_processing
     
