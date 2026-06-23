@@ -332,7 +332,7 @@ module volume_processing
             print*, in_progress_centroid
             print*, 'aa'
 
-            do i=1,size(centroid_array)
+            do i=1,size(centroid_array,1)
                 print*, centroid_array(i,:)
             enddo
             
