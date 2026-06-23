@@ -241,7 +241,7 @@ module volume_processing
                 ef = ef + 1
             enddo
 
-            non_viable_faces(ef)
+            non_viable_faces(ef) = .true.
             
             cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
             cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
