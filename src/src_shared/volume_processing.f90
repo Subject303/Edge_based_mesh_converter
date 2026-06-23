@@ -131,6 +131,7 @@ module volume_processing
                     if (i.eq.centroid_array_count+1) exit
                     
                 else
+                    print*, 'none, looping'
                 endif
                 
                 print*, ef, current_face, cell_1, cell_2 , prev_cell
