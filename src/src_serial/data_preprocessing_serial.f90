@@ -114,6 +114,8 @@ module data_processing_serial
         call volume_alloc
         
         call internal_edge_volume_processing
+        call boundary_edge_volume_processing
+        
         
     end subroutine data_processing
     
