@@ -327,9 +327,16 @@ module volume_processing
             in_progress_projection(:) = 0.0
             in_progress_centroid = e_centroid(e,:)
             
+            print*, 'aa'
             print*, centroid_index_array
             print*, in_progress_centroid
-            print*, centroid_array
+            print*, 'aa'
+
+            do i=1,size(centroid_array)
+                print*, centroid_array(i,:)
+            enddo
+            
+            print*, 'aa'
             
             call centroid_array_routine(in_progress_projection, in_progress_centroid, centroid_array_count, centroid_array, i1, i2)
             
