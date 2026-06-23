@@ -27,7 +27,7 @@ module volume_processing
         integer(KIND=INT32) :: ie, e, i, j, i1, i2, centroid_array_count, centroid_array_count_old, ef, ec, ef_start, ec_start, ef_end, ec_end
         integer(KIND=INT32) :: cell_count, face_count, current_face, current_cell, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
-        real(KIND=REAL32),allocatable   :: centroid_array(:)
+        real(KIND=REAL32),allocatable   :: centroid_array(:,:)
         logical, allocatable :: non_viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -44,7 +44,7 @@ module volume_processing
         allocate(sn(i_nedge,3))
         
         centroid_array_count_old = -1
-        allocate(centroid_index_array(0),non_viable_faces(0))
+        allocate(centroid_index_array(0),non_viable_faces(0),centroid_array(0,0))
         
         do ie = 1, i_nedge
             e = e_internal_indexing_array(ie)
@@ -67,8 +67,8 @@ module volume_processing
             ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
             
             if (centroid_array_count_old .ne. centroid_array_count) then
-                deallocate(centroid_index_array,non_viable_faces)
-                allocate(centroid_index_array(centroid_array_count), non_viable_faces(face_count+1))
+                deallocate(centroid_index_array,non_viable_faces,centroid_array)
+                allocate(centroid_index_array(centroid_array_count), non_viable_faces(face_count+1), centroid_array(centroid_array_count,3))
             endif
             
             current_face = e_f_obj_relation_array(ef_start+1)
@@ -78,16 +78,21 @@ module volume_processing
             centroid_index_array(1) = cell_1
             centroid_index_array(2) = current_face
             centroid_index_array(3) = cell_2
+            
+            centroid_array(1,:) = c_centroid(cell_1,:)
+            centroid_array(2,:) = f_centroid(current_face,:)
+            centroid_array(3,:) = c_centroid(cell_2,:)
+                    
             prev_cell = cell_2
             
-            print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
+            !print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
             
             i=4
             non_viable_faces = .false.
             
             ef = 1
             
-            print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
+            !print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
             
             do
                 
@@ -108,12 +113,16 @@ module volume_processing
             
                     centroid_index_array(i)   = current_face
                     centroid_index_array(i+1) = cell_2
+                    
+                    centroid_array(i,:)   = f_centroid(current_face,:)
+                    centroid_array(i+1,:) = c_centroid(cell_2,:)
+                    
                     non_viable_faces(ef) = .true.
                     
                     prev_cell = centroid_index_array(i+1)
                     i=i+2 
                     
-                    print*, 'i-1 = cell_1, i+1 = cell_2'
+                    !print*, 'i-1 = cell_1, i+1 = cell_2'
                     
                     if (i.eq.centroid_array_count+1) exit
                     
@@ -121,24 +130,30 @@ module volume_processing
                     
                     centroid_index_array(i)   = current_face
                     centroid_index_array(i+1) = cell_1
+                    
+                    centroid_array(i,:)   = f_centroid(current_face,:)
+                    centroid_array(i+1,:) = c_centroid(cell_1,:)
+                    
                     non_viable_faces(ef) = .true.
                     
                     prev_cell = centroid_index_array(i+1)
                     i=i+2 
                     
-                    print*, 'swapped'
+                    !print*, 'swapped'
                     
                     if (i.eq.centroid_array_count+1) exit
                     
                 else
-                    print*, 'none, looping'
+                    !print*, 'none, looping'
                 endif
                 
-                print*, ef, current_face, cell_1, cell_2 , prev_cell
+                !print*, ef, current_face, cell_1, cell_2 , prev_cell
                 
             enddo
             
             centroid_index_array(centroid_array_count) = centroid_index_array(1)
+            
+            centroid_array(centroid_array_count,:) = c_centroid(cell_1,:)
             
             
             centroid_array_count_old = centroid_array_count
@@ -147,11 +162,11 @@ module volume_processing
             if (i.ne.centroid_array_count+1) print*, 'centroid array count broken'
             if (centroid_index_array(1).ne.centroid_index_array(centroid_array_count)) print*, 'internal centroid array start and end wrong'
             
-            print*, centroid_index_array
+            !print*, centroid_index_array
             
             
             
-            !call centroid_array_routine(sn(e,:), e_centroid(e,:), centroid_array_count, centroid_array, i1, i2)
+            call centroid_array_routine(sn(e,:), e_centroid(e,:), centroid_array_count, centroid_array, i1, i2)
             
         enddo
         
