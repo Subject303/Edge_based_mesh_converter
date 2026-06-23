@@ -28,6 +28,7 @@ module volume_processing
         integer(KIND=INT32) :: cell_count, face_count, current_face, current_cell, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3)
         logical, allocatable :: non_viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -164,13 +165,16 @@ module volume_processing
             
             !print*, centroid_index_array
             
+            in_progress_projection(:) = 0.0
+            in_progress_centroid = e_centroid(e,:)
             
+            call centroid_array_routine(in_progress_projection, in_progress_centroid, centroid_array_count, centroid_array, i1, i2)
             
-            call centroid_array_routine(sn(e,:), e_centroid(e,:), centroid_array_count, centroid_array, i1, i2)
+            sn(e,:) = in_progress_projection
             
         enddo
         
-        do i=1,nedge
+        do i=1,i_nedge
             print*, i, sqrt(sn(i,1)*sn(i,1) + sn(i,2)*sn(i,2) + sn(i,3)*sn(i,3)), sn(i,:)
         enddo
         
@@ -185,10 +189,12 @@ module volume_processing
         implicit none
         integer(KIND=INT32)          :: i, centroid_array_count, i1
         integer(KIND=INT32),optional :: i2
-        real(KIND=REAL32) :: obj_projection(3), centroid_array(:,:), obj_centroid(3)
+        real(KIND=REAL32) :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3)
         
         do i=2,centroid_array_count
-            call cvolume(obj_projection, vol(i1), vol(i2), i1, i2, obj_centroid, centroid_array(i-1,:), centroid_array(i,:))
+            baryobj_1_centroid = centroid_array(i-1,:)
+            baryobj_2_centroid = centroid_array(i,:) 
+            call cvolume(obj_projection, vol(i1), vol(i2), i1, i2, obj_centroid, baryobj_1_centroid, baryobj_2_centroid)
         enddo
         
         
