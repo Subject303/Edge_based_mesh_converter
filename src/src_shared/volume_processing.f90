@@ -330,6 +330,8 @@ module volume_processing
             
             sb(e,:) = in_progress_projection
             
+            print*, e, sqrt(sb(e,1)*sb(e,1) + sb(e,2)*sb(e,2) + sb(e,3)*sb(e,3)), sb(e,:)
+            
         enddo
         
         do i=1,b_nedge
