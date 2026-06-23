@@ -170,7 +170,9 @@ module volume_processing
             
         enddo
         
-        print*, sn
+        do i=1,nedge
+            print*, i, sqrt(sn(i,1)*sn(i,1) + sn(i,2)*sn(i,2) + sn(i,3)*sn(i,3)), sn(i,:)
+        enddo
         
     end subroutine internal_edge_volume_processing
     
