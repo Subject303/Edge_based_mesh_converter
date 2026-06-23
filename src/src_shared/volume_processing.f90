@@ -243,12 +243,12 @@ module volume_processing
             cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
             
             centroid_index_array(1) = current_face
-            centroid_index_array(2) = cell_2
+            centroid_index_array(2) = cell_1
             
             centroid_array(1,:) = f_centroid(current_face,:)
-            centroid_array(2,:) = c_centroid(cell_2,:)
+            centroid_array(2,:) = c_centroid(cell_1,:)
                     
-            prev_cell = cell_2
+            prev_cell = cell_1
             
             print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
             
