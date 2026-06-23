@@ -245,14 +245,14 @@ module volume_processing
                     
             prev_cell = cell_2
             
-            !print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
+            print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
             
             i=4
             non_viable_faces = .false.
             
             ef = 1
             
-            !print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
+            print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
             
             do
                 
@@ -282,7 +282,7 @@ module volume_processing
                     prev_cell = centroid_index_array(i+1)
                     i=i+2 
                     
-                    !print*, 'i-1 = cell_1, i+1 = cell_2'
+                    print*, 'i-1 = cell_1, i+1 = cell_2'
                     
                     if (i.eq.centroid_array_count+1) exit
                     
@@ -299,15 +299,15 @@ module volume_processing
                     prev_cell = centroid_index_array(i+1)
                     i=i+2 
                     
-                    !print*, 'swapped'
+                    print*, 'swapped'
                     
                     if (i.eq.centroid_array_count+1) exit
                     
                 else
-                    !print*, 'none, looping'
+                    print*, 'none, looping'
                 endif
                 
-                !print*, ef, current_face, cell_1, cell_2 , prev_cell
+                print*, ef, current_face, cell_1, cell_2 , prev_cell
                 
             enddo
             
