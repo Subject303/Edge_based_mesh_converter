@@ -96,7 +96,7 @@ module preprocessor_routine_module
         do c=1,nele
             cp_start = (1 + c_p_index_array(c-1))
             cp_end   = c_p_index_array(c)
-            number_of_points = 1 + cp_start - cp_end
+            number_of_points = 1 + cp_end - cp_start
             
             do i=1,3
                 c_centroid(c,i) = sum(coords(c_p_obj_relation_array(cp_start:cp_end),i)) / number_of_points
