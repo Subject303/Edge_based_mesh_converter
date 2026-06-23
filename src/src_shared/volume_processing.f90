@@ -356,6 +356,7 @@ module volume_processing
             baryobj_1_centroid = centroid_array(i-1,:)
             baryobj_2_centroid = centroid_array(i,:) 
             call cvolume(obj_projection, vol(i1), vol(i2), i1, i2, obj_centroid, baryobj_1_centroid, baryobj_2_centroid)
+            print*, obj_projection
         enddo
         
         
