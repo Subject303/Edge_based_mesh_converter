@@ -78,7 +78,7 @@ module volume_processing
             centroid_index_array(1) = cell_1
             centroid_index_array(2) = current_face
             centroid_index_array(3) = cell_2
-            prev_cell = cell_1
+            prev_cell = cell_2
             
             print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
             
