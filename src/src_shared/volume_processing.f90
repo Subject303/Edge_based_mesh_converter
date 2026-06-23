@@ -230,8 +230,8 @@ module volume_processing
         enddo
 
         sn(1) = sn(1) + ((v34(2) * v35(3) - v34(3) * v35(2))/2) ! projection in the xx axis
-        sn(2) = sn(1) + ((v34(3) * v35(1) - v34(1) * v35(3))/2) ! projection in the yy axis
-        sn(3) = sn(1) + ((v34(1) * v35(2) - v34(2) * v35(1))/2) ! projection in the zz axis
+        sn(2) = sn(2) + ((v34(3) * v35(1) - v34(1) * v35(3))/2) ! projection in the yy axis
+        sn(3) = sn(3) + ((v34(1) * v35(2) - v34(2) * v35(1))/2) ! projection in the zz axis
         
     !                               i4--------------i5
     !                                \  >>>>>>>   /
