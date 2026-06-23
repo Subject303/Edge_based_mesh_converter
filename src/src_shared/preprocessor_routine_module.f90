@@ -102,8 +102,6 @@ module preprocessor_routine_module
                 c_centroid(c,i) = sum(coords(c_p_obj_relation_array(cp_start:cp_end),i)) / number_of_points
             enddo
             
-            print*, c, c_centroid(c,:), number_of_points
-            
         enddo
         
         print*, 'finished calculating cell centroids'

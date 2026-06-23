@@ -253,11 +253,11 @@ module volume_processing
                     
             prev_cell = cell_1
             
-            print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
+            !print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
             
             i=3
             
-            print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
+            !print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
             
             do
                 
@@ -289,7 +289,7 @@ module volume_processing
                     prev_cell = centroid_index_array(i+1)
                     i=i+2 
                     
-                    print*, 'i-1 = cell_1, i+1 = cell_2'
+                    !print*, 'i-1 = cell_1, i+1 = cell_2'
                     
                 elseif (prev_cell .eq. cell_2) then
                     
@@ -306,13 +306,13 @@ module volume_processing
                     prev_cell = centroid_index_array(i+1)
                     i=i+2 
                     
-                    print*, 'swapped'
+                    !print*, 'swapped'
                     
                 else
-                    print*, 'none, looping'
+                    !print*, 'none, looping'
                 endif
                 
-                print*, ef, current_face, cell_1, cell_2 , prev_cell
+                !print*, ef, current_face, cell_1, cell_2 , prev_cell
                 
             enddo
             
@@ -327,22 +327,10 @@ module volume_processing
             in_progress_projection(:) = 0.0
             in_progress_centroid = e_centroid(e,:)
             
-            print*, 'aa'
-            print*, centroid_index_array
-            print*, in_progress_centroid
-            print*, 'aa'
-
-            do i=1,size(centroid_array,1)
-                print*, centroid_array(i,:)
-            enddo
-            
-            print*, 'aa'
             
             call centroid_array_routine(in_progress_projection, in_progress_centroid, centroid_array_count, centroid_array, i1, i2)
             
             sb(be,:) = in_progress_projection
-            
-            print*, be, sqrt(sb(be,1)*sb(be,1) + sb(be,2)*sb(be,2) + sb(be,3)*sb(be,3)), sb(be,:)
             
         enddo
         
@@ -365,7 +353,6 @@ module volume_processing
             baryobj_1_centroid = centroid_array(i-1,:)
             baryobj_2_centroid = centroid_array(i,:) 
             call cvolume(obj_projection, vol(i1), vol(i2), i1, i2, obj_centroid, baryobj_1_centroid, baryobj_2_centroid)
-            print*, obj_projection
         enddo
         
         
