@@ -174,9 +174,9 @@ module volume_processing
             
         enddo
         
-        do i=1,i_nedge
-            print*, i, sqrt(sn(i,1)*sn(i,1) + sn(i,2)*sn(i,2) + sn(i,3)*sn(i,3)), sn(i,:)
-        enddo
+        !do i=1,i_nedge
+        !    print*, i, sqrt(sn(i,1)*sn(i,1) + sn(i,2)*sn(i,2) + sn(i,3)*sn(i,3)), sn(i,:)
+        !enddo
         
     end subroutine internal_edge_volume_processing
     
@@ -334,11 +334,171 @@ module volume_processing
             
         enddo
         
-        do i=1,b_nedge
-            print*, i, sqrt(sb(i,1)*sb(i,1) + sb(i,2)*sb(i,2) + sb(i,3)*sb(i,3)), sb(i,:)
-        enddo
+        !do i=1,b_nedge
+        !    print*, i, sqrt(sb(i,1)*sb(i,1) + sb(i,2)*sb(i,2) + sb(i,3)*sb(i,3)), sb(i,:)
+        !enddo
         
     end subroutine boundary_edge_volume_processing
+    
+    
+    subroutine boundary_face_volume_processing
+        implicit none
+        integer(KIND=INT32) :: bp, p, i, j, i1, i2, centroid_array_count, centroid_array_count_old, ef, ec, ef_start, ec_start, ef_end, ec_end
+        integer(KIND=INT32) :: edge_count, face_count, current_face, current_cell, cell_1, cell_2, prev_cell
+        integer(KIND=INT32),allocatable :: centroid_index_array(:)
+        real(KIND=REAL32),allocatable   :: centroid_array(:,:)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3)
+        logical, allocatable :: non_viable_edges(:)
+        
+        ! it's upsetting this is the easiest of the three jobs I gotta do
+        
+        ! so, step wise here's the process per edge
+        ! 1:
+        !   find all connected cells and faces
+        ! 2:
+        !   order an array of cells and faces
+        !   hopefully this is not too dificult
+        ! 3:
+        !   call the processer subroutine and sum the projections and volumes
+        
+        allocate(sbb(b_poin,3))
+        
+        centroid_array_count_old = -1
+        allocate(centroid_index_array(0),non_viable_faces(0),centroid_array(0,0))
+        
+        do bp = 1, b_poin
+            p = p_bound_indexing_array(bp)
+            ! this is a loop of all boundary edges.
+            
+            i1 = p
+            i2 = p
+            ! i1 and i2 are the constituent points of edge e
+            
+            pe_start = p_e_index_array(p-1)
+            pf_start = p_f_index_array(p-1)
+            pe_end   = p_e_index_array(p)
+            pf_end   = p_f_index_array(p)
+            
+            edge_count = pe_end-pe_start
+            face_count = pf_end-pf_start
+            
+            centroid_array_count = edge_count + face_count
+            
+            ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
+            
+            if (centroid_array_count_old .ne. centroid_array_count) then
+                deallocate(centroid_index_array,non_viable_faces,centroid_array)
+                allocate(centroid_index_array(centroid_array_count), non_viable_edges(edge_count), centroid_array(centroid_array_count,3))
+            endif
+            
+            ef = 1
+            
+            non_viable_edges = .false.
+            
+            do ! we must start on a boundary face
+                current_edge = p_e_obj_relation_array(ef_start+ef)
+                if (f_bound_array(current_face)) exit
+                ef = ef + 1
+            enddo
+
+            non_viable_edges(ef) = .true.
+            
+            cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
+            
+            centroid_index_array(1) = current_face
+            centroid_index_array(2) = cell_1
+            
+            centroid_array(1,:) = f_centroid(current_face,:)
+            centroid_array(2,:) = c_centroid(cell_1,:)
+                    
+            prev_cell = cell_1
+            
+            !print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
+            
+            i=3
+            
+            !print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
+            
+            do
+                
+                if (ef.eq.face_count) then
+                    ef = 1
+                else
+                    ef=ef+1
+                endif
+
+                
+                if (non_viable_faces(ef)) cycle
+                
+                current_face = e_f_obj_relation_array(ef_start + ef)
+                cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
+                cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
+                
+                if (prev_cell .eq. cell_1) then
+            
+                    centroid_index_array(i)   = current_face
+                    centroid_array(i,:)   = f_centroid(current_face,:)
+                    
+                    if (f_bound_array(current_face)) exit
+                    
+                    centroid_index_array(i+1) = cell_2
+                    centroid_array(i+1,:) = c_centroid(cell_2,:)
+                    
+                    non_viable_faces(ef) = .true.
+                    
+                    prev_cell = centroid_index_array(i+1)
+                    i=i+2 
+                    
+                    !print*, 'i-1 = cell_1, i+1 = cell_2'
+                    
+                elseif (prev_cell .eq. cell_2) then
+                    
+                    centroid_index_array(i)   = current_face
+                    centroid_array(i,:)   = f_centroid(current_face,:)
+                    
+                    if (f_bound_array(current_face)) exit
+                    
+                    centroid_index_array(i+1) = cell_1
+                    centroid_array(i+1,:) = c_centroid(cell_1,:)
+                    
+                    non_viable_faces(ef) = .true.
+                    
+                    prev_cell = centroid_index_array(i+1)
+                    i=i+2 
+                    
+                    !print*, 'swapped'
+                    
+                else
+                    !print*, 'none, looping'
+                endif
+                
+                !print*, ef, current_face, cell_1, cell_2 , prev_cell
+                
+            enddo
+            
+            
+            centroid_array_count_old = centroid_array_count
+            
+            
+            !if (i.ne.centroid_array_count+1) print*, 'centroid array count broken'
+            !if (centroid_index_array(1).ne.centroid_index_array(centroid_array_count)) print*, 'internal centroid array start and end wrong'
+            
+            
+            in_progress_projection(:) = 0.0
+            in_progress_centroid = e_centroid(e,:)
+            
+            
+            call centroid_array_routine(in_progress_projection, in_progress_centroid, centroid_array_count, centroid_array, i1, i2)
+            
+            sb(be,:) = in_progress_projection
+            
+        enddo
+        
+        !do i=1,b_nedge
+        !    print*, i, sqrt(sb(i,1)*sb(i,1) + sb(i,2)*sb(i,2) + sb(i,3)*sb(i,3)), sb(i,:)
+        !enddo
+        
+    end subroutine boundary_face_volume_processing
     
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
