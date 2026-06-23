@@ -110,7 +110,7 @@ module volume_processing
                     centroid_index_array(i+1) = cell_2
                     non_viable_faces(ef) = .true.
                     
-                    prev_cell = centroid_index_array(i-1)
+                    prev_cell = centroid_index_array(i+1)
                     i=i+2 
                     
                     print*, 'i-1 = cell_1, i+1 = cell_2'
@@ -123,7 +123,7 @@ module volume_processing
                     centroid_index_array(i+1) = cell_1
                     non_viable_faces(ef) = .true.
                     
-                    prev_cell = centroid_index_array(i-1)
+                    prev_cell = centroid_index_array(i+1)
                     i=i+2 
                     
                     print*, 'swapped'
