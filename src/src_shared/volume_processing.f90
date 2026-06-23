@@ -154,7 +154,7 @@ module volume_processing
             
             centroid_index_array(centroid_array_count) = centroid_index_array(1)
             
-            centroid_array(centroid_array_count,:) = c_centroid(cell_1,:)
+            centroid_array(centroid_array_count,:) = c_centroid(cell_2,:)
             
             
             centroid_array_count_old = centroid_array_count
