@@ -207,7 +207,7 @@ module volume_processing
         allocate(centroid_index_array(0),non_viable_faces(0),centroid_array(0,0))
         
         do ie = 1, b_nedge
-            e = e_boundary_indexing_array(ie)
+            e = e_bound_indexing_array(ie)
             ! this is a loop of all boundary edges.
             
             i1 = e_p_obj_relation_array(e_p_index_array(e)-1)
