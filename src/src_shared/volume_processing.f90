@@ -244,7 +244,6 @@ module volume_processing
             non_viable_faces(ef) = .true.
             
             cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
-            cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
             
             centroid_index_array(1) = current_face
             centroid_index_array(2) = cell_1
@@ -324,10 +323,13 @@ module volume_processing
             !if (i.ne.centroid_array_count+1) print*, 'centroid array count broken'
             !if (centroid_index_array(1).ne.centroid_index_array(centroid_array_count)) print*, 'internal centroid array start and end wrong'
             
-            print*, centroid_index_array
             
             in_progress_projection(:) = 0.0
             in_progress_centroid = e_centroid(e,:)
+            
+            print*, centroid_index_array
+            print*, in_progress_centroid
+            print*, centroid_array
             
             call centroid_array_routine(in_progress_projection, in_progress_centroid, centroid_array_count, centroid_array, i1, i2)
             
