@@ -231,7 +231,14 @@ module volume_processing
                 allocate(centroid_index_array(centroid_array_count), non_viable_faces(face_count+1), centroid_array(centroid_array_count,3))
             endif
             
-            current_face = e_f_obj_relation_array(ef_start+1)
+            ef = 1
+            
+            do ! we must start on a boundary face
+                current_face = e_f_obj_relation_array(ef_start+ef)
+                if (f_bound_array(current_face)) exit
+                ef = ef + 1
+            enddo
+
             cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
             cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
             
@@ -249,8 +256,6 @@ module volume_processing
             
             i=4
             non_viable_faces = .false.
-            
-            ef = 1
             
             print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
             
