@@ -647,7 +647,9 @@ module volume_processing
                     endif
                 
                     print*, pe, current_edge, face_1, face_2 , prev_face
-
+                    
+                    if (ANY(.not.non_viable_edges)) stop
+                    
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
             
