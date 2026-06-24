@@ -362,7 +362,7 @@ module volume_processing
         ! 3:
         !   call the processer subroutine and sum the projections and volumes
         
-        allocate(sbb(b_poin,3))
+        allocate(sbb(b_npoin,3))
         
         centroid_array_count_old = -1
         allocate(centroid_index_array(0),non_viable_edges(0),centroid_array(0,0))
@@ -388,7 +388,7 @@ module volume_processing
             ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
             
             if (centroid_array_count_old .ne. centroid_array_count) then
-                deallocate(centroid_index_array,non_viable_faces,centroid_array)
+                deallocate(centroid_index_array,non_viable_edges,centroid_array)
                 allocate(centroid_index_array(centroid_array_count), non_viable_edges(edge_count), centroid_array(centroid_array_count,3))
             endif
             
