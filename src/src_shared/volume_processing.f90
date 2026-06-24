@@ -178,8 +178,6 @@ module volume_processing
                 endif
             enddo
             
-            print*,direction_array
-            
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
@@ -353,8 +351,6 @@ module volume_processing
                     direction_array(i) = direction_array(i)/abs(direction_array(i))
                 endif
             enddo
-            
-            print*,direction_array
             
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
@@ -704,6 +700,7 @@ module volume_processing
             in_progress_centroid = coords(p,:)
             ! by making i1, i2, i3 all p, the volume change should be zero
             
+            print*,p_normal_vectors(bp,:)
             direction_array(:) = p_normal_vectors(bp,:)
             do i=1,3
                 if (direction_array(i).eq.0.0) then
