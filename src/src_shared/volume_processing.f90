@@ -574,7 +574,7 @@ module volume_processing
             
                 i=4
             
-                print*, pe, current_edge, face_1, face_2 , prev_face
+                !print*, pe, current_edge, face_1, face_2 , prev_face
                 
                 do
                 
