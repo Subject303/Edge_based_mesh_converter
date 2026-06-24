@@ -569,7 +569,7 @@ module volume_processing
             
                 i=4
             
-                !print*, ef, current_edge, face_1, face_2 ,prev_cell, 'prev_face'
+                print*, pe, current_edge, face_1, face_2 , prev_face
             
                 print*, 'moving to real loop'
                 do
@@ -648,7 +648,7 @@ module volume_processing
                 
                     print*, pe, current_edge, face_1, face_2 , prev_face
                     
-                    if (ANY(.not.non_viable_edges)) stop
+                    if (ALL(non_viable_edges)) stop
                     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
