@@ -685,7 +685,7 @@ module volume_processing
             in_progress_centroid = coords(p,:)
             ! by making i1, i2, i3 all p, the volume change should be zero
             
-            direction_array(:) = sign(1., p_normal_vectors(bp,:))
+            direction_array(:) = sign(1., -p_normal_vectors(bp,:))
             
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
@@ -728,11 +728,11 @@ module volume_processing
             tot(i1,:) = tot(i1,:) + sb(i,:)
             tot(i2,:) = tot(i2,:) - sb(i,:)
         enddo
-        !do i=1,b_npoin
-        !    i1 = p_bound_indexing_array(i)
-        !    
-        !    tot(i1,:) = tot(i1,:) + sbb(i,:)
-        !enddo
+        do i=1,b_npoin
+            i1 = p_bound_indexing_array(i)
+            
+            tot(i1,:) = tot(i1,:) + sbb(i,:)
+        enddo
         
         print*, ' testing projections '
         
