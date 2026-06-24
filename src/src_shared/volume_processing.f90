@@ -28,7 +28,7 @@ module volume_processing
         integer(KIND=INT32) :: cell_count, face_count, current_face, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3)
         logical, allocatable :: non_viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -178,7 +178,10 @@ module volume_processing
                 endif
             enddo
             
-            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count, centroid_array, coords(i1,:), coords(i2,:), vol(i1), vol(i2))
+            c1(:) = coords(i1,:)
+            c2(:) = coords(i2,:)
+            
+            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol(i1), vol(i2))
             
             sn(e,:) = in_progress_projection
             
@@ -199,7 +202,7 @@ module volume_processing
         integer(KIND=INT32) :: cell_count, face_count, current_face, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3)
         logical, allocatable :: non_viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -349,7 +352,10 @@ module volume_processing
                 endif
             enddo
             
-            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count, centroid_array, coords(i1,:), coords(i2,:), vol(i1), vol(i2))
+            c1(:) = coords(i1,:)
+            c2(:) = coords(i2,:)
+            
+            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol(i1), vol(i2))
             
             
             sb(be,:) = in_progress_projection
@@ -370,7 +376,7 @@ module volume_processing
         integer(KIND=INT32) :: edge_count, face_count, current_edge, face_1, face_2, prev_face
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3)
         logical, allocatable :: non_viable_edges(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -703,7 +709,10 @@ module volume_processing
                 endif
             enddo
             
-            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count_real, centroid_array, coords(i1,:), coords(i1,:))
+            c1(:) = coords(i1,:)
+            c2(:) = coords(i2,:)
+            
+            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count_real, centroid_array, c1, c2
             
             sbb(bp,:) = in_progress_projection
             
