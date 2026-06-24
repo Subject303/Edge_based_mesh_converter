@@ -616,7 +616,7 @@ module volume_processing
                     
                         print*, 'i-1 = face_1, i+1 = face_2', i, centroid_array_count+1
                     
-                        if (centroid_index_array(i+1) .eq. starting_edge) exit
+                        if (centroid_index_array(i) .eq. starting_edge) exit
                     
                     elseif (prev_face .eq. face_2) then
                     
@@ -633,7 +633,7 @@ module volume_processing
                     
                         print*, 'swapped', i, centroid_array_count+1
                     
-                        if (centroid_index_array(i+1) .eq. starting_edge) exit
+                        if (centroid_index_array(i) .eq. starting_edge) exit
                     
                     else
                         print*, 'none, looping', i, centroid_array_count+1, edge_count, face_count
