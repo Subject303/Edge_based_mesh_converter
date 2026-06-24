@@ -728,11 +728,11 @@ module volume_processing
             tot(i1,:) = tot(i1,:) + sb(i,:)
             tot(i2,:) = tot(i2,:) - sb(i,:)
         enddo
-        do i=1,b_npoin
-            i1 = p_bound_indexing_array(i)
-            
-            tot(i1,:) = tot(i1,:) + sbb(i,:)
-        enddo
+        !do i=1,b_npoin
+        !    i1 = p_bound_indexing_array(i)
+        !    
+        !    tot(i1,:) = tot(i1,:) + sbb(i,:)
+        !enddo
         
         print*, ' testing projections '
         
