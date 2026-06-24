@@ -712,7 +712,7 @@ module volume_processing
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
-            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count_real, centroid_array, c1, c2
+            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count_real, centroid_array, c1, c2)
             
             sbb(bp,:) = in_progress_projection
             
