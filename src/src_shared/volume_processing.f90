@@ -646,7 +646,7 @@ module volume_processing
                         
                     endif
                 
-                    print*, ef, current_face, face_1, face_2 , prev_face
+                    print*, pe, current_edge, face_1, face_2 , prev_face
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
