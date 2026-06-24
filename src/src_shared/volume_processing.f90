@@ -418,7 +418,7 @@ module volume_processing
 
                 non_viable_edges(pe) = .true.
                 
-                i = e_f_obj_relation_array(e_f_index_array(current_edge-1)    )
+                i = e_f_index_array(current_edge-1)
                 do 
                     i=i+1
                     if (f_bound_array(e_f_obj_relation_array(i))) exit
@@ -455,7 +455,7 @@ module volume_processing
                 
                     current_edge = e_f_obj_relation_array(pe_start + pe)
                     
-                    i = e_f_obj_relation_array(e_f_index_array(current_edge-1)    )
+                    i = e_f_index_array(current_edge-1)
                     do 
                         i=i+1
                         if (f_bound_array(e_f_obj_relation_array(i))) exit
@@ -528,7 +528,7 @@ module volume_processing
             
                 current_edge = p_e_obj_relation_array(pe_start+1)
                 
-                i = e_f_obj_relation_array(e_f_index_array(current_edge-1)    )
+                i = e_f_index_array(current_edge-1)
                 do 
                     i=i+1
                     if (f_bound_array(e_f_obj_relation_array(i))) exit
@@ -572,7 +572,7 @@ module volume_processing
                 
                     current_edge = e_f_obj_relation_array(pe_start + pe)
                     
-                    i = e_f_obj_relation_array(e_f_index_array(current_edge-1)    )
+                    i = e_f_index_array(current_edge-1)
                     do 
                         i=i+1
                         if (f_bound_array(e_f_obj_relation_array(i))) exit
