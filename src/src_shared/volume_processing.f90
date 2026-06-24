@@ -348,7 +348,7 @@ module volume_processing
     subroutine boundary_face_volume_processing
         implicit none
         integer(KIND=INT32) :: bp, p, i, j, i1, i2, centroid_array_count, centroid_array_count_old, pe, pe_start, pf_start, pe_end, pf_end
-        integer(KIND=INT32) :: edge_count, face_count, current_edge, face_1, face_2, prev_face
+        integer(KIND=INT32) :: edge_count, face_count, current_edge, starting_edge, face_1, face_2, prev_face
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
         real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3)
@@ -577,7 +577,7 @@ module volume_processing
                         pe=pe+1
                     endif
 
-                    print*, pe, non_viable_edges
+                    !print*, pe, non_viable_edges
                     if (non_viable_edges(pe)) cycle
                 
                     do ! we must only use boundary edges
@@ -616,7 +616,7 @@ module volume_processing
                     
                         print*, 'i-1 = face_1, i+1 = face_2', i, centroid_array_count+1
                     
-                        if (i.eq.centroid_array_count+1) exit
+                        if (centroid_index_array(i+1) .eq. starting_edge) exit
                     
                     elseif (prev_face .eq. face_2) then
                     
@@ -633,7 +633,7 @@ module volume_processing
                     
                         print*, 'swapped', i, centroid_array_count+1
                     
-                        if (i.eq.centroid_array_count+1) exit
+                        if (centroid_index_array(i+1) .eq. starting_edge) exit
                     
                     else
                         print*, 'none, looping', i, centroid_array_count+1, edge_count, face_count
@@ -642,12 +642,13 @@ module volume_processing
                 
                     print*, pe, current_edge, face_1, face_2 , prev_face
                     
-                    print*, 'centroid array ', centroid_index_array
-                    if (ALL(non_viable_edges)) exit
+                    !print*, 'centroid array ', centroid_index_array
                     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
             
+                print*, 'centroid array ', centroid_index_array
+                    
                 centroid_index_array(centroid_array_count) = centroid_index_array(3)
             
                 centroid_array(centroid_array_count,:) = f_centroid(face_2,:)
