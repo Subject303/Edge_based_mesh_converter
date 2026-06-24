@@ -729,7 +729,7 @@ module volume_processing
             if (projection_mag(i).lt.projection_mag(i1)) i1 = i
             if (projection_mag(i).gt.projection_mag(i1)) i2 = i
         enddo
-        print*, 'lowest sn  ', projection_mag(i1), sn(i1,:), ' highest sn  ', projection_mag(i2), sn(i2,:)
+        print*, 'lowest sn  ', projection_mag(i1), sn(i1,:), i1, ' highest sn  ', projection_mag(i2), sn(i2,:), i2
         
         deallocate(projection_mag)
         allocate(projection_mag(b_nedge))
@@ -741,6 +741,7 @@ module volume_processing
             if (projection_mag(i).gt.projection_mag(i1)) i2 = i
         enddo
         print*, 'lowest sb  ', projection_mag(i1), sb(i1,:), i1, ' highest sb  ', projection_mag(i2), sb(i2,:), i2
+        print*, ' '
         
         deallocate(projection_mag)
         allocate(projection_mag(b_npoin))
@@ -752,6 +753,7 @@ module volume_processing
             if (projection_mag(i).gt.projection_mag(i1)) i2 = i
         enddo
         print*, 'lowest sbb ', projection_mag(i1), sbb(i1,:), i1, ' highest sbb ', projection_mag(i2), sbb(i2,:), i2
+        print*, ' '
         
         deallocate(projection_mag)
         allocate(projection_mag(npoin))
@@ -763,6 +765,7 @@ module volume_processing
             if (projection_mag(i).gt.projection_mag(i1)) i2 = i
         enddo
         print*, 'lowest tot ', projection_mag(i1), tot(i1,:), i1, ' highest tot ', projection_mag(i2), tot(i2,:), i2
+        print*, ' '
         
         i1=1
         i2=1
@@ -772,6 +775,7 @@ module volume_processing
         enddo
         
         print*, 'lowest vol ', vol(i1), i1, ' highest vol ', vol(i2), i2
+        print*, ' '
         
         
     end subroutine projection_test
