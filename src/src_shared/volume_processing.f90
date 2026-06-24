@@ -178,7 +178,7 @@ module volume_processing
                 endif
             enddo
             
-            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count_real, centroid_array, coords(i1,:), coords(i2,:), vol(i1), vol(i2))
+            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count, centroid_array, coords(i1,:), coords(i2,:), vol(i1), vol(i2))
             
             sn(e,:) = in_progress_projection
             
@@ -349,7 +349,7 @@ module volume_processing
                 endif
             enddo
             
-            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count_real, centroid_array, coords(i1,:), coords(i2,:), vol(i1), vol(i2))
+            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count, centroid_array, coords(i1,:), coords(i2,:), vol(i1), vol(i2))
             
             
             sb(be,:) = in_progress_projection
