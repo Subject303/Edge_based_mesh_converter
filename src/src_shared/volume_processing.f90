@@ -174,7 +174,7 @@ module volume_processing
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
-            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol(i1), vol(i2))
+            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol(i1), vol(i2))
             
             sn(e,:) = in_progress_projection
             
@@ -340,7 +340,7 @@ module volume_processing
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
-            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol(i1), vol(i2))
+            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol(i1), vol(i2))
             
             
             sb(be,:) = in_progress_projection
@@ -690,7 +690,7 @@ module volume_processing
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
-            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count_real, centroid_array, c1, c2)
+            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count_real, centroid_array, c1, c2)
             
             sbb(bp,:) = in_progress_projection
             
@@ -807,7 +807,7 @@ module volume_processing
         
     end subroutine projection_test
     
-    subroutine centroid_array_routine(obj_projection, anp, obj_centroid, centroid_array_count, centroid_array, i1, i2, vol1, vol2)
+    subroutine centroid_array_routine(obj_projection, obj_centroid, centroid_array_count, centroid_array, i1, i2, vol1, vol2)
         implicit none
         integer(KIND=INT32)        :: i, centroid_array_count
         real(KIND=REAL32),optional :: vol1, vol2
@@ -817,26 +817,25 @@ module volume_processing
             do i=2,centroid_array_count
                 baryobj_1_centroid = centroid_array(i-1,:)
                 baryobj_2_centroid = centroid_array(i,:) 
-                call cvolume(obj_projection, anp, obj_centroid, baryobj_1_centroid, baryobj_2_centroid, i1, i2, vol1, vol2)
+                call cvolume(obj_projection, obj_centroid, baryobj_1_centroid, baryobj_2_centroid, i1, i2, vol1, vol2)
             enddo
         else
             do i=2,centroid_array_count
                 baryobj_1_centroid = centroid_array(i-1,:)
                 baryobj_2_centroid = centroid_array(i,:)
-                call cvolume(obj_projection, anp, obj_centroid, baryobj_1_centroid, baryobj_2_centroid, i1, i2)
+                call cvolume(obj_projection, obj_centroid, baryobj_1_centroid, baryobj_2_centroid, i1, i2)
             enddo
         endif
         
         
     end subroutine centroid_array_routine
     
-    subroutine cvolume(sn, anp, i3, i4, i5, i1, i2, vol1, vol2)
+    subroutine cvolume(sn, i3, i4, i5, i1, i2, vol1, vol2)
         implicit none
         real(KIND=REAL32),optional :: vol1, vol2
         real(KIND=REAL32),dimension(3) :: v13,v14,v15,v32,v42,v52,c1415,c4252
         real(KIND=REAL32),dimension(3) :: sn, i1, i2, i3, i4, i5
         real(KIND=REAL32),dimension(3) :: v34,v35
-        real(KIND=REAL32),dimension(3) :: v12, anp
         integer(KIND=INT32) :: i
         
         do i=1,3
@@ -874,9 +873,9 @@ module volume_processing
             v35(i) = i3(i) - i5(i) ! vector from 3 to 5
         enddo
 
-        sn(1) = sn(1) + anp(1) * abs((v34(2) * v35(3) - v34(3) * v35(2))/2) ! projection in the xx axis
-        sn(2) = sn(2) + anp(2) * abs((v34(3) * v35(1) - v34(1) * v35(3))/2) ! projection in the yy axis
-        sn(3) = sn(3) + anp(3) * abs((v34(1) * v35(2) - v34(2) * v35(1))/2) ! projection in the zz axis
+        sn(1) = sn(1) + ((v34(2) * v35(3) - v34(3) * v35(2))/2) ! projection in the xx axis
+        sn(2) = sn(2) + ((v34(3) * v35(1) - v34(1) * v35(3))/2) ! projection in the yy axis
+        sn(3) = sn(3) + ((v34(1) * v35(2) - v34(2) * v35(1))/2) ! projection in the zz axis
         
     !                               i4--------------i5
     !                                \  >>>>>>>   /
