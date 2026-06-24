@@ -25,7 +25,7 @@ module volume_processing
     subroutine internal_edge_volume_processing
         implicit none
         integer(KIND=INT32) :: ie, e, i, j, i1, i2, centroid_array_count, centroid_array_count_old, ef, ec, ef_start, ec_start, ef_end, ec_end
-        integer(KIND=INT32) :: cell_count, face_count, current_face, current_cell, cell_1, cell_2, prev_cell
+        integer(KIND=INT32) :: cell_count, face_count, current_face, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
         real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3)
@@ -185,7 +185,7 @@ module volume_processing
     subroutine boundary_edge_volume_processing
         implicit none
         integer(KIND=INT32) :: be, e, i, j, i1, i2, centroid_array_count, centroid_array_count_old, ef, ec, ef_start, ec_start, ef_end, ec_end
-        integer(KIND=INT32) :: cell_count, face_count, current_face, current_cell, cell_1, cell_2, prev_cell
+        integer(KIND=INT32) :: cell_count, face_count, current_face, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
         real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3)
@@ -344,8 +344,8 @@ module volume_processing
     
     subroutine boundary_face_volume_processing
         implicit none
-        integer(KIND=INT32) :: bp, p, i, j, i1, i2, centroid_array_count, centroid_array_count_old, ef, ec, ef_start, ec_start, ef_end, ec_end
-        integer(KIND=INT32) :: edge_count, face_count, current_face, current_cell, cell_1, cell_2, prev_cell
+        integer(KIND=INT32) :: bp, p, i, j, i1, i2, centroid_array_count, centroid_array_count_old, pe, pe_start, pf_start, pe_end, pf_end
+        integer(KIND=INT32) :: edge_count, face_count, current_edge, face_1, face_2, prev_face
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
         real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3)
