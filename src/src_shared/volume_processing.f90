@@ -691,6 +691,91 @@ module volume_processing
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
+    subroutine projection_test
+        implicit none
+        integer(KIND=INT32)          :: i, i1, i2
+        real(KIND=REAL32),allocatable :: projection_mag(:), tot(:,:)
+        
+        
+        allocate(tot(npoin,3))
+        tot = 0.0
+        do i=1,i_nedge
+            i1 = e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(i))-1)
+            i2 = e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(i)))
+            
+            tot(i1,:) = tot(i1,:) + sn(i,:)
+            tot(i2,:) = tot(i1,:) - sn(i,:)
+        enddo
+        do i=1,b_nedge
+            i1 = e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(i))-1)
+            i2 = e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(i)))
+            
+            tot(i1,:) = tot(i1,:) + sb(i,:)
+            tot(i2,:) = tot(i1,:) - sb(i,:)
+        enddo
+        do i=1,b_npoin
+            i1 = p_bound_indexing_array(i)
+            
+            tot(i1,:) = tot(i1,:) + sbb(i,:)
+        enddo
+        
+        print*, ' testing projections '
+        
+        allocate(projection_mag(i_nedge))
+        projection_mag(:) = sqrt(sn(:,1)*sn(:,1) + sn(:,2)*sn(:,2) + sn(:,3)*sn(:,3))
+        i1=1
+        i2=1
+        do i=1,i_nedge
+            if (projection_mag(i).lt.projection_mag(i1)) i1 = i
+            if (projection_mag(i).gt.projection_mag(i1)) i2 = i
+        enddo
+        print*, 'lowest sn  ', projection_mag(i1), sn(i1,:), ' highest sn  ', projection_mag(i2), sn(i2,:)
+        
+        deallocate(projection_mag)
+        allocate(projection_mag(b_nedge))
+        projection_mag(:) = sqrt(sb(:,1)*sb(:,1) + sb(:,2)*sb(:,2) + sb(:,3)*sb(:,3))
+        i1=1
+        i2=1
+        do i=1,b_nedge
+            if (projection_mag(i).lt.projection_mag(i1)) i1 = i
+            if (projection_mag(i).gt.projection_mag(i1)) i2 = i
+        enddo
+        print*, 'lowest sb  ', projection_mag(i1), sb(i1,:), i1, ' highest sb  ', projection_mag(i2), sb(i2,:), i2
+        
+        deallocate(projection_mag)
+        allocate(projection_mag(b_npoin))
+        projection_mag(:) = sqrt(sbb(:,1)*sbb(:,1) + sbb(:,2)*sbb(:,2) + sbb(:,3)*sbb(:,3))
+        i1=1
+        i2=1
+        do i=1,b_npoin
+            if (projection_mag(i).lt.projection_mag(i1)) i1 = i
+            if (projection_mag(i).gt.projection_mag(i1)) i2 = i
+        enddo
+        print*, 'lowest sbb ', projection_mag(i1), sbb(i1,:), i1, ' highest sbb ', projection_mag(i2), sbb(i2,:), i2
+        
+        deallocate(projection_mag)
+        allocate(projection_mag(npoin))
+        projection_mag(:) = sqrt(tot(:,1)*tot(:,1) + tot(:,2)*tot(:,2) + tot(:,3)*tot(:,3))
+        i1=1
+        i2=1
+        do i=1,npoin
+            if (projection_mag(i).lt.projection_mag(i1)) i1 = i
+            if (projection_mag(i).gt.projection_mag(i1)) i2 = i
+        enddo
+        print*, 'lowest tot ', projection_mag(i1), tot(i1,:), i1 ' highest tot ', projection_mag(i2), tot(i2,:), i2
+        
+        i1=1
+        i2=1
+        do i=1,npoin
+            if (vol(i).lt.vol(i1)) i1 = i
+            if (vol(i).gt.vol(i1)) i2 = i
+        enddo
+        
+        print*, 'lowest vol ', vol(i1,:), i1, ' highest vol ', vol(i2,:), i2
+        
+        
+    end subroutine projection_test
+    
     subroutine centroid_array_routine(obj_projection, obj_centroid, centroid_array_count, centroid_array, i1, i2)
         implicit none
         integer(KIND=INT32)          :: i, centroid_array_count, i1
@@ -704,7 +789,7 @@ module volume_processing
         enddo
         
         
-    end subroutine
+    end subroutine centroid_array_routine
     
     subroutine cvolume(sn, vol1, vol2, i1, i2, i3, i4, i5)
         implicit none
