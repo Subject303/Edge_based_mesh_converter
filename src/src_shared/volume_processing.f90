@@ -175,11 +175,11 @@ module volume_processing
             
         enddo
         
-        print*,'aaaa'
-        do i=1,i_nedge
-            print*, i, sqrt(sn(i,1)*sn(i,1) + sn(i,2)*sn(i,2) + sn(i,3)*sn(i,3)), sn(i,:)
-        enddo
-        print*,'aaaa'
+        !print*,'aaaa'
+        !do i=1,i_nedge
+        !    print*, i, sqrt(sn(i,1)*sn(i,1) + sn(i,2)*sn(i,2) + sn(i,3)*sn(i,3)), sn(i,:)
+        !enddo
+        !print*,'aaaa'
         
     end subroutine internal_edge_volume_processing
     
@@ -337,10 +337,10 @@ module volume_processing
             
         enddo
         
-        do i=1,b_nedge
-            print*, i, sqrt(sb(i,1)*sb(i,1) + sb(i,2)*sb(i,2) + sb(i,3)*sb(i,3)), sb(i,:)
-        enddo
-        print*,'aaaa'
+        !do i=1,b_nedge
+        !    print*, i, sqrt(sb(i,1)*sb(i,1) + sb(i,2)*sb(i,2) + sb(i,3)*sb(i,3)), sb(i,:)
+        !enddo
+        !print*,'aaaa'
         
     end subroutine boundary_edge_volume_processing
     
@@ -681,10 +681,10 @@ module volume_processing
             
         enddo
         
-        do i=1,b_npoin
-            print*, i, sqrt(sbb(i,1)*sbb(i,1) + sbb(i,2)*sbb(i,2) + sbb(i,3)*sbb(i,3)), sbb(i,:)
-        enddo
-        print*, 'aaa'
+        !do i=1,b_npoin
+        !    print*, i, sqrt(sbb(i,1)*sbb(i,1) + sbb(i,2)*sbb(i,2) + sbb(i,3)*sbb(i,3)), sbb(i,:)
+        !enddo
+        !print*, 'aaa'
         
     end subroutine boundary_face_volume_processing
     
@@ -729,6 +729,7 @@ module volume_processing
         do i=1,i_nedge
             if (projection_mag(i).lt.projection_mag(i1)) i1 = i
             if (projection_mag(i).gt.projection_mag(i2)) i2 = i
+            print*, i, projection_mag(i), sn(i,:), i1, i2
         enddo
         print*, 'lowest sn  ', projection_mag(i1), sn(i1,:), i1, ' highest sn  ', projection_mag(i2), sn(i2,:), i2
         print*, ' '
@@ -742,6 +743,7 @@ module volume_processing
         do i=1,b_nedge
             if (projection_mag(i).lt.projection_mag(i1)) i1 = i
             if (projection_mag(i).gt.projection_mag(i2)) i2 = i
+            print*, i, projection_mag(i), sb(i,:), i1, i2
         enddo
         print*, 'lowest sb  ', projection_mag(i1), sb(i1,:), i1, ' highest sb  ', projection_mag(i2), sb(i2,:), i2
         print*, ' '
@@ -755,6 +757,7 @@ module volume_processing
         do i=1,b_npoin
             if (projection_mag(i).lt.projection_mag(i1)) i1 = i
             if (projection_mag(i).gt.projection_mag(i2)) i2 = i
+            print*, i, projection_mag(i), sbb(i,:)
         enddo
         print*, 'lowest sbb ', projection_mag(i1), sbb(i1,:), i1, ' highest sbb ', projection_mag(i2), sbb(i2,:), i2
         print*, ' '
