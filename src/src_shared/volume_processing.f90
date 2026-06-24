@@ -704,14 +704,14 @@ module volume_processing
             i2 = e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(i)))
             
             tot(i1,:) = tot(i1,:) + sn(i,:)
-            tot(i2,:) = tot(i1,:) - sn(i,:)
+            tot(i2,:) = tot(i2,:) - sn(i,:)
         enddo
         do i=1,b_nedge
             i1 = e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(i))-1)
             i2 = e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(i)))
             
             tot(i1,:) = tot(i1,:) + sb(i,:)
-            tot(i2,:) = tot(i1,:) - sb(i,:)
+            tot(i2,:) = tot(i2,:) - sb(i,:)
         enddo
         do i=1,b_npoin
             i1 = p_bound_indexing_array(i)
