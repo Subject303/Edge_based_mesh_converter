@@ -415,7 +415,7 @@ module volume_processing
                     if (feature_edges(reversed_e_bound_indexing_array(current_edge))) exit
                     pe = pe + 1
                 enddo
-
+                
                 non_viable_edges(pe) = .true.
                 
                 i = e_f_index_array(current_edge-1)
@@ -583,6 +583,8 @@ module volume_processing
                         if (f_bound_array(e_f_obj_relation_array(i))) exit
                     enddo
                     face_2 = e_f_obj_relation_array(i)
+                    print*, e_f_index_array(current_edge-1)+1 , e_f_index_array(current_edge)
+                    print*, i, face_1, face_2
                     if (i.gt.e_f_index_array(current_edge)) print*, ' non-feature boundary edge has more than 2 faces '
                 
                     if (prev_face .eq. face_1) then
