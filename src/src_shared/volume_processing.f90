@@ -768,6 +768,9 @@ module volume_processing
         do i=1,npoin
             if (projection_mag(i).lt.projection_mag(i1)) i1 = i
             if (projection_mag(i).gt.projection_mag(i2)) i2 = i
+            
+            print*, i, projection_mag(i), tot(i,:)
+            
         enddo
         print*, 'lowest tot ', projection_mag(i1), tot(i1,:), i1, ' highest tot ', projection_mag(i2), tot(i2,:), i2
         print*, ' '
