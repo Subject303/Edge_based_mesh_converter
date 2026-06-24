@@ -549,9 +549,6 @@ module volume_processing
                     if (f_bound_array(e_f_obj_relation_array(j))) exit
                 enddo
                 face_2 = e_f_obj_relation_array(j)
-                    
-                print*, e_f_index_array(current_edge-1)+1 , e_f_index_array(current_edge)
-                print*, j, face_1, face_2
                 
                 if (j.gt.e_f_index_array(current_edge)) print*, ' non-feature boundary edge has more than 2 faces '
             
@@ -580,7 +577,7 @@ module volume_processing
                         pe=pe+1
                     endif
 
-                    print*, non_viable_edges
+                    print*, pe, non_viable_edges
                     if (non_viable_edges(pe)) cycle
                 
                     do ! we must only use boundary edges
@@ -601,9 +598,6 @@ module volume_processing
                         if (f_bound_array(e_f_obj_relation_array(j))) exit
                     enddo
                     face_2 = e_f_obj_relation_array(j)
-                    
-                    print*, e_f_index_array(current_edge-1)+1 , e_f_index_array(current_edge)
-                    print*, j, face_1, face_2
                     
                     if (j.gt.e_f_index_array(current_edge)) print*, ' non-feature boundary edge has more than 2 faces '
                 
@@ -648,6 +642,7 @@ module volume_processing
                 
                     print*, pe, current_edge, face_1, face_2 , prev_face
                     
+                    print*, 'centroid array ', centroid_array
                     if (ALL(non_viable_edges)) stop
                     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
