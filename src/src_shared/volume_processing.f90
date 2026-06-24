@@ -453,7 +453,12 @@ module volume_processing
                 
                     if (non_viable_edges(pe)) cycle
                 
-                    current_edge = e_f_obj_relation_array(pe_start + pe)
+                    do ! we must only use boundary edges
+                        current_edge = p_e_obj_relation_array(pe_start+pe)
+                        if (e_bound_array(current_edge)) exit
+                        non_viable_edges(pe) = .true.
+                        pe = pe + 1
+                    enddo
                     
                     i = e_f_index_array(current_edge-1)
                     do 
@@ -526,7 +531,12 @@ module volume_processing
                 
                 non_viable_edges = .false.
             
-                current_edge = p_e_obj_relation_array(pe_start+1)
+                do ! we must only use boundary edges
+                    current_edge = p_e_obj_relation_array(pe_start+pe)
+                    if (e_bound_array(current_edge)) exit
+                    non_viable_edges(pe) = .true.
+                    pe = pe + 1
+                enddo
                 
                 i = e_f_index_array(current_edge-1)
                 do 
@@ -539,6 +549,10 @@ module volume_processing
                     if (f_bound_array(e_f_obj_relation_array(i))) exit
                 enddo
                 face_2 = e_f_obj_relation_array(i)
+                    
+                print*, e_f_index_array(current_edge-1)+1 , e_f_index_array(current_edge)
+                print*, i, face_1, face_2
+                
                 if (i.gt.e_f_index_array(current_edge)) print*, ' non-feature boundary edge has more than 2 faces '
             
                 centroid_index_array(1) = face_1
@@ -559,6 +573,7 @@ module volume_processing
             
                 !print*, ef, current_edge, face_1, face_2 ,prev_cell, 'prev_face'
             
+                print*, 'moving to real loop'
                 do
                 
                     if (pe.eq.edge_count) then
@@ -570,7 +585,12 @@ module volume_processing
                 
                     if (non_viable_edges(pe)) cycle
                 
-                    current_edge = e_f_obj_relation_array(pe_start + pe)
+                    do ! we must only use boundary edges
+                        current_edge = p_e_obj_relation_array(pe_start+pe)
+                        if (e_bound_array(current_edge)) exit
+                        non_viable_edges(pe) = .true.
+                        pe = pe + 1
+                    enddo
                     
                     i = e_f_index_array(current_edge-1)
                     do 
@@ -583,8 +603,10 @@ module volume_processing
                         if (f_bound_array(e_f_obj_relation_array(i))) exit
                     enddo
                     face_2 = e_f_obj_relation_array(i)
+                    
                     print*, e_f_index_array(current_edge-1)+1 , e_f_index_array(current_edge)
                     print*, i, face_1, face_2
+                    
                     if (i.gt.e_f_index_array(current_edge)) print*, ' non-feature boundary edge has more than 2 faces '
                 
                     if (prev_face .eq. face_1) then
