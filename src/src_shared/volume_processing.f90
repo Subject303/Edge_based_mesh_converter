@@ -762,7 +762,7 @@ module volume_processing
             if (projection_mag(i).lt.projection_mag(i1)) i1 = i
             if (projection_mag(i).gt.projection_mag(i1)) i2 = i
         enddo
-        print*, 'lowest tot ', projection_mag(i1), tot(i1,:), i1 ' highest tot ', projection_mag(i2), tot(i2,:), i2
+        print*, 'lowest tot ', projection_mag(i1), tot(i1,:), i1, ' highest tot ', projection_mag(i2), tot(i2,:), i2
         
         i1=1
         i2=1
@@ -771,7 +771,7 @@ module volume_processing
             if (vol(i).gt.vol(i1)) i2 = i
         enddo
         
-        print*, 'lowest vol ', vol(i1,:), i1, ' highest vol ', vol(i2,:), i2
+        print*, 'lowest vol ', vol(i1), i1, ' highest vol ', vol(i2), i2
         
         
     end subroutine projection_test
