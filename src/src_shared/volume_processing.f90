@@ -389,6 +389,8 @@ module volume_processing
             face_count = pf_end-pf_start
             
             if (feature_points(bp)) then
+                
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 ! FEATURE POINTS
                 ! IE CORNERS
                 
@@ -409,19 +411,14 @@ module volume_processing
                 
                 do ! we must start on a feature edge
                     current_edge = p_e_obj_relation_array(pe_start+pe)
-                    if (e_internal_array(current_edge)) then
-                        non_viable_edges(pe) = .true.
-                        pe = pe + 1
-                        cycle
-                    endif
-                    
+                    if (e_internal_array(current_edge)) non_viable_edges(pe) = .true.
                     if (feature_edges(reversed_e_bound_indexing_array(current_edge))) exit
                     pe = pe + 1
                 enddo
 
                 non_viable_edges(pe) = .true.
                 
-                i = e_f_obj_relation_array(e_f_index_array(current_edge)    )
+                i = e_f_obj_relation_array(e_f_index_array(current_edge-1)    )
                 do 
                     i=i+1
                     if (f_bound_array(e_f_obj_relation_array(i))) exit
@@ -458,7 +455,7 @@ module volume_processing
                 
                     current_edge = e_f_obj_relation_array(pe_start + pe)
                     
-                    i = e_f_obj_relation_array(e_f_index_array(current_edge)    )
+                    i = e_f_obj_relation_array(e_f_index_array(current_edge-1)    )
                     do 
                         i=i+1
                         if (f_bound_array(e_f_obj_relation_array(i))) exit
@@ -510,6 +507,7 @@ module volume_processing
                 
                 enddo
             else
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 ! NON FEATURE POINTS
                 ! IE NOT CORNERS
                 
@@ -530,7 +528,7 @@ module volume_processing
             
                 current_edge = p_e_obj_relation_array(pe_start+1)
                 
-                i = e_f_obj_relation_array(e_f_index_array(current_edge)    )
+                i = e_f_obj_relation_array(e_f_index_array(current_edge-1)    )
                 do 
                     i=i+1
                     if (f_bound_array(e_f_obj_relation_array(i))) exit
@@ -574,7 +572,7 @@ module volume_processing
                 
                     current_edge = e_f_obj_relation_array(pe_start + pe)
                     
-                    i = e_f_obj_relation_array(e_f_index_array(current_edge)    )
+                    i = e_f_obj_relation_array(e_f_index_array(current_edge-1)    )
                     do 
                         i=i+1
                         if (f_bound_array(e_f_obj_relation_array(i))) exit
@@ -628,7 +626,8 @@ module volume_processing
                     endif
                 
                     !print*, ef, current_face, cell_1, cell_2 , prev_face
-                
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
             
                 centroid_index_array(centroid_array_count) = centroid_index_array(3)
