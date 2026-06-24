@@ -383,22 +383,23 @@ module volume_processing
             edge_count = pe_end-pe_start
             face_count = pf_end-pf_start
             
-            centroid_array_count = edge_count + face_count
-            
-            ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
-            
-            if (centroid_array_count_old .ne. centroid_array_count) then
-                deallocate(centroid_index_array,non_viable_edges,centroid_array)
-                allocate(centroid_index_array(centroid_array_count), non_viable_edges(edge_count), centroid_array(centroid_array_count,3))
-            endif
-            
-            pe = 1
-            
-            non_viable_edges = .false.
-            
             if (feature_points(p)) then
                 ! FEATURE POINTS
                 ! IE CORNERS
+                
+                centroid_array_count = edge_count + face_count
+            
+                ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
+            
+                if (centroid_array_count_old .ne. centroid_array_count) then
+                    deallocate(centroid_index_array,non_viable_edges,centroid_array)
+                    allocate(centroid_index_array(centroid_array_count), non_viable_edges(edge_count), centroid_array(centroid_array_count,3))
+                endif
+            
+                pe = 1
+            
+                non_viable_edges = .false.
+                
                 do ! we must start on a feature edge
                     current_edge = p_e_obj_relation_array(pe_start+pe)
                     if (feature_edges(current_edge)) exit
@@ -482,6 +483,17 @@ module volume_processing
             else
                 ! NON FEATURE POINTS
                 ! IE NOT CORNERS
+                
+                centroid_array_count = 1 + edge_count + face_count
+            
+                ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
+            
+                if (centroid_array_count_old .ne. centroid_array_count) then
+                    deallocate(centroid_index_array,non_viable_edges,centroid_array)
+                    allocate(centroid_index_array(centroid_array_count), non_viable_edges(edge_count), centroid_array(centroid_array_count,3))
+                endif
+            
+                pe = 1
                 
                 non_viable_edges = .false.
             
