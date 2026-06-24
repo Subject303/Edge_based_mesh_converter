@@ -224,7 +224,12 @@ module boundary_routine_module
             
             if (dot_product_of_c_to_f_and_normal .lt. 0) f_normal_vectors(bf,:) = -f_normal_vectors(bf,:)
             
+            print*,vf
+            print*,f_normal_vectors(bf,:)
+            
         enddo
+        
+        print*, 'weh'
         
         ! because I've already split my feature edges in my preprocessor I can then get point normal vectors by just averaging connected face normals
         
