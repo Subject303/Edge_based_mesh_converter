@@ -418,15 +418,15 @@ module volume_processing
                 
                 non_viable_edges(pe) = .true.
                 
-                i = e_f_index_array(current_edge-1)
+                j = e_f_index_array(current_edge-1)
                 do 
-                    i=i+1
-                    if (f_bound_array(e_f_obj_relation_array(i))) exit
+                    j=j+1
+                    if (f_bound_array(e_f_obj_relation_array(j))) exit
                 enddo
-                face_1 = e_f_obj_relation_array(i)
+                face_1 = e_f_obj_relation_array(j)
                 face_2 = -1
                 
-                if (i.gt.e_f_index_array(current_edge)) print*, ' feature boundary edge has more than 1 faces '
+                if (j.gt.e_f_index_array(current_edge)) print*, ' feature boundary edge has more than 1 faces '
                 
                 centroid_index_array(1) = current_edge
                 centroid_index_array(2) = face_1
@@ -460,15 +460,15 @@ module volume_processing
                         pe = pe + 1
                     enddo
                     
-                    i = e_f_index_array(current_edge-1)
+                    j = e_f_index_array(current_edge-1)
                     do 
-                        i=i+1
-                        if (f_bound_array(e_f_obj_relation_array(i))) exit
+                        j=j+1
+                        if (f_bound_array(e_f_obj_relation_array(j))) exit
                     enddo
-                    face_1 = e_f_obj_relation_array(i)
+                    face_1 = e_f_obj_relation_array(j)
                     face_2 = -1
                     
-                    if (i.gt.e_f_index_array(current_edge)) print*, ' feature boundary edge has more than 1 faces '
+                    if (j.gt.e_f_index_array(current_edge)) print*, ' feature boundary edge has more than 1 faces '
                     
                     if (prev_face .eq. face_1) then
             
@@ -538,22 +538,22 @@ module volume_processing
                     pe = pe + 1
                 enddo
                 
-                i = e_f_index_array(current_edge-1)
+                j = e_f_index_array(current_edge-1)
                 do 
-                    i=i+1
-                    if (f_bound_array(e_f_obj_relation_array(i))) exit
+                    j=j+1
+                    if (f_bound_array(e_f_obj_relation_array(j))) exit
                 enddo
-                face_1 = e_f_obj_relation_array(i)
+                face_1 = e_f_obj_relation_array(j)
                 do 
-                    i=i+1
-                    if (f_bound_array(e_f_obj_relation_array(i))) exit
+                    j=j+1
+                    if (f_bound_array(e_f_obj_relation_array(j))) exit
                 enddo
-                face_2 = e_f_obj_relation_array(i)
+                face_2 = e_f_obj_relation_array(j)
                     
                 print*, e_f_index_array(current_edge-1)+1 , e_f_index_array(current_edge)
-                print*, i, face_1, face_2
+                print*, j, face_1, face_2
                 
-                if (i.gt.e_f_index_array(current_edge)) print*, ' non-feature boundary edge has more than 2 faces '
+                if (j.gt.e_f_index_array(current_edge)) print*, ' non-feature boundary edge has more than 2 faces '
             
                 centroid_index_array(1) = face_1
                 centroid_index_array(2) = current_edge
@@ -562,14 +562,12 @@ module volume_processing
                 centroid_array(1,:) = f_centroid(face_1,:)
                 centroid_array(2,:) = e_centroid(current_edge,:)
                 centroid_array(3,:) = f_centroid(face_2,:)
-                    
+                
                 prev_face = face_2
             
                 !print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
             
                 i=4
-            
-                pe = 1
             
                 !print*, ef, current_edge, face_1, face_2 ,prev_cell, 'prev_face'
             
@@ -582,7 +580,7 @@ module volume_processing
                         pe=pe+1
                     endif
 
-                
+                    print*, non_viable_edges
                     if (non_viable_edges(pe)) cycle
                 
                     do ! we must only use boundary edges
@@ -592,22 +590,22 @@ module volume_processing
                         pe = pe + 1
                     enddo
                     
-                    i = e_f_index_array(current_edge-1)
+                    j = e_f_index_array(current_edge-1)
                     do 
-                        i=i+1
-                        if (f_bound_array(e_f_obj_relation_array(i))) exit
+                        j=j+1
+                        if (f_bound_array(e_f_obj_relation_array(j))) exit
                     enddo
-                    face_1 = e_f_obj_relation_array(i)
+                    face_1 = e_f_obj_relation_array(j)
                     do 
-                        i=i+1
-                        if (f_bound_array(e_f_obj_relation_array(i))) exit
+                        j=j+1
+                        if (f_bound_array(e_f_obj_relation_array(j))) exit
                     enddo
-                    face_2 = e_f_obj_relation_array(i)
+                    face_2 = e_f_obj_relation_array(j)
                     
                     print*, e_f_index_array(current_edge-1)+1 , e_f_index_array(current_edge)
-                    print*, i, face_1, face_2
+                    print*, j, face_1, face_2
                     
-                    if (i.gt.e_f_index_array(current_edge)) print*, ' non-feature boundary edge has more than 2 faces '
+                    if (j.gt.e_f_index_array(current_edge)) print*, ' non-feature boundary edge has more than 2 faces '
                 
                     if (prev_face .eq. face_1) then
             
@@ -646,10 +644,9 @@ module volume_processing
                     else
                         print*, 'none, looping', i, centroid_array_count+1, edge_count, face_count
                         
-                        stop
                     endif
                 
-                    !print*, ef, current_face, cell_1, cell_2 , prev_face
+                    print*, ef, current_face, cell_1, cell_2 , prev_face
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
