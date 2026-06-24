@@ -161,7 +161,7 @@ module volume_processing
             centroid_array_count_old = centroid_array_count
             
             
-            if (i.ne.centroid_array_count+1) print*, 'centroid array count broken'
+            !if (i.ne.centroid_array_count+1) print*, 'centroid array count broken'
             if (centroid_index_array(1).ne.centroid_index_array(centroid_array_count)) print*, 'internal centroid array start and end wrong'
             
             !print*, centroid_index_array
@@ -374,6 +374,8 @@ module volume_processing
             p = p_bound_indexing_array(bp)
             ! this is a loop of all boundary edges.
             
+            print*, bp, p, 'inside loop'
+            
             i1 = p
             i2 = p
             ! i1 and i2 are the constituent points of edge e
@@ -386,9 +388,11 @@ module volume_processing
             edge_count = pe_end-pe_start
             face_count = pf_end-pf_start
             
-            if (feature_points(p)) then
+            if (feature_points(bp)) then
                 ! FEATURE POINTS
                 ! IE CORNERS
+                
+                print*, bp, p, 'inside feature statement'
                 
                 centroid_array_count = edge_count + face_count
             
@@ -405,7 +409,7 @@ module volume_processing
                 
                 do ! we must start on a feature edge
                     current_edge = p_e_obj_relation_array(pe_start+pe)
-                    if (feature_edges(current_edge)) exit
+                    if (feature_edges(reversed_e_bound_indexing_array(current_edge))) exit
                     pe = pe + 1
                 enddo
 
@@ -447,7 +451,7 @@ module volume_processing
                         centroid_index_array(i)   = current_edge
                         centroid_array(i,:)   = e_centroid(current_edge,:)
                     
-                        if (feature_edges(current_edge)) exit
+                        if (feature_edges(reversed_e_bound_indexing_array(current_edge))) exit  
                     
                         centroid_index_array(i+1) = face_2
                         centroid_array(i+1,:) = f_centroid(face_2,:)
@@ -464,7 +468,7 @@ module volume_processing
                         centroid_index_array(i)   = current_edge
                         centroid_array(i,:)   = e_centroid(current_edge,:)
                     
-                        if (feature_edges(current_edge)) exit
+                        if (feature_edges(reversed_e_bound_indexing_array(current_edge))) exit
                     
                         centroid_index_array(i+1) = face_1
                         centroid_array(i+1,:) = f_centroid(face_1,:)
@@ -486,6 +490,8 @@ module volume_processing
             else
                 ! NON FEATURE POINTS
                 ! IE NOT CORNERS
+                
+                print*, 'inside non feature loop'
                 
                 centroid_array_count = 1 + edge_count + face_count
             
@@ -572,7 +578,7 @@ module volume_processing
                         if (i.eq.centroid_array_count+1) exit
                     
                     else
-                        !print*, 'none, looping'
+                        print*, 'none, looping'
                     endif
                 
                     !print*, ef, current_face, cell_1, cell_2 , prev_face

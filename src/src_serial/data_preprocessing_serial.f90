@@ -95,20 +95,16 @@ module data_processing_serial
         
         print*, ' '
         print*, 'starting boundary flagging routines'
-        print*, ' '
         
         call split_feature_edges
         !call flag_boundary_regions
         
-        print*, ' '
         print*, 'finished boundary flagging routines'
         print*, ' '
         print*, 'starting calculating boundary normal vectors'
-        print*, ' '
         
         call calculate_normal_vectors
         
-        print*, ' '
         print*, 'finished calculating boundary normal vectors'
         print*, ' '
         
