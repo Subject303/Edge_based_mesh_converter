@@ -264,6 +264,15 @@ module boundary_routine_module
      ! so I can just growth algo my boundaries
     end subroutine boundary_angle_feature_flagging
     
+    subroutine split_feature_edges
+        implicit none
+        
+        allocate(feature_points(b_npoin), feature_edges(b_nedge))
+        feature_points = .false.
+        feature_edges  = .false.
+        
+    end subroutine split_feature_edges
+    
     ! end contains    
     
 end module boundary_routine_module

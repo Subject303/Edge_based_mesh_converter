@@ -92,6 +92,9 @@ module boundary_data
     ! for boundary normal vectors it makes sense to both calculate  normals for faces, and then derive point normals
     real(KIND=REAL32), allocatable :: p_normal_vectors(:,:), f_normal_vectors(:,:)
     
+    ! logical array identifying feature points and edges
+    logical, allocatable :: feature_points(:), feature_edges(:)
+    
 end module boundary_data
 
 module projection_data

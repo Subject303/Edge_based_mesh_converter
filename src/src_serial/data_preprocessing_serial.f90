@@ -92,6 +92,16 @@ module data_processing_serial
         print*, i_npoin, b_npoin, i_nedge, b_nedge, i_nface, b_nface
         print*, 'Total object sums follow: '
         print *, npoin, ' points, ', nedge, ' edges, ', nface, ' faces '
+        
+        print*, ' '
+        print*, 'starting boundary flagging routines'
+        print*, ' '
+        
+        call split_feature_edges
+        !call flag_boundary_regions
+        
+        print*, ' '
+        print*, 'finished boundary flagging routines'
         print*, ' '
         print*, 'starting calculating boundary normal vectors'
         print*, ' '
@@ -115,6 +125,7 @@ module data_processing_serial
         
         call internal_edge_volume_processing
         call boundary_edge_volume_processing
+        call boundary_face_volume_processing
         
         
     end subroutine data_processing

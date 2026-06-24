@@ -72,6 +72,8 @@ module volume_processing
                 allocate(centroid_index_array(centroid_array_count), non_viable_faces(face_count+1), centroid_array(centroid_array_count,3))
             endif
             
+            non_viable_faces = .false.
+            
             current_face = e_f_obj_relation_array(ef_start+1)
             cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
             cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
@@ -89,7 +91,6 @@ module volume_processing
             !print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
             
             i=4
-            non_viable_faces = .false.
             
             ef = 1
             
@@ -152,8 +153,8 @@ module volume_processing
                 
             enddo
             
-            centroid_index_array(centroid_array_count) = centroid_index_array(1)
-            
+            centroid_index_array(centroid_array_count) = centroid_index_array(3)
+            ! this might be exactly negative, alternatives are 1, and cell_1
             centroid_array(centroid_array_count,:) = c_centroid(cell_2,:)
             
             
@@ -391,92 +392,183 @@ module volume_processing
                 allocate(centroid_index_array(centroid_array_count), non_viable_edges(edge_count), centroid_array(centroid_array_count,3))
             endif
             
-            ef = 1
+            pe = 1
             
             non_viable_edges = .false.
             
-            do ! we must start on a boundary face
-                current_edge = p_e_obj_relation_array(ef_start+ef)
-                if (f_bound_array(current_face)) exit
-                ef = ef + 1
-            enddo
+            if (feature_points(p)) then
+                ! FEATURE POINTS
+                ! IE CORNERS
+                do ! we must start on a feature edge
+                    current_edge = p_e_obj_relation_array(pe_start+pe)
+                    if (feature_edges(current_edge)) exit
+                    pe = pe + 1
+                enddo
 
-            non_viable_edges(ef) = .true.
+                non_viable_edges(pe) = .true.
             
-            cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
+                face_1 = e_f_obj_relation_array(e_f_index_array(current_edge)    )
             
-            centroid_index_array(1) = current_face
-            centroid_index_array(2) = cell_1
+                centroid_index_array(1) = current_edge
+                centroid_index_array(2) = face_1
             
-            centroid_array(1,:) = f_centroid(current_face,:)
-            centroid_array(2,:) = c_centroid(cell_1,:)
+                centroid_array(1,:) = e_centroid(current_edge,:)
+                centroid_array(2,:) = f_centroid(face_1,:)
                     
-            prev_cell = cell_1
+                prev_face = face_1
             
-            !print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
+                !print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
             
-            i=3
+                i=3
             
-            !print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
+                !print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
             
-            do
+                do
                 
-                if (ef.eq.face_count) then
-                    ef = 1
-                else
-                    ef=ef+1
-                endif
+                    if (pe.eq.edge_count) then
+                        pe = 1
+                    else
+                        pe=pe+1
+                    endif
 
                 
-                if (non_viable_faces(ef)) cycle
+                    if (non_viable_edges(pe)) cycle
                 
-                current_face = e_f_obj_relation_array(ef_start + ef)
-                cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
-                cell_2 = f_c_obj_relation_array(f_c_index_array(current_face-1)+1)
+                    current_edge = e_f_obj_relation_array(pe_start + pe)
+                    face_1 = e_f_obj_relation_array(e_f_index_array(current_edge)    )
+                    face_2 = e_f_obj_relation_array(e_f_index_array(current_edge-1)+1)
                 
-                if (prev_cell .eq. cell_1) then
+                    if (prev_face .eq. face_1) then
             
-                    centroid_index_array(i)   = current_face
-                    centroid_array(i,:)   = f_centroid(current_face,:)
+                        centroid_index_array(i)   = current_edge
+                        centroid_array(i,:)   = e_centroid(current_edge,:)
                     
-                    if (f_bound_array(current_face)) exit
+                        if (feature_edges(current_edge)) exit
                     
-                    centroid_index_array(i+1) = cell_2
-                    centroid_array(i+1,:) = c_centroid(cell_2,:)
+                        centroid_index_array(i+1) = face_2
+                        centroid_array(i+1,:) = f_centroid(face_2,:)
                     
-                    non_viable_faces(ef) = .true.
+                        non_viable_edges(pe) = .true.
                     
-                    prev_cell = centroid_index_array(i+1)
-                    i=i+2 
+                        prev_face = centroid_index_array(i+1)
+                        i=i+2 
                     
-                    !print*, 'i-1 = cell_1, i+1 = cell_2'
+                        !print*, 'i-1 = face_1, i+1 = face_2'
                     
-                elseif (prev_cell .eq. cell_2) then
+                    elseif (prev_face .eq. face_2) then
                     
-                    centroid_index_array(i)   = current_face
-                    centroid_array(i,:)   = f_centroid(current_face,:)
+                        centroid_index_array(i)   = current_edge
+                        centroid_array(i,:)   = e_centroid(current_edge,:)
                     
-                    if (f_bound_array(current_face)) exit
+                        if (feature_edges(current_edge)) exit
                     
-                    centroid_index_array(i+1) = cell_1
-                    centroid_array(i+1,:) = c_centroid(cell_1,:)
+                        centroid_index_array(i+1) = face_1
+                        centroid_array(i+1,:) = f_centroid(face_1,:)
                     
-                    non_viable_faces(ef) = .true.
+                        non_viable_edges(pe) = .true.
                     
-                    prev_cell = centroid_index_array(i+1)
-                    i=i+2 
+                        prev_face = centroid_index_array(i+1)
+                        i=i+2 
                     
-                    !print*, 'swapped'
+                        !print*, 'swapped'
                     
-                else
-                    !print*, 'none, looping'
-                endif
+                    else
+                        !print*, 'none, looping'
+                    endif
                 
-                !print*, ef, current_face, cell_1, cell_2 , prev_cell
+                    !print*, ef, current_edge, face_1, face_2 , prev_face
                 
-            enddo
+                enddo
+            else
+                ! NON FEATURE POINTS
+                ! IE NOT CORNERS
+                
+                non_viable_edges = .false.
             
+                current_edge = p_e_obj_relation_array(pe_start+1)
+                face_1 = e_f_obj_relation_array(e_f_index_array(current_edge)    )
+                face_2 = e_f_obj_relation_array(e_f_index_array(current_edge-1)+1)
             
+                centroid_index_array(1) = face_1
+                centroid_index_array(2) = current_edge
+                centroid_index_array(3) = face_2
+            
+                centroid_array(1,:) = f_centroid(face_1,:)
+                centroid_array(2,:) = e_centroid(current_edge,:)
+                centroid_array(3,:) = f_centroid(face_2,:)
+                    
+                prev_face = face_2
+            
+                !print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
+            
+                i=4
+            
+                pe = 1
+            
+                !print*, ef, current_edge, face_1, face_2 ,prev_cell, 'prev_face'
+            
+                do
+                
+                    if (pe.eq.edge_count) then
+                        pe = 1
+                    else
+                        pe=pe+1
+                    endif
+
+                
+                    if (non_viable_edges(pe)) cycle
+                
+                    current_edge = p_e_obj_relation_array(pe_start + pe)
+                    face_1 = e_f_obj_relation_array(e_f_index_array(current_edge)    )
+                    face_2 = e_f_obj_relation_array(e_f_index_array(current_edge-1)+1)
+                
+                    if (prev_face .eq. face_1) then
+            
+                        centroid_index_array(i)   = current_edge
+                        centroid_index_array(i+1) = face_2
+                    
+                        centroid_array(i,:)   = e_centroid(current_edge,:)
+                        centroid_array(i+1,:) = f_centroid(face_2,:)
+                    
+                        non_viable_edges(pe) = .true.
+                    
+                        prev_face = centroid_index_array(i+1)
+                        i=i+2 
+                    
+                        !print*, 'i-1 = face_1, i+1 = face_2'
+                    
+                        if (i.eq.centroid_array_count+1) exit
+                    
+                    elseif (prev_face .eq. face_2) then
+                    
+                        centroid_index_array(i)   = current_edge
+                        centroid_index_array(i+1) = face_1
+                    
+                        centroid_array(i,:)   = e_centroid(current_edge,:)
+                        centroid_array(i+1,:) = f_centroid(face_1,:)
+                    
+                        non_viable_edges(pe) = .true.
+                    
+                        prev_face = centroid_index_array(i+1)
+                        i=i+2 
+                    
+                        !print*, 'swapped'
+                    
+                        if (i.eq.centroid_array_count+1) exit
+                    
+                    else
+                        !print*, 'none, looping'
+                    endif
+                
+                    !print*, ef, current_face, cell_1, cell_2 , prev_face
+                
+                enddo
+            
+                centroid_index_array(centroid_array_count) = centroid_index_array(3)
+            
+                centroid_array(centroid_array_count,:) = f_centroid(face_2,:)
+                
+            endif
             centroid_array_count_old = centroid_array_count
             
             
@@ -485,18 +577,18 @@ module volume_processing
             
             
             in_progress_projection(:) = 0.0
-            in_progress_centroid = e_centroid(e,:)
-            
+            in_progress_centroid = coords(p,:)
+            ! by making i1, i2, i3 all p, the volume change should be zero
             
             call centroid_array_routine(in_progress_projection, in_progress_centroid, centroid_array_count, centroid_array, i1, i2)
             
-            sb(be,:) = in_progress_projection
+            sbb(bp,:) = in_progress_projection
             
         enddo
         
-        !do i=1,b_nedge
-        !    print*, i, sqrt(sb(i,1)*sb(i,1) + sb(i,2)*sb(i,2) + sb(i,3)*sb(i,3)), sb(i,:)
-        !enddo
+        do i=1,b_npoin
+            print*, i, sqrt(sbb(i,1)*sbb(i,1) + sbb(i,2)*sbb(i,2) + sbb(i,3)*sbb(i,3)), sbb(i,:)
+        enddo
         
     end subroutine boundary_face_volume_processing
     
