@@ -643,7 +643,7 @@ module volume_processing
                     print*, pe, current_edge, face_1, face_2 , prev_face
                     
                     print*, 'centroid array ', centroid_array
-                    if (ALL(non_viable_edges)) stop
+                    if (ALL(non_viable_edges)) exit
                     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
