@@ -335,7 +335,7 @@ module volume_processing
             in_progress_projection(:) = 0.0
             in_progress_centroid = e_centroid(e,:)
             
-            direction_array(:) = sign(1., coords(i1,:) - coords(i2,:))
+            direction_array(:) = sign(1., coords(i2,:) - coords(i1,:))
             
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
