@@ -178,6 +178,8 @@ module volume_processing
                 endif
             enddo
             
+            print*,direction_array
+            
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
@@ -351,6 +353,8 @@ module volume_processing
                     direction_array(i) = direction_array(i)/abs(direction_array(i))
                 endif
             enddo
+            
+            print*,direction_array
             
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
@@ -708,6 +712,8 @@ module volume_processing
                     direction_array(i) = direction_array(i)/abs(direction_array(i))
                 endif
             enddo
+            
+            print*,direction_array
             
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
