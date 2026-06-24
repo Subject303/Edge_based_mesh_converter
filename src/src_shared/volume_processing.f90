@@ -516,8 +516,6 @@ module volume_processing
                 ! NON FEATURE POINTS
                 ! IE NOT CORNERS
                 
-                print*, 'inside non feature loop'
-                
                 centroid_array_count = 1 + edge_count + face_count
             
                 ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
@@ -525,6 +523,9 @@ module volume_processing
                 if (centroid_array_count_old .ne. centroid_array_count) then
                     deallocate(centroid_index_array,non_viable_edges,centroid_array)
                     allocate(centroid_index_array(centroid_array_count), non_viable_edges(edge_count), centroid_array(centroid_array_count,3))
+                else
+                    centroid_index_array = 0
+                    centroid_array = 0.0
                 endif
             
                 pe = 1
@@ -567,8 +568,7 @@ module volume_processing
                 i=4
             
                 print*, pe, current_edge, face_1, face_2 , prev_face
-            
-                print*, 'moving to real loop'
+                
                 do
                 
                     if (pe.eq.edge_count) then
@@ -644,16 +644,10 @@ module volume_processing
                     
                     !print*, 'centroid array ', centroid_index_array
                     
-                    if (ALL(non_viable_edges))exit
-                    
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
             
                 print*, 'centroid array ', centroid_index_array
-                    
-                centroid_index_array(centroid_array_count) = centroid_index_array(3)
-            
-                centroid_array(centroid_array_count,:) = f_centroid(face_2,:)
                 
             endif
             centroid_array_count_old = centroid_array_count
