@@ -723,12 +723,12 @@ module volume_processing
         
         allocate(projection_mag(i_nedge))
         projection_mag(:) = sqrt(sn(:,1)*sn(:,1) + sn(:,2)*sn(:,2) + sn(:,3)*sn(:,3))
-        print*, projection_mag
+        !print*, projection_mag
         i1=1
         i2=1
         do i=1,i_nedge
             if (projection_mag(i).lt.projection_mag(i1)) i1 = i
-            if (projection_mag(i).gt.projection_mag(i1)) i2 = i
+            if (projection_mag(i).gt.projection_mag(i2)) i2 = i
         enddo
         print*, 'lowest sn  ', projection_mag(i1), sn(i1,:), i1, ' highest sn  ', projection_mag(i2), sn(i2,:), i2
         print*, ' '
@@ -736,12 +736,12 @@ module volume_processing
         deallocate(projection_mag)
         allocate(projection_mag(b_nedge))
         projection_mag(:) = sqrt(sb(:,1)*sb(:,1) + sb(:,2)*sb(:,2) + sb(:,3)*sb(:,3))
-        print*, projection_mag
+        !print*, projection_mag
         i1=1
         i2=1
         do i=1,b_nedge
             if (projection_mag(i).lt.projection_mag(i1)) i1 = i
-            if (projection_mag(i).gt.projection_mag(i1)) i2 = i
+            if (projection_mag(i).gt.projection_mag(i2)) i2 = i
         enddo
         print*, 'lowest sb  ', projection_mag(i1), sb(i1,:), i1, ' highest sb  ', projection_mag(i2), sb(i2,:), i2
         print*, ' '
@@ -749,12 +749,12 @@ module volume_processing
         deallocate(projection_mag)
         allocate(projection_mag(b_npoin))
         projection_mag(:) = sqrt(sbb(:,1)*sbb(:,1) + sbb(:,2)*sbb(:,2) + sbb(:,3)*sbb(:,3))
-        print*, projection_mag
+        !print*, projection_mag
         i1=1
         i2=1
         do i=1,b_npoin
             if (projection_mag(i).lt.projection_mag(i1)) i1 = i
-            if (projection_mag(i).gt.projection_mag(i1)) i2 = i
+            if (projection_mag(i).gt.projection_mag(i2)) i2 = i
         enddo
         print*, 'lowest sbb ', projection_mag(i1), sbb(i1,:), i1, ' highest sbb ', projection_mag(i2), sbb(i2,:), i2
         print*, ' '
@@ -762,12 +762,12 @@ module volume_processing
         deallocate(projection_mag)
         allocate(projection_mag(npoin))
         projection_mag(:) = sqrt(tot(:,1)*tot(:,1) + tot(:,2)*tot(:,2) + tot(:,3)*tot(:,3))
-        print*, projection_mag
+        !print*, projection_mag
         i1=1
         i2=1
         do i=1,npoin
             if (projection_mag(i).lt.projection_mag(i1)) i1 = i
-            if (projection_mag(i).gt.projection_mag(i1)) i2 = i
+            if (projection_mag(i).gt.projection_mag(i2)) i2 = i
         enddo
         print*, 'lowest tot ', projection_mag(i1), tot(i1,:), i1, ' highest tot ', projection_mag(i2), tot(i2,:), i2
         print*, ' '
