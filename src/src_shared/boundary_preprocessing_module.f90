@@ -246,8 +246,8 @@ module boundary_routine_module
             
             do i=1,3
                 
-                do p=pf_start,pf_end
-                    if (f_bound_array(p)) p_normal_vectors(bp,i) = p_normal_vectors(bp,i) + f_normal_vectors(reversed_f_bound_indexing_array(p_f_obj_relation_array(p)),i)
+                do f=pf_start,pf_end
+                    if (f_bound_array(p_f_obj_relation_array(f))) p_normal_vectors(bp,i) = p_normal_vectors(bp,i) + f_normal_vectors(reversed_f_bound_indexing_array(p_f_obj_relation_array(f)),i)
                 enddo
                 
             enddo
