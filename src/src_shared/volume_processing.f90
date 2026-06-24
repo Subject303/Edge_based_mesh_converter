@@ -365,7 +365,7 @@ module volume_processing
         allocate(sbb(b_poin,3))
         
         centroid_array_count_old = -1
-        allocate(centroid_index_array(0),non_viable_faces(0),centroid_array(0,0))
+        allocate(centroid_index_array(0),non_viable_edges(0),centroid_array(0,0))
         
         do bp = 1, b_poin
             p = p_bound_indexing_array(bp)
