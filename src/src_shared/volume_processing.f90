@@ -824,15 +824,17 @@ module volume_processing
             v52(i) = i5(i) - coords(i2,i) ! vector from 5 to 2
             v12(i) = coords(i1,i) - coords(i2,i)
             if (v12(i).eq.0.0) then
-                v12(i) = 0.0
+                v12(i) = 1.0
             else
                 v12(i) = v12(i) / abs(v12(i))
             endif
         enddo
+        
         ! Volume=∥a×b∥ ∥c∥ |cosϕ|=|(a×b)⋅c|. volume of parallelepiped of sides abc
         ! Volume = Volume/6 think a parallelepiped is 6 tets
         !https://mathinsight.org/scalar_triple_product
         ! a = v14 b = v15
+        
         c1415(1) = v14(2) * v15(3) - v14(3) * v15(2)
         c1415(2) = v14(3) * v15(1) - v14(1) * v15(3)
         c1415(3) = v14(1) * v15(2) - v14(2) * v15(1)
