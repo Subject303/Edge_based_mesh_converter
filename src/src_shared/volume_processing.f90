@@ -175,9 +175,11 @@ module volume_processing
             
         enddo
         
-        !do i=1,i_nedge
-        !    print*, i, sqrt(sn(i,1)*sn(i,1) + sn(i,2)*sn(i,2) + sn(i,3)*sn(i,3)), sn(i,:)
-        !enddo
+        print*,'aaaa'
+        do i=1,i_nedge
+            print*, i, sqrt(sn(i,1)*sn(i,1) + sn(i,2)*sn(i,2) + sn(i,3)*sn(i,3)), sn(i,:)
+        enddo
+        print*,'aaaa'
         
     end subroutine internal_edge_volume_processing
     
@@ -335,9 +337,10 @@ module volume_processing
             
         enddo
         
-        !do i=1,b_nedge
-        !    print*, i, sqrt(sb(i,1)*sb(i,1) + sb(i,2)*sb(i,2) + sb(i,3)*sb(i,3)), sb(i,:)
-        !enddo
+        do i=1,b_nedge
+            print*, i, sqrt(sb(i,1)*sb(i,1) + sb(i,2)*sb(i,2) + sb(i,3)*sb(i,3)), sb(i,:)
+        enddo
+        print*,'aaaa'
         
     end subroutine boundary_edge_volume_processing
     
