@@ -716,7 +716,7 @@ module volume_processing
         do i=1,b_npoin
             i1 = p_bound_indexing_array(i)
             
-            tot(i1,:) = tot(i1,:) + sbb(i,:)
+            tot(i1,:) = tot(i1,:) - sbb(i,:)
         enddo
         
         print*, ' testing projections '
