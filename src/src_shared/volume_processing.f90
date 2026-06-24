@@ -370,7 +370,7 @@ module volume_processing
         integer(KIND=INT32) :: edge_count, face_count, current_edge, face_1, face_2, prev_face
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3)
         logical, allocatable :: non_viable_edges(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -879,7 +879,7 @@ module volume_processing
             enddo
             vol1 = vol1 + abs((c1415(1)*v13(1) ) - (c1415(2)*v13(2) ) + (c1415(3)*v13(3) ) )/6
             vol2 = vol2 + abs((c1415(1)*v32(1) ) - (c1415(2)*v32(2) ) + (c1415(3)*v32(3) ) )/6
-        enddo
+        endif
 
         do i=1,3
             v34(i) = i3(i) - i4(i) ! vector from 3 to 4
