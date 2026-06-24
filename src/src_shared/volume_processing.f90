@@ -28,7 +28,7 @@ module volume_processing
         integer(KIND=INT32) :: cell_count, face_count, current_face, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3)
         logical, allocatable :: non_viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -169,8 +169,8 @@ module volume_processing
             in_progress_projection(:) = 0.0
             in_progress_centroid = e_centroid(e,:)
             
-            direction_array(:) = coords(i1,:) - coords(i2,:)
             do i=1,3
+                direction_array(i) = coords(i1,i) - coords(i2,i)
                 if (direction_array(i).eq.0.0) then
                     direction_array(i) = 1.
                 else
@@ -199,7 +199,7 @@ module volume_processing
         integer(KIND=INT32) :: cell_count, face_count, current_face, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3)
         logical, allocatable :: non_viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -340,8 +340,8 @@ module volume_processing
             in_progress_centroid = e_centroid(e,:)
             
             
-            direction_array(:) = coords(i1,:) - coords(i2,:)
             do i=1,3
+                direction_array(i) = coords(i1,i) - coords(i2,i)
                 if (direction_array(i).eq.0.0) then
                     direction_array(i) = 1.
                 else
@@ -842,7 +842,7 @@ module volume_processing
         
     end subroutine centroid_array_routine
     
-    subroutine cvolume(sn, anp, i3, i4, i5, i1, i2 vol1, vol2)
+    subroutine cvolume(sn, anp, i3, i4, i5, i1, i2, vol1, vol2)
         implicit none
         real(KIND=REAL32),optional :: vol1, vol2
         real(KIND=REAL32),dimension(3) :: v13,v14,v15,v32,v42,v52,c1415,c4252
