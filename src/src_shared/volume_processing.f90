@@ -347,7 +347,7 @@ module volume_processing
     
     subroutine boundary_face_volume_processing
         implicit none
-        integer(KIND=INT32) :: bp, p, i, j, i1, i2, centroid_array_count, centroid_array_count_old, pe, pe_start, pf_start, pe_end, pf_end
+        integer(KIND=INT32) :: bp, p, i, j, i1, i2, centroid_array_count, centroid_array_count_real, centroid_array_count_old, pe, pe_start, pf_start, pe_end, pf_end
         integer(KIND=INT32) :: edge_count, face_count, current_edge, face_1, face_2, prev_face
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
@@ -523,9 +523,6 @@ module volume_processing
                 if (centroid_array_count_old .ne. centroid_array_count) then
                     deallocate(centroid_index_array,non_viable_edges,centroid_array)
                     allocate(centroid_index_array(centroid_array_count), non_viable_edges(edge_count), centroid_array(centroid_array_count,3))
-                else
-                    centroid_index_array = 0
-                    centroid_array = 0.0
                 endif
             
                 pe = 1
@@ -557,6 +554,8 @@ module volume_processing
                 centroid_index_array(2) = current_edge
                 centroid_index_array(3) = face_2
             
+                centroid_array_count_real = 3
+                
                 centroid_array(1,:) = f_centroid(face_1,:)
                 centroid_array(2,:) = e_centroid(current_edge,:)
                 centroid_array(3,:) = f_centroid(face_2,:)
@@ -609,6 +608,8 @@ module volume_processing
                         centroid_array(i,:)   = e_centroid(current_edge,:)
                         centroid_array(i+1,:) = f_centroid(face_2,:)
                     
+                        centroid_array_count_real = centroid_array_count_real + 2
+                        
                         non_viable_edges(pe) = .true.
                     
                         prev_face = centroid_index_array(i+1)
@@ -626,6 +627,8 @@ module volume_processing
                         centroid_array(i,:)   = e_centroid(current_edge,:)
                         centroid_array(i+1,:) = f_centroid(face_1,:)
                     
+                        centroid_array_count_real = centroid_array_count_real + 2
+                        
                         non_viable_edges(pe) = .true.
                     
                         prev_face = centroid_index_array(i+1)
@@ -647,7 +650,7 @@ module volume_processing
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
             
-                print*, 'centroid array ', centroid_index_array
+                print*, 'centroid array ', centroid_index_array(1:centroid_array_count_real)
                 
             endif
             centroid_array_count_old = centroid_array_count
@@ -661,7 +664,7 @@ module volume_processing
             in_progress_centroid = coords(p,:)
             ! by making i1, i2, i3 all p, the volume change should be zero
             
-            call centroid_array_routine(in_progress_projection, in_progress_centroid, centroid_array_count, centroid_array, i1, i2)
+            call centroid_array_routine(in_progress_projection, in_progress_centroid, centroid_array_count_real, centroid_array, i1, i2)
             
             sbb(bp,:) = in_progress_projection
             
