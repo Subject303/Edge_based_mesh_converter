@@ -253,8 +253,14 @@ module boundary_routine_module
         enddo
         
         do p=1,b_npoin
+            print*,p
+            print*,p_normal_vectors(p,:)
             p_normal_vectors(p,:) = p_normal_vectors(p,:) / sqrt(p_normal_vectors(p,1)**2 + p_normal_vectors(p,2)**2 + p_normal_vectors(p,3)**2)
+            print*,p_normal_vectors(p,:)
         enddo
+        
+        
+        
         
     end subroutine calculate_normal_vectors
     
