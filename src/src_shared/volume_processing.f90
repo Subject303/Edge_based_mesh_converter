@@ -812,6 +812,7 @@ module volume_processing
         real(KIND=REAL32),dimension(3) :: v13,v14,v15,v32,v42,v52,c1415,c4252
         real(KIND=REAL32),dimension(3) :: sn, i3, i4, i5
         real(KIND=REAL32),dimension(3) :: v34,v35
+        real(KIND=REAL32),dimension(3) :: normal
         integer(KIND=INT32) :: i, i1,i2
         
         do i=1,3
@@ -821,6 +822,7 @@ module volume_processing
             v32(i) = i3(i) - coords(i2,i) ! vector from 3 to 2
             v42(i) = i4(i) - coords(i2,i) ! vector from 4 to 2
             v52(i) = i5(i) - coords(i2,i) ! vector from 5 to 2
+            normal(i) = (coords(i1,i) - coords(i2,i)) / abs(coords(i1,i) - coords(i2,i))
         enddo
         ! Volume=∥a×b∥ ∥c∥ |cosϕ|=|(a×b)⋅c|. volume of parallelepiped of sides abc
         ! Volume = Volume/6 think a parallelepiped is 6 tets
@@ -841,9 +843,9 @@ module volume_processing
             v35(i) = i3(i) - i5(i) ! vector from 3 to 5
         enddo
 
-        sn(1) = sn(1) + ((v34(2) * v35(3) - v34(3) * v35(2))/2) ! projection in the xx axis
-        sn(2) = sn(2) + ((v34(3) * v35(1) - v34(1) * v35(3))/2) ! projection in the yy axis
-        sn(3) = sn(3) + ((v34(1) * v35(2) - v34(2) * v35(1))/2) ! projection in the zz axis
+        sn(1) = sn(1) + normal(1) * ((v34(2) * v35(3) - v34(3) * v35(2))/2) ! projection in the xx axis
+        sn(2) = sn(2) + normal(2) * ((v34(3) * v35(1) - v34(1) * v35(3))/2) ! projection in the yy axis
+        sn(3) = sn(3) + normal(3) * ((v34(1) * v35(2) - v34(2) * v35(1))/2) ! projection in the zz axis
         
     !                               i4--------------i5
     !                                \  >>>>>>>   /
