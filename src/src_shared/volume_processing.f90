@@ -169,7 +169,16 @@ module volume_processing
             in_progress_projection(:) = 0.0
             in_progress_centroid = e_centroid(e,:)
             
-            call centroid_array_routine(in_progress_projection, in_progress_centroid, centroid_array_count, centroid_array, i1, i2)
+            direction_array(:) = coords(i1,:) - coords(i2,:)
+            do i=1,3
+                if (direction_array(i).eq.0.0) then
+                    direction_array(i) = 1.
+                else
+                    direction_array(i) = direction_array(i)/abs(direction_array(i))
+                endif
+            enddo
+            
+            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count_real, centroid_array, coords(i1,:), coords(i2,:), vol(i1), vol(i2))
             
             sn(e,:) = in_progress_projection
             
@@ -331,7 +340,17 @@ module volume_processing
             in_progress_centroid = e_centroid(e,:)
             
             
-            call centroid_array_routine(in_progress_projection, in_progress_centroid, centroid_array_count, centroid_array, i1, i2)
+            direction_array(:) = coords(i1,:) - coords(i2,:)
+            do i=1,3
+                if (direction_array(i).eq.0.0) then
+                    direction_array(i) = 1.
+                else
+                    direction_array(i) = direction_array(i)/abs(direction_array(i))
+                endif
+            enddo
+            
+            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count_real, centroid_array, coords(i1,:), coords(i2,:), vol(i1), vol(i2))
+            
             
             sb(be,:) = in_progress_projection
             
@@ -675,7 +694,16 @@ module volume_processing
             in_progress_centroid = coords(p,:)
             ! by making i1, i2, i3 all p, the volume change should be zero
             
-            call centroid_array_routine(in_progress_projection, in_progress_centroid, centroid_array_count_real, centroid_array, i1, i2)
+            direction_array(:) = p_normal_vectors(bp,:)
+            do i=1,3
+                if (direction_array(i).eq.0.0) then
+                    direction_array(i) = 1.
+                else
+                    direction_array(i) = direction_array(i)/abs(direction_array(i))
+                endif
+            enddo
+            
+            call centroid_array_routine(in_progress_projection, direction_array, in_progress_centroid, centroid_array_count_real, centroid_array, coords(i1,:), coords(i1,:))
             
             sbb(bp,:) = in_progress_projection
             
@@ -791,43 +819,45 @@ module volume_processing
         
     end subroutine projection_test
     
-    subroutine centroid_array_routine(obj_projection, obj_centroid, centroid_array_count, centroid_array, i1, i2)
+    subroutine centroid_array_routine(obj_projection, anp, obj_centroid, centroid_array_count, centroid_array, i1, i2, vol1, vol2)
         implicit none
-        integer(KIND=INT32)          :: i, centroid_array_count, i1
-        integer(KIND=INT32),optional :: i2
-        real(KIND=REAL32) :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3)
+        integer(KIND=INT32)        :: i, centroid_array_count
+        real(KIND=REAL32),optional :: vol1, vol2
+        real(KIND=REAL32)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), i1(3), i2(3)
         
-        do i=2,centroid_array_count
-            baryobj_1_centroid = centroid_array(i-1,:)
-            baryobj_2_centroid = centroid_array(i,:) 
-            call cvolume(obj_projection, vol(i1), vol(i2), i1, i2, obj_centroid, baryobj_1_centroid, baryobj_2_centroid)
-        enddo
+        if (present(vol1)) then
+            do i=2,centroid_array_count
+                baryobj_1_centroid = centroid_array(i-1,:)
+                baryobj_2_centroid = centroid_array(i,:) 
+                call cvolume(obj_projection, anp, obj_centroid, baryobj_1_centroid, baryobj_2_centroid, i1, i2, vol1, vol2)
+            enddo
+        else
+            do i=2,centroid_array_count
+                baryobj_1_centroid = centroid_array(i-1,:)
+                baryobj_2_centroid = centroid_array(i,:)
+                call cvolume(obj_projection, anp, obj_centroid, baryobj_1_centroid, baryobj_2_centroid, i1, i2)
+            enddo
+        endif
         
         
     end subroutine centroid_array_routine
     
-    subroutine cvolume(sn, vol1, vol2, i1, i2, i3, i4, i5)
+    subroutine cvolume(sn, anp, i3, i4, i5, i1, i2 vol1, vol2)
         implicit none
-        real(KIND=REAL32) :: vol1,vol2
+        real(KIND=REAL32),optional :: vol1, vol2
         real(KIND=REAL32),dimension(3) :: v13,v14,v15,v32,v42,v52,c1415,c4252
-        real(KIND=REAL32),dimension(3) :: sn, i3, i4, i5
+        real(KIND=REAL32),dimension(3) :: sn, i1, i2, i3, i4, i5
         real(KIND=REAL32),dimension(3) :: v34,v35
-        real(KIND=REAL32),dimension(3) :: v12
-        integer(KIND=INT32) :: i, i1,i2
+        real(KIND=REAL32),dimension(3) :: v12, anp
+        integer(KIND=INT32) :: i
         
         do i=1,3
-            v13(i) = coords(i1,i) - i3(i) ! vector from 1 to 3
-            v14(i) = coords(i1,i) - i4(i) ! vector from 1 to 4
-            v15(i) = coords(i1,i) - i5(i) ! vector from 1 to 5
-            v32(i) = i3(i) - coords(i2,i) ! vector from 3 to 2
-            v42(i) = i4(i) - coords(i2,i) ! vector from 4 to 2
-            v52(i) = i5(i) - coords(i2,i) ! vector from 5 to 2
-            v12(i) = coords(i1,i) - coords(i2,i)
-            if (v12(i).eq.0.0) then
-                v12(i) = 1.0
-            else
-                v12(i) = v12(i) / abs(v12(i))
-            endif
+            v13(i) = i1(i) - i3(i) ! vector from 1 to 3
+            v14(i) = i1(i) - i4(i) ! vector from 1 to 4
+            v15(i) = i1(i) - i5(i) ! vector from 1 to 5
+            v32(i) = i3(i) - i2(i) ! vector from 3 to 2
+            v42(i) = i4(i) - i2(i) ! vector from 4 to 2
+            v52(i) = i5(i) - i2(i) ! vector from 5 to 2
         enddo
         
         ! Volume=∥a×b∥ ∥c∥ |cosϕ|=|(a×b)⋅c|. volume of parallelepiped of sides abc
@@ -842,17 +872,23 @@ module volume_processing
         c4252(2) = v42(3) * v52(1) - v42(1) * v52(3)
         c4252(3) = v42(1) * v52(2) - v42(2) * v52(1)
         
-        vol1 = vol1 + abs((c1415(1)*v13(1) ) - (c1415(2)*v13(2) ) + (c1415(3)*v13(3) ) )/6
-        vol2 = vol2 + abs((c1415(1)*v32(1) ) - (c1415(2)*v32(2) ) + (c1415(3)*v32(3) ) )/6
+        if (present(vol1))then
+            do i=1,3
+                v13(i) = i1(i) - i3(i) ! vector from 1 to 3
+                v32(i) = i3(i) - i2(i) ! vector from 3 to 2
+            enddo
+            vol1 = vol1 + abs((c1415(1)*v13(1) ) - (c1415(2)*v13(2) ) + (c1415(3)*v13(3) ) )/6
+            vol2 = vol2 + abs((c1415(1)*v32(1) ) - (c1415(2)*v32(2) ) + (c1415(3)*v32(3) ) )/6
+        enddo
 
         do i=1,3
             v34(i) = i3(i) - i4(i) ! vector from 3 to 4
             v35(i) = i3(i) - i5(i) ! vector from 3 to 5
         enddo
 
-        sn(1) = sn(1) + v12(1) * ((v34(2) * v35(3) - v34(3) * v35(2))/2) ! projection in the xx axis
-        sn(2) = sn(2) + v12(2) * ((v34(3) * v35(1) - v34(1) * v35(3))/2) ! projection in the yy axis
-        sn(3) = sn(3) + v12(3) * ((v34(1) * v35(2) - v34(2) * v35(1))/2) ! projection in the zz axis
+        sn(1) = sn(1) + anp(1) * ((v34(2) * v35(3) - v34(3) * v35(2))/2) ! projection in the xx axis
+        sn(2) = sn(2) + anp(2) * ((v34(3) * v35(1) - v34(1) * v35(3))/2) ! projection in the yy axis
+        sn(3) = sn(3) + anp(3) * ((v34(1) * v35(2) - v34(2) * v35(1))/2) ! projection in the zz axis
         
     !                               i4--------------i5
     !                                \  >>>>>>>   /
