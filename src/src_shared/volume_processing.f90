@@ -374,7 +374,6 @@ module volume_processing
             p = p_bound_indexing_array(bp)
             ! this is a loop of all boundary edges.
             
-            print*, bp, p, 'inside loop'
             
             i1 = p
             i2 = p
@@ -426,7 +425,10 @@ module volume_processing
                 face_1 = e_f_obj_relation_array(j)
                 face_2 = -1
                 
-                if (j.gt.e_f_index_array(current_edge)) print*, ' feature boundary edge has more than 1 faces '
+                if (j.gt.e_f_index_array(current_edge))then
+                    print*, ' non-feature boundary edge has more than 2 faces '
+                    stop
+                endif
                 
                 centroid_index_array(1) = current_edge
                 centroid_index_array(2) = face_1
@@ -468,7 +470,10 @@ module volume_processing
                     face_1 = e_f_obj_relation_array(j)
                     face_2 = -1
                     
-                    if (j.gt.e_f_index_array(current_edge)) print*, ' feature boundary edge has more than 1 faces '
+                    if (j.gt.e_f_index_array(current_edge))then
+                        print*, ' non-feature boundary edge has more than 2 faces '
+                        stop
+                    endif
                     
                     if (prev_face .eq. face_1) then
             
@@ -548,8 +553,11 @@ module volume_processing
                 enddo
                 face_2 = e_f_obj_relation_array(j)
                 
-                if (j.gt.e_f_index_array(current_edge)) print*, ' non-feature boundary edge has more than 2 faces '
-            
+                if (j.gt.e_f_index_array(current_edge))then
+                    print*, ' non-feature boundary edge has more than 2 faces '
+                    stop
+                endif
+                
                 centroid_index_array(1) = face_1
                 centroid_index_array(2) = current_edge
                 centroid_index_array(3) = face_2
@@ -598,8 +606,11 @@ module volume_processing
                     enddo
                     face_2 = e_f_obj_relation_array(j)
                     
-                    if (j.gt.e_f_index_array(current_edge)) print*, ' non-feature boundary edge has more than 2 faces '
-                
+                    if (j.gt.e_f_index_array(current_edge))then
+                        print*, ' non-feature boundary edge has more than 2 faces '
+                        stop
+                    endif
+                        
                     if (prev_face .eq. face_1) then
             
                         centroid_index_array(i)   = current_edge
@@ -615,7 +626,7 @@ module volume_processing
                         prev_face = centroid_index_array(i+1)
                         i=i+2 
                     
-                        print*, 'i-1 = face_1, i+1 = face_2', i, centroid_array_count+1
+                        !print*, 'i-1 = face_1, i+1 = face_2', i, centroid_array_count+1
                     
                         if (face_2 .eq. centroid_index_array(1)) exit
                     
@@ -634,23 +645,23 @@ module volume_processing
                         prev_face = centroid_index_array(i+1)
                         i=i+2 
                     
-                        print*, 'swapped', i, centroid_array_count+1
+                        !print*, 'swapped', i, centroid_array_count+1
                     
                         if (face_1 .eq. centroid_index_array(1)) exit
                     
                     else
-                        print*, 'none, looping', i, centroid_array_count+1, edge_count, face_count
+                        !print*, 'none, looping', i, centroid_array_count+1, edge_count, face_count
                         
                     endif
                 
-                    print*, pe, current_edge, face_1, face_2 , prev_face
+                    !print*, pe, current_edge, face_1, face_2 , prev_face
                     
                     !print*, 'centroid array ', centroid_index_array
                     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
             
-                print*, 'centroid array ', centroid_index_array(1:centroid_array_count_real)
+               ! print*, 'centroid array ', centroid_index_array(1:centroid_array_count_real)
                 
             endif
             centroid_array_count_old = centroid_array_count
@@ -673,6 +684,7 @@ module volume_processing
         do i=1,b_npoin
             print*, i, sqrt(sbb(i,1)*sbb(i,1) + sbb(i,2)*sbb(i,2) + sbb(i,3)*sbb(i,3)), sbb(i,:)
         enddo
+        print*, 'aaa'
         
     end subroutine boundary_face_volume_processing
     
