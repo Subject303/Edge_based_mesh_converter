@@ -729,7 +729,7 @@ module volume_processing
         do i=1,i_nedge
             if (projection_mag(i).lt.projection_mag(i1)) i1 = i
             if (projection_mag(i).gt.projection_mag(i2)) i2 = i
-            print*, i, projection_mag(i), sn(i,:), e_p_index_array(e_internal_indexing_array(i)-1) , e_p_index_array(e_internal_indexing_array(i))
+            print*, i, projection_mag(i), sn(i,:), e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(i))-1) , e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(i)))
         enddo
         print*, 'lowest sn  ', projection_mag(i1), sn(i1,:), i1, ' highest sn  ', projection_mag(i2), sn(i2,:), i2
         print*, ' '
@@ -743,7 +743,7 @@ module volume_processing
         do i=1,b_nedge
             if (projection_mag(i).lt.projection_mag(i1)) i1 = i
             if (projection_mag(i).gt.projection_mag(i2)) i2 = i
-            print*, i, projection_mag(i), sb(i,:), e_p_index_array(e_bound_indexing_array(i)-1) , e_p_index_array(e_bound_indexing_array(i))
+            print*, i, projection_mag(i), sb(i,:), e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(i))-1) , e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(i)))
         enddo
         print*, 'lowest sb  ', projection_mag(i1), sb(i1,:), i1, ' highest sb  ', projection_mag(i2), sb(i2,:), i2
         print*, ' '
