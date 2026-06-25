@@ -236,6 +236,8 @@ module boundary_routine_module
         allocate(p_normal_vectors(b_npoin,3))
         p_normal_vectors = 0.
         
+        print*,p_normal_vectors
+        
         do bp=1,b_npoin
         
             p = p_bound_indexing_array(bp)
@@ -259,6 +261,8 @@ module boundary_routine_module
             ! I'm dickriding myself pretty hard over this
             
         enddo
+        
+        print*,p_normal_vectors
         
         do p=1,b_npoin
             print*,p
