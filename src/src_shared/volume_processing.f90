@@ -816,8 +816,6 @@ module volume_processing
         print*, 'lowest vol ', vol(i1), i1, ' highest vol ', vol(i2), i2
         print*, ' '
         
-        print*, p_normal_vectors
-        
     end subroutine projection_test
     
     subroutine centroid_array_routine(obj_projection, obj_centroid, centroid_array_count, centroid_array, i1, i2, vol1, vol2)
