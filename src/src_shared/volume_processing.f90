@@ -29,7 +29,7 @@ module volume_processing
         integer(KIND=INT32) :: cell_count, face_count, current_face, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle
         logical, allocatable :: non_viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -371,7 +371,7 @@ module volume_processing
         integer(KIND=INT32) :: edge_count, face_count, current_edge, face_1, face_2, prev_face
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle
         logical, allocatable :: non_viable_edges(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
