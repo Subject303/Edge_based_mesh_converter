@@ -94,6 +94,12 @@ module data_processing_serial
         print *, npoin, ' points, ', nedge, ' edges, ', nface, ' faces '
         
         print*, ' '
+        print*, 'starting calculating boundary normal vectors'
+        
+        call calculate_normal_vectors
+        
+        print*, 'finished calculating boundary normal vectors'        
+        print*, ' '
         print*, 'starting boundary flagging routines'
         
         call boundary_angle_feature_flagging
@@ -102,12 +108,7 @@ module data_processing_serial
         
         print*, 'finished boundary flagging routines'
         print*, ' '
-        print*, 'starting calculating boundary normal vectors'
-        
-        call calculate_normal_vectors
-        
-        print*, 'finished calculating boundary normal vectors'
-        print*, ' '
+
         
     end subroutine data_preprocessing
     
