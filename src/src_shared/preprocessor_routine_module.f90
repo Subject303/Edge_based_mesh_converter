@@ -139,7 +139,7 @@ module preprocessor_routine_module
             cf_start_index = 1 + c_f_index_array(c-1)
             cf_end_index   = c_f_index_array(c)
             
-            print*, 'CELL ' ,c
+            print*, 'CELL ' ,c,c_f_index_array(c-1),c_f_index_array(c)
             
             n_con_edges = 0
             do cf_index = cf_start_index, cf_end_index
