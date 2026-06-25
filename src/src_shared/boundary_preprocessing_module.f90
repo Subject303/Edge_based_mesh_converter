@@ -215,7 +215,7 @@ module boundary_routine_module
             
             magnitude = f_normal_vectors(bf,1)*f_normal_vectors(bf,1) + f_normal_vectors(bf,2)*f_normal_vectors(bf,2) + f_normal_vectors(bf,3)*f_normal_vectors(bf,3)
             
-            f_normal_vectors(bf,:)  = f_normal_vectors(bf,:) / magnitude
+            f_normal_vectors(bf,:)  = f_normal_vectors(bf,:) / sqrt(magnitude)
             
             
             ! we're taking the scalar product of the normal vector and the vector of the adjacent cell to the face to guarantee the normal faces outward.
