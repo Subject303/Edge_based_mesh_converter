@@ -224,7 +224,7 @@ module boundary_routine_module
             
             if (dot_product_of_c_to_f_and_normal .lt. 0) f_normal_vectors(bf,:) = -f_normal_vectors(bf,:)
             
-            print*,bf, f, f_normal_vectors(bf,:), f_centroid(f)
+            print*,bf, f, f_normal_vectors(bf,:), f_centroid(f,:)
             
         enddo
         
