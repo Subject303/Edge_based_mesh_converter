@@ -131,6 +131,9 @@ module preprocessor_routine_module
         allocate(c_e_index_array(0:nele))
         c_e_index_array(0) = 0
         
+        
+        print*, size(c_f_obj_relation_array), c_f_sum, maxval(c_f_index_array)
+        
         do c=1,nele
         
             cf_start_index = 1 + c_f_index_array(c-1)
