@@ -264,9 +264,47 @@ module boundary_routine_module
     end subroutine calculate_normal_vectors
     
     subroutine boundary_angle_feature_flagging
-     ! wont need to do this 
-     ! I will have already split my edges for the purpose of normal vectors
-     ! so I can just growth algo my boundaries
+        implicit none
+        integer(KIND=INT32) :: i, j, be, e, f1, f2
+        real(KIND=REAL32)   :: nv1(3), nv2(3), angle
+        
+        allocate(feature_edges(b_nedge))
+        feature_edges = .false.
+        
+        do be=1,b_nedge
+            e = e_bound_indexing_array(be)
+            
+            j = e_f_index_array(e-1)
+            do 
+                j=j+1
+                if (f_bound_array(e_f_obj_relation_array(j))) exit
+            enddo
+            f1 = e_f_obj_relation_array(j)
+            do 
+                j=j+1
+                if (f_bound_array(e_f_obj_relation_array(j))) exit
+            enddo
+            f2 = e_f_obj_relation_array(j)
+                
+            if (j.gt.e_f_index_array(e))then
+                print*, ' non-feature boundary edge has more than 2 faces '
+                stop
+            endif
+            
+            f1 = reversed_f_bound_indexing_array(f1)
+            f2 = reversed_f_bound_indexing_array(f2)
+            
+            nv1(:)=p_normal_vectors(f1,:)
+            nv2(:)=p_normal_vectors(f2,:)
+            
+            angle = acosd(alignment(nv1, nv2))
+            
+            if (angle.gt.15.) feature_edges(be) = .true.
+            
+            print*, be, angle, feature_edges(be)
+            
+        enddo
+        
     end subroutine boundary_angle_feature_flagging
     
     subroutine split_feature_edges
