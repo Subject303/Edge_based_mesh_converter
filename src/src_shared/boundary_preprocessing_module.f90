@@ -224,8 +224,6 @@ module boundary_routine_module
             !angle = (v1(1)*f_normal_vectors(bf,1) + v1(2)*f_normal_vectors(bf,2) + v1(3)*f_normal_vectors(bf,3))/ sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3))
             angle = alignment(v1,f_normal_vectors(bf,:))
             
-            print*, angle
-            
             if (angle .lt. 0) f_normal_vectors(bf,:) = -f_normal_vectors(bf,:)
             
         enddo

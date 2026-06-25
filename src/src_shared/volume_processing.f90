@@ -177,6 +177,12 @@ module volume_processing
             
             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol(i1), vol(i2))
             
+            direction_array(:) = c1(:) - c2(:)
+            
+            angle = alignment(in_progress_projection, direction_array)
+            
+            if (angle .lt. 0.) in_progress_projection(:) = -in_progress_projection(:)
+            
             sn(e,:) = in_progress_projection
             
         enddo
@@ -336,15 +342,16 @@ module volume_processing
             in_progress_projection(:) = 0.0
             in_progress_centroid = e_centroid(e,:)
             
-            direction_array(:) = coords(i1,:) - coords(i2,:)
-            
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol(i1), vol(i2))
             
+            direction_array(:) = c1(:) - c2(:)
+            
             angle = alignment(in_progress_projection, direction_array)
             
+            if (angle .lt. 0.) in_progress_projection(:) = -in_progress_projection(:)
             
             sb(be,:) = in_progress_projection
             
@@ -688,12 +695,17 @@ module volume_processing
             in_progress_centroid = coords(p,:)
             ! by making i1, i2, i3 all p, the volume change should be zero
             
-            direction_array(:) = sign(1., p_normal_vectors(bp,:))
             
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count_real, centroid_array, c1, c2)
+            
+            direction_array(:) = p_normal_vectors(bp,:)
+            
+            angle = alignment(in_progress_projection, direction_array)
+            
+            if (angle .lt. 0.) in_progress_projection(:) = -in_progress_projection(:)
             
             sbb(bp,:) = in_progress_projection
             
