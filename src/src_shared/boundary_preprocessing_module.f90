@@ -222,7 +222,7 @@ module boundary_routine_module
             v1(:) = f_normal_vectors(bf,:) * (c_centroid(f_c_obj_relation_array(f_c_index_array(f)),:) - f_centroid(f,:))
             dot_product_of_c_to_f_and_normal = v1(1) + v1(2) + v1(3)
             
-            if (dot_product_of_c_to_f_and_normal .lt. 0) f_normal_vectors(bf,:) = -f_normal_vectors(bf,:)
+            !if (dot_product_of_c_to_f_and_normal .lt. 0) f_normal_vectors(bf,:) = -f_normal_vectors(bf,:)
             
             print*,bf, f, f_normal_vectors(bf,:), f_centroid(f,:)
             
