@@ -280,6 +280,7 @@ module boundary_routine_module
                 if (f_bound_array(e_f_obj_relation_array(j))) exit
             enddo
             f1 = e_f_obj_relation_array(j)
+            
             do 
                 j=j+1
                 if (f_bound_array(e_f_obj_relation_array(j))) exit
@@ -297,7 +298,7 @@ module boundary_routine_module
             nv1(:)=p_normal_vectors(f1,:)
             nv2(:)=p_normal_vectors(f2,:)
             
-            angle = acosd(alignment(nv1, nv2))
+            angle = asind(alignment(nv1, nv2))
             
             if (angle.gt.15.) feature_edges(be) = .true.
             
