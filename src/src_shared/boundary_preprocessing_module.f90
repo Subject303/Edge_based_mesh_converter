@@ -250,7 +250,7 @@ module boundary_routine_module
                     if (f_bound_array(p_f_obj_relation_array(f))) then
                         p_normal_vectors(bp,i) = p_normal_vectors(bp,i) + f_normal_vectors(reversed_f_bound_indexing_array(p_f_obj_relation_array(f)),i)
                         print*, i, f, f_bound_array(p_f_obj_relation_array(f)), f_normal_vectors(reversed_f_bound_indexing_array(p_f_obj_relation_array(f)),i)
-                    else
+                    endif
                 enddo
                 
             enddo
