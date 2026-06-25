@@ -132,7 +132,7 @@ module preprocessor_routine_module
         c_e_index_array(0) = 0
         
         
-        print*, size(c_f_obj_relation_array), c_f_sum, maxval(c_f_index_array)
+        print*, size(c_f_obj_relation_array), c_f_sum, maxval(c_f_index_array), size(c_f_index_array), nele
         
         do c=1,nele
         
@@ -143,7 +143,7 @@ module preprocessor_routine_module
             
             n_con_edges = 0
             do cf_index = cf_start_index, cf_end_index
-                print*, cf_index
+                !print*, cf_index
                 f = c_f_obj_relation_array(cf_index)
                 
                 n_con_edges =  n_con_edges + f_e_index_array(f) - f_e_index_array(f-1) ! all index arrays start at 0
