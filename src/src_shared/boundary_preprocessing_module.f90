@@ -250,7 +250,7 @@ module boundary_routine_module
                 
                 do f=pf_start,pf_end
                     if (f_bound_array(p_f_obj_relation_array(f))) then
-                        p_normal_vectors(bp,i) = p_normal_vectors(bp,i) + f_normal_vectors(reversed_f_bound_indexing_array(p_f_obj_relation_array(f)),i)/number_of_points
+                        p_normal_vectors(bp,i) = p_normal_vectors(bp,i) + f_normal_vectors(reversed_f_bound_indexing_array(p_f_obj_relation_array(f)),i)
                     endif
                 enddo
                 
@@ -263,8 +263,8 @@ module boundary_routine_module
         
         do p=1,b_npoin
             !print*,p
+            p_normal_vectors(p,:) = p_normal_vectors(p,:) / sqrt(p_normal_vectors(p,1)**2 + p_normal_vectors(p,2)**2 + p_normal_vectors(p,3)**2)
             print*,sqrt(p_normal_vectors(p,1)**2 + p_normal_vectors(p,2)**2 + p_normal_vectors(p,3)**2), 'mag', p_normal_vectors(p,:)
-            !p_normal_vectors(p,:) = p_normal_vectors(p,:) / sqrt(p_normal_vectors(p,1)**2 + p_normal_vectors(p,2)**2 + p_normal_vectors(p,3)**2)
             !print*,p_normal_vectors(p,:)
         enddo
         
