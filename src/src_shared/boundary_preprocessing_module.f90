@@ -310,9 +310,8 @@ module boundary_routine_module
     subroutine split_feature_edges
         implicit none
         
-        allocate(feature_points(b_npoin), feature_edges(b_nedge))
+        allocate(feature_points(b_npoin))
         feature_points = .false.
-        feature_edges  = .false.
         
     end subroutine split_feature_edges
     
