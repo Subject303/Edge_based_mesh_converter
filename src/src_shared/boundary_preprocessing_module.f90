@@ -295,8 +295,8 @@ module boundary_routine_module
             f1 = reversed_f_bound_indexing_array(f1)
             f2 = reversed_f_bound_indexing_array(f2)
             
-            nv1(:)=p_normal_vectors(f1,:)
-            nv2(:)=p_normal_vectors(f2,:)
+            nv1(:)=f_normal_vectors(f1,:)
+            nv2(:)=f_normal_vectors(f2,:)
             
             angle = acosd(alignment(nv1, nv2))
             
