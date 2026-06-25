@@ -298,7 +298,7 @@ module boundary_routine_module
             nv1(:)=p_normal_vectors(f1,:)
             nv2(:)=p_normal_vectors(f2,:)
             
-            angle = asind(alignment(nv1, nv2))
+            angle = acosd(alignment(nv1, nv2))
             
             if (angle.gt.15.) feature_edges(be) = .true.
             
