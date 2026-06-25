@@ -132,7 +132,7 @@ module preprocessor_routine_module
         c_e_index_array(0) = 0
         
         
-        print*, size(c_f_obj_relation_array), c_f_sum, maxval(c_f_index_array)
+        print*, size(c_f_obj_relation_array), c_f_sum, maxval(c_f_index_array), c_f_index_array((nele-100):nele)
         
         do c=1,nele
         
