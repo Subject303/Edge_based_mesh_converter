@@ -187,7 +187,7 @@ module boundary_routine_module
     subroutine calculate_normal_vectors
         use centroid_data
         implicit none
-        integer(KIND=INT32) :: f, bf, fp_start, p1, p2, p3, magnitude, dot_product_of_c_to_f_and_normal, p, bp, pf_start, pf_end, number_of_points, i, j
+        integer(KIND=INT32) :: f, bf, fp_start, p1, p2, p3, magnitude, dot_product_of_c_to_f_and_normal, angle, p, bp, pf_start, pf_end, number_of_points, i, j
         real(KIND=REAL32)   :: v1(3), v2(3), sumV
         
         
@@ -219,8 +219,12 @@ module boundary_routine_module
             
             
             ! we're taking the scalar product of the normal vector and the vector of the adjacent cell to the face to guarantee the normal faces outward.
-            v1(:) = f_normal_vectors(bf,:) * (c_centroid(f_c_obj_relation_array(f_c_index_array(f)),:) - f_centroid(f,:))
-            dot_product_of_c_to_f_and_normal = v1(1) + v1(2) + v1(3)
+            v1(:) = (c_centroid(f_c_obj_relation_array(f_c_index_array(f)),:) - f_centroid(f,:))
+            dot_product_of_c_to_f_and_normal = v1(1)*f_normal_vectors(bf,1) + v1(2)*f_normal_vectors(bf,1) + v1(3)*f_normal_vectors(bf,1)
+            
+            angle = dot_product_of_c_to_f_and_normal/ sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3))
+            
+            print*, angle
             
             !if (dot_product_of_c_to_f_and_normal .lt. 0) f_normal_vectors(bf,:) = -f_normal_vectors(bf,:)
             
