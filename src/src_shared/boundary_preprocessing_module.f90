@@ -225,11 +225,7 @@ module boundary_routine_module
             
             angle = dot_product_of_c_to_f_and_normal/ sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3))
             
-            print*, angle
-            
             if (angle .lt. 0) f_normal_vectors(bf,:) = -f_normal_vectors(bf,:)
-            
-            print*,bf, f, f_normal_vectors(bf,:), f_centroid(f,:)
             
         enddo
         
@@ -254,8 +250,7 @@ module boundary_routine_module
                 
                 do f=pf_start,pf_end
                     if (f_bound_array(p_f_obj_relation_array(f))) then
-                        print*, i, f, f_bound_array(p_f_obj_relation_array(f)), f_normal_vectors(reversed_f_bound_indexing_array(p_f_obj_relation_array(f)),i), p_normal_vectors(bp,i) 
-                        p_normal_vectors(bp,i) = p_normal_vectors(bp,i) + f_normal_vectors(reversed_f_bound_indexing_array(p_f_obj_relation_array(f)),i)
+                        p_normal_vectors(bp,i) = (p_normal_vectors(bp,i) + f_normal_vectors(reversed_f_bound_indexing_array(p_f_obj_relation_array(f)),i))/2
                     endif
                 enddo
                 
@@ -266,13 +261,11 @@ module boundary_routine_module
             
         enddo
         
-        print*,p_normal_vectors
-        
         do p=1,b_npoin
-            print*,p
-            print*,p_normal_vectors(p,:)
-            p_normal_vectors(p,:) = p_normal_vectors(p,:) / sqrt(p_normal_vectors(p,1)**2 + p_normal_vectors(p,2)**2 + p_normal_vectors(p,3)**2)
-            print*,p_normal_vectors(p,:)
+            !print*,p
+            print*,sqrt(p_normal_vectors(p,1)**2 + p_normal_vectors(p,2)**2 + p_normal_vectors(p,3)**2), 'mag', p_normal_vectors(p,:)
+            !p_normal_vectors(p,:) = p_normal_vectors(p,:) / sqrt(p_normal_vectors(p,1)**2 + p_normal_vectors(p,2)**2 + p_normal_vectors(p,3)**2)
+            !print*,p_normal_vectors(p,:)
         enddo
         
         
