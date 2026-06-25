@@ -9,6 +9,7 @@ module volume_processing
     use boundary_data
     use quicksort_module
     use projection_data
+    use utils, ONLY : alignment
     ! need everything p much here.
     implicit none
     
@@ -195,7 +196,7 @@ module volume_processing
         integer(KIND=INT32) :: cell_count, face_count, current_face, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL32),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle
         logical, allocatable :: non_viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -335,12 +336,14 @@ module volume_processing
             in_progress_projection(:) = 0.0
             in_progress_centroid = e_centroid(e,:)
             
-            direction_array(:) = sign(1., coords(i1,:) - coords(i2,:))
+            direction_array(:) = coords(i1,:) - coords(i2,:)
             
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol(i1), vol(i2))
+            
+            angle = alignment(in_progress_projection, direction_array)
             
             
             sb(be,:) = in_progress_projection

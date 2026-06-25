@@ -8,7 +8,7 @@ module boundary_routine_module
     use object_relation_data
     use boundary_data
     use quicksort_module
-    
+    use utils, ONLY : alignment
     implicit none
     
     contains
@@ -188,7 +188,7 @@ module boundary_routine_module
         use centroid_data
         implicit none
         integer(KIND=INT32) :: f, bf, fp_start, p1, p2, p3, p, bp, pf_start, pf_end, number_of_points, i, j
-        real(KIND=REAL32)   :: v1(3), v2(3), sumV, magnitude, dot_product_of_c_to_f_and_normal, angle
+        real(KIND=REAL32)   :: v1(3), v2(3), sumV, magnitude, angle
         
         
         allocate(f_normal_vectors(b_nface,3))
@@ -221,22 +221,17 @@ module boundary_routine_module
             ! we're taking the scalar product of the normal vector and the vector of the adjacent cell to the face to guarantee the normal faces outward.
             v1(:) = (c_centroid(f_c_obj_relation_array(f_c_index_array(f)),:) - f_centroid(f,:))
             
-            dot_product_of_c_to_f_and_normal = v1(1)*f_normal_vectors(bf,1) + v1(2)*f_normal_vectors(bf,2) + v1(3)*f_normal_vectors(bf,3)
-            
-            angle = dot_product_of_c_to_f_and_normal/ sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3))
+            !angle = (v1(1)*f_normal_vectors(bf,1) + v1(2)*f_normal_vectors(bf,2) + v1(3)*f_normal_vectors(bf,3))/ sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3))
+            angle = alignment(v1,f_normal_vectors(bf,:))
             
             if (angle .lt. 0) f_normal_vectors(bf,:) = -f_normal_vectors(bf,:)
             
         enddo
         
-        print*, 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
-        
         ! because I've already split my feature edges in my preprocessor I can then get point normal vectors by just averaging connected face normals
         
         allocate(p_normal_vectors(b_npoin,3))
         p_normal_vectors = 0.
-        
-        print*,p_normal_vectors
         
         do bp=1,b_npoin
         
@@ -262,10 +257,7 @@ module boundary_routine_module
         enddo
         
         do p=1,b_npoin
-            !print*,p
             p_normal_vectors(p,:) = p_normal_vectors(p,:) / sqrt(p_normal_vectors(p,1)**2 + p_normal_vectors(p,2)**2 + p_normal_vectors(p,3)**2)
-            print*,sqrt(p_normal_vectors(p,1)**2 + p_normal_vectors(p,2)**2 + p_normal_vectors(p,3)**2), 'mag', p_normal_vectors(p,:)
-            !print*,p_normal_vectors(p,:)
         enddo
         
         

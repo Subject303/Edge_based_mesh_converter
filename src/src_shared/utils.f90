@@ -35,6 +35,15 @@ module utils
         
     end subroutine remove_flagged_duplicates
     
+    real(KIND=REAL32) function alignment(v1,v2)
+        implicit none
+        real(KIND=REAL32) :: v1(3), v2(3)
+        
+        alignment = (v1(1)*v2(1) + v1(2)*v2(2) + v1(3)*v2(3))/ (sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3)) * sqrt(v2(1)*v2(1) + v2(2)*v2(2) + v2(3)*v2(3)))
+        
+    end function
+    
+    
     !end contains
     
 end module
