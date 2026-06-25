@@ -187,8 +187,8 @@ module boundary_routine_module
     subroutine calculate_normal_vectors
         use centroid_data
         implicit none
-        integer(KIND=INT32) :: f, bf, fp_start, p1, p2, p3, magnitude, dot_product_of_c_to_f_and_normal, angle, p, bp, pf_start, pf_end, number_of_points, i, j
-        real(KIND=REAL32)   :: v1(3), v2(3), sumV
+        integer(KIND=INT32) :: f, bf, fp_start, p1, p2, p3, p, bp, pf_start, pf_end, number_of_points, i, j
+        real(KIND=REAL32)   :: v1(3), v2(3), sumV, magnitude, dot_product_of_c_to_f_and_normal, angle
         
         
         allocate(f_normal_vectors(b_nface,3))
