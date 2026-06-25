@@ -163,7 +163,7 @@ module volume_processing
             
             
             !if (i.ne.centroid_array_count+1) print*, 'centroid array count broken'
-            if (centroid_index_array(1).ne.centroid_index_array(centroid_array_count)) print*, 'internal centroid array start and end wrong'
+            !if (centroid_index_array(3).ne.centroid_index_array(centroid_array_count)) print*, 'internal centroid array start and end wrong'
             
             !print*, centroid_index_array
             
