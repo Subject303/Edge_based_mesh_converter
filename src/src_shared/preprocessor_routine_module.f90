@@ -303,7 +303,7 @@ module preprocessor_routine_module
         
             ! count the number of cells adjacent to each point
 			
-            print*, y , y_index(x_count + 1), SIZE(backward_obj_relation_array), forward_sum
+            print*, y , y_index(x_count + 1)
             
             do while (y .eq. y_index(x_count + 1))
                 x_count = x_count + 1
@@ -313,9 +313,6 @@ module preprocessor_routine_module
             ! adjust x_count
 			
             backward_index(y) = x_count
-            
-            print*, (backward_index(y-1)+1), x_count, backward_leading_obj_count, y, forward_leading_obj_count
-            print*, backward_obj_relation_array((backward_index(y-1)+1):x_count)
             
             ! check if there exists any possible duplicates
             if (backward_index(y-1)+1 .ne. x_count) then
