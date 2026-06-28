@@ -148,9 +148,10 @@ for c in range(nele):
         
     c_f_obj_relation_array[c] = f_array
     
-
-    
-print(f_p_obj_relation_array)
+i=-1
+for obj in f_p_obj_relation_array:
+    i=i+1
+    print(i, obj)
 
 del polyblock
 del cell
