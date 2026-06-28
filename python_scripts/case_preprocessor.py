@@ -153,6 +153,8 @@ for obj in f_p_obj_relation_array:
     i=i+1
     print(i, obj)
 
+print(c_f_obj_relation_array)
+
 del polyblock
 del cell
 del face
