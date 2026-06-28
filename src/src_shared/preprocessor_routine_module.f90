@@ -221,12 +221,6 @@ module preprocessor_routine_module
     !!!!!!!!!!! raw connectivity inversions ::
     
     subroutine p_c_preprocess
-		implicit none
-        integer(KIND=INT32) :: i
-        
-        do i=1,nele
-            print*,c_p_obj_relation_array( (c_p_index_array(i-1)+1) : c_p_index_array(i) )
-        enddo
     
         print *, 'beginning processing cell connectivity array inversion'
         call obj_relation_inverter(nele, npoin, c_p_sum, c_p_index_array, c_p_obj_relation_array, p_c_sum, p_c_index_array, p_c_obj_relation_array)
@@ -236,12 +230,6 @@ module preprocessor_routine_module
     
     
     subroutine p_f_preprocess
-		implicit none
-        integer(KIND=INT32) :: i
-        
-        do i=1,nface
-            print*,f_p_obj_relation_array( (f_p_index_array(i-1)+1) : f_p_index_array(i) )
-        enddo
     
         print *, 'beginning processing face connectivity array inversion'
         call obj_relation_inverter(nface, npoin, f_p_sum, f_p_index_array, f_p_obj_relation_array, p_f_sum, p_f_index_array, p_f_obj_relation_array)
@@ -297,13 +285,17 @@ module preprocessor_routine_module
         allocate(backward_obj_relation_array(forward_sum), backward_index(0:backward_leading_obj_count), backward_index_duplicates(0:backward_leading_obj_count) )
         allocate(y_index,source=forward_obj_relation_array)
         
-        print*,forward_obj_relation_array
+        do i=1,forward_leading_obj_count
+            print*,forward_obj_relation_array( (forward_index(i-1)+1) : forward_index(i) )
+        enddo
+        
+        !print*,forward_obj_relation_array
         
         do x=1, forward_leading_obj_count
             xy_start_index = 1 + forward_index(x-1)
             xy_end_index   = forward_index(x)
 
-            print*, xy_start_index, xy_end_index, x, forward_leading_obj_count, backward_leading_obj_count
+            !print*, xy_start_index, xy_end_index, x, forward_leading_obj_count, backward_leading_obj_count
             
             backward_obj_relation_array(xy_start_index:xy_end_index) = x
 
@@ -311,8 +303,8 @@ module preprocessor_routine_module
 
         call quicksort(y_index , 1 , forward_sum , backward_obj_relation_array)
         
-        print*,y_index
-        print*,backward_obj_relation_array
+        !print*,y_index
+        !print*,backward_obj_relation_array
         
 		
         backward_index = 0
