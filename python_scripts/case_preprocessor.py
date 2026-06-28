@@ -148,8 +148,6 @@ for c in range(nele):
         
     c_f_obj_relation_array[c] = f_array
     
-print(f_p_obj_relation_array[242])
-
 del polyblock
 del cell
 del face
@@ -200,8 +198,6 @@ for x, y in coupled:
     i=i+1
 
 del coupled; gc.collect()
-
-print(f_p_obj_relation_array[289])
 
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
@@ -571,22 +567,6 @@ for obj in c_f_obj_relation_array:
 for obj in f_e_obj_relation_array:
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
-
-        
-#print(f_p_obj_relation_array[166])
-#print()
-#print(c_f_sum)
-#print()
-#print(c_f_index)
-#print()
-#print(c_f_obj_relation_array)
-#print()        
-#print(f_e_sum)
-#print()
-#print(f_e_index)
-#print()
-#print(f_e_obj_relation_array)
-#print()
 
    
 print('finished writing to file',time.time()-start); sys.stdout.flush()
