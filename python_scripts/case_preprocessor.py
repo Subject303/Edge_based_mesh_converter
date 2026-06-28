@@ -148,12 +148,7 @@ for c in range(nele):
         
     c_f_obj_relation_array[c] = f_array
     
-i=-1
-for obj in f_p_obj_relation_array:
-    i=i+1
-    print(i, obj)
-
-print(c_f_obj_relation_array)
+print(f_p_obj_relation_array[242])
 
 del polyblock
 del cell
@@ -204,6 +199,7 @@ del coupled; gc.collect()
 
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
+    print(obj)
     for j in range(len(obj)):
         obj[j] = f_sort[obj[j]] 
     c_f_obj_relation_array[i] = sorted(obj)
