@@ -79,24 +79,24 @@ module read_data_serial
         print*, 'reading face to edge relation array '
         read(10) f_e_obj_relation_array(:)
         
-        c_f_obj_relation_array = c_f_obj_relation_array - 1
-        f_e_obj_relation_array = f_e_obj_relation_array - 1
-        
-        print*,c_f_sum, SIZE(c_f_obj_relation_array), nele, SIZE(c_f_index_array)
-        print*, 'aa'
-        print*,c_f_index_array
-        print*, 'aa'
-        print*,c_f_obj_relation_array
-        print*, 'aa'        
-        print*,f_e_sum, SIZE(f_e_obj_relation_array), nface, SIZE(f_e_index_array)
-        print*, 'aa'
-        print*,f_e_index_array
-        print*, 'aa'
-        print*,f_e_obj_relation_array
-        print*, 'aa'
-        
-        c_f_obj_relation_array = c_f_obj_relation_array + 1
-        f_e_obj_relation_array = f_e_obj_relation_array + 1
+        !c_f_obj_relation_array = c_f_obj_relation_array - 1
+        !f_e_obj_relation_array = f_e_obj_relation_array - 1
+        !
+        !print*,c_f_sum, SIZE(c_f_obj_relation_array), nele, SIZE(c_f_index_array)
+        !print*, 'aa'
+        !print*,c_f_index_array
+        !print*, 'aa'
+        !print*,c_f_obj_relation_array
+        !print*, 'aa'        
+        !print*,f_e_sum, SIZE(f_e_obj_relation_array), nface, SIZE(f_e_index_array)
+        !print*, 'aa'
+        !print*,f_e_index_array
+        !print*, 'aa'
+        !print*,f_e_obj_relation_array
+        !print*, 'aa'
+        !
+        !c_f_obj_relation_array = c_f_obj_relation_array + 1
+        !f_e_obj_relation_array = f_e_obj_relation_array + 1
         
         close(10)
         
