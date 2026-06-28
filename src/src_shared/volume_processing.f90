@@ -183,7 +183,7 @@ module volume_processing
             
             if (angle .lt. 0.) in_progress_projection(:) = -in_progress_projection(:)
             
-            sn(e,:) = in_progress_projection
+            sn(ie,:) = in_progress_projection
             
         enddo
         
