@@ -310,7 +310,7 @@ temp = []
 temp2 = []
 j=0
 print('   c_p',time.time()-start); sys.stdout.flush()
-for i in range(len(c_p_index)):
+for i in range(len(c_p_index)-1):
     print(i, i+1, len(c_p_index))
     cell_to_rep.append(j)
     if c_p_index[i] == c_p_index[i+1]:    
@@ -403,6 +403,7 @@ print(cell_to_del)
 j=len(c_f_index)
 for i in reversed(cell_to_del):
     j=j-1
+    print( j, i)
     if 1 != i:
         c_f_obj_relation_array.pop(j)
         c_f_index.pop(j)
