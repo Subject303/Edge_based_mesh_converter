@@ -203,7 +203,13 @@ del coupled; gc.collect()
 #    print(i, f_sort[i], )
 #    print( temp[i] , f_p_obj_relation_array[f_sort[i]] )
 
+print('aaaaaaa')
+print('aaaaaaa')
+print('aaaaaaa')
 print(temp[242], f_sort[242], f_p_obj_relation_array[166])
+print('aaaaaaa')
+print('aaaaaaa')
+print('aaaaaaa')
 
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
