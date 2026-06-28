@@ -297,9 +297,8 @@ module preprocessor_routine_module
 
         call quicksort(y_index , 1 , forward_sum , backward_obj_relation_array)
         
-        !print*,size(y_index)
-        !print*,y_index
-        !print*,backward_obj_relation_array
+        print*,y_index
+        print*,backward_obj_relation_array
         
          
         backward_index = 0
