@@ -202,25 +202,12 @@ for x, y in coupled:
 
 del coupled; gc.collect()
 
-#for i in range(len(f_sort)-1):
-#    print(i, f_sort[i], )
-#    print( temp[i] , f_p_obj_relation_array[f_sort[i]] )
-
-print('aaaaaaa')
-print('aaaaaaa')
-print('aaaaaaa')
-print(temp[166], f_sort[166], f_p_obj_relation_array[242])
-print('aaaaaaa')
-print('aaaaaaa')
-print('aaaaaaa')
+print(f_p_obj_relation_array[289])
 
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
-    #print(i, obj)
     for j in range(len(obj)):
-        obj[j] = f_sort[obj[j]] 
-    #print(i, obj)
-    #print('aa')
+        obj[j] = f_sort[obj[j]]
     c_f_obj_relation_array[i] = sorted(obj)
 
 del f_sort
