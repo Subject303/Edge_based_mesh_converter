@@ -82,7 +82,7 @@ module read_data_serial
         !c_f_obj_relation_array = c_f_obj_relation_array - 1
         !f_e_obj_relation_array = f_e_obj_relation_array - 1
         !
-        !print*,c_f_sum, SIZE(c_f_obj_relation_array), nele, SIZE(c_f_index_array)
+        print*,c_f_sum, SIZE(c_f_obj_relation_array), nele, SIZE(c_f_index_array)
         !print*, 'aa'
         !print*,c_f_index_array
         !print*, 'aa'
