@@ -220,9 +220,9 @@ module boundary_routine_module
             
             ! we're taking the scalar product of the normal vector and the vector of the adjacent cell to the face to guarantee the normal faces outward.
             v1(:) = (c_centroid(f_c_obj_relation_array(f_c_index_array(f)),:) - f_centroid(f,:))
-            
+            v2(:) = f_normal_vectors(bf,:)
             !angle = (v1(1)*f_normal_vectors(bf,1) + v1(2)*f_normal_vectors(bf,2) + v1(3)*f_normal_vectors(bf,3))/ sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3))
-            angle = alignment(v1,f_normal_vectors(bf,:))
+            angle = alignment(v1,v2)
             
             if (angle .lt. 0) f_normal_vectors(bf,:) = -f_normal_vectors(bf,:)
             
