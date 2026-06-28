@@ -311,6 +311,7 @@ temp2 = []
 j=0
 print('   c_p',time.time()-start); sys.stdout.flush()
 for i in range(len(c_p_index)-1):
+    print(i, i+1, len(c_p_index))
     cell_to_rep.append(j)
     if c_p_index[i] == c_p_index[i+1]:    
         obj1 = c_p_obj_relation_array[i]
