@@ -312,7 +312,7 @@ for i in range(len(c_p_index)-1):
         obj1 = c_p_obj_relation_array[i]
         obj2 = c_p_obj_relation_array[i+1]
 
-        for p in range(c_p_index[i]):
+        for p in reversed(range(c_p_index[i])):
             if obj1[p]!=obj2[p]:
                 temp.append(obj1)
                 temp2.append(c_p_index[i])
@@ -339,7 +339,7 @@ for i in range(len(f_p_index)-1):
         obj1 = f_p_obj_relation_array[i]
         obj2 = f_p_obj_relation_array[i+1]
 
-        for p in range(f_p_index[i]):
+        for p in reversed(range(f_p_index[i])):
             if obj1[p]!=obj2[p]:
                 temp.append(obj1)
                 temp2.append(f_p_index[i])
@@ -418,7 +418,7 @@ for i in range(len(c_f_index)-1):
         obj1 = c_f_obj_relation_array[i]
         obj2 = c_f_obj_relation_array[i+1]
 
-        for p in range(c_f_index[i]):
+        for p in reversed(range(c_f_index[i])):
             if obj1[p]!=obj2[p]:
                 temp.append(obj1)
                 temp2.append(c_f_index[i])
@@ -440,7 +440,7 @@ for i in range(len(f_e_index)-1):
         obj1 = f_e_obj_relation_array[i]
         obj2 = f_e_obj_relation_array[i+1]
 
-        for p in range(f_e_index[i]):
+        for p in reversed(range(f_e_index[i])):
             if obj1[p]!=obj2[p]:
                 temp.append(obj1)
                 temp2.append(f_e_index[i])
