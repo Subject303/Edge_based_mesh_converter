@@ -185,7 +185,6 @@ temp = f_p_obj_relation_array
 
 i=0
 for x, y, z in coupled:
-    print(i, x)
     f_p_obj_relation_array[i] = x
     f_sort[i] = y
     f_e_obj_relation_array[i] = z
