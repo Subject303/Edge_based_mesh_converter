@@ -397,10 +397,10 @@ temp1=[0]*nface_to_del
 
 j=0
 for i in face_to_del:
-    j=j+1
     if 1 == i:
         temp[j] = f_e_obj_relation_array[j]
         temp1[j] = f_e_index[j]
+    j=j+1
 
 f_e_obj_relation_array = temp
 f_e_index = temp1
@@ -420,10 +420,10 @@ temp1=[0]*nele_to_del
 
 j=0
 for i in cell_to_del:
-    j=j+1
     if 1 == i:
         temp[j] = c_f_obj_relation_array[j]
         temp1[j] = c_f_index[j]
+    j=j+1
 
 c_f_obj_relation_array = temp
 c_f_index = temp1
