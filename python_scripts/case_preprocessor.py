@@ -149,6 +149,9 @@ for c in range(nele):
     c_f_obj_relation_array[c] = f_array
     
 
+    
+print(f_p_obj_relation_array)
+
 del polyblock
 del cell
 del face
@@ -558,7 +561,9 @@ for obj in f_e_obj_relation_array:
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
 
-
+        
+print(f_p_obj_relation_array[166])
+print()
 print(c_f_sum)
 print()
 print(c_f_index)
