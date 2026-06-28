@@ -612,6 +612,13 @@ module volume_processing
                         if (e_bound_array(current_edge)) exit
                         non_viable_edges(pe) = .true.
                         pe = pe + 1
+                        
+                        if (pe.eq.edge_count) then
+                            pe = 1
+                        else
+                            pe=pe+1
+                        endif
+                        
                     enddo
                     
                     j = e_f_index_array(current_edge-1)
