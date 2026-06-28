@@ -79,6 +79,19 @@ module read_data_serial
         print*, 'reading face to edge relation array '
         read(10) f_e_obj_relation_array(:)
         
+        print*,c_f_sum
+        print*, 'aa'
+        print*,c_f_index
+        print*, 'aa'
+        print*,c_f_obj_relation_array
+        print*, 'aa'        
+        print*,f_e_sum
+        print*, 'aa'
+        print*,f_e_index
+        print*, 'aa'
+        print*,f_e_obj_relation_array
+        print*, 'aa'
+        
         close(10)
         
         print*, 'Relation array sums: '
