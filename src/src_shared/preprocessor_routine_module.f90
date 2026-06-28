@@ -289,7 +289,7 @@ module preprocessor_routine_module
             xy_start_index = 1 + forward_index(x-1)
             xy_end_index   = forward_index(x)
 
-            print*, xy_start_index, xy_end_index, x
+            print*, xy_start_index, xy_end_index, x, forward_leading_obj_count, backward_leading_obj_count
             
             backward_obj_relation_array(xy_start_index:xy_end_index) = x
 
