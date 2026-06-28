@@ -300,19 +300,27 @@ module boundary_routine_module
             
             angle = acosd(alignment(nv1, nv2))
             
-            if (angle.gt.15.) feature_edges(be) = .true.
-            
-            print*, be, angle, feature_edges(be)
+            if (angle.gt.15.) then
+                call split_feature_edges(e,be, f1, f2)
+            endif
             
         enddo
         
     end subroutine boundary_angle_feature_flagging
     
-    subroutine split_feature_edges
+    subroutine split_feature_edges(e,be,f1,f2)
         implicit none
+        integer(KIND=INT32) :: i, j, be, e, p1, p2, f1, f2
         
-        allocate(feature_points(b_npoin))
-        feature_points = .false.
+        
+        feature_edges(be) = .true.
+        
+        e = e_bound_indexing_array(be)
+            
+        p1 = e_p_obj_relation_array(e_p_index_array(e)  )
+        p2 = e_p_obj_relation_array(e_p_index_array(e)-1)
+        
+        
         
     end subroutine split_feature_edges
     
