@@ -221,7 +221,9 @@ module preprocessor_routine_module
     !!!!!!!!!!! raw connectivity inversions ::
     
     subroutine p_c_preprocess
-    
+		implicit none
+        integer(KIND=INT32) :: i
+        
         do i=1,nele
             print*,c_p_obj_relation_array( (c_p_index_array(i-1)+1) : c_p_index_array(i) )
         enddo
