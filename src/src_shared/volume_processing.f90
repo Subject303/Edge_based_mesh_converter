@@ -432,7 +432,6 @@ module volume_processing
                     current_edge = p_e_obj_relation_array(pe_start+pe)
                     if (e_internal_array(current_edge)) non_viable_edges(pe) = .true.
                     if (feature_edges(reversed_e_bound_indexing_array(current_edge))) exit
-                    pe = pe + 1
                     
                     if (pe.eq.edge_count) then
                         pe = 1
@@ -486,7 +485,6 @@ module volume_processing
                         current_edge = p_e_obj_relation_array(pe_start+pe)
                         if (e_bound_array(current_edge)) exit
                         non_viable_edges(pe) = .true.
-                        pe = pe + 1
                         
                         if (pe.eq.edge_count) then
                             pe = 1
@@ -571,7 +569,6 @@ module volume_processing
                     current_edge = p_e_obj_relation_array(pe_start+pe)
                     if (e_bound_array(current_edge)) exit
                     non_viable_edges(pe) = .true.
-                    pe = pe + 1
                     
                     if (pe.eq.edge_count) then
                         pe = 1
@@ -630,7 +627,6 @@ module volume_processing
                         current_edge = p_e_obj_relation_array(pe_start+pe)
                         if (e_bound_array(current_edge)) exit
                         non_viable_edges(pe) = .true.
-                        pe = pe + 1
                         
                         if (pe.eq.edge_count) then
                             pe = 1
