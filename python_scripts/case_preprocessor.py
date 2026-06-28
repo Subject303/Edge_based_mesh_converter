@@ -390,25 +390,33 @@ for i in reversed(face_to_del):
         f_e_obj_relation_array.pop(j)
         f_e_index.pop(j)
 
+        
+print('deleting f e duplicates',time.time()-start); sys.stdout.flush()
+
 j=len(c_f_index)
 for i in reversed(cell_to_del):
     j=j-1
     if 1 != i:
         c_f_obj_relation_array.pop(j)
         c_f_index.pop(j)
+        
+print('deleting c f duplicates',time.time()-start); sys.stdout.flush()
 
 for i in range(len(f_e_obj_relation_array)):
     obj = f_e_obj_relation_array[i]
     for j in range(len(obj)):
         obj[j] = edge_to_rep[obj[j]] 
     f_e_obj_relation_array[i] = sorted(obj)
-
+    
+print('replacing edge rearrangements',time.time()-start); sys.stdout.flush()
 
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
     for j in range(len(obj)):
         obj[j] = face_to_rep[obj[j]] 
     c_f_obj_relation_array[i] = sorted(obj)
+
+print('replacing face rearrangements',time.time()-start); sys.stdout.flush()
 
 temp = []
 temp2 = []
