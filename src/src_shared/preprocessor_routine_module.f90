@@ -132,14 +132,14 @@ module preprocessor_routine_module
         c_e_index_array(0) = 0
         
         
-        print*, size(c_f_obj_relation_array), c_f_sum, maxval(c_f_index_array), size(c_f_index_array), nele
+        !print*, size(c_f_obj_relation_array), c_f_sum, maxval(c_f_index_array), size(c_f_index_array), nele
         
         do c=1,nele
         
             cf_start_index = 1 + c_f_index_array(c-1)
             cf_end_index   = c_f_index_array(c)
             
-            print*, 'CELL ' ,c,c_f_index_array(c-1),c_f_index_array(c)
+            !print*, 'CELL ' ,c,c_f_index_array(c-1),c_f_index_array(c)
             
             n_con_edges = 0
             do cf_index = cf_start_index, cf_end_index
