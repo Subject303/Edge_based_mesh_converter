@@ -564,6 +564,12 @@ print()
 print(c_f_index)
 print()
 print(c_f_obj_relation_array)
+print()        
+print(f_e_sum)
+print()
+print(f_e_index)
+print()
+print(f_e_obj_relation_array)
 print()
 
    
