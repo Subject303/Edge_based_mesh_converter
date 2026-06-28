@@ -222,6 +222,10 @@ module preprocessor_routine_module
     
     subroutine p_c_preprocess
     
+        do i=1,nele
+            print*,c_p_obj_relation_array( (c_p_index_array(i-1)+1) : c_p_index_array(i) )
+        enddo
+    
         print *, 'beginning processing cell connectivity array inversion'
         call obj_relation_inverter(nele, npoin, c_p_sum, c_p_index_array, c_p_obj_relation_array, p_c_sum, p_c_index_array, p_c_obj_relation_array)
         print *, 'finished processing cell connectivity array inversion'
