@@ -199,9 +199,11 @@ for x, y in coupled:
 
 del coupled; gc.collect()
 
-for i in range(len(f_sort)-1):
-    print(i, f_sort[i], )
-    print( temp[i] , f_p_obj_relation_array[f_sort[i]] )
+#for i in range(len(f_sort)-1):
+#    print(i, f_sort[i], )
+#    print( temp[i] , f_p_obj_relation_array[f_sort[i]] )
+
+print(temp[242], f_sort[242], f_p_obj_relation_array[166])
 
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
