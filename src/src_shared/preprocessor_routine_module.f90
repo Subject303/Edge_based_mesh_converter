@@ -297,6 +297,7 @@ module preprocessor_routine_module
         
         print*,size(y_index)
         print*,y_index
+        print*,backward_obj_relation_array
         
          
         backward_index = 0
