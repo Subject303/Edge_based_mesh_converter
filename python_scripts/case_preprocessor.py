@@ -205,11 +205,11 @@ for i in range(len(f_sort)-1):
 
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
-    print(i, obj)
+    #print(i, obj)
     for j in range(len(obj)):
         obj[j] = f_sort[obj[j]] 
-    print(i, obj)
-    print('aa')
+    #print(i, obj)
+    #print('aa')
     c_f_obj_relation_array[i] = sorted(obj)
 
 del f_sort
