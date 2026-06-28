@@ -294,7 +294,11 @@ module preprocessor_routine_module
         enddo
 
         call quicksort(y_index , 1 , forward_sum , backward_obj_relation_array)
-
+        
+        print*,size(y_index)
+        print*,y_index
+        
+        
         backward_index = 0
         backward_index_duplicates = 0
         total_x_count = 0
