@@ -285,9 +285,9 @@ module preprocessor_routine_module
         allocate(backward_obj_relation_array(forward_sum), backward_index(0:backward_leading_obj_count), backward_index_duplicates(0:backward_leading_obj_count) )
         allocate(y_index,source=forward_obj_relation_array)
         
-        do i=1,forward_leading_obj_count
-            print*,forward_obj_relation_array( (forward_index(i-1)+1) : forward_index(i) )
-        enddo
+        !do i=1,forward_leading_obj_count
+        !    print*,forward_obj_relation_array( (forward_index(i-1)+1) : forward_index(i) )
+        !enddo
         
         !print*,forward_obj_relation_array
         
