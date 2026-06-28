@@ -558,19 +558,19 @@ for obj in f_e_obj_relation_array:
     for entry in obj:
         file.write(struct.pack('<i' ,entry + 1))
 
-        
-#print(c_f_sum)
-#print()
-#print(c_f_index)
-#print()
-#print(c_f_obj_relation_array)
-#print()        
-#print(f_e_sum)
-#print()
-#print(f_e_index)
-#print()
-#print(f_e_obj_relation_array)
-#print()
+
+print(c_f_sum)
+print()
+print(c_f_index)
+print()
+print(c_f_obj_relation_array)
+print()        
+print(f_e_sum)
+print()
+print(f_e_index)
+print()
+print(f_e_obj_relation_array)
+print()
 
    
 print('finished writing to file',time.time()-start); sys.stdout.flush()
