@@ -317,7 +317,6 @@ for i in range(len(c_p_index)-1):
         obj2 = c_p_obj_relation_array[i+1]
 
         for p in range(c_p_index[i]):
-            print(p, obj1[p], obj2[p])
             if obj1[p]!=obj2[p]:
                 temp.append(obj1)
                 temp2.append(c_p_index[i])
@@ -325,15 +324,6 @@ for i in range(len(c_p_index)-1):
                 cell_to_del[i] = 1
                 break
 
-        #for p in range(c_p_index[i]-1, 0, -1):
-        #    print(p, obj1[p], obj2[p])
-        #    if obj1[p]!=obj2[p]:
-        #        temp.append(obj1)
-        #        temp2.append(c_p_index[i])
-        #        j=j+1
-        #        cell_to_del[i] = 1
-         #       break
-        print(i,obj1,obj2, cell_to_del[i])
             
 temp.append(c_p_obj_relation_array[i+1])
 temp2.append(c_p_index[i+1])
@@ -352,7 +342,8 @@ for i in range(len(f_p_index)-1):
     if f_p_index[i] == f_p_index[i+1]:    
         obj1 = f_p_obj_relation_array[i]
         obj2 = f_p_obj_relation_array[i+1]
-        for p in range(f_p_index[i]-1, 0, -1):
+
+        for p in range(f_p_index[i]):
             if obj1[p]!=obj2[p]:
                 temp.append(obj1)
                 temp2.append(f_p_index[i])
@@ -403,13 +394,6 @@ for i in reversed(face_to_del):
         f_e_obj_relation_array.pop(j)
         f_e_index.pop(j)
 
-i=0
-for obj in c_f_obj_relation_array:
-    print(i, obj)
-    i=i+1
-
-print(cell_to_del)
-
 j=len(c_f_index)
 for i in reversed(cell_to_del):
     j=j-1
@@ -423,22 +407,13 @@ for i in range(len(f_e_obj_relation_array)):
     for j in range(len(obj)):
         obj[j] = edge_to_rep[obj[j]] 
     f_e_obj_relation_array[i] = sorted(obj)
-    
-i=0
-for obj in c_f_obj_relation_array:
-    print(i, obj)
-    i=i+1
+
 
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
     for j in range(len(obj)):
         obj[j] = face_to_rep[obj[j]] 
     c_f_obj_relation_array[i] = sorted(obj)
-
-i=0
-for obj in c_f_obj_relation_array:
-    print(i, obj)
-    i=i+1
 
 temp = []
 temp2 = []
@@ -459,11 +434,6 @@ c_f_obj_relation_array = temp
 c_f_index = temp2
 del temp
 del temp2; gc.collect()
-
-i=0
-for obj in c_f_obj_relation_array:
-    print(i, obj)
-    i=i+1
 
 temp = []
 temp2 = []
