@@ -236,7 +236,13 @@ module preprocessor_routine_module
     
     
     subroutine p_f_preprocess
-
+		implicit none
+        integer(KIND=INT32) :: i
+        
+        do i=1,nface
+            print*,f_p_obj_relation_array( (f_p_index_array(i-1)+1) : f_p_index_array(i) )
+        enddo
+    
         print *, 'beginning processing face connectivity array inversion'
         call obj_relation_inverter(nface, npoin, f_p_sum, f_p_index_array, f_p_obj_relation_array, p_f_sum, p_f_index_array, p_f_obj_relation_array)
         print *, 'finished processing face connectivity array inversion'
