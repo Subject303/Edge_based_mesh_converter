@@ -433,6 +433,13 @@ module volume_processing
                     if (e_internal_array(current_edge)) non_viable_edges(pe) = .true.
                     if (feature_edges(reversed_e_bound_indexing_array(current_edge))) exit
                     pe = pe + 1
+                    
+                    if (pe.eq.edge_count) then
+                        pe = 1
+                    else
+                        pe=pe+1
+                    endif
+                    
                 enddo
                 
                 non_viable_edges(pe) = .true.
@@ -480,6 +487,12 @@ module volume_processing
                         if (e_bound_array(current_edge)) exit
                         non_viable_edges(pe) = .true.
                         pe = pe + 1
+                        
+                        if (pe.eq.edge_count) then
+                            pe = 1
+                        else
+                            pe=pe+1
+                        endif
                     enddo
                     
                     j = e_f_index_array(current_edge-1)
