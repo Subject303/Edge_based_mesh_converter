@@ -309,7 +309,7 @@ module preprocessor_routine_module
             enddo
             
             ! adjust x_count
-                
+			
             backward_index(y) = x_count
             
             print*, (backward_index(y-1)+1), x_count, backward_leading_obj_count, y
