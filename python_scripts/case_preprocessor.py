@@ -347,6 +347,7 @@ for i in range(len(f_p_index)-1):
                 j=j+1
                 face_to_del[i] = 1
                 break
+    print(i, face_to_rep[i])
             
     
 temp.append(f_p_obj_relation_array[i+1])
