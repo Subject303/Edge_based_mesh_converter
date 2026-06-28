@@ -289,15 +289,17 @@ module preprocessor_routine_module
             xy_start_index = 1 + forward_index(x-1)
             xy_end_index   = forward_index(x)
 
+            print*, xy_start_index, xy_end_index, x
+            
             backward_obj_relation_array(xy_start_index:xy_end_index) = x
 
         enddo
 
         call quicksort(y_index , 1 , forward_sum , backward_obj_relation_array)
         
-        print*,size(y_index)
-        print*,y_index
-        print*,backward_obj_relation_array
+        !print*,size(y_index)
+        !print*,y_index
+        !print*,backward_obj_relation_array
         
          
         backward_index = 0
@@ -308,7 +310,7 @@ module preprocessor_routine_module
         
             ! count the number of cells adjacent to each point
 			
-            print*, y , y_index(x_count + 1)
+            !print*, y , y_index(x_count + 1)
             
             do while (y .eq. y_index(x_count + 1))
                 x_count = x_count + 1
