@@ -297,6 +297,10 @@ edge_to_del=[-1]*len(e_p_index)
 face_to_del=[-1]*len(f_p_index)
 cell_to_del=[-1]*len(c_p_index)
 
+nedge_to_del = len(e_p_index)
+nface_to_del = len(f_p_index)
+nele_to_del = len(c_p_index)
+
 edge_to_del[-1]=1
 face_to_del[-1]=1
 cell_to_del[-1]=1
@@ -318,6 +322,7 @@ for i in range(len(c_p_index)-1):
                 temp2.append(c_p_index[i])
                 j=j+1
                 cell_to_del[i] = 1
+                nele_to_del=nele_to_del-1
                 break
 
             
@@ -345,6 +350,7 @@ for i in range(len(f_p_index)-1):
                 temp2.append(f_p_index[i])
                 j=j+1
                 face_to_del[i] = 1
+                nface_to_del=nface_to_del-1
                 break
             
     
@@ -371,6 +377,7 @@ for i in range(len(e_p_index)-1):
         temp2.append(2)
         j=j+1
         edge_to_del[i] = 1
+        nedge_to_del=nedge_to_del-1
         
     
 temp.append(e_p_obj_relation_array[i+1])
@@ -383,22 +390,48 @@ del temp2; gc.collect()
    
 print('updating mappings',time.time()-start); sys.stdout.flush()
 
-j=len(f_e_index)
-for i in reversed(face_to_del):
-    j=j-1
-    if 1 != i:
-        f_e_obj_relation_array.pop(j)
-        f_e_index.pop(j)
+
+
+temp=[0]*nface_to_del
+temp1=[0]*nface_to_del
+
+j=0
+for i in face_to_del:
+    if 1 == i:
+        temp[j] = f_e_obj_relation_array[j]
+        temp1[j] = f_e_index[j]
+
+f_e_obj_relation_array = temp
+f_e_index = temp1
+
+#j=len(f_e_index)
+#for i in reversed(face_to_del):
+#    j=j-1
+#    if 1 != i:
+#        f_e_obj_relation_array.pop(j)
+#        f_e_index.pop(j)
 
         
 print('deleting f e duplicates',time.time()-start); sys.stdout.flush()
 
-j=len(c_f_index)
-for i in reversed(cell_to_del):
-    j=j-1
-    if 1 != i:
-        c_f_obj_relation_array.pop(j)
-        c_f_index.pop(j)
+temp=[0]*nele_to_del
+temp1=[0]*nele_to_del
+
+j=0
+for i in cell_to_del:
+    if 1 == i:
+        temp[j] = c_f_obj_relation_array[j]
+        temp1[j] = c_f_index[j]
+
+c_f_obj_relation_array = temp
+c_f_index = temp1
+
+#j=len(c_f_index)
+#for i in reversed(cell_to_del):
+#    j=j-1
+#    if 1 != i:
+#        c_f_obj_relation_array.pop(j)
+#        c_f_index.pop(j)
         
 print('deleting c f duplicates',time.time()-start); sys.stdout.flush()
 
