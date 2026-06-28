@@ -199,9 +199,11 @@ del coupled; gc.collect()
 
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
-    print(obj)
+    print(i, obj)
     for j in range(len(obj)):
         obj[j] = f_sort[obj[j]] 
+    print(i, obj)
+    print('aa')
     c_f_obj_relation_array[i] = sorted(obj)
 
 del f_sort
