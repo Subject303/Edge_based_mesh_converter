@@ -324,6 +324,19 @@ module boundary_routine_module
         
     end subroutine split_feature_edges
     
+    subroutine dummy_feature_flagging
+        implicit none
+        
+        
+        
+        allocate(feature_edges(b_nedge),feature_points(b_npoin))
+        feature_edges = .false.
+        feature_points = .false.
+        
+        
+        
+    end subroutine dummy_feature_flagging
+    
     ! end contains    
     
 end module boundary_routine_module
