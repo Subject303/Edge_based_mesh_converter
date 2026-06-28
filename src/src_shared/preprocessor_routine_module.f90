@@ -303,7 +303,7 @@ module preprocessor_routine_module
         
             ! count the number of cells adjacent to each point
 			
-            print*, y , y_index(x_count + 1), SIZE(backward_obj_relation_array)
+            print*, y , y_index(x_count + 1), SIZE(backward_obj_relation_array), forward_sum
             
             do while (y .eq. y_index(x_count + 1))
                 x_count = x_count + 1
