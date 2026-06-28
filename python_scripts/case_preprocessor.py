@@ -560,12 +560,9 @@ file.write(struct.pack('<2i' ,f_e_sum, 0))
 for entry in f_e_index:
     file.write(struct.pack('<i' ,entry))
 
-i=1
 for obj in c_f_obj_relation_array:
     for entry in obj:
-        i=i+1
         file.write(struct.pack('<i' ,entry + 1))
-print(i)
 
 for obj in f_e_obj_relation_array:
     for entry in obj:
