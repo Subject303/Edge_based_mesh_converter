@@ -81,13 +81,13 @@ module read_data_serial
         
         print*,c_f_sum
         print*, 'aa'
-        print*,c_f_index
+        print*,c_f_index_array
         print*, 'aa'
         print*,c_f_obj_relation_array
         print*, 'aa'        
         print*,f_e_sum
         print*, 'aa'
-        print*,f_e_index
+        print*,f_e_index_array
         print*, 'aa'
         print*,f_e_obj_relation_array
         print*, 'aa'
