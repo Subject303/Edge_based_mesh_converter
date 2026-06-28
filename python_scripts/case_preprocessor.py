@@ -430,6 +430,10 @@ c_f_obj_relation_array = temp
 c_f_index = temp2
 del temp
 del temp2; gc.collect()
+i=0
+for obj in c_f_obj_relation_array:
+    print(i, obj)
+    i=i+1
 
 temp = []
 temp2 = []
