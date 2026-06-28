@@ -397,7 +397,6 @@ for i in reversed(face_to_del):
 j=len(c_f_index)
 for i in reversed(cell_to_del):
     j=j-1
-    print( j, i)
     if 1 != i:
         c_f_obj_relation_array.pop(j)
         c_f_index.pop(j)
