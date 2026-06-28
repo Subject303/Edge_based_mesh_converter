@@ -421,11 +421,13 @@ for i in range(len(c_f_index)-1):
     if c_f_index[i] == c_f_index[i+1]:    
         obj1 = c_f_obj_relation_array[i]
         obj2 = c_f_obj_relation_array[i+1]
-        for p in range(c_f_index[i]-1, 0, -1):
+
+        for p in range(c_f_index[i]):
             if obj1[p]!=obj2[p]:
                 temp.append(obj1)
                 temp2.append(c_f_index[i])
                 break
+
             
 temp.append(c_f_obj_relation_array[i+1])
 temp2.append(c_f_index[i+1])
@@ -441,7 +443,8 @@ for i in range(len(f_e_index)-1):
     if f_e_index[i] == f_e_index[i+1]:    
         obj1 = f_e_obj_relation_array[i]
         obj2 = f_e_obj_relation_array[i+1]
-        for p in range(f_e_index[i]-1, 0, -1):
+
+        for p in range(f_e_index[i]):
             if obj1[p]!=obj2[p]:
                 temp.append(obj1)
                 temp2.append(f_e_index[i])
