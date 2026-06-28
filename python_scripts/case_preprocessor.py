@@ -397,6 +397,7 @@ temp1=[0]*nface_to_del
 
 j=0
 for i in face_to_del:
+    j=j+1
     if 1 == i:
         temp[j] = f_e_obj_relation_array[j]
         temp1[j] = f_e_index[j]
@@ -419,6 +420,7 @@ temp1=[0]*nele_to_del
 
 j=0
 for i in cell_to_del:
+    j=j+1
     if 1 == i:
         temp[j] = c_f_obj_relation_array[j]
         temp1[j] = c_f_index[j]
