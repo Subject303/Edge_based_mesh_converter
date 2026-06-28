@@ -413,16 +413,13 @@ f_e_index = temp1
         
 print('deleting f e duplicates',time.time()-start); sys.stdout.flush()
 
-temp=[0]*nele_to_del
+temp=[[]]*nele_to_del
 temp1=[0]*nele_to_del
 
-j=0
-for i in cell_to_del:
-    if 1 == i:
-        print(j, nele_to_del)
-        temp[j] = c_f_obj_relation_array[j]
-        temp1[j] = c_f_index[j]
-    j=j+1
+for i in range(nele_to_del):
+    if 1 == cell_to_del[i]:
+        temp[i] = c_f_obj_relation_array[i]
+        temp1[i] = c_f_index[i]
 
 c_f_obj_relation_array = temp
 c_f_index = temp1
