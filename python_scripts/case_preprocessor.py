@@ -315,7 +315,6 @@ for i in range(len(c_p_index)-1):
     if c_p_index[i] == c_p_index[i+1]:    
         obj1 = c_p_obj_relation_array[i]
         obj2 = c_p_obj_relation_array[i+1]
-        print(i,obj1,obj2)
         for p in range(c_p_index[i]-1, 0, -1):
             if obj1[p]!=obj2[p]:
                 temp.append(obj1)
@@ -323,6 +322,7 @@ for i in range(len(c_p_index)-1):
                 j=j+1
                 cell_to_del[i] = 1
                 break
+        print(i,obj1,obj2, cell_to_del[i])
             
 temp.append(c_p_obj_relation_array[i+1])
 temp2.append(c_p_index[i+1])
