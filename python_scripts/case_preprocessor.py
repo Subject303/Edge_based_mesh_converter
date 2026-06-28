@@ -397,6 +397,8 @@ for obj in c_f_obj_relation_array:
     print(i, obj)
     i=i+1
 
+print(cell_to_del)
+
 j=len(c_f_index)
 for i in reversed(cell_to_del):
     j=j-1
