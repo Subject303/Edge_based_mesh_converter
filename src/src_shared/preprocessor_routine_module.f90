@@ -312,7 +312,7 @@ module preprocessor_routine_module
 			
             backward_index(y) = x_count
             
-            print*, (backward_index(y-1)+1), x_count, backward_leading_obj_count, y
+            print*, (backward_index(y-1)+1), x_count, backward_leading_obj_count, y, forward_leading_obj_count
             
             ! check if there exists any possible duplicates
             if (backward_index(y-1)+1 .ne. x_count) then
