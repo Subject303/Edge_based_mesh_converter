@@ -838,7 +838,7 @@ module volume_processing
             total_volume = total_volume + vol(i)
         enddo
         
-        print'(a,e14.4e3,i,a,e14.4e3,i,a,e14.4e3)', 'lowest vol ', vol(i1), i1, ' highest vol ', vol(i2), i2, ' total volume ', total_volume
+        print'(a,e14.4e3,i,a,e14.4e3,i,a,f)', 'lowest vol ', vol(i1), i1, ' highest vol ', vol(i2), i2, ' total volume ', total_volume
         print*, ' '
         
     end subroutine projection_test
