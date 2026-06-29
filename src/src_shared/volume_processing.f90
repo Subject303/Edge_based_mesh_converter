@@ -906,8 +906,8 @@ module volume_processing
                 v13(i) = i1(i) - i3(i) ! vector from 1 to 3
                 v32(i) = i3(i) - i2(i) ! vector from 3 to 2
             enddo
-            vol1 = dbl_vol1 + ((c1415(1)*v13(1) ) - (c1415(2)*v13(2) ) + (c1415(3)*v13(3) ) )/6
-            vol2 = dbl_vol2 + ((c1415(1)*v32(1) ) - (c1415(2)*v32(2) ) + (c1415(3)*v32(3) ) )/6
+            vol1 = dbl_vol1 + abs((c1415(1)*v13(1) ) - (c1415(2)*v13(2) ) + (c1415(3)*v13(3) ) )/6
+            vol2 = dbl_vol2 + abs((c1415(1)*v32(1) ) - (c1415(2)*v32(2) ) + (c1415(3)*v32(3) ) )/6
             
 		endif
 
