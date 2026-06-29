@@ -531,6 +531,8 @@ nele  = len(c_p_index)
 nface = len(f_p_index)
 nedge = len(e_p_index)
 
+print(c_f_index)
+
 c_p_sum=c_p_index[-1]
 f_p_sum=f_p_index[-1]
 e_p_sum=e_p_index[-1]
