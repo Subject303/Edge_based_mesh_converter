@@ -870,7 +870,7 @@ module volume_processing
         integer(KIND=INT32)        :: i, centroid_array_count
         real(KIND=REAL64),optional :: vol1, vol2
         real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), i1(3), i2(3)
-        real(KIND=REAL64)          :: v1(3),v2(3), v3(3)
+        real(KIND=REAL64)          :: v1(3),v2(3), v3(3), start_angle
         
         angelee = 0.0
         
@@ -878,6 +878,12 @@ module volume_processing
             vol1 = 0.0
             vol2 = 0.0
             
+            v3 = i1 - i2
+            v1 = (obj_centroid - centroid_array(1,:))
+            v2 = (obj_centroid - centroid_array(2,:))
+			
+            start_angle = planar_alignment(v1,v2,v3)
+                
             do i=2,centroid_array_count
                 baryobj_1_centroid = centroid_array(i-1,:)
                 baryobj_2_centroid = centroid_array(i,:) 
@@ -893,7 +899,7 @@ module volume_processing
                 print*, baryobj_1_centroid
                 print*, baryobj_2_centroid
                 print*, v3
-                print*, abs(planar_alignment(v1,v2,v3))
+                print*, abs(planar_alignment(v1,v2,v3) - start_angle)
                 !angelee = angelee + abs(planar_alignment(v1,v2,v3))
                 !print*, angelee, planar_alignment(v1,v2,v3)
                 print*, 'aaaaa'
