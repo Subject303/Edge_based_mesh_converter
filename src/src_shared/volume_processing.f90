@@ -895,10 +895,11 @@ module volume_processing
                 v2 = obj_centroid - baryobj_2_centroid ! vector from 3 to 5
                 v3 = i1 - i2
 				
-                !angelee = angelee + acosd(alignment(v1,v2))
+                angelee = angelee + planar_alignment(v1,v2,v3)
                 print*, 'aaaaa'
-                !print*, angelee, acosd(alignment(v1,v2)), alignment(v1,v2)
-                print*, planar_alignment(v1,v2,v3)
+                print*, baryobj_1_centroid
+                print*, baryobj_2_centroid
+                print*, angelee, planar_alignment(v1,v2,v3)
                 print*, 'aaaaa'
                 
             enddo
