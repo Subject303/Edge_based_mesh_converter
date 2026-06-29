@@ -891,13 +891,13 @@ module volume_processing
                 call cvolume(obj_projection, obj_centroid, baryobj_1_centroid, baryobj_2_centroid, i1, i2, vol1, vol2)
                 
                 
-                v1 = obj_centroid - baryobj_1_centroid!centroid_array(1,:) ! vector from 3 to 4
-                v2 = obj_centroid - baryobj_2_centroid ! vector from 3 to 5
                 v3 = i1 - i2
+                v1 = v3*(obj_centroid - baryobj_1_centroid)!centroid_array(1,:) ! vector from 3 to 4
+                v2 = v3*(obj_centroid - baryobj_2_centroid) ! vector from 3 to 5
 				
                 angelee = angelee + planar_alignment(v1,v2,v3)
                 print*, 'aaaaa'
-                print*, baryobj_1_centroid
+                print*, baryobj_1_centroid, v1
                 print*, angelee, planar_alignment(v1,v2,v3)
                 print*, 'aaaaa'
                 
