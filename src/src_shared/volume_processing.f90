@@ -196,9 +196,10 @@ module volume_processing
 			endif
             
             print*,'aa'
-            print*, centroid_array
-            print*, centroid_array_count, SIZE(centroid_array)
-            print*, in_progress_centroid, c1, c2
+            print*, centroid_array_count, SIZE(centroid_array,1)
+            print*, in_progress_centroid
+            print*, c1
+            print*, c2
             print*,'aa'
             
         enddo
@@ -376,9 +377,10 @@ module volume_processing
 			endif
             
             print*,'aa'
-            print*, centroid_array
-            print*, centroid_array_count, SIZE(centroid_array)
-            print*, in_progress_centroid, c1, c2
+            print*, centroid_array_count, SIZE(centroid_array,1)
+            print*, in_progress_centroid
+            print*, c1
+            print*, c2
             print*,'aa'
             
             
@@ -934,6 +936,11 @@ module volume_processing
             
             vol1 = vol1 + abs((c1415(1)*v13(1) ) - (c1415(2)*v13(2) ) + (c1415(3)*v13(3) ) )/6
             vol2 = vol2 + abs((c1415(1)*v32(1) ) - (c1415(2)*v32(2) ) + (c1415(3)*v32(3) ) )/6
+            
+            print*, 'aaaaa'
+            print*, c1415
+            print*, c4252
+            print*, 'aaaaa'
             
 		endif
 
