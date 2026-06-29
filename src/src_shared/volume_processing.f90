@@ -159,8 +159,8 @@ module volume_processing
             enddo
             
             ! this might be exactly negative, alternatives are 1, and cell_1
-            centroid_index_array(centroid_array_count) = centroid_index_array(1)
-            centroid_array(centroid_array_count,:) = c_centroid(centroid_index_array(1),:)
+            centroid_index_array(centroid_array_count) = centroid_index_array(3)
+            centroid_array(centroid_array_count,:) = c_centroid(centroid_index_array(3),:)
 			
             centroid_array_count_old = centroid_array_count
             
