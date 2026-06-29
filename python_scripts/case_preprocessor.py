@@ -463,9 +463,9 @@ for i in range(len(c_f_index)-1):
                 temp2.append(c_f_index[i])
                 break
 
-            
-temp.append(c_f_obj_relation_array[i+1])
-temp2.append(c_f_index[i+1])
+
+#temp.append(c_f_obj_relation_array[i+1])
+#temp2.append(c_f_index[i+1])
 c_f_obj_relation_array = temp
 c_f_index = temp2
 del temp
@@ -485,8 +485,8 @@ for i in range(len(f_e_index)-1):
                 temp2.append(f_e_index[i])
                 break
             
-temp.append(f_e_obj_relation_array[i+1])
-temp2.append(f_e_index[i+1])
+#temp.append(f_e_obj_relation_array[i+1])
+#temp2.append(f_e_index[i+1])
 f_e_obj_relation_array = temp
 f_e_index = temp2
 del temp

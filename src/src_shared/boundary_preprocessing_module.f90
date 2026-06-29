@@ -286,7 +286,7 @@ module boundary_routine_module
                 if (f_bound_array(e_f_obj_relation_array(j))) exit
             enddo
             f2 = e_f_obj_relation_array(j)
-                
+			
             if (j.gt.e_f_index_array(e))then
                 print*, ' non-feature boundary edge has more than 2 faces '
                 stop
