@@ -876,7 +876,7 @@ module volume_processing
         implicit none
         integer(KIND=INT32)        :: i, centroid_array_count
         real(KIND=REAL64),optional :: vol1, vol2
-        real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), i1(3), i2(3)
+        real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), v1(3),v2(3), i1(3), i2(3)
         
         angelee = 0.0
         
@@ -888,6 +888,18 @@ module volume_processing
                 baryobj_1_centroid = centroid_array(i-1,:)
                 baryobj_2_centroid = centroid_array(i,:) 
                 call cvolume(obj_projection, obj_centroid, baryobj_1_centroid, baryobj_2_centroid, i1, i2, vol1, vol2)
+                
+                
+                do i=1,3
+                    v1(i) = obj_centroid(i) - baryobj_1_centroid(i) ! vector from 3 to 4
+                    v2(i) = obj_centroid(i) - baryobj_2_centroid(i) ! vector from 3 to 5
+                enddo
+                
+                angelee = angelee + acosd(alignment(v1,v2))
+                print*, 'aaaaa'
+                print*, angelee, acosd(alignment(v1,v2))
+                print*, 'aaaaa'
+                
             enddo
         else
             do i=2,centroid_array_count
@@ -949,11 +961,6 @@ module volume_processing
         sn(1) = sn(1) + ((v34(2) * v35(3) - v34(3) * v35(2))/2) ! projection in the xx axis
         sn(2) = sn(2) + ((v34(3) * v35(1) - v34(1) * v35(3))/2) ! projection in the yy axis
         sn(3) = sn(3) + ((v34(1) * v35(2) - v34(2) * v35(1))/2) ! projection in the zz axis
-        
-        angelee = angelee + acosd(alignment(v34,v35))
-        print*, 'aaaaa'
-        print*, angelee, acosd(alignment(v34,v35)), acosd(alignment(v13,v32))
-        print*, 'aaaaa'
         
         
     !                               i4--------------i5
