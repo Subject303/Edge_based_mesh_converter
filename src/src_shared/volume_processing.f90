@@ -745,7 +745,8 @@ module volume_processing
     
     subroutine projection_test
         implicit none
-        integer(KIND=INT32)          :: i, i1, i2
+        integer(KIND=INT32)           :: i, i1, i2
+        real(KIND=REAL64)			  :: total_volume
         real(KIND=REAL64),allocatable :: projection_mag(:), tot(:,:)
         
         
@@ -828,14 +829,16 @@ module volume_processing
         print'(a,4e14.4e3,i,a,4e14.4e3,i)', 'lowest tot ', projection_mag(i1), tot(i1,:), i1, ' highest tot ', projection_mag(i2), tot(i2,:), i2
         print*, ' '
         
+        total_volume = 0.0
         i1=1
         i2=1
         do i=1,npoin
             if (vol(i).lt.vol(i1)) i1 = i
             if (vol(i).gt.vol(i1)) i2 = i
+            total_volume = total_volume + vol(i)
         enddo
         
-        print'(a,e14.4e3,i,a,e14.4e3,i)', 'lowest vol ', vol(i1), i1, ' highest vol ', vol(i2), i2
+        print'(a,e14.4e3,i,a,e14.4e3,i,a,e14.4e3)', 'lowest vol ', vol(i1), i1, ' highest vol ', vol(i2), i2, ' total volume ', total_volume
         print*, ' '
         
     end subroutine projection_test
