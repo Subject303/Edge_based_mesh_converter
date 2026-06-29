@@ -413,59 +413,8 @@ del temp
 del temp2
 del temp3
 del temp4; gc.collect()
-   
-print('updating mappings',time.time()-start); sys.stdout.flush()
-
-
-
-#temp=[[]]*nface_to_del
-#temp1=[0]*nface_to_del
-
-#for i in range(nface_to_del):
-#    if -1 == face_to_del[i]:
-#        temp[i] = f_e_obj_relation_array[i]
-#        temp1[i] = f_e_index[i]
-
-#f_e_obj_relation_array = temp
-#f_e_index = temp1
-
-#j=len(f_e_index)
-#for i in reversed(face_to_del):
-#    j=j-1
-#    if 1 != i:
-#        f_e_obj_relation_array.pop(j)
-#        f_e_index.pop(j)
-
-        
-print('deleting f e duplicates',time.time()-start); sys.stdout.flush()
-
-#temp=[[]]*nele_to_del
-#temp1=[0]*nele_to_del
-
-#for i in range(nele_to_del):
-#    if -1 == cell_to_del[i]:
-#        temp[i] = c_f_obj_relation_array[i]
-#        temp1[i] = c_f_index[i]
-
-#c_f_obj_relation_array = temp
-#c_f_index = temp1
-
-#j=len(c_f_index)
-#for i in reversed(cell_to_del):
-#    j=j-1
-#    if 1 != i:
-#        c_f_obj_relation_array.pop(j)
-#        c_f_index.pop(j)
-        
-print('deleting c f duplicates',time.time()-start); sys.stdout.flush()
-
-for i in range(len(f_e_obj_relation_array)):
-    obj = f_e_obj_relation_array[i]
-    for j in range(len(obj)):
-        obj[j] = edge_to_rep[obj[j]] 
-    f_e_obj_relation_array[i] = sorted(obj)
     
-print('replacing edge rearrangements',time.time()-start); sys.stdout.flush()
+print('   updating c f mapping',time.time()-start); sys.stdout.flush()
 
 for i in range(len(c_f_obj_relation_array)):
     obj = c_f_obj_relation_array[i]
@@ -473,7 +422,13 @@ for i in range(len(c_f_obj_relation_array)):
         obj[j] = face_to_rep[obj[j]] 
     c_f_obj_relation_array[i] = sorted(obj)
 
-print('replacing face rearrangements',time.time()-start); sys.stdout.flush()
+print('   updating f e mapping',time.time()-start); sys.stdout.flush()
+for i in range(len(f_e_obj_relation_array)):
+    obj = f_e_obj_relation_array[i]
+    for j in range(len(obj)):
+        obj[j] = edge_to_rep[obj[j]] 
+    f_e_obj_relation_array[i] = sorted(obj)
+
 
 print(c_f_index)
 
