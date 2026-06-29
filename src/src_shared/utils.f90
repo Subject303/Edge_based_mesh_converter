@@ -49,7 +49,7 @@ module utils
         implicit none
         real(KIND=REAL32) :: v1(3), v2(3)
         
-        alignment = (v1(1)*v2(1) + v1(2)*v2(2) + v1(3)*v2(3))/ (sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3)) * sqrt(v2(1)*v2(1) + v2(2)*v2(2) + v2(3)*v2(3)))
+        alignment_single = (v1(1)*v2(1) + v1(2)*v2(2) + v1(3)*v2(3))/ (sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3)) * sqrt(v2(1)*v2(1) + v2(2)*v2(2) + v2(3)*v2(3)))
         
     end function alignment_single
     
@@ -57,7 +57,7 @@ module utils
         implicit none
         real(KIND=REAL64) :: v1(3), v2(3)
         
-        alignment = (v1(1)*v2(1) + v1(2)*v2(2) + v1(3)*v2(3))/ (sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3)) * sqrt(v2(1)*v2(1) + v2(2)*v2(2) + v2(3)*v2(3)))
+        alignment_double = (v1(1)*v2(1) + v1(2)*v2(2) + v1(3)*v2(3))/ (sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3)) * sqrt(v2(1)*v2(1) + v2(2)*v2(2) + v2(3)*v2(3)))
         
     end function alignment_double
     
