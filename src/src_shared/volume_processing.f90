@@ -898,7 +898,7 @@ module volume_processing
                 !angelee = angelee + acosd(alignment(v1,v2))
                 print*, 'aaaaa'
                 !print*, angelee, acosd(alignment(v1,v2)), alignment(v1,v2)
-                print*, acosd(planar_alignment(v1,v2,v3)), planar_alignment(v1,v2,v3)
+                print*, planar_alignment(v1,v2,v3)
                 print*, 'aaaaa'
                 
             enddo
