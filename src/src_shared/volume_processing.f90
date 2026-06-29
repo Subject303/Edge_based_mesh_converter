@@ -950,7 +950,7 @@ module volume_processing
         
 
         print*, 'aaaaa'
-        print*, alignment(v34,v35)
+        print*, acosd(alignment(v34,v35))
         print*, 'aaaaa'
         
         
