@@ -21,6 +21,7 @@ module volume_processing
         implicit none
         allocate(vol(npoin),sn(i_nedge,3),sb(b_nedge,3),sbb(b_npoin,3))
         
+        vol = 0.0
         sn  = 0.0
         sb  = 0.0
         sbb = 0.0
