@@ -897,7 +897,7 @@ module volume_processing
                 !angelee = angelee + acosd(alignment(v1,v2))
                 print*, 'aaaaa'
                 !print*, angelee, acosd(alignment(v1,v2)), alignment(v1,v2)
-                print*, asind(alignment(v1,v2)), acosd(alignment(v1,v2)), atan2d(alignment(v1,v2)), alignment(v1,v2)
+                print*, asind(alignment(v1,v2)), acosd(alignment(v1,v2)), alignment(v1,v2)
                 print*, 'aaaaa'
                 
             enddo
