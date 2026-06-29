@@ -35,7 +35,7 @@ module volume_processing
         integer(KIND=INT32) :: cell_count, face_count, current_face, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL64),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL64)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle
+        real(KIND=REAL64)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle, vol1, vol2
         logical, allocatable :: non_viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -179,15 +179,22 @@ module volume_processing
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
-            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol(i1), vol(i2))
+            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol1, vol2)
             
             direction_array(:) = c1(:) - c2(:)
             
             angle = alignment(in_progress_projection, direction_array)
             
-            if (angle .lt. 0.) in_progress_projection(:) = -in_progress_projection(:)
+            if (angle .lt. 0.) then
+                sn(ie,:) = -in_progress_projection(:)
+                vol(i1)  = vol(i1) + vol1
+                vol(i2)  = vol(i2) + vol2
+			else
+                sn(ie,:) = in_progress_projection
+                vol(i1)  = vol(i1) + vol1
+                vol(i2)  = vol(i2) + vol2
+			endif
             
-            sn(ie,:) = in_progress_projection
             
         enddo
         
@@ -206,7 +213,7 @@ module volume_processing
         integer(KIND=INT32) :: cell_count, face_count, current_face, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL64),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL64)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle
+        real(KIND=REAL64)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle, vol1, vol2
         logical, allocatable :: non_viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -347,15 +354,21 @@ module volume_processing
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
-            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol(i1), vol(i2))
+            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol1, vol2)
             
             direction_array(:) = c1(:) - c2(:)
             
             angle = alignment(in_progress_projection, direction_array)
             
-            if (angle .lt. 0.) in_progress_projection(:) = -in_progress_projection(:)
-            
-            sb(be,:) = in_progress_projection
+            if (angle .lt. 0.) then
+                sb(be,:) = -in_progress_projection(:)
+                vol(i1)  = vol(i1) + vol1
+                vol(i2)  = vol(i2) + vol2
+			else
+                sb(be,:) = in_progress_projection
+                vol(i1)  = vol(i1) + vol1
+                vol(i2)  = vol(i2) + vol2
+			endif
             
         enddo
         
@@ -852,6 +865,9 @@ module volume_processing
         real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), i1(3), i2(3)
         
         if (present(vol1)) then
+            vol1 = 0.0
+            vol2 = 0.0
+            
             do i=2,centroid_array_count
                 baryobj_1_centroid = centroid_array(i-1,:)
                 baryobj_2_centroid = centroid_array(i,:) 
