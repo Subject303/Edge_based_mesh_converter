@@ -882,7 +882,7 @@ module volume_processing
             v1 = (obj_centroid - centroid_array(1,:))
             v2 = (obj_centroid - centroid_array(2,:))
 			
-            start_angle = planar_alignment(v1,v2,v3)
+            start_angle = abs(planar_alignment(v1,v2,v3))
                 
             do i=2,centroid_array_count
                 baryobj_1_centroid = centroid_array(i-1,:)
@@ -899,7 +899,7 @@ module volume_processing
                 print*, baryobj_1_centroid
                 print*, baryobj_2_centroid
                 print*, v3
-                print*, abs(planar_alignment(v1,v2,v3) - start_angle)
+                print*, abs(planar_alignment(v1,v2,v3)) - start_angle
                 !angelee = angelee + abs(planar_alignment(v1,v2,v3))
                 !print*, angelee, planar_alignment(v1,v2,v3)
                 print*, 'aaaaa'
