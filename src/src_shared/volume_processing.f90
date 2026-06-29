@@ -375,9 +375,6 @@ module volume_processing
             
             print*,'aa'
             print*, centroid_array_count, SIZE(centroid_array,1)
-            print*, in_progress_centroid
-            print*, c1
-            print*, c2
             print*,'aa'
             
             
