@@ -783,7 +783,7 @@ module volume_processing
             if (projection_mag(i).gt.projection_mag(i2)) i2 = i
             
         enddo
-        print'(a,4f7.3,i,a,4f7.3,i)', 'lowest sn  ', projection_mag(i1), sn(i1,:), i1, ' highest sn  ', projection_mag(i2), sn(i2,:), i2
+        print'(a,4e10.3,i,a,4e10.3,i)', 'lowest sn  ', projection_mag(i1), sn(i1,:), i1, ' highest sn  ', projection_mag(i2), sn(i2,:), i2
         print*, ' '
         
         deallocate(projection_mag)
@@ -797,7 +797,7 @@ module volume_processing
             if (projection_mag(i).gt.projection_mag(i2)) i2 = i
             
         enddo
-        print'(a,4f7.3,i,a,4f7.3,i)', 'lowest sb  ', projection_mag(i1), sb(i1,:), i1, ' highest sb  ', projection_mag(i2), sb(i2,:), i2
+        print'(a,4e10.3,i,a,4e10.3,i)', 'lowest sb  ', projection_mag(i1), sb(i1,:), i1, ' highest sb  ', projection_mag(i2), sb(i2,:), i2
         print*, ' '
         
         deallocate(projection_mag)
@@ -811,7 +811,7 @@ module volume_processing
             if (projection_mag(i).gt.projection_mag(i2)) i2 = i
             
         enddo
-        print'(a,4f7.3,i,a,4f7.3,i)', 'lowest sbb ', projection_mag(i1), sbb(i1,:), i1, ' highest sbb ', projection_mag(i2), sbb(i2,:), i2
+        print'(a,4e10.3,i,a,4e10.3,i)', 'lowest sbb ', projection_mag(i1), sbb(i1,:), i1, ' highest sbb ', projection_mag(i2), sbb(i2,:), i2
         print*, ' '
         
         deallocate(projection_mag)
@@ -825,7 +825,7 @@ module volume_processing
             if (projection_mag(i).gt.projection_mag(i2)) i2 = i
             
         enddo
-        print'(a,4f7.3,i,a,4f7.3,i)', 'lowest tot ', projection_mag(i1), tot(i1,:), i1, ' highest tot ', projection_mag(i2), tot(i2,:), i2
+        print'(a,4e10.3,i,a,4e10.3,i)', 'lowest tot ', projection_mag(i1), tot(i1,:), i1, ' highest tot ', projection_mag(i2), tot(i2,:), i2
         print*, ' '
         
         i1=1
@@ -835,7 +835,7 @@ module volume_processing
             if (vol(i).gt.vol(i1)) i2 = i
         enddo
         
-        print'(a,f7.3,i,a,f7.3,i)', 'lowest vol ', vol(i1), i1, ' highest vol ', vol(i2), i2
+        print'(a,e10.3,i,a,e10.3,i)', 'lowest vol ', vol(i1), i1, ' highest vol ', vol(i2), i2
         print*, ' '
         
     end subroutine projection_test
