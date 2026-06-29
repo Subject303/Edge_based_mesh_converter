@@ -451,10 +451,10 @@ module volume_processing
                 face_1 = e_f_obj_relation_array(j)
                 face_2 = -1
                 
-                if (j.gt.e_f_index_array(current_edge))then
-                    print*, ' non-feature boundary edge has more than 2 faces '
-                    stop
-                endif
+                !if (j.gt.e_f_index_array(current_edge))then
+                !    print*, ' non-feature boundary edge has more than 2 faces '
+                !    stop
+                !endif
                 
                 centroid_index_array(1) = current_edge
                 centroid_index_array(2) = face_1
@@ -501,10 +501,10 @@ module volume_processing
                     face_1 = e_f_obj_relation_array(j)
                     face_2 = -1
                     
-                    if (j.gt.e_f_index_array(current_edge))then
-                        print*, ' non-feature boundary edge has more than 2 faces '
-                        stop
-                    endif
+                    !if (j.gt.e_f_index_array(current_edge))then
+                    !    print*, ' non-feature boundary edge has more than 2 faces '
+                    !    stop
+                    !endif
                     
                     if (prev_face .eq. face_1) then
             
