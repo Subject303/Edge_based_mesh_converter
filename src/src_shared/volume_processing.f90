@@ -19,7 +19,12 @@ module volume_processing
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     subroutine volume_alloc
         implicit none
-        allocate(vol(npoin))
+        allocate(vol(npoin),sn(i_nedge,3),sb(b_nedge,3),sbb(b_npoin,3))
+        
+        sn  = 0.0
+        sb  = 0.0
+        sbb = 0.0
+        
         
     end subroutine volume_alloc
         
@@ -42,8 +47,6 @@ module volume_processing
         !   hopefully this is not too dificult
         ! 3:
         !   call the processer subroutine and sum the projections and volumes
-        
-        allocate(sn(i_nedge,3))
         
         centroid_array_count_old = -1
         allocate(centroid_index_array(0),non_viable_faces(0),centroid_array(0,0))
@@ -216,8 +219,6 @@ module volume_processing
         ! 3:
         !   call the processer subroutine and sum the projections and volumes
         
-        allocate(sb(b_nedge,3))
-        
         centroid_array_count_old = -1
         allocate(centroid_index_array(0),non_viable_faces(0),centroid_array(0,0))
         
@@ -384,8 +385,6 @@ module volume_processing
         !   hopefully this is not too dificult
         ! 3:
         !   call the processer subroutine and sum the projections and volumes
-        
-        allocate(sbb(b_npoin,3))
         
         centroid_array_count_old = -1
         allocate(centroid_index_array(0),non_viable_edges(0),centroid_array(0,0))
