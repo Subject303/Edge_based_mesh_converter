@@ -159,8 +159,8 @@ module volume_processing
             enddo
             
             ! this might be exactly negative, alternatives are 1, and cell_1
-            centroid_index_array(centroid_array_count) = centroid_index_array(3)
-            centroid_array(centroid_array_count,:) = c_centroid(centroid_index_array(3),:)
+            centroid_index_array(centroid_array_count) = centroid_index_array(1)
+            centroid_array(centroid_array_count,:) = c_centroid(centroid_index_array(1),:)
 			
             centroid_array_count_old = centroid_array_count
             
@@ -875,6 +875,8 @@ module volume_processing
         angelee = 0.0
         
         if (present(vol1)) then
+            vol1 = 0.0
+            vol2 = 0.0
             
             do i=2,centroid_array_count
                 baryobj_1_centroid = centroid_array(i-1,:)
