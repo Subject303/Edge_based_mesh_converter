@@ -786,8 +786,6 @@ module volume_processing
         enddo
         print'(a,4e14.4e3,i,a,4e14.4e3,i)', 'lowest sn  ', projection_mag(i1), sn(i1,:), i1, ' highest sn  ', projection_mag(i2), sn(i2,:), i2
         print*, ' '
-        print*, MAXVAL(coords(:,1)),MINVAL(coords(:,1)),MAXVAL(coords(:,2)),MINVAL(coords(:,2)),MAXVAL(coords(:,3)),MINVAL(coords(:,3))
-        
         
         deallocate(projection_mag)
         allocate(projection_mag(b_nedge))
@@ -842,6 +840,8 @@ module volume_processing
         
         print'(a,e14.4e3,i,a,e14.4e3,i,a,f)', 'lowest vol ', vol(i1), i1, ' highest vol ', vol(i2), i2, ' total volume ', total_volume
         print*, ' '
+        
+        print*, MAXVAL(coords(:,1)),MINVAL(coords(:,1)),MAXVAL(coords(:,2)),MINVAL(coords(:,2)),MAXVAL(coords(:,3)),MINVAL(coords(:,3))
         
     end subroutine projection_test
     
