@@ -876,7 +876,8 @@ module volume_processing
         implicit none
         integer(KIND=INT32)        :: i, centroid_array_count
         real(KIND=REAL64),optional :: vol1, vol2
-        real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), v1(3),v2(3), i1(3), i2(3)
+        real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), i1(3), i2(3)
+        real(KIND=REAL64)          :: v1(3),v2(3), v3(3)
         
         angelee = 0.0
         
@@ -892,12 +893,12 @@ module volume_processing
                 
                 v1 = obj_centroid - centroid_array(1,:) ! vector from 3 to 4
                 v2 = obj_centroid - baryobj_2_centroid ! vector from 3 to 5
-                
-                
+                v3 = i1 - i2
+				
                 !angelee = angelee + acosd(alignment(v1,v2))
                 print*, 'aaaaa'
                 !print*, angelee, acosd(alignment(v1,v2)), alignment(v1,v2)
-                print*, asind(alignment(v1,v2)), acosd(alignment(v1,v2)), alignment(v1,v2)
+                print*, acosd(planar_alignment(v1,v2,v3)), planar_alignment(v1,v2,v3)
                 print*, 'aaaaa'
                 
             enddo
