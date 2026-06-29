@@ -308,6 +308,8 @@ cell_to_del[-1]=1
 
 temp = []
 temp2 = []
+temp3 = []
+temp4 = []
 j=0
 print('   c_p',time.time()-start); sys.stdout.flush()
 for i in range(len(c_p_index)-1):
@@ -321,6 +323,10 @@ for i in range(len(c_p_index)-1):
                 temp.append(obj1)
                 temp2.append(c_p_index[i])
                 j=j+1
+                
+                temp3.append(c_f_obj_relation_array[i])
+                temp4.append(c_f_index[i])
+
                 cell_to_del[i] = 1
                 nele_to_del=nele_to_del-1
                 break
@@ -328,14 +334,22 @@ for i in range(len(c_p_index)-1):
             
 temp.append(c_p_obj_relation_array[i+1])
 temp2.append(c_p_index[i+1])
+temp3.append(c_f_obj_relation_array[i+1])
+temp4.append(c_f_index[i+1])
 cell_to_rep.append(j)
 c_p_obj_relation_array = temp
 c_p_index = temp2
+c_f_obj_relation_array = temp3
+c_f_index = temp4
 del temp
-del temp2; gc.collect()
+del temp2
+del temp3
+del temp4; gc.collect()
 
 temp = []
 temp2 = []
+temp3 = []
+temp4 = []
 j=0
 print('   f_p',time.time()-start); sys.stdout.flush()
 for i in range(len(f_p_index)-1):
@@ -349,6 +363,10 @@ for i in range(len(f_p_index)-1):
                 temp.append(obj1)
                 temp2.append(f_p_index[i])
                 j=j+1
+                
+                temp3.append(f_e_obj_relation_array[i])
+                temp4.append(f_e_index[i])
+
                 face_to_del[i] = 1
                 nface_to_del=nface_to_del-1
                 break
@@ -356,11 +374,17 @@ for i in range(len(f_p_index)-1):
     
 temp.append(f_p_obj_relation_array[i+1])
 temp2.append(f_p_index[i+1])
+temp3.append(f_e_obj_relation_array[i+1])
+temp4.append(f_e_index[i+1])
 face_to_rep.append(j)
 f_p_obj_relation_array = temp 
 f_p_index = temp2
+f_e_obj_relation_array = temp3
+f_e_index = temp4
 del temp
-del temp2; gc.collect()
+del temp2
+del temp3
+del temp4; gc.collect()
 
 temp = []
 temp2 = []
@@ -386,22 +410,24 @@ edge_to_rep.append(j)
 e_p_obj_relation_array = temp
 e_p_index = temp2
 del temp
-del temp2; gc.collect()
+del temp2
+del temp3
+del temp4; gc.collect()
    
 print('updating mappings',time.time()-start); sys.stdout.flush()
 
 
 
-temp=[[]]*nface_to_del
-temp1=[0]*nface_to_del
+#temp=[[]]*nface_to_del
+#temp1=[0]*nface_to_del
 
-for i in range(nface_to_del):
-    if -1 == face_to_del[i]:
-        temp[i] = f_e_obj_relation_array[i]
-        temp1[i] = f_e_index[i]
+#for i in range(nface_to_del):
+#    if -1 == face_to_del[i]:
+#        temp[i] = f_e_obj_relation_array[i]
+#        temp1[i] = f_e_index[i]
 
-f_e_obj_relation_array = temp
-f_e_index = temp1
+#f_e_obj_relation_array = temp
+#f_e_index = temp1
 
 #j=len(f_e_index)
 #for i in reversed(face_to_del):
@@ -413,16 +439,16 @@ f_e_index = temp1
         
 print('deleting f e duplicates',time.time()-start); sys.stdout.flush()
 
-temp=[[]]*nele_to_del
-temp1=[0]*nele_to_del
+#temp=[[]]*nele_to_del
+#temp1=[0]*nele_to_del
 
-for i in range(nele_to_del):
-    if -1 == cell_to_del[i]:
-        temp[i] = c_f_obj_relation_array[i]
-        temp1[i] = c_f_index[i]
+#for i in range(nele_to_del):
+#    if -1 == cell_to_del[i]:
+#        temp[i] = c_f_obj_relation_array[i]
+#        temp1[i] = c_f_index[i]
 
-c_f_obj_relation_array = temp
-c_f_index = temp1
+#c_f_obj_relation_array = temp
+#c_f_index = temp1
 
 #j=len(c_f_index)
 #for i in reversed(cell_to_del):
