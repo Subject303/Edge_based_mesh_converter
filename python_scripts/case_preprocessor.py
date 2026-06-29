@@ -297,15 +297,6 @@ edge_to_del=[-1]*len(e_p_index)
 face_to_del=[-1]*len(f_p_index)
 cell_to_del=[-1]*len(c_p_index)
 
-nedge_to_del = len(e_p_index)
-nface_to_del = len(f_p_index)
-nele_to_del = len(c_p_index)
-
-edge_to_del[-1]=1
-face_to_del[-1]=1
-cell_to_del[-1]=1
-
-
 temp = []
 temp2 = []
 temp3 = []
@@ -327,8 +318,6 @@ for i in range(len(c_p_index)-1):
                 temp3.append(c_f_obj_relation_array[i])
                 temp4.append(c_f_index[i])
 
-                cell_to_del[i] = 1
-                nele_to_del=nele_to_del-1
                 break
 
             
@@ -367,8 +356,6 @@ for i in range(len(f_p_index)-1):
                 temp3.append(f_e_obj_relation_array[i])
                 temp4.append(f_e_index[i])
 
-                face_to_del[i] = 1
-                nface_to_del=nface_to_del-1
                 break
             
     
@@ -400,8 +387,6 @@ for i in range(len(e_p_index)-1):
         temp.append(obj1)
         temp2.append(2)
         j=j+1
-        edge_to_del[i] = 1
-        nedge_to_del=nedge_to_del-1
         
     
 temp.append(e_p_obj_relation_array[i+1])
