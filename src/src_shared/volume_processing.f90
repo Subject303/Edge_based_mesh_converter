@@ -952,7 +952,7 @@ module volume_processing
         
         angelee = angelee + acosd(alignment(v34,v35))
         print*, 'aaaaa'
-        print*, angelee
+        print*, angelee, acosd(alignment(v34,v35))
         print*, 'aaaaa'
         
         
