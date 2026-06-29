@@ -825,7 +825,7 @@ module volume_processing
             if (projection_mag(i).gt.projection_mag(i2)) i2 = i
             
         enddo
-        print'(a,4f4.3,i,a,4f4.3,i)', 'lowest tot ', projection_mag(i1), tot(i1,:), i1, ' highest tot ', projection_mag(i2), tot(i2,:), i2
+        print'(a,4f7.3,i,a,4f7.3,i)', 'lowest tot ', projection_mag(i1), tot(i1,:), i1, ' highest tot ', projection_mag(i2), tot(i2,:), i2
         print*, ' '
         
         i1=1
