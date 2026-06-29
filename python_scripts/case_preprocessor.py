@@ -427,14 +427,10 @@ for i in range(len(f_e_obj_relation_array)):
         obj[j] = edge_to_rep[obj[j]] 
     f_e_obj_relation_array[i] = sorted(obj)
 
-
-print(c_f_index)
-
 temp = []
 temp2 = []
 print('   c_f'); sys.stdout.flush()
 for i in range(len(c_f_index)-1):
-    print(c_f_index[i], c_f_index[i+1], c_f_obj_relation_array[i], c_f_obj_relation_array[i+1])
     if c_f_index[i] == c_f_index[i+1]:    
         obj1 = c_f_obj_relation_array[i]
         obj2 = c_f_obj_relation_array[i+1]
@@ -512,8 +508,6 @@ print('updating counts',time.time()-start); sys.stdout.flush()
 nele  = len(c_p_index)
 nface = len(f_p_index)
 nedge = len(e_p_index)
-
-print(c_f_index)
 
 c_p_sum=c_p_index[-1]
 f_p_sum=f_p_index[-1]
