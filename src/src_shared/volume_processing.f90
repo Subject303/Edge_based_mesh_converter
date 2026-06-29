@@ -189,8 +189,10 @@ module volume_processing
                 sn(ie,:) = -in_progress_projection(:)
                 vol(i1)  = vol(i1) + vol1
                 vol(i2)  = vol(i2) + vol2
+                print*, 'sn swapped'
 			else
                 sn(ie,:) = in_progress_projection
+                print*, 'sn reg'
                 vol(i1)  = vol(i1) + vol1
                 vol(i2)  = vol(i2) + vol2
 			endif
@@ -361,10 +363,12 @@ module volume_processing
             angle = alignment(in_progress_projection, direction_array)
             
             if (angle .lt. 0.) then
+                print*, 'sb swapped'
                 sb(be,:) = -in_progress_projection(:)
                 vol(i1)  = vol(i1) + vol1
                 vol(i2)  = vol(i2) + vol2
 			else
+                print*, 'sb regular'
                 sb(be,:) = in_progress_projection
                 vol(i1)  = vol(i1) + vol1
                 vol(i2)  = vol(i2) + vol2
@@ -919,6 +923,7 @@ module volume_processing
                 v13(i) = i1(i) - i3(i) ! vector from 1 to 3
                 v32(i) = i3(i) - i2(i) ! vector from 3 to 2
             enddo
+            
             vol1 = vol1 + abs((c1415(1)*v13(1) ) - (c1415(2)*v13(2) ) + (c1415(3)*v13(3) ) )/6
             vol2 = vol2 + abs((c1415(1)*v32(1) ) - (c1415(2)*v32(2) ) + (c1415(3)*v32(3) ) )/6
             
