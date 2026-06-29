@@ -453,6 +453,7 @@ temp = []
 temp2 = []
 print('   c_f'); sys.stdout.flush()
 for i in range(len(c_f_index)-1):
+    print(c_f_index[i], c_f_index[i+1], c_f_obj_relation_array[i], c_f_obj_relation_array[i+1])
     if c_f_index[i] == c_f_index[i+1]:    
         obj1 = c_f_obj_relation_array[i]
         obj2 = c_f_obj_relation_array[i+1]
