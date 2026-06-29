@@ -9,7 +9,7 @@ module volume_processing
     use boundary_data
     use quicksort_module
     use projection_data
-    use utils, ONLY : alignment
+    use utils, ONLY : alignment, planar_alignment
     ! need everything p much here.
     implicit none
     real(KIND=REAL64) :: angelee
