@@ -449,6 +449,8 @@ for i in range(len(c_f_obj_relation_array)):
 
 print('replacing face rearrangements',time.time()-start); sys.stdout.flush()
 
+print(c_f_index)
+
 temp = []
 temp2 = []
 print('   c_f'); sys.stdout.flush()
