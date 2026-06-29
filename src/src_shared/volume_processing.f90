@@ -28,8 +28,8 @@ module volume_processing
         integer(KIND=INT32) :: ie, e, i, j, i1, i2, centroid_array_count, centroid_array_count_old, ef, ec, ef_start, ec_start, ef_end, ec_end
         integer(KIND=INT32) :: cell_count, face_count, current_face, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
-        real(KIND=REAL64),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL64)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle
+        real(KIND=REAL32),allocatable   :: centroid_array(:,:)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle
         logical, allocatable :: non_viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -201,8 +201,8 @@ module volume_processing
         integer(KIND=INT32) :: be, e, i, j, i1, i2, centroid_array_count, centroid_array_count_old, ef, ec, ef_start, ec_start, ef_end, ec_end
         integer(KIND=INT32) :: cell_count, face_count, current_face, cell_1, cell_2, prev_cell
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
-        real(KIND=REAL64),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL64)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle
+        real(KIND=REAL32),allocatable   :: centroid_array(:,:)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle
         logical, allocatable :: non_viable_faces(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -370,8 +370,8 @@ module volume_processing
         integer(KIND=INT32) :: bp, p, i, j, i1, i2, centroid_array_count, centroid_array_count_real, centroid_array_count_old, pe, pe_start, pf_start, pe_end, pf_end
         integer(KIND=INT32) :: edge_count, face_count, current_edge, face_1, face_2, prev_face
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
-        real(KIND=REAL64),allocatable   :: centroid_array(:,:)
-        real(KIND=REAL64)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle
+        real(KIND=REAL32),allocatable   :: centroid_array(:,:)
+        real(KIND=REAL32)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle
         logical, allocatable :: non_viable_edges(:)
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -746,7 +746,7 @@ module volume_processing
     subroutine projection_test
         implicit none
         integer(KIND=INT32)          :: i, i1, i2
-        real(KIND=REAL64),allocatable :: projection_mag(:), tot(:,:)
+        real(KIND=REAL32),allocatable :: projection_mag(:), tot(:,:)
         
         
         allocate(tot(npoin,3))
@@ -844,7 +844,7 @@ module volume_processing
         implicit none
         integer(KIND=INT32)        :: i, centroid_array_count
         real(KIND=REAL32),optional :: vol1, vol2
-        real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), i1(3), i2(3)
+        real(KIND=REAL32)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), i1(3), i2(3)
         
         if (present(vol1)) then
             do i=2,centroid_array_count
@@ -866,10 +866,9 @@ module volume_processing
     subroutine cvolume(sn, i3, i4, i5, i1, i2, vol1, vol2)
         implicit none
         real(KIND=REAL32),optional     :: vol1, vol2
-        real(KIND=REAL64)              :: dbl_vol1, dbl_vol2
-        real(KIND=REAL64),dimension(3) :: v13,v14,v15,v32,v42,v52,c1415,c4252
-        real(KIND=REAL64),dimension(3) :: sn, i1, i2, i3, i4, i5
-        real(KIND=REAL64),dimension(3) :: v34,v35
+        real(KIND=REAL32),dimension(3) :: v13,v14,v15,v32,v42,v52,c1415,c4252
+        real(KIND=REAL32),dimension(3) :: sn, i1, i2, i3, i4, i5
+        real(KIND=REAL32),dimension(3) :: v34,v35
         integer(KIND=INT32) :: i
         
         do i=1,3
@@ -894,15 +893,13 @@ module volume_processing
         c4252(3) = v42(1) * v52(2) - v42(2) * v52(1)
         
         if (present(vol1))then
-            dbl_vol1 = vol1
-            dbl_vol2 = vol2
         
             do i=1,3
                 v13(i) = i1(i) - i3(i) ! vector from 1 to 3
                 v32(i) = i3(i) - i2(i) ! vector from 3 to 2
             enddo
-            vol1 = dbl_vol1 + abs((c1415(1)*v13(1) ) - (c1415(2)*v13(2) ) + (c1415(3)*v13(3) ) )/6
-            vol2 = dbl_vol2 + abs((c1415(1)*v32(1) ) - (c1415(2)*v32(2) ) + (c1415(3)*v32(3) ) )/6
+            vol1 = vol1 + abs((c1415(1)*v13(1) ) - (c1415(2)*v13(2) ) + (c1415(3)*v13(3) ) )/6
+            vol2 = vol2 + abs((c1415(1)*v32(1) ) - (c1415(2)*v32(2) ) + (c1415(3)*v32(3) ) )/6
             
 		endif
 
