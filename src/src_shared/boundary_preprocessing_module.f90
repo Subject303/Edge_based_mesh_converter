@@ -330,8 +330,8 @@ module boundary_routine_module
         
         
         allocate(feature_edges(b_nedge),feature_points(b_npoin))
-        feature_edges = .false.
-        feature_points = .false.
+        feature_edges = .true.
+        feature_points = .true.
         
         
         
