@@ -898,7 +898,6 @@ module volume_processing
                 angelee = angelee + planar_alignment(v1,v2,v3)
                 print*, 'aaaaa'
                 print*, baryobj_1_centroid
-                print*, baryobj_2_centroid
                 print*, angelee, planar_alignment(v1,v2,v3)
                 print*, 'aaaaa'
                 
