@@ -197,9 +197,6 @@ module volume_processing
             
             print*,'aa'
             print*, centroid_array_count, SIZE(centroid_array,1)
-            print*, in_progress_centroid
-            print*, c1
-            print*, c2
             print*,'aa'
             
         enddo
@@ -897,7 +894,8 @@ module volume_processing
 				
                 angelee = angelee + planar_alignment(v1,v2,v3)
                 print*, 'aaaaa'
-                print*, baryobj_1_centroid, v1
+                print*, baryobj_1_centroid
+                print*, v3
                 print*, angelee, planar_alignment(v1,v2,v3)
                 print*, 'aaaaa'
                 
