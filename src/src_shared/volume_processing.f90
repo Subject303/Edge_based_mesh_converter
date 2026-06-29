@@ -890,10 +890,9 @@ module volume_processing
                 call cvolume(obj_projection, obj_centroid, baryobj_1_centroid, baryobj_2_centroid, i1, i2, vol1, vol2)
                 
                 
-                do i=1,3
-                    v1(i) = obj_centroid(i) - baryobj_1_centroid(i) ! vector from 3 to 4
-                    v2(i) = obj_centroid(i) - baryobj_2_centroid(i) ! vector from 3 to 5
-                enddo
+                v1 = obj_centroid - baryobj_1_centroid ! vector from 3 to 4
+                v2 = obj_centroid - baryobj_2_centroid ! vector from 3 to 5
+                
                 
                 angelee = angelee + acosd(alignment(v1,v2))
                 print*, 'aaaaa'
