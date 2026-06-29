@@ -410,9 +410,7 @@ edge_to_rep.append(j)
 e_p_obj_relation_array = temp
 e_p_index = temp2
 del temp
-del temp2
-del temp3
-del temp4; gc.collect()
+del temp2; gc.collect()
     
 print('   updating c f mapping',time.time()-start); sys.stdout.flush()
 
