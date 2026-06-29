@@ -73,10 +73,10 @@ module utils
         implicit none
         real(KIND=REAL32) :: v1(3), v2(3), v3(3), mag(3), det, dot
         
-        mag(1) = sqrt(v1(1)*v1(1)+v1(2)*v1(2)+v1(3)*v1(3))
+        !mag(1) = sqrt(v1(1)*v1(1)+v1(2)*v1(2)+v1(3)*v1(3))
         v1(:) = v1(:)! / mag(1)
         
-        mag(2) = sqrt(v2(1)*v2(1)+v2(2)*v2(2)+v2(3)*v2(3))
+        !mag(2) = sqrt(v2(1)*v2(1)+v2(2)*v2(2)+v2(3)*v2(3))
         v2(:) = v2(:)! / mag(2)
         
         mag(3) = sqrt(v3(1)*v3(1)+v3(2)*v3(2)+v3(3)*v3(3))
@@ -93,10 +93,10 @@ module utils
         implicit none
         real(KIND=REAL64) :: v1(3), v2(3), v3(3), mag(3), det, dot
         
-        mag(1) = sqrt(v1(1)*v1(1)+v1(2)*v1(2)+v1(3)*v1(3))
+        !mag(1) = sqrt(v1(1)*v1(1)+v1(2)*v1(2)+v1(3)*v1(3))
         v1(:) = v1(:)! / mag(1)
         
-        mag(2) = sqrt(v2(1)*v2(1)+v2(2)*v2(2)+v2(3)*v2(3))
+        !mag(2) = sqrt(v2(1)*v2(1)+v2(2)*v2(2)+v2(3)*v2(3))
         v2(:) = v2(:)! / mag(2)
         
         mag(3) = sqrt(v3(1)*v3(1)+v3(2)*v3(2)+v3(3)*v3(3))
