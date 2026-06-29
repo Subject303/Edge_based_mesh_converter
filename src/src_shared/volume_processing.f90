@@ -865,8 +865,8 @@ module volume_processing
     
     subroutine cvolume(sn, i3, i4, i5, i1, i2, vol1, vol2)
         implicit none
-        real(KIND=REAL32),optional     :: vol1, vol2
-        real(KIND=REAL64)              :: dbl_vol1, dbl_vol2
+        real(KIND=REAL32)		   :: vol1, vol2
+        real(KIND=REAL64),optional :: dbl_vol1, dbl_vol2
         real(KIND=REAL64),dimension(3) :: v13,v14,v15,v32,v42,v52,c1415,c4252
         real(KIND=REAL64),dimension(3) :: sn, i1, i2, i3, i4, i5
         real(KIND=REAL64),dimension(3) :: v34,v35
@@ -894,6 +894,8 @@ module volume_processing
         c4252(3) = v42(1) * v52(2) - v42(2) * v52(1)
         
         if (present(vol1))then
+            dbl_vol1 = vol1
+            dbl_vol2 = vol2
         
             do i=1,3
                 v13(i) = i1(i) - i3(i) ! vector from 1 to 3
