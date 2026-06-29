@@ -12,7 +12,7 @@ module volume_processing
     use utils, ONLY : alignment
     ! need everything p much here.
     implicit none
-    
+    real(KIND=REAL64) :: angelee
         
     contains
     
@@ -878,6 +878,8 @@ module volume_processing
         real(KIND=REAL64),optional :: vol1, vol2
         real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), i1(3), i2(3)
         
+        angelee = 0.0
+        
         if (present(vol1)) then
             vol1 = 0.0
             vol2 = 0.0
@@ -948,9 +950,9 @@ module volume_processing
         sn(2) = sn(2) + ((v34(3) * v35(1) - v34(1) * v35(3))/2) ! projection in the yy axis
         sn(3) = sn(3) + ((v34(1) * v35(2) - v34(2) * v35(1))/2) ! projection in the zz axis
         
-
+        angelee = angelee + acosd(alignment(v34,v35))
         print*, 'aaaaa'
-        print*, acosd(alignment(v34,v35))
+        print*, angelee
         print*, 'aaaaa'
         
         
