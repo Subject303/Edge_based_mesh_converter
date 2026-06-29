@@ -894,8 +894,6 @@ module volume_processing
         c4252(3) = v42(1) * v52(2) - v42(2) * v52(1)
         
         if (present(vol1))then
-            dbl_vol1 = vol1
-            dbl_vol2 = vol2
         
             do i=1,3
                 v13(i) = i1(i) - i3(i) ! vector from 1 to 3
