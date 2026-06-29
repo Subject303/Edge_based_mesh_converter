@@ -189,14 +189,17 @@ module volume_processing
                 sn(ie,:) = -in_progress_projection(:)
                 vol(i1)  = vol(i1) + vol1
                 vol(i2)  = vol(i2) + vol2
-                print*, 'sn swapped'
 			else
                 sn(ie,:) = in_progress_projection
-                print*, 'sn reg'
                 vol(i1)  = vol(i1) + vol1
                 vol(i2)  = vol(i2) + vol2
 			endif
             
+            print*,'aa'
+            print*, centroid_array
+            print*, centroid_array_count, SIZE(centroid_array)
+            print*, in_progress_centroid, c1, c2
+            print*,'aa'
             
         enddo
         
@@ -363,16 +366,21 @@ module volume_processing
             angle = alignment(in_progress_projection, direction_array)
             
             if (angle .lt. 0.) then
-                print*, 'sb swapped'
                 sb(be,:) = -in_progress_projection(:)
                 vol(i1)  = vol(i1) + vol1
                 vol(i2)  = vol(i2) + vol2
 			else
-                print*, 'sb regular'
                 sb(be,:) = in_progress_projection
                 vol(i1)  = vol(i1) + vol1
                 vol(i2)  = vol(i2) + vol2
 			endif
+            
+            print*,'aa'
+            print*, centroid_array
+            print*, centroid_array_count, SIZE(centroid_array)
+            print*, in_progress_centroid, c1, c2
+            print*,'aa'
+            
             
         enddo
         
