@@ -4,6 +4,16 @@ module utils
     use iso_fortran_env
     implicit none
     
+	private alignment_single, alignment_double
+    
+    interface alignment
+
+        module procedure &
+        & alignment_single, &
+        & alignment_double
+        
+    end interface alignment
+    
     contains
     
     subroutine sort_and_flag_duplicates(array)
@@ -35,14 +45,21 @@ module utils
         
     end subroutine remove_flagged_duplicates
     
-    real(KIND=REAL32) function alignment(v1,v2)
+    real(KIND=REAL32) function alignment_single(v1,v2)
         implicit none
         real(KIND=REAL32) :: v1(3), v2(3)
         
         alignment = (v1(1)*v2(1) + v1(2)*v2(2) + v1(3)*v2(3))/ (sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3)) * sqrt(v2(1)*v2(1) + v2(2)*v2(2) + v2(3)*v2(3)))
         
-    end function
+    end function alignment_single
     
+    real(KIND=REAL64) function alignment_double(v1,v2)
+        implicit none
+        real(KIND=REAL64) :: v1(3), v2(3)
+        
+        alignment = (v1(1)*v2(1) + v1(2)*v2(2) + v1(3)*v2(3))/ (sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3)) * sqrt(v2(1)*v2(1) + v2(2)*v2(2) + v2(3)*v2(3)))
+        
+    end function alignment_double
     
     !end contains
     
