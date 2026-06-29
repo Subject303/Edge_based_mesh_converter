@@ -4,20 +4,12 @@
 #PBS -j eo
 #PBS -m bf
 #PBS -M j.thomas@lboro.ac.uk
-#PBS -l walltime=20:00:00
+#PBS -l walltime=00:00:01
 #PBS -l nodes=1:ppn=40
 #PBS -A Szmelter2025b
 
-ls
-pwd
-
-
 cd      $PBS_O_WORKDIR
 cd      ..
-
-ls
-pwd
-
 
 main_path=$(pwd)
 # MOD=$(find . -name $main_path"/modfiles/*.prj")
