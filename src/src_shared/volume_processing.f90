@@ -861,7 +861,7 @@ module volume_processing
     subroutine centroid_array_routine(obj_projection, obj_centroid, centroid_array_count, centroid_array, i1, i2, vol1, vol2)
         implicit none
         integer(KIND=INT32)        :: i, centroid_array_count
-        real(KIND=REAL32),optional :: vol1, vol2
+        real(KIND=REAL64),optional :: vol1, vol2
         real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), i1(3), i2(3)
         
         if (present(vol1)) then
@@ -886,8 +886,7 @@ module volume_processing
     
     subroutine cvolume(sn, i3, i4, i5, i1, i2, vol1, vol2)
         implicit none
-        real(KIND=REAL32),optional     :: vol1, vol2
-        real(KIND=REAL64)              :: dbl_vol1, dbl_vol2
+        real(KIND=REAL64),optional     :: vol1, vol2
         real(KIND=REAL64),dimension(3) :: v13,v14,v15,v32,v42,v52,c1415,c4252
         real(KIND=REAL64),dimension(3) :: sn, i1, i2, i3, i4, i5
         real(KIND=REAL64),dimension(3) :: v34,v35
@@ -908,8 +907,6 @@ module volume_processing
         ! a = v14 b = v15
         
         if (present(vol1))then
-            dbl_vol1 = vol1
-            dbl_vol2 = vol2
             
             c1415(1) = v14(2) * v15(3) - v14(3) * v15(2)
             c1415(2) = v14(3) * v15(1) - v14(1) * v15(3)
@@ -922,8 +919,8 @@ module volume_processing
                 v13(i) = i1(i) - i3(i) ! vector from 1 to 3
                 v32(i) = i3(i) - i2(i) ! vector from 3 to 2
             enddo
-            vol1 = dbl_vol1 + abs((c1415(1)*v13(1) ) - (c1415(2)*v13(2) ) + (c1415(3)*v13(3) ) )/6
-            vol2 = dbl_vol2 + abs((c1415(1)*v32(1) ) - (c1415(2)*v32(2) ) + (c1415(3)*v32(3) ) )/6
+            vol1 = vol1 + abs((c1415(1)*v13(1) ) - (c1415(2)*v13(2) ) + (c1415(3)*v13(3) ) )/6
+            vol2 = vol2 + abs((c1415(1)*v32(1) ) - (c1415(2)*v32(2) ) + (c1415(3)*v32(3) ) )/6
             
 		endif
 
