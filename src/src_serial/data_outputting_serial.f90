@@ -123,7 +123,7 @@ module data_outputting_serial
         write(1) offset, types(:)
         
         offset = 8+c_p_sum*4
-        write(1) offset, c_p_obj_relation_array(:)
+        write(1) offset, c_p_obj_relation_array(:)-1
     
         write(1) 8+face_offset
         do c=1,nele
@@ -131,7 +131,7 @@ module data_outputting_serial
             do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
                 f = c_f_obj_relation_array(cf)
                 ! number of points in face, points in face
-                write(1) (f_p_index_array(f)-f_p_index_array(f-1)) , f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))
+                write(1) (f_p_index_array(f)-f_p_index_array(f-1)) , f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))-1
             enddo
         enddo
     
