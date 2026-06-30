@@ -68,6 +68,7 @@ module data_outputting_serial
                 f = c_f_obj_relation_array(cf)
                 face_offset = face_offset + 1 + (f_p_index_array(f)-f_p_index_array(f-1))
             enddo
+            print*, face_offset*4
         enddo
         face_offset = face_offset * 4
         
