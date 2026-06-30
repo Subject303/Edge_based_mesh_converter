@@ -89,7 +89,7 @@ module data_outputting_serial
         offset = offset + 8 + nele 
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="connectivity" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + nele*4
+        offset = offset + 8 + c_p_sum*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="faces" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + face_offset
@@ -113,13 +113,13 @@ module data_outputting_serial
         offset = nele*4
         write(1) offset, c_p_index_array(1:nele)
     
-        offset = c_p_sum*4
-        write(1) offset, c_p_obj_relation_array(:)
-    
         allocate(types(nele))
         types = 42
         offset = nele
         write(1) offset, types(:)
+        
+        offset = c_p_sum*4
+        write(1) offset, c_p_obj_relation_array(:)
     
         write(1) face_offset
         do c=1,nele
