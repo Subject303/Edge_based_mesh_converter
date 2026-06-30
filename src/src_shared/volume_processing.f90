@@ -286,7 +286,7 @@ module volume_processing
             i=3
             
             !print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
-            
+            print*, 'aa ', centroid_index_array
             do
                 
                 if (ef.eq.face_count) then
@@ -343,6 +343,7 @@ module volume_processing
                 endif
                 
                 !print*, ef, current_face, cell_1, cell_2 , prev_cell
+                print*, 'aa ', centroid_index_array
                 
             enddo
             
