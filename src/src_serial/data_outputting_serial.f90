@@ -93,7 +93,7 @@ module data_outputting_serial
         offset = offset + 8 + c_p_sum*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="faces" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + face_offset
+        offset = offset + face_offset
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="faceoffsets" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')//'&
 &</Cells>'//NEW_LINE('')//'&
