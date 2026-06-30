@@ -1,6 +1,11 @@
     
 module data_outputting_serial
     use io_data
+    use object_counts
+    use raw_data
+    use object_relation_data
+    use boundary_data
+    use projection_data
     
     contains
     
