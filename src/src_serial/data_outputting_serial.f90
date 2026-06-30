@@ -110,7 +110,7 @@ module data_outputting_serial
         write(1) offset, c_p_index_array(1:nele)
     
         offset = 8+nele*4
-        write(1) offset, c_p_relationship_array(:)
+        write(1) offset, c_p_obj_relation_array(:)
     
         allocate(types(nelem))
         types = 42
@@ -122,7 +122,7 @@ module data_outputting_serial
             write(1) (c_f_index_array(c)-c_f_index_array(c-1)) ! number of faces
             do f=(1+c_f_index_array(c-1)),c_f_index_array(c)
                 ! number of points in face, points in face
-                write(1) (f_p_index_array(f)-f_p_index_array(f-1)) , f_p_relationship_array((f_p_index_array(f-1)+1):f_p_index_array(f))
+                write(1) (f_p_index_array(f)-f_p_index_array(f-1)) , f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))
             enddo
         enddo
     
