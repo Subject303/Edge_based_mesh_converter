@@ -279,6 +279,7 @@ module volume_processing
             centroid_array(2,:) = c_centroid(cell_1,:)
                     
             prev_cell = cell_1
+            cell_2 = -1
             
             !print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
             
