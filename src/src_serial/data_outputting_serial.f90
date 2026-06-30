@@ -133,8 +133,9 @@ module data_outputting_serial
     
         offset = 8+nele*4
         write(1) offset
+        offset_count = 0
         do c=1,nele
-            offset_count =  1 + c_f_index_array(c) - c_f_index_array(c-1)
+            offset_count =  offset_count + 1 + c_f_index_array(c) - c_f_index_array(c-1)
             do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
                 f = c_f_obj_relation_array(cf)
                 offset_count = offset_count + (f_p_index_array(f)-f_p_index_array(f-1))
