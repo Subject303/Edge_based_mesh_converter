@@ -52,7 +52,7 @@ module data_outputting_serial
     
     subroutine output_vtu_binary_appended
         implicit none
-		integer(KIND=INT32)             :: i, c, f, offset_count
+		integer(KIND=INT32)             :: i, c, f, offset_count, cf
 		integer(KIND=INT8 ),allocatable :: types(:)
         integer(KIND=INT64)			    :: offset, face_offset
         character(:), allocatable		:: outstring
@@ -64,7 +64,8 @@ module data_outputting_serial
 		face_offset = 2
 		do c=1,nele
             face_offset = face_offset + 1
-            do f=(1+c_f_index_array(c-1)),c_f_index_array(c)
+            do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
+                f = c_f_obj_relation_array(cf)
                 face_offset = face_offset + (f_p_index_array(f)-f_p_index_array(f-1))
             enddo
         enddo
@@ -82,13 +83,13 @@ module data_outputting_serial
         offset = offset + 8 + npoin*3*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="offsets" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + nele*4
+        offset = offset + 8 + nelem*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="UInt8" Name="types" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + nele 
+        offset = offset + 8 + nelem 
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="connectivity" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + nele*4
+        offset = offset + 8 + nelem*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="faces" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + face_offset
@@ -112,7 +113,7 @@ module data_outputting_serial
         offset = 8+nele*4
         write(1) offset, c_p_obj_relation_array(:)
     
-        allocate(types(nele))
+        allocate(types(nelem))
         types = 42
         offset = 8+nele
         write(1) offset, types(:)
@@ -120,7 +121,8 @@ module data_outputting_serial
         write(1) face_offset
         do c=1,nele
             write(1) (c_f_index_array(c)-c_f_index_array(c-1)) ! number of faces
-            do f=(1+c_f_index_array(c-1)),c_f_index_array(c)
+            do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
+                f = c_f_obj_relation_array(cf)
                 ! number of points in face, points in face
                 write(1) (f_p_index_array(f)-f_p_index_array(f-1)) , f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))
             enddo
@@ -130,7 +132,8 @@ module data_outputting_serial
         write(1) offset
         do c=1,nele
             offset_count =  1 + c_f_index_array(c) - c_f_index_array(c-1)
-            do f=(1+c_f_index_array(c-1)),c_f_index_array(c)
+            do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
+                f = c_f_obj_relation_array(cf)
                 offset_count = offset_count + (f_p_index_array(f)-f_p_index_array(f-1))
             enddo
             write(1) offset_count
