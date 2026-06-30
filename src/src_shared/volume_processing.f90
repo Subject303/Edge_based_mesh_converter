@@ -218,6 +218,24 @@ module volume_processing
         real(KIND=REAL64)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle, vol1, vol2
         logical, allocatable :: non_viable_faces(:)
         
+        do e=1,nedge
+            i1       = e_p_index_array(e-1)	+ 1
+			ef_start = e_f_index_array(e-1)	+ 1
+            ec_start = e_c_index_array(e-1)	+ 1
+            i2       = e_p_index_array(e) 
+            ef_end   = e_f_index_array(e)
+            ec_end   = e_c_index_array(e)
+            print*, e_bound_array(e)
+            print*, 'point'
+            print*, e_p_obj_relation_array(i1:i2)
+            print*, 'edge'
+            print*, e_f_obj_relation_array(ef_start:ef_end)
+            print*, 'face'
+            print*, e_c_obj_relation_array(ec_start:ec_end)
+            
+	    enddo
+        
+        
         ! it's upsetting this is the easiest of the three jobs I gotta do
         
         ! so, step wise here's the process per edge
