@@ -109,8 +109,8 @@ module data_outputting_serial
         
         offset = 8+npoin*3*4
         write(1) offset
-        do i=1,3
-            write(1) coords(:,i)
+        do i=1,npoin
+            write(1) coords(i,:)
 		enddo
         
         offset = 8+nele*4
