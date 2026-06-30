@@ -61,14 +61,13 @@ module data_outputting_serial
         write(TXTnpoin, '(I16)') npoin
         write(TXTnele,  '(I16)') nele
         
-		face_offset = 2
+		face_offset = 0
 		do c=1,nele
             face_offset = face_offset + 1! + c_f_index_array(c) - c_f_index_array(c-1)
             do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
                 f = c_f_obj_relation_array(cf)
                 face_offset = face_offset + 1 + (f_p_index_array(f)-f_p_index_array(f-1))
             enddo
-            print*, face_offset*4
         enddo
         face_offset = face_offset * 4
         
@@ -93,7 +92,7 @@ module data_outputting_serial
         offset = offset + 8 + c_p_sum*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="faces" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + face_offset
+        offset = offset + 8 + face_offset
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="faceoffsets" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')//'&
 &</Cells>'//NEW_LINE('')//'&
@@ -122,7 +121,7 @@ module data_outputting_serial
         offset = 8+c_p_sum*4
         write(1) offset, c_p_obj_relation_array(:)
     
-        write(1) face_offset
+        write(1) 8+face_offset
         do c=1,nele
             write(1) (c_f_index_array(c)-c_f_index_array(c-1)) ! number of faces
             do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
