@@ -55,6 +55,7 @@ module preprocessor_routine_module
             
             do i=1,3
                 e_centroid(e,i) = sum(coords(e_p_obj_relation_array(ep_start:ep_end),i)) / 2
+                print*, sum(coords(e_p_obj_relation_array(ep_start:ep_end),i)), e_centroid(e,i)
             enddo
         enddo
         
@@ -78,11 +79,6 @@ module preprocessor_routine_module
             do i=1,3
                 f_centroid(f,i) = sum(coords(f_p_obj_relation_array(fp_start:fp_end),i)) / number_of_points
             enddo
-            
-            print*, coords(f_p_obj_relation_array(fp_start:fp_end),1)
-            print*, coords(f_p_obj_relation_array(fp_start:fp_end),2)
-            print*, coords(f_p_obj_relation_array(fp_start:fp_end),3)
-            print*, f_centroid(f,:), number_of_points
             
         enddo
         
