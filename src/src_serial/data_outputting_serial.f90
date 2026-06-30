@@ -63,7 +63,7 @@ module data_outputting_serial
         
 		face_offset = 2
 		do c=1,nele
-            face_offset = face_offset + 1
+            face_offset = face_offset + 1 + c_f_index_array(c) - c_f_index_array(c-1)
             do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
                 f = c_f_obj_relation_array(cf)
                 face_offset = face_offset + (f_p_index_array(f)-f_p_index_array(f-1))
@@ -86,13 +86,13 @@ module data_outputting_serial
         offset = offset + 8 + nele*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="UInt8" Name="types" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + c_p_sum 
+        offset = offset + 8 + nele 
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="connectivity" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + face_offset*4
+        offset = offset + 8 + c_p_sum*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="faces" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + nele*4
+        offset = offset + 8 + face_offset
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="faceoffsets" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')//'&
 &</Cells>'//NEW_LINE('')//'&
