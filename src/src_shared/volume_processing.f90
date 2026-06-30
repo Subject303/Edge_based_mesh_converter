@@ -248,7 +248,7 @@ module volume_processing
             cell_count = ec_end-ec_start
             face_count = ef_end-ef_start
             
-            centroid_array_count = cell_count + face_count + 1
+            centroid_array_count = cell_count + face_count
             
             ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
             
@@ -263,6 +263,7 @@ module volume_processing
             
             do ! we must start on a boundary face
                 current_face = e_f_obj_relation_array(ef_start+ef)
+                print*, current_face, f_bound_array(current_face)
                 if (f_bound_array(current_face)) exit
                 ef = ef + 1
             enddo
@@ -305,12 +306,11 @@ module volume_processing
                     centroid_index_array(i)   = current_face
                     centroid_array(i,:)   = f_centroid(current_face,:)
                     
-                    !if (f_bound_array(current_face)) exit
+                    print*, current_face, f_bound_array(current_face)
+                    if (f_bound_array(current_face)) exit
                     
                     centroid_index_array(i+1) = cell_2
                     centroid_array(i+1,:) = c_centroid(cell_2,:)
-                    
-                    if (f_bound_array(current_face)) exit
                     
                     non_viable_faces(ef) = .true.
                     
@@ -324,12 +324,11 @@ module volume_processing
                     centroid_index_array(i)   = current_face
                     centroid_array(i,:)   = f_centroid(current_face,:)
                     
-                    !if (f_bound_array(current_face)) exit
+                    print*, current_face, f_bound_array(current_face)
+                    if (f_bound_array(current_face)) exit
                     
                     centroid_index_array(i+1) = cell_1
                     centroid_array(i+1,:) = c_centroid(cell_1,:)
-                    
-                    if (f_bound_array(current_face)) exit
                     
                     non_viable_faces(ef) = .true.
                     
