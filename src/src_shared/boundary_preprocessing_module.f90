@@ -116,6 +116,8 @@ module boundary_routine_module
         enddo
         reversed_e_bound_indexing_array = e_bound_indexing_array - reversed_e_bound_indexing_array
         
+        print*,reversed_e_bound_indexing_array
+        
         e_bound_indexing_array   =pack(e_bound_indexing_array   ,e_bound_array)
         e_internal_indexing_array=pack(e_internal_indexing_array,e_internal_array)
         b_nedge = size(e_bound_indexing_array)
