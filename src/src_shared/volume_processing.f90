@@ -263,7 +263,7 @@ module volume_processing
             
             do ! we must start on a boundary face
                 current_face = e_f_obj_relation_array(ef_start+ef)
-                print*, current_face, f_c_obj_relation_array(f_c_index_array(current_face)    ), -1, f_bound_array(current_face), ef, ef_start+ef, ef_end
+                print*, current_face, f_c_obj_relation_array(f_c_index_array(current_face)    ), f_c_obj_relation_array(f_c_index_array(current_face-1)+1), f_bound_array(current_face), ef, ef_start+ef, ef_end
                 if (f_bound_array(current_face)) exit
                 ef = ef + 1
             enddo
