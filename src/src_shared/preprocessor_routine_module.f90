@@ -78,6 +78,12 @@ module preprocessor_routine_module
             do i=1,3
                 f_centroid(f,i) = sum(coords(f_p_obj_relation_array(fp_start:fp_end),i)) / number_of_points
             enddo
+            
+            print*, coords(f_p_obj_relation_array(fp_start:fp_end),1)
+            print*, coords(f_p_obj_relation_array(fp_start:fp_end),2)
+            print*, coords(f_p_obj_relation_array(fp_start:fp_end),3)
+            print*, f_centroid(f,:), number_of_points
+            
         enddo
         
         print*, 'finished calculating face centroids'

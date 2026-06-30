@@ -33,8 +33,6 @@ module boundary_routine_module
         
             nfaces = f_c_index_array(f) - f_c_index_array(f-1)
             
-            print*, f, nfaces
-            
             if (nfaces .eq. 1) then
             
                 f_bound_array(f) = .true.
@@ -67,9 +65,6 @@ module boundary_routine_module
         f_internal_indexing_array=pack(f_internal_indexing_array,f_internal_array)
         b_nface = size(f_bound_indexing_array)
         i_nface = size(f_internal_indexing_array)
-        
-        print*, reversed_f_bound_indexing_array
-        print*, f_bound_array
         
         if (b_nface+i_nface .ne. nface)then
             print*, 'ERROR ERROR'
