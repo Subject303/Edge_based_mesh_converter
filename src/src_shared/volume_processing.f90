@@ -248,7 +248,7 @@ module volume_processing
             cell_count = ec_end-ec_start
             face_count = ef_end-ef_start
             
-            centroid_array_count = cell_count + face_count
+            centroid_array_count = cell_count + face_count + 1
             
             ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
             
