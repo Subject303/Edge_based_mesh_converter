@@ -106,6 +106,8 @@ module data_outputting_serial
         open(1,file='vtu_mesh.vtu',access='stream',convert='little_endian')
         
         write(1) outstring
+        
+        write(1) coords
     
         offset = 8+npoin*3*4
         write(1) offset, c_p_index_array(1:nele)
