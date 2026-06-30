@@ -305,10 +305,12 @@ module volume_processing
                     centroid_index_array(i)   = current_face
                     centroid_array(i,:)   = f_centroid(current_face,:)
                     
-                    if (f_bound_array(current_face)) exit
+                    !if (f_bound_array(current_face)) exit
                     
                     centroid_index_array(i+1) = cell_2
                     centroid_array(i+1,:) = c_centroid(cell_2,:)
+                    
+                    if (f_bound_array(current_face)) exit
                     
                     non_viable_faces(ef) = .true.
                     
@@ -322,10 +324,12 @@ module volume_processing
                     centroid_index_array(i)   = current_face
                     centroid_array(i,:)   = f_centroid(current_face,:)
                     
-                    if (f_bound_array(current_face)) exit
+                    !if (f_bound_array(current_face)) exit
                     
                     centroid_index_array(i+1) = cell_1
                     centroid_array(i+1,:) = c_centroid(cell_1,:)
+                    
+                    if (f_bound_array(current_face)) exit
                     
                     non_viable_faces(ef) = .true.
                     
