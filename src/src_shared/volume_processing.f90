@@ -379,9 +379,6 @@ module volume_processing
                 vol(i2)  = vol(i2) + vol2
 			endif
             
-            print*,'aa'
-            print*, centroid_array_count, SIZE(centroid_array,1)
-            print*,'aa'
             
             
         enddo
