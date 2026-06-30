@@ -231,7 +231,7 @@ module volume_processing
             print*, p_bound_array(e_p_obj_relation_array(i1:i2))
             print*, 'edge'
             print*, e_f_obj_relation_array(ef_start:ef_end)
-            print*, e_bound_array(e_f_obj_relation_array(ef_start:ef_end))
+            print*, f_bound_array(e_f_obj_relation_array(ef_start:ef_end))
             print*, 'face'
             print*, e_c_obj_relation_array(ec_start:ec_end)
             
