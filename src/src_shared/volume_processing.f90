@@ -346,6 +346,8 @@ module volume_processing
                 print*, 'aa ', centroid_index_array
                 
             enddo
+			
+            print*, 'aa ', centroid_index_array
             
             
             centroid_array_count_old = centroid_array_count
