@@ -108,8 +108,11 @@ module data_outputting_serial
         write(1) outstring
         
         offset = 8+npoin*3*4
-        write(1) offset, coords
-    
+        write(1) offset
+        do i=1,3
+            write(1) coords(:,i)
+		enddo
+        
         offset = 8+nele*4
         write(1) offset, c_p_index_array(1:nele)
     
