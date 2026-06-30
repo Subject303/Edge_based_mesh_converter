@@ -225,7 +225,7 @@ module volume_processing
             i2       = e_p_index_array(e) 
             ef_end   = e_f_index_array(e)
             ec_end   = e_c_index_array(e)
-            print*, 'bound ', e_bound_array(e), e_centroid(e)
+            print*, 'bound ', e_bound_array(e), e_centroid(e,:)
             print*, 'point'
             print*, e_p_obj_relation_array(i1:i2)
             print*, 'edge'
