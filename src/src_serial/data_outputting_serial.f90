@@ -52,7 +52,7 @@ module data_outputting_serial
     
     subroutine output_vtu_binary_appended
         implicit none
-		integer(KIND=INT32)             :: i, offset_count
+		integer(KIND=INT32)             :: i, c, f, offset_count
 		integer(KIND=INT8 ),allocatable :: types(:)
         integer(KIND=INT64)			    :: offset, face_offset
         character(:), allocatable		:: outstring
@@ -82,13 +82,13 @@ module data_outputting_serial
         offset = offset + 8 + npoin*3*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="offsets" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + nelem*4
+        offset = offset + 8 + nele*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="UInt8" Name="types" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + nelem 
+        offset = offset + 8 + nele 
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="connectivity" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + nelem*4
+        offset = offset + 8 + nele*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="faces" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + face_offset
@@ -112,7 +112,7 @@ module data_outputting_serial
         offset = 8+nele*4
         write(1) offset, c_p_obj_relation_array(:)
     
-        allocate(types(nelem))
+        allocate(types(nele))
         types = 42
         offset = 8+nele
         write(1) offset, types(:)
