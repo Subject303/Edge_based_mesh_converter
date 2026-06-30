@@ -272,6 +272,7 @@ module volume_processing
             
             cell_1 = f_c_obj_relation_array(f_c_index_array(current_face)    )
             
+            centroid_index_array = -1
             centroid_index_array(1) = current_face
             centroid_index_array(2) = cell_1
             
