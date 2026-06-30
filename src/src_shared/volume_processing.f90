@@ -306,7 +306,7 @@ module volume_processing
                     centroid_index_array(i)   = current_face
                     centroid_array(i,:)   = f_centroid(current_face,:)
                     
-                    print*, current_face, f_bound_array(current_face)
+                    print*, current_face, f_bound_array(current_face), ef, ef_start+ef, ef_end
                     if (f_bound_array(current_face)) exit
                     
                     centroid_index_array(i+1) = cell_2
@@ -324,7 +324,7 @@ module volume_processing
                     centroid_index_array(i)   = current_face
                     centroid_array(i,:)   = f_centroid(current_face,:)
                     
-                    print*, current_face, f_bound_array(current_face)
+                    print*, current_face, f_bound_array(current_face), ef, ef_start+ef, ef_end
                     if (f_bound_array(current_face)) exit
                     
                     centroid_index_array(i+1) = cell_1
