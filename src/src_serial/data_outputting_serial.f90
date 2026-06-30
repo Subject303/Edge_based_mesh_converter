@@ -86,13 +86,13 @@ module data_outputting_serial
         offset = offset + 8 + nele*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="UInt8" Name="types" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + nele 
+        offset = offset + 8 + c_p_sum 
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="connectivity" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + c_p_sum*4
+        offset = offset + 8 + face_offset*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="faces" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + face_offset
+        offset = offset + 8 + nele*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="faceoffsets" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')//'&
 &</Cells>'//NEW_LINE('')//'&
@@ -107,18 +107,18 @@ module data_outputting_serial
         
         write(1) outstring
         
-        offset = npoin*3*4
+        offset = 8+npoin*3*4
         write(1) offset, coords
     
-        offset = nele*4
+        offset = 8+nele*4
         write(1) offset, c_p_index_array(1:nele)
     
         allocate(types(nele))
         types = 42
-        offset = nele
+        offset = 8+nele
         write(1) offset, types(:)
         
-        offset = c_p_sum*4
+        offset = 8+c_p_sum*4
         write(1) offset, c_p_obj_relation_array(:)
     
         write(1) face_offset
@@ -131,7 +131,7 @@ module data_outputting_serial
             enddo
         enddo
     
-        offset = nele*4
+        offset = 8+nele*4
         write(1) offset
         do c=1,nele
             offset_count =  1 + c_f_index_array(c) - c_f_index_array(c-1)
