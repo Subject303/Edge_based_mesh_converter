@@ -107,12 +107,13 @@ module data_outputting_serial
         
         write(1) outstring
         
+        offset = 8+npoin*3*4
         write(1) coords
     
-        offset = 8+npoin*3*4
+        offset = 8+nele*4
         write(1) offset, c_p_index_array(1:nele)
     
-        offset = 8+nele*4
+        offset = 8+c_p_sum*4
         write(1) offset, c_p_obj_relation_array(:)
     
         allocate(types(nele))
