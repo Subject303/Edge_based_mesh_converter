@@ -107,21 +107,21 @@ module data_outputting_serial
         
         write(1) outstring
         
-        offset = 8+npoin*3*4
+        offset = npoin*3*4
         write(1) offset, coords
     
-        offset = 8+nele*4
+        offset = nele*4
         write(1) offset, c_p_index_array(1:nele)
     
         allocate(types(nele))
         types = 42
-        offset = 8+nele
+        offset = nele
         write(1) offset, types(:)
         
-        offset = 8+c_p_sum*4
+        offset = c_p_sum*4
         write(1) offset, c_p_obj_relation_array(:)
     
-        write(1) face_offset
+        write(1) face_offset-8
         do c=1,nele
             write(1) (c_f_index_array(c)-c_f_index_array(c-1)) ! number of faces
             do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
@@ -131,7 +131,7 @@ module data_outputting_serial
             enddo
         enddo
     
-        offset = 8+nele*4
+        offset = nele*4
         write(1) offset
         do c=1,nele
             offset_count =  1 + c_f_index_array(c) - c_f_index_array(c-1)
