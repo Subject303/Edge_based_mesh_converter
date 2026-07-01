@@ -52,11 +52,12 @@ module data_outputting_serial
     
     subroutine output_vtu_binary_appended
         implicit none
-		integer(KIND=INT32)             :: i, c, f, e, offset_count, cf, fe
+		integer(KIND=INT32)             :: i, c, f, e, offset_count, cf, fe, p, num_e, written_p
 		integer(KIND=INT8 ),allocatable :: types(:)
         integer(KIND=INT64)			    :: offset, face_offset
         character(:), allocatable		:: outstring
         character(16)                   :: offset_text, TXTnele, TXTnpoin
+        logical(:), allocatable		    :: viable_edge(:)
         
         write(TXTnpoin, '(I16)') npoin
         write(TXTnele,  '(I16)') nele
@@ -132,12 +133,49 @@ module data_outputting_serial
                 ! number of points in face, points in face
                 write(1) (f_p_index_array(f)-f_p_index_array(f-1))! , f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))-1
                 
-                e=f_e_obj_relation_array(1+f_e_index_array(f-1))
-                write(1) e_p_obj_relation_array(e_p_index_array(e)-1)-1
+                num_e = f_e_index_array(f)-f_e_index_array(f-1)
+                allocate(viable_edge(num_e)
+                viable_edge = .false.
                 
-                do fe=(1+f_e_index_array(f-1)),f_e_index_array(f)
+                fe = 1
+                viable_edge(fe) = .true.
+                e = f_e_obj_relation_array( fe + f_e_index_array(f-1) )
+                p = e_p_obj_relation_array(e_p_index_array(e)-1)-1
+                write(1) p
+                p = e_p_obj_relation_array(e_p_index_array(e))-1
+                write(1) p
+                fe = 2
+                written_p = 2
+                do 
+                    if (viable_edge(fe)) then
+                        if (fe .eq. num_e) then
+                            fe = 1
+                        else
+                            fe = fe + 1
+                        endif
+                        cycle
+                    endif
+                    
                     e = f_e_obj_relation_array(fe)
-                    write(1) e_p_obj_relation_array(e_p_index_array(e))-1
+                    if (p .eq. e_p_obj_relation_array(e_p_index_array(e))-1) then
+                        p = e_p_obj_relation_array(e_p_index_array(e)-1)-1
+                        write(1) p
+                        viable_edge(fe) = .true.
+                        written_p = written_p + 1
+                        cycle
+                        
+                    elseif (p .eq. e_p_obj_relation_array(e_p_index_array(e)-1)-1) then
+                        p = e_p_obj_relation_array(e_p_index_array(e))-1
+                        write(1) p
+                        viable_edge(fe) = .true.
+                        written_p = written_p + 1
+                        cycle
+                    else
+                        
+                    endif
+                    
+                    if (written_p.eq.num_e) exit
+                    
                 enddo
             enddo
         enddo
