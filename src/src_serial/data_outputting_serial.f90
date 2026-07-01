@@ -157,7 +157,7 @@ module data_outputting_serial
                     
                     e = f_e_obj_relation_array(fe)
                     
-                    print*, e, p, e_p_obj_relation_array(e_p_index_array(e))-1), e_p_obj_relation_array(e_p_index_array(e)-1)-1)
+                    print*, e, p, e_p_obj_relation_array(e_p_index_array(e))-1, e_p_obj_relation_array(e_p_index_array(e)-1)-1
                     if (p .eq. e_p_obj_relation_array(e_p_index_array(e))-1) then
                         p = e_p_obj_relation_array(e_p_index_array(e)-1)-1
                         write(1) p
