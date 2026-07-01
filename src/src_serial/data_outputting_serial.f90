@@ -182,6 +182,7 @@ module data_outputting_serial
                     if (written_p.eq.num_e) exit
                     
                 enddo
+                deallocate(viable_edge)
             enddo
         enddo
     
