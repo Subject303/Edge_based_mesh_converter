@@ -172,7 +172,11 @@ module data_outputting_serial
                         written_p = written_p + 1
                         cycle
                     else
-                        
+                        if (fe .eq. num_e) then
+                            fe = 1
+                        else
+                            fe = fe + 1
+                        endif
                     endif
                     
                     if (written_p.eq.num_e) exit
