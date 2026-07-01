@@ -138,15 +138,16 @@ module data_outputting_serial
                 viable_edge = .false.
                 
                 fe = 1
-                !viable_edge(fe) = .true.
+                viable_edge(fe) = .true.
                 e = f_e_obj_relation_array( fe + f_e_index_array(f-1) )
                 p = e_p_obj_relation_array(e_p_index_array(e)-1)
                 write(1) p-1
-                !p = e_p_obj_relation_array(e_p_index_array(e))
-                !write(1) p-1
-                !fe = 2
-                written_p = 1
+                p = e_p_obj_relation_array(e_p_index_array(e))
+                write(1) p-1
+                fe = 2
+                written_p = 2
                 do 
+                    if (written_p.eq.num_e) exit
                     if (viable_edge(fe)) then
                         if (fe .eq. num_e) then
                             fe = 1
@@ -179,7 +180,6 @@ module data_outputting_serial
                         endif
                     endif
                     
-                    if (written_p.eq.num_e) exit
                     
                 enddo
                 deallocate(viable_edge)
