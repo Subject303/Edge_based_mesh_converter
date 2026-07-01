@@ -140,10 +140,10 @@ module data_outputting_serial
                 fe = 1
                 viable_edge(fe) = .true.
                 e = f_e_obj_relation_array( fe + f_e_index_array(f-1) )
-                p = e_p_obj_relation_array(e_p_index_array(e)-1)-1
-                write(1) p
-                p = e_p_obj_relation_array(e_p_index_array(e))-1
-                write(1) p
+                p = e_p_obj_relation_array(e_p_index_array(e)-1)
+                write(1) p-1
+                p = e_p_obj_relation_array(e_p_index_array(e))
+                write(1) p-1
                 fe = 2
                 written_p = 2
                 do 
@@ -157,17 +157,17 @@ module data_outputting_serial
                     
                     e = f_e_obj_relation_array(fe)
                     
-                    print*, e, p, e_p_obj_relation_array(e_p_index_array(e))-1, e_p_obj_relation_array(e_p_index_array(e)-1)-1
+                    print*, e, p, e_p_obj_relation_array(e_p_index_array(e)), e_p_obj_relation_array(e_p_index_array(e)-1)
                     if (p .eq. e_p_obj_relation_array(e_p_index_array(e))-1) then
-                        p = e_p_obj_relation_array(e_p_index_array(e)-1)-1
-                        write(1) p
+                        p = e_p_obj_relation_array(e_p_index_array(e)-1)
+                        write(1) p-1
                         viable_edge(fe) = .true.
                         written_p = written_p + 1
                         cycle
                         
-                    elseif (p .eq. e_p_obj_relation_array(e_p_index_array(e)-1)-1) then
-                        p = e_p_obj_relation_array(e_p_index_array(e))-1
-                        write(1) p
+                    elseif (p .eq. e_p_obj_relation_array(e_p_index_array(e)-1)) then
+                        p = e_p_obj_relation_array(e_p_index_array(e))
+                        write(1) p-1
                         viable_edge(fe) = .true.
                         written_p = written_p + 1
                         cycle
