@@ -134,7 +134,7 @@ module data_outputting_serial
                 write(1) (f_p_index_array(f)-f_p_index_array(f-1))! , f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))-1
                 
                 num_e = f_e_index_array(f)-f_e_index_array(f-1)
-                allocate(viable_edge(num_e)
+                allocate(viable_edge(num_e))
                 viable_edge = .false.
                 
                 fe = 1
