@@ -153,7 +153,6 @@ module data_outputting_serial
                         else
                             fe = fe + 1
                         endif
-                        cycle
                     endif
                     
                     e = f_e_obj_relation_array(fe)
