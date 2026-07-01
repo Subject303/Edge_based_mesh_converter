@@ -134,7 +134,7 @@ module data_outputting_serial
                 write(1) (f_p_index_array(f)-f_p_index_array(f-1))! , f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))-1
                 
                 fe=(1+f_e_index_array(f-1))
-                write(1) e_p_obj_relation_array(e_p_index_array(e)-1)-1
+                write(1) e_p_obj_relation_array(e_p_index_array(f_e_obj_relation_array(fe))-1)-1
                 
                 do fe=(1+f_e_index_array(f-1)),f_e_index_array(f)
                     e = f_e_obj_relation_array(fe)
