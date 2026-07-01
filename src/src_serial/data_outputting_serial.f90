@@ -57,7 +57,7 @@ module data_outputting_serial
         integer(KIND=INT64)			    :: offset, face_offset
         character(:), allocatable		:: outstring
         character(16)                   :: offset_text, TXTnele, TXTnpoin
-        logical(:), allocatable		    :: viable_edge(:)
+        logical, allocatable		    :: viable_edge(:)
         
         write(TXTnpoin, '(I16)') npoin
         write(TXTnele,  '(I16)') nele
