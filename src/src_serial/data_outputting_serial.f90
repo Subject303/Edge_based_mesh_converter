@@ -52,7 +52,7 @@ module data_outputting_serial
     
     subroutine output_vtu_binary_appended
         implicit none
-		integer(KIND=INT32)             :: i, c, f, offset_count, cf
+		integer(KIND=INT32)             :: i, c, f, e, offset_count, cf, fe
 		integer(KIND=INT8 ),allocatable :: types(:)
         integer(KIND=INT64)			    :: offset, face_offset
         character(:), allocatable		:: outstring
@@ -131,7 +131,15 @@ module data_outputting_serial
             do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
                 f = c_f_obj_relation_array(cf)
                 ! number of points in face, points in face
-                write(1) (f_p_index_array(f)-f_p_index_array(f-1)) , f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))-1
+                write(1) (f_p_index_array(f)-f_p_index_array(f-1))! , f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))-1
+                
+                fe=(1+f_e_index_array(f-1))
+                write(1) e_p_obj_relation_array(e_p_index_array(e)-1) 
+                
+                do fe=(1+f_e_index_array(f-1)),f_e_index_array(f)
+                    e = f_e_obj_relation_array(fe)
+                    write(1) e_p_obj_relation_array(e_p_index_array(e))
+                enddo
             enddo
         enddo
     
