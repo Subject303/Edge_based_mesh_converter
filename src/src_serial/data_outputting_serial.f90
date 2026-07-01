@@ -133,6 +133,8 @@ module data_outputting_serial
                 ! number of points in face, points in face
                 write(1) (f_p_index_array(f)-f_p_index_array(f-1))! , f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))-1
                 
+                print*,  f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))
+                
                 num_e = f_e_index_array(f)-f_e_index_array(f-1)
                 allocate(viable_edge(num_e))
                 viable_edge = .false.
@@ -142,8 +144,10 @@ module data_outputting_serial
                 e = f_e_obj_relation_array( fe + f_e_index_array(f-1) )
                 p = e_p_obj_relation_array(e_p_index_array(e)-1)
                 write(1) p-1
+                print*, p
                 p = e_p_obj_relation_array(e_p_index_array(e))
                 write(1) p-1
+                print*, p
                 fe = 2
                 written_p = 2
                 do 
@@ -164,6 +168,7 @@ module data_outputting_serial
                         write(1) p-1
                         viable_edge(fe) = .true.
                         written_p = written_p + 1
+                        print*, p
                         cycle
                         
                     elseif (p .eq. e_p_obj_relation_array(e_p_index_array(e)-1)) then
@@ -171,6 +176,7 @@ module data_outputting_serial
                         write(1) p-1
                         viable_edge(fe) = .true.
                         written_p = written_p + 1
+                        print*, p
                         cycle
                     else
                         if (fe .eq. num_e) then
