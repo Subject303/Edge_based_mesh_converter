@@ -139,6 +139,7 @@ module data_outputting_serial
                 allocate(viable_edge(num_e))
                 viable_edge = .false.
                 
+                print*, e, p, e_p_obj_relation_array(e_p_index_array(e)), e_p_obj_relation_array(e_p_index_array(e)-1), written_p, num_e
                 fe = 1
                 viable_edge(fe) = .true.
                 e = f_e_obj_relation_array( fe + f_e_index_array(f-1) )
