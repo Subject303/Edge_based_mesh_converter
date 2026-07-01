@@ -158,7 +158,7 @@ module data_outputting_serial
                     e = f_e_obj_relation_array(fe)
                     
                     print*, e, p, e_p_obj_relation_array(e_p_index_array(e)), e_p_obj_relation_array(e_p_index_array(e)-1), written_p, num_e
-                    if (p .eq. e_p_obj_relation_array(e_p_index_array(e))-1) then
+                    if (p .eq. e_p_obj_relation_array(e_p_index_array(e))) then
                         p = e_p_obj_relation_array(e_p_index_array(e)-1)
                         write(1) p-1
                         viable_edge(fe) = .true.
