@@ -69,11 +69,15 @@ module manual_geom_generation_module
         wake_length = 1 + wake_end - wake_start
         allocate(temp_wake_coords(wake_length,2,n_highways_wake))
         
+        temp_wake_coords(:,2,1) = 0.0
+        
         do i=wake_start,wake_end
             
             dx = temp_coords(i,2,1)/(n_highways_wake-1)
-                
-            do n=1,n_highways_wake
+            
+            temp_wake_coords(i,1,:) = temp_coords(i,1,1)
+            
+            do n=2,n_highways_wake
                 
                 temp_wake_coords(i,2,n) = temp_wake_coords(i,2,1) + dx*(n-1)
                 
