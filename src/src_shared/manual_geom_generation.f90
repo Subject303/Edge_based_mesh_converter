@@ -30,6 +30,8 @@ module manual_geom_generation_module
         
         allocate(temp_coords(n_lengthways,2,n_highways))
         
+        temp_coords = 0.0
+        
         dx = (end_length - start_length)/n_lengthways
         
         do i=1,n_lengthways
