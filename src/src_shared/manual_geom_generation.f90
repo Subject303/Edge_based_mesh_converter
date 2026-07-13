@@ -50,7 +50,7 @@ module manual_geom_generation_module
                 temp_coords(i,2,n_highways) = temp_coords(wake_start,2,n_highways)
             else
                 temp_coords(i,2,n_highways) = inner_r + (i-1)*dydx
-                wake_start= i
+                wake_start= i + 1
                 wake_end  = i
             endif
             
