@@ -93,9 +93,13 @@ module manual_geom_generation_module
                 paramaterised_line(1) = lambda
                 paramaterised_line(2) = beta
                 
+                return
+                
             case(angled_line)
                 paramaterised_line(1) = lambda
                 paramaterised_line(2) = lambda / beta
+                
+                return
                 
             case(trever_birch_proj)
                 
@@ -123,6 +127,7 @@ module manual_geom_generation_module
                     paramaterised_line(2) = D / 2
                     
                 endif
+                return
                 
         end select
         
