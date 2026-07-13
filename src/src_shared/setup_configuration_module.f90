@@ -6,6 +6,8 @@ module setup_configuration_module
     
     implicit none
     
+    logical :: manual_geom
+    
     contains
     
     subroutine setup_configuration
@@ -16,6 +18,7 @@ module setup_configuration_module
         logical :: file_end
         
         output_requests = 0
+        manual_geom = .false.
         
         open(10,file='./config.cfg',access='sequential',action='read',status='old')
         
@@ -36,6 +39,12 @@ module setup_configuration_module
                 
                     case('prerocessed_data_file=')
                         raw_data_path = current_line(indexer+1:)
+                        
+                    case('manual_geom=')
+                        indexer = index(current_line,'true')
+                        if (indexer.ne.0) then
+                            manual_geom = .true.
+                        endif
                         
                     case('binary_internal=')
                         indexer = index(current_line,'true')

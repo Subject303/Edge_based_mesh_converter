@@ -1,6 +1,4 @@
-
-
-program converter_serial
+module manual_geom_generation_module
     
     use iso_fortran_env
     
@@ -9,8 +7,6 @@ program converter_serial
     use read_data_serial
     use data_processing_serial
     use data_outputting_serial
-    
-    use manual_geom_generation_module
     
     implicit none
     
@@ -33,4 +29,4 @@ program converter_serial
     ! end of program
     
     
-end program converter_serial
+end module manual_geom_generation_module
