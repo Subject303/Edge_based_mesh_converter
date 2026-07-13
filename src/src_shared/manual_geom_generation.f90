@@ -24,7 +24,7 @@ module manual_geom_generation_module
     
     subroutine t_birch_slender (inner_r, outer_r, start_length, end_length, nose, scale_var ,n_highways, n_rotational, n_highways_wake)
         implicit none
-        integer(KIND=INT32)            :: i, n, n_lengthways, n_highways, n_rotational, n_highways_wake, wake_length, wake_start, wake_end, wake_i, scale_var
+        integer(KIND=INT32)            :: i, j, n, n_lengthways, n_highways, n_rotational, n_highways_wake, wake_length, wake_start, wake_end, wake_i, scale_var, plane_npoin
         real(KIND=REAL32)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, dydx, pi, dOO
         real(KIND=REAL32),allocatable  :: temp_coords(:,:,:), temp_wake_coords(:,:,:)
         
@@ -127,13 +127,37 @@ module manual_geom_generation_module
         
         allocate(coords(npoin,3))
         
-        do i=1, n_rotational
+        j=0
+        do i=1,n_lengthways
+            do n=1,n_highways
+                j=j+1
+                coords(j,1) = temp_coords(i,1,n)
+                coords(j,2) = temp_coords(i,2,n)
+            enddo
+        enddo  
+        do i=1,wake_length
+            do n=1,n_highways_wake
+                j=j+1
+                coords(j,1) = temp_wake_coords(i,1,n)
+                coords(j,2) = temp_wake_coords(i,2,n)
+            enddo
+        enddo  
+        
+        plane_npoin = j
+        
+        coords(1:plane_npoin,3) = 0.0
+        
+        do n=2, n_rotational
             
+            i = (plane_npoin * (n-1)) + 1
+            j = (plane_npoin *  n   )
             
+            coords(i:j,2) = cos(doo*n)*coords(1:plane_npoin,2)! - sin(doo*n)*coords(1:plane_npoin,3)
+            coords(i:j,3) = sin(doo*n)*coords(1:plane_npoin,2)! + cos(doo*n)*coords(1:plane_npoin,3)
             
         enddo
         
-        
+        print*, coords
         
     end subroutine t_birch_slender
     
