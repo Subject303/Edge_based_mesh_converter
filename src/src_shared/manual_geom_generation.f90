@@ -47,17 +47,17 @@ module manual_geom_generation_module
             
         end do
         
-!         do i=1,n_lengthways
-!             
-!             dx = (temp_coords(i,2,n_highways) - temp_coords(i,2,1))/n_highways
-!                 
-!             do n=2,(n_highways-1)
-!                 
-!                 temp_coords(i,2,n) = dx*n
-!                 
-!             enddo
-!             
-!         end do
+        do i=1,n_lengthways
+            
+            dx = (temp_coords(i,2,n_highways) - temp_coords(i,2,1))/n_highways
+                
+            do n=2,(n_highways-1)
+                
+                temp_coords(i,2,n) = dx*n
+                
+            enddo
+            
+        end do
         
         open(12,file="planar_mesh_coords.csv",access='sequential',action='write',status='replace')
         
