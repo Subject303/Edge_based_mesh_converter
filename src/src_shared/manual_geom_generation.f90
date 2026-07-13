@@ -97,7 +97,7 @@ module manual_geom_generation_module
             
             do n=1,n_highways
                 
-                print*, temp_coords(i,1,n) , ',', temp_coords(i,2,n)
+                !print*, temp_coords(i,1,n) , ',', temp_coords(i,2,n)
                 
                 write(12,'(f,a,f)') temp_coords(i,1,n) , ',', temp_coords(i,2,n)
                 
@@ -109,7 +109,7 @@ module manual_geom_generation_module
             
             do n=1,n_highways_wake
                 
-                print*, temp_wake_coords(i,1,n) , ',', temp_wake_coords(i,2,n)
+                !print*, temp_wake_coords(i,1,n) , ',', temp_wake_coords(i,2,n)
                 
                 write(12,'(f,a,f)') temp_wake_coords(i,1,n) , ',', temp_wake_coords(i,2,n)
                 
@@ -157,7 +157,9 @@ module manual_geom_generation_module
             
         enddo
         
-        print*, coords
+        do i=1,npoin
+            print*, coords
+        enddo
         
     end subroutine t_birch_slender
     
