@@ -49,7 +49,7 @@ module manual_geom_generation_module
         
         do i=1,n_lengthways
             
-            dx = (temp_coords(i,2,n_highways) - temp_coords(i,2,1))/n_highways
+            dx = (temp_coords(i,2,n_highways) - temp_coords(i,2,1))/(n_highways-1)
                 
             do n=1,n_highways
                 
