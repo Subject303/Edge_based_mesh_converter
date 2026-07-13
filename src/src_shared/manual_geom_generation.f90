@@ -121,7 +121,7 @@ module manual_geom_generation_module
         
         pi = atan(1.0)
         
-        dOO = 2 * pi / n_rotational
+        dOO = 2 * pi / (n_rotational+1)
         
         print*, asind(dOO), acosd(dOO), atand(dOO)
             
