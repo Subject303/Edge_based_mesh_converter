@@ -28,7 +28,9 @@ module manual_geom_generation_module
         real(KIND=REAL32)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, dydx
         real(KIND=REAL32),allocatable  :: temp_coords(:,:,:), temp_wake_coords(:,:,:)
         
-        n_lengthways = (end_length - start_length) * scale_var
+        n_lengthways = 1 + (end_length - start_length) * scale_var
+        
+        print*, n_lengthways
         
         allocate(temp_coords(n_lengthways,2,n_highways))
         
