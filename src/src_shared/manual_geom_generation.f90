@@ -24,7 +24,7 @@ module manual_geom_generation_module
     
     subroutine t_birch_slender (inner_r, outer_r, start_length, end_length, nose, n_lengthways ,n_highways, n_rotational, n_highways_wake)
         implicit none
-        integer(KIND=INT32)            :: i, n, n_lengthways, n_highways, n_rotational, n_highways_wake, wake_length, wake_start, wake_end
+        integer(KIND=INT32)            :: i, n, n_lengthways, n_highways, n_rotational, n_highways_wake, wake_length, wake_start, wake_end, wake_i
         real(KIND=REAL32)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, dydx
         real(KIND=REAL32),allocatable  :: temp_coords(:,:,:), temp_wake_coords(:,:,:)
         
@@ -71,15 +71,19 @@ module manual_geom_generation_module
         
         temp_wake_coords(:,2,1) = 0.0
         
+        wake_i = 0
+        
         do i=wake_start,wake_end
+            
+            wake_i = wake_i + 1
             
             dx = temp_coords(i,2,1)/(n_highways_wake-1)
             
-            temp_wake_coords(i,1,:) = temp_coords(i,1,1)
+            temp_wake_coords(wake_i,1,:) = temp_coords(i,1,1)
             
             do n=2,n_highways_wake
                 
-                temp_wake_coords(i,2,n) = temp_wake_coords(i,2,1) + dx*(n-1)
+                temp_wake_coords(wake_i,2,n) = temp_wake_coords(wake_i,2,1) + dx*(n-1)
                 
             enddo
             
@@ -99,7 +103,7 @@ module manual_geom_generation_module
             
         enddo        
         
-        do i=wake_start,wake_end
+        do i=1,wake_length
             
             do n=1,n_highways_wake
                 
