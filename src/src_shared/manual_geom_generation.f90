@@ -2,31 +2,135 @@ module manual_geom_generation_module
     
     use iso_fortran_env
     
-    use setup_configuration_module
-    
-    use read_data_serial
-    use data_processing_serial
-    use data_outputting_serial
+    use object_counts
+    use raw_data
     
     implicit none
     
-    ! start of program
+    contains
     
-    call setup_configuration
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
-    if (manual_geom) then
-        call manual_geom_generation
-    else
-        call read_data
-    endif
+    subroutine manual_geom_generation
+        implicit none
+        
+        call t_birch_slender(1.0, 3.0, -3.0, 15.0, 0.0, 100, 100, 100)
+        
+    end subroutine manual_geom_generation
     
-    call data_preprocessing
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
-    call data_processing
+    subroutine t_birch_slender (inner_r, outer_r, start_length, end_length, nose, n_lengthways ,n_highways, n_rotational)
+        implicit none
+        integer(KIND=INT32)            :: i, n, n_lengthways, n_highways, n_rotational
+        real(KIND=REAL32)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, grad
+        real(KIND=REAL32),allocatable  :: temp_coords(:,:,:)
+        
+        allocate(temp_coords(n_lengthways,2,n_highways))
+        
+        dx = (end_length - start_length)/n_lengthways
+        
+        do i=1,n_lengthways
+            
+            lambda = start_length + i*dx
+            
+            temp_coords(i,:,1) = paramaterised_line(lambda, 3, nose)
+            
+            temp_coords(i,1,:) = temp_coords(i,1,1)
+            
+        end do
+            
+        grad = outer_r/inner_r
+        
+        do i=1,n_lengthways
+            
+            lambda = start_length + i*dx
+            
+            temp_coords(i,:,n_highways) = paramaterised_line(lambda, 2, grad)
+            
+        end do
+        
+        temp_coords(:,2,n_highways) = temp_coords(:,2,n_highways) + inner_r
+        
+        do i=1,n_lengthways
+            
+            dx = (temp_coords(i,2,n_highways) - temp_coords(i,2,1))/n_highways
+                
+            do n=2,(n_highways-1)
+                
+                temp_coords(i,2,n) = dx*n
+                
+            enddo
+            
+        end do
+        
+        open(12,file="planar_mesh_coords.csv",access='stream',action='write',status='replace')
+        
+        do i=1,n_lengthways
+            
+            do n=1,n_highways
+                
+                write(12,'(f,a,f)') temp_coords(i,1,n) , ',', temp_coords(i,2,n)
+                
+            enddo
+            
+        enddo
+        
+        close(12)
+        
+    end subroutine t_birch_slender
     
-    call data_outputting
+    real(KIND=REAL32),dimension(2) function paramaterised_line(lambda, funct, beta)
+        implicit none
+        real(KIND=REAL32)             :: lambda, D
+        real(KIND=REAL32),optional    :: beta
+        integer(KIND=INT32)           :: funct
+        integer(KIND=INT32),parameter :: straight_line=1, angled_line=2, trever_birch_proj=3
+        
+        select case (funct)
+            case(straight_line)
+                paramaterised_line(1) = lambda
+                paramaterised_line(2) = beta
+                
+            case(angled_line)
+                paramaterised_line(1) = lambda
+                paramaterised_line(2) = lambda / beta
+                
+            case(trever_birch_proj)
+                
+                D  = 1.0
+                    
+                if (lambda .le. beta)then
+                
+                    paramaterised_line(1) = lambda
+                    paramaterised_line(2) = 0.0
+                    
+                elseif (lambda .gt. beta)
+                    
+                    !
+                    ! r/D = -0.002615(x/D)^3 - 0.039867(x/D)^2 + 0.30984(x/D)
+                    !
+                    
+                    D = lambda/D
+                    
+                    paramaterised_line(1) = lambda
+                    paramaterised_line(2) = -0.002615(D)^3 - 0.039867(D)^2 + 0.30984(D)
+                    
+                elseif ((lambda - beta) .gt. 10.0)
+                    
+                    paramaterised_line(1) = lambda
+                    paramaterised_line(2) = D / 2
+                    
+                endif
+                
+        end select
+        
+        
+        
+        print*,  'missing function definition in mesh generator'
+    end function
     
-    ! end of program
+    !end contains
     
     
 end module manual_geom_generation_module

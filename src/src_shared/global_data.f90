@@ -122,4 +122,6 @@ module io_data
     integer(KIND=INT32) :: output_requests 
     integer(KIND=INT32),parameter :: no_output=0, binary_internal=1 ,ascii_internal=2, vtu_ascii=4, vtu_binary_appended=8
     
+    logical :: manual_geom
+    
 end module io_data

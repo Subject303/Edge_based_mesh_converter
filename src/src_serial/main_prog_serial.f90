@@ -6,6 +6,8 @@ program converter_serial
     
     use setup_configuration_module
     
+    use io_data
+    
     use read_data_serial
     use data_processing_serial
     use data_outputting_serial

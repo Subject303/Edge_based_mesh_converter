@@ -6,8 +6,6 @@ module setup_configuration_module
     
     implicit none
     
-    logical :: manual_geom
-    
     contains
     
     subroutine setup_configuration
