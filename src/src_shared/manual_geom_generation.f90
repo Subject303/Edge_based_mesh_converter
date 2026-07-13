@@ -80,8 +80,9 @@ module manual_geom_generation_module
         
     end subroutine t_birch_slender
     
-    real(KIND=REAL32),dimension(2) function paramaterised_line(lambda, funct, beta)
+    function paramaterised_line(lambda, funct, beta)
         implicit none
+        real(KIND=REAL32), dimension(2) :: paramaterised_line
         real(KIND=REAL32)             :: lambda, D
         real(KIND=REAL32),optional    :: beta
         integer(KIND=INT32)           :: funct
