@@ -46,7 +46,7 @@ module manual_geom_generation_module
             temp_coords(i,2,n_highways) = inner_r + (i-1)*dydx
             
         end do
-            
+        
 !         do i=1,n_lengthways
 !             
 !             dx = (temp_coords(i,2,n_highways) - temp_coords(i,2,1))/n_highways
@@ -106,13 +106,17 @@ module manual_geom_generation_module
                 
                     paramaterised_line(1) = lambda
                     paramaterised_line(2) = 0.0
-                    
-                elseif ((lambda - beta) .gt. 3.0) then
+                    return
+                endif
+                
+                if ((lambda - beta) .gt. 3.0) then
                     
                     paramaterised_line(1) = lambda
                     paramaterised_line(2) = D / 2
-                    
-                elseif (lambda .gt. beta) then
+                    return
+                endif
+                
+                if (lambda .gt. beta) then
                     
                     !
                     ! r/D = -0.002615(x/D)^3 - 0.039867(x/D)^2 + 0.30984(x/D)
@@ -122,9 +126,9 @@ module manual_geom_generation_module
                     
                     paramaterised_line(1) = lambda
                     paramaterised_line(2) = -0.002615*(D**3) - 0.039867*(D**2) + 0.30984*(D)
+                    return
                     
                 endif
-                return
                 
         end select
         
