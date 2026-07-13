@@ -53,7 +53,7 @@ module manual_geom_generation_module
                 
             do n=2,(n_highways-1)
                 
-                temp_coords(i,2,n) = dx*n
+                temp_coords(i,2,n) = temp_coords(i,2,1) + dx*n
                 
             enddo
             
