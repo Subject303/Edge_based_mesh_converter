@@ -108,6 +108,12 @@ module manual_geom_generation_module
                     paramaterised_line(2) = 0.0
                     return
                 endif
+                if ((lambda - beta) .ge. 10.0) then
+                    
+                    paramaterised_line(1) = lambda
+                    paramaterised_line(2) = 0.0
+                    return
+                endif
                 
                 if ((lambda - beta) .gt. 3.0) then
                     
