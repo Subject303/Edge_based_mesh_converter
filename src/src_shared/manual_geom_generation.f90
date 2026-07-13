@@ -121,7 +121,7 @@ module manual_geom_generation_module
         
         pi = 3.14159265359
         
-        dOO = pi / n_rotational
+        dOO = 2 * pi / n_rotational
         
         print*, pi, dOO, sind(dOO), cosd(dOO), tand(dOO)
         
@@ -151,7 +151,7 @@ module manual_geom_generation_module
         
         coords(1:plane_npoin,3) = 0.0
         
-        do n=2, n_rotational
+        do n=1, n_rotational
             
             i = (plane_npoin * (n-1)) + 1
             j = (plane_npoin *  n   )
