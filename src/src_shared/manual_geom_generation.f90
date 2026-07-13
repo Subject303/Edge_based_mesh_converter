@@ -157,7 +157,7 @@ module manual_geom_generation_module
             i = (plane_npoin * (n-1)) + 1
             j = (plane_npoin *  n   )
             
-            coords(i:j,1) =            coords(1:plane_npoin,1)
+            coords(i:j,1) =                coords(1:plane_npoin,1)
             coords(i:j,2) = cos(doo*(n-1))*coords(1:plane_npoin,2)! - sin(doo*n)*coords(1:plane_npoin,3)
             coords(i:j,3) = sin(doo*(n-1))*coords(1:plane_npoin,2)! + cos(doo*n)*coords(1:plane_npoin,3)
             
