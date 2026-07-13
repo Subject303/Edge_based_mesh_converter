@@ -121,7 +121,7 @@ module manual_geom_generation_module
         
         pi = 3.14159265359
         
-        dOO = 2 * pi / n_rotational
+        dOO = pi / n_rotational
         
         print*, pi, dOO, sind(dOO), cosd(dOO), tand(dOO)
         
