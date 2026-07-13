@@ -14,7 +14,7 @@ module manual_geom_generation_module
     subroutine manual_geom_generation
         implicit none
         
-        call t_birch_slender(1.0, 3.0, -3.0, 15.0, 0.0, 101, 10, 100)
+        call t_birch_slender(1.0, 3.0, -3.0, 15.0, 0.0, 101, 10, 100, 10)
         
         stop
         
@@ -22,15 +22,16 @@ module manual_geom_generation_module
     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
-    subroutine t_birch_slender (inner_r, outer_r, start_length, end_length, nose, n_lengthways ,n_highways, n_rotational)
+    subroutine t_birch_slender (inner_r, outer_r, start_length, end_length, nose, n_lengthways ,n_highways, n_rotational, n_highways_wake)
         implicit none
-        integer(KIND=INT32)            :: i, n, n_lengthways, n_highways, n_rotational
+        integer(KIND=INT32)            :: i, n, n_lengthways, n_highways, n_rotational, n_highways_wake, wake_length, wake_start, wake_end
         real(KIND=REAL32)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, dydx
-        real(KIND=REAL32),allocatable  :: temp_coords(:,:,:)
+        real(KIND=REAL32),allocatable  :: temp_coords(:,:,:), temp_wake_coords(:,:,:)
         
         allocate(temp_coords(n_lengthways,2,n_highways))
         
         temp_coords = 0.0
+        wake_end = 0
         
         dx   = (end_length - start_length)/(n_lengthways-1)
         dydx = (outer_r - inner_r)        /(n_lengthways-1)
@@ -44,10 +45,11 @@ module manual_geom_generation_module
             temp_coords(i,1,:) = temp_coords(i,1,1)
             
             if ((lambda - nose) .ge. 10.) then
-                temp_coords(i,2,n_highways) = temp_coords(n,2,n_highways)
+                wake_end = wake_end + 1
+                temp_coords(i,2,n_highways) = temp_coords(wake_start,2,n_highways)
             else
                 temp_coords(i,2,n_highways) = inner_r + (i-1)*dydx
-                n=i
+                wake_start=i
             endif
             
         end do
@@ -64,6 +66,21 @@ module manual_geom_generation_module
             
         end do
         
+        wake_length = 1 + wake_end - wake_start
+        allocate(temp_wake_coords(wake_length,2,n_highways_wake))
+        
+        do i=wake_start,wake_end
+            
+            dx = temp_coords(i,2,1)/(n_highways_wake-1)
+                
+            do n=1,n_highways_wake
+                
+                temp_wake_coords(i,2,n) = temp_wake_coords(i,2,1) + dx*(n-1)
+                
+            enddo
+            
+        end do
+        
         open(12,file="planar_mesh_coords.csv",access='sequential',action='write',status='replace')
         
         do i=1,n_lengthways
@@ -71,6 +88,16 @@ module manual_geom_generation_module
             do n=1,n_highways
                 
                 write(12,'(f,a,f)') temp_coords(i,1,n) , ',', temp_coords(i,2,n)
+                
+            enddo
+            
+        enddo        
+        
+        do i=wake_start,wake_end
+            
+            do n=1,n_highways_wake
+                
+                write(12,'(f,a,f)') temp_wake_coords(i,1,n) , ',', temp_wake_coords(i,2,n)
                 
             enddo
             
@@ -113,12 +140,13 @@ module manual_geom_generation_module
                     paramaterised_line(2) = 0.0
                     return
                 endif
-                if ((lambda - beta) .ge. 10.0) then
-                    
-                    paramaterised_line(1) = lambda
-                    paramaterised_line(2) = 0.0
-                    return
-                endif
+                
+!                 if ((lambda - beta) .ge. 10.0) then
+!                     
+!                     paramaterised_line(1) = lambda
+!                     paramaterised_line(2) = 0.0
+!                     return
+!                 endif
                 
                 if ((lambda - beta) .gt. 3.0) then
                     
