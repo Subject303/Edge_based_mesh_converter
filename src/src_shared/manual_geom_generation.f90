@@ -36,7 +36,7 @@ module manual_geom_generation_module
         
         do i=1,n_lengthways
             
-            lambda = start_length + i*dx
+            lambda = start_length + (i-1)*dx
             
             temp_coords(i,:,1) = paramaterised_line(lambda, 3, nose)
             
@@ -48,8 +48,7 @@ module manual_geom_generation_module
         
         do i=1,n_lengthways
             
-            lambda = start_length + i*dx
-            
+            lambda = (i-1)*1.0
             temp_coords(i,:,n_highways) = paramaterised_line(lambda, 2, grad)
             
         end do
@@ -94,13 +93,13 @@ module manual_geom_generation_module
         
         select case (funct)
             case(straight_line)
-                paramaterised_line(1) = lambda
+            
                 paramaterised_line(2) = beta
                 
                 return
                 
             case(angled_line)
-                paramaterised_line(1) = lambda
+            
                 paramaterised_line(2) = lambda / beta
                 
                 return
