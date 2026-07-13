@@ -158,7 +158,7 @@ module manual_geom_generation_module
         enddo
         
         do i=1,npoin
-            print*, coords
+            print*, coords(i,:)
         enddo
         
     end subroutine t_birch_slender
