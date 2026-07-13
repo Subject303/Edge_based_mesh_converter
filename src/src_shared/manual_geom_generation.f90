@@ -16,6 +16,8 @@ module manual_geom_generation_module
         
         call t_birch_slender(1.0, 3.0, -3.0, 15.0, 0.0, 100, 100, 100)
         
+        stop
+        
     end subroutine manual_geom_generation
     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
