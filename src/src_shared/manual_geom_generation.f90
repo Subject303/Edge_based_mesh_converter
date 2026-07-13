@@ -112,6 +112,11 @@ module manual_geom_generation_module
                     paramaterised_line(1) = lambda
                     paramaterised_line(2) = 0.0
                     
+                elseif ((lambda - beta) .gt. 10.0) then
+                    
+                    paramaterised_line(1) = lambda
+                    paramaterised_line(2) = D / 2
+                    
                 elseif (lambda .gt. beta) then
                     
                     !
@@ -122,11 +127,6 @@ module manual_geom_generation_module
                     
                     paramaterised_line(1) = lambda
                     paramaterised_line(2) = -0.002615*(D**3) - 0.039867*(D**2) + 0.30984*(D)
-                    
-                elseif ((lambda - beta) .gt. 10.0) then
-                    
-                    paramaterised_line(1) = lambda
-                    paramaterised_line(2) = D / 2
                     
                 endif
                 return
