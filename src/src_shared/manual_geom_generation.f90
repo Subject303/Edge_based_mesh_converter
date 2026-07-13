@@ -14,7 +14,7 @@ module manual_geom_generation_module
     subroutine manual_geom_generation
         implicit none
         
-        call t_birch_slender(1.0, 2.0, -3.0, 15.0, 0.0, 2, 5, 12, 2)
+        call t_birch_slender(1.0, 2.0, -3.0, 15.0, 0.0, 2, 5, 4, 2)
         
         stop
         
