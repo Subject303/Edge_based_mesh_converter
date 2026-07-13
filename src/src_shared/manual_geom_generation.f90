@@ -108,13 +108,13 @@ module manual_geom_generation_module
             case(trever_birch_proj)
                 
                 D  = 1.0
-                    
+                
                 if (lambda .le. beta) then
                 
                     paramaterised_line(1) = lambda
                     paramaterised_line(2) = 0.0
                     
-                elseif ((lambda - beta) .gt. 10.0) then
+                elseif ((lambda - beta) .gt. 3.0) then
                     
                     paramaterised_line(1) = lambda
                     paramaterised_line(2) = D / 2
