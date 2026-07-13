@@ -25,15 +25,15 @@ module manual_geom_generation_module
     subroutine t_birch_slender (inner_r, outer_r, start_length, end_length, nose, n_lengthways ,n_highways, n_rotational)
         implicit none
         integer(KIND=INT32)            :: i, n, n_lengthways, n_highways, n_rotational
-        real(KIND=REAL32)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, dydx, grad
+        real(KIND=REAL32)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, dydx
         real(KIND=REAL32),allocatable  :: temp_coords(:,:,:)
         
         allocate(temp_coords(n_lengthways,2,n_highways))
         
         temp_coords = 0.0
         
-        dx   = (end_length - start_length)/n_lengthways
-        dydx = (outer_r - inner_r)        /n_lengthways
+        dx   = (end_length - start_length)/(n_lengthways-1)
+        dydx = (outer_r - inner_r)        /(n_lengthways-1)
         
         do i=1,n_lengthways
             
