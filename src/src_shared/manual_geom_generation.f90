@@ -31,7 +31,6 @@ module manual_geom_generation_module
         allocate(temp_coords(n_lengthways,2,n_highways))
         
         temp_coords = 0.0
-        wake_end = 0
         
         dx   = (end_length - start_length)/(n_lengthways-1)
         dydx = (outer_r - inner_r)        /(n_lengthways-1)
@@ -49,7 +48,8 @@ module manual_geom_generation_module
                 temp_coords(i,2,n_highways) = temp_coords(wake_start,2,n_highways)
             else
                 temp_coords(i,2,n_highways) = inner_r + (i-1)*dydx
-                wake_start=i
+                wake_start= i
+                wake_end  = i
             endif
             
         end do
@@ -91,7 +91,7 @@ module manual_geom_generation_module
             
             do n=1,n_highways
                 
-                print*, temp_wake_coords(i,1,n) , ',', temp_wake_coords(i,2,n)
+                print*, temp_coords(i,1,n) , ',', temp_coords(i,2,n)
                 
                 write(12,'(f,a,f)') temp_coords(i,1,n) , ',', temp_coords(i,2,n)
                 
