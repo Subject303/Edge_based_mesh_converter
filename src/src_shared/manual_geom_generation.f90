@@ -101,12 +101,12 @@ module manual_geom_generation_module
                 
                 D  = 1.0
                     
-                if (lambda .le. beta)then
+                if (lambda .le. beta) then
                 
                     paramaterised_line(1) = lambda
                     paramaterised_line(2) = 0.0
                     
-                elseif (lambda .gt. beta)
+                elseif (lambda .gt. beta) then
                     
                     !
                     ! r/D = -0.002615(x/D)^3 - 0.039867(x/D)^2 + 0.30984(x/D)
@@ -117,7 +117,7 @@ module manual_geom_generation_module
                     paramaterised_line(1) = lambda
                     paramaterised_line(2) = -0.002615(D)^3 - 0.039867(D)^2 + 0.30984(D)
                     
-                elseif ((lambda - beta) .gt. 10.0)
+                elseif ((lambda - beta) .gt. 10.0) then
                     
                     paramaterised_line(1) = lambda
                     paramaterised_line(2) = D / 2
