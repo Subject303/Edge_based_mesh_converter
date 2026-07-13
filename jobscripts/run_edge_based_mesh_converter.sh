@@ -30,7 +30,7 @@ module load GCC
 module load Python/3.10.8-GCCcore-12.2.0
 
 
-COMPLIST=" ./src/src_shared/global_data.f90 ./src/src_shared/quicksort.f90 ./src/src_shared/utils.f90  ./src/src_shared/boundary_preprocessing_module.f90 ./src/src_shared/volume_processing.f90 ./src/src_shared/preprocessor_routine_module.f90 ./src/src_shared/setup_configuration_module.f90 "
+COMPLIST=" ./src/src_shared/global_data.f90 ./src/src_shared/quicksort.f90 ./src/src_shared/utils.f90  ./src/src_shared/boundary_preprocessing_module.f90 ./src/src_shared/volume_processing.f90 ./src/src_shared/preprocessor_routine_module.f90 ./src/src_shared/setup_configuration_module.f90 ./src/src_shared/manual_geom_generation.f90 "
 
 COMPLIST=$COMPLIST" ./src/src_serial/read_data_serial.f90 ./src/src_serial/data_outputting_serial.f90 ./src/src_serial/data_preprocessing_serial.f90 ./src/src_serial/main_prog_serial.f90 "
 
@@ -50,7 +50,7 @@ fi
 
 echo ' running python preprocessor ' # 2>&1 | tee -a $LOG
 
-python3 "./python_scripts/case_preprocessor.py" # 2>&1 | tee -a $LOG
+#python3 "./python_scripts/case_preprocessor.py" # 2>&1 | tee -a $LOG
 
 echo ' running main converter program serial ' # 2>&1 | tee -a $LOG
 
