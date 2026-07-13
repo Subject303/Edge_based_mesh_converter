@@ -51,9 +51,9 @@ module manual_geom_generation_module
             
             dx = (temp_coords(i,2,n_highways) - temp_coords(i,2,1))/n_highways
                 
-            do n=2,(n_highways-1)
+            do n=1,n_highways
                 
-                temp_coords(i,2,n) = temp_coords(i,2,1) + dx*n
+                temp_coords(i,2,n) = temp_coords(i,2,1) + dx*(n-1)
                 
             enddo
             
