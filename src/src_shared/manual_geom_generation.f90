@@ -14,7 +14,7 @@ module manual_geom_generation_module
     subroutine manual_geom_generation
         implicit none
         
-        call t_birch_slender(1.0, 2.0, -3.0, 15.0, 0.0, 5, 10, 100, 10)
+        call t_birch_slender(1.0, 2.0, -3.0, 15.0, 0.0, 2, 5, 12, 2)
         
         stop
         
@@ -25,7 +25,7 @@ module manual_geom_generation_module
     subroutine t_birch_slender (inner_r, outer_r, start_length, end_length, nose, scale_var ,n_highways, n_rotational, n_highways_wake)
         implicit none
         integer(KIND=INT32)            :: i, n, n_lengthways, n_highways, n_rotational, n_highways_wake, wake_length, wake_start, wake_end, wake_i, scale_var
-        real(KIND=REAL32)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, dydx
+        real(KIND=REAL32)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, dydx, pi, dOO
         real(KIND=REAL32),allocatable  :: temp_coords(:,:,:), temp_wake_coords(:,:,:)
         
         n_lengthways = 1 + (end_length - start_length) * scale_var
@@ -118,6 +118,22 @@ module manual_geom_generation_module
         enddo
         
         close(12)
+        
+        pi = atan(1.0)
+        
+        dOO = 2*pi/(n_rotational-1)
+        
+        npoin = ((n_lengthways*n_highways) + (wake_length*n_highways_wake)) * n_rotational
+        
+        allocate(coords(npoin,3))
+        
+        do i=1, n_rotational
+            
+            
+            
+        enddo
+        
+        
         
     end subroutine t_birch_slender
     
