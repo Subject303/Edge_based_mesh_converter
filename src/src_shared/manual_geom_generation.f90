@@ -44,9 +44,10 @@ module manual_geom_generation_module
             temp_coords(i,1,:) = temp_coords(i,1,1)
             
             if ((lambda - nose) .ge. 10.) then
-                temp_coords(i,2,n_highways) = 1.0
+                temp_coords(i,2,n_highways) = temp_coords(n,2,n_highways)
             else
                 temp_coords(i,2,n_highways) = inner_r + (i-1)*dydx
+                n=i
             endif
             
         end do
