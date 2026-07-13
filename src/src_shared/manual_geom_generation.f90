@@ -64,7 +64,7 @@ module manual_geom_generation_module
             
         end do
         
-        open(12,file="planar_mesh_coords.csv",access='stream',action='write',status='replace')
+        open(12,file="planar_mesh_coords.csv",access='sequential',action='write',status='replace')
         
         do i=1,n_lengthways
             
