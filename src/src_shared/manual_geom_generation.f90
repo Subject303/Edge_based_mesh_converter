@@ -123,7 +123,7 @@ module manual_geom_generation_module
         
         dOO = 2*pi/(n_rotational-1)
         
-        print*, d00
+        print*, dOO
             
         npoin = ((n_lengthways*n_highways) + (wake_length*n_highways_wake)) * n_rotational
         
