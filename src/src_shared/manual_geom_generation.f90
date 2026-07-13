@@ -119,12 +119,12 @@ module manual_geom_generation_module
         
         close(12)
         
-        pi = atan(1.0)
+        pi = 3.14159265359
         
         dOO = 2 * pi / n_rotational
         
         print*, pi, dOO, sind(dOO), cosd(dOO), tand(dOO)
-            
+        
         npoin = ((n_lengthways*n_highways) + (wake_length*n_highways_wake)) * n_rotational
         
         allocate(coords(npoin,3))
