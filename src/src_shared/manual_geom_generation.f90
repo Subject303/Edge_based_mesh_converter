@@ -25,14 +25,15 @@ module manual_geom_generation_module
     subroutine t_birch_slender (inner_r, outer_r, start_length, end_length, nose, n_lengthways ,n_highways, n_rotational)
         implicit none
         integer(KIND=INT32)            :: i, n, n_lengthways, n_highways, n_rotational
-        real(KIND=REAL32)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, grad
+        real(KIND=REAL32)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, dydx, grad
         real(KIND=REAL32),allocatable  :: temp_coords(:,:,:)
         
         allocate(temp_coords(n_lengthways,2,n_highways))
         
         temp_coords = 0.0
         
-        dx = (end_length - start_length)/n_lengthways
+        dx   = (end_length - start_length)/n_lengthways
+        dydx = (outer_r - inner_r)        /n_lengthways
         
         do i=1,n_lengthways
             
@@ -42,19 +43,10 @@ module manual_geom_generation_module
             
             temp_coords(i,1,:) = temp_coords(i,1,1)
             
-        end do
-            
-        grad = outer_r/inner_r
-        
-        do i=1,n_lengthways
-            
-            lambda = (i-1)*1.0
-            temp_coords(i,:,n_highways) = paramaterised_line(lambda, 2, grad)
+            temp_coords(i,2,n_highways) = inner_r + (i-1)*dydx
             
         end do
-        
-        temp_coords(:,2,n_highways) = temp_coords(:,2,n_highways) + inner_r
-        
+            
 !         do i=1,n_lengthways
 !             
 !             dx = (temp_coords(i,2,n_highways) - temp_coords(i,2,1))/n_highways
@@ -94,12 +86,14 @@ module manual_geom_generation_module
         select case (funct)
             case(straight_line)
             
+                paramaterised_line(1) = lambda
                 paramaterised_line(2) = beta
                 
                 return
                 
             case(angled_line)
             
+                paramaterised_line(1) = lambda
                 paramaterised_line(2) = lambda / beta
                 
                 return
