@@ -127,6 +127,8 @@ module manual_geom_generation_module
         
         allocate(coords(npoin,3))
         
+        coords = 0.0
+        
         j=0
         do i=1,n_lengthways
             do n=1,n_highways
