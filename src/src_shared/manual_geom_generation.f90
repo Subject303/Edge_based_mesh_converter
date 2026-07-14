@@ -163,9 +163,28 @@ module manual_geom_generation_module
             
         enddo
         
-        do i=1,npoin
-            print*, coords(i,:)
-        enddo
+        nele = (((n_lengthways-1)*(n_highways-1)) + (wake_length*(n_highways_wake-1))) * n_rotational
+        
+        allocate(c_p_index_array(nele), c_p_obj_relation_array(nele*8))
+        
+        c_p_sum = nele*8
+        
+        
+        nface = (nedge + 4*nedge) * n_rotational
+        
+        allocate(f_p_index_array(nface), f_p_obj_relation_array(nface*2))
+        
+        f_p_sum = nedge*4
+        
+        
+        nedge = (((n_lengthways-1)*(n_highways-1)) + ((wake_length-1)*(n_highways_wake-1)) + plane_npoin) * n_rotational
+        
+        allocate(e_p_index_array(nedge), e_p_obj_relation_array(nedge*2))
+        
+        e_p_sum = nedge*2
+        
+        print*, npoin, nedge, nface, nele
+        
         
     end subroutine t_birch_slender
     
