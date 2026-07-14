@@ -46,9 +46,9 @@ module manual_geom_generation_module
             
             temp_coords(i,1,:) = temp_coords(i,1,1)
             
-            if ((lambda - nose) .ge. 10.) then
+            if ((lambda - nose) .gt. 10.) then
                 wake_end = wake_end + 1
-                temp_coords(i,2,n_highways) = temp_coords(wake_start,2,n_highways)
+                temp_coords(i,2,n_highways) = temp_coords(wake_start-1,2,n_highways)
             else
                 temp_coords(i,2,n_highways) = inner_r + (i-1)*dydx
                 wake_start= i + 1
