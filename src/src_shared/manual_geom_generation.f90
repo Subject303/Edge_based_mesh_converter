@@ -14,7 +14,7 @@ module manual_geom_generation_module
     subroutine manual_geom_generation
         implicit none
         
-        call t_birch_slender(1.0, 2.0, -3.0, 15.0, 0.0, 1, 3, 4, 2)
+        call t_birch_slender(1.0, 2.0, -3.0, 15.0, 0.0, 1, 5, 4, 5)
         
         stop
         
@@ -80,7 +80,7 @@ module manual_geom_generation_module
             
             wake_i = wake_i + 1
             
-            dx = temp_coords(i,2,1)/(n_highways_wake)
+            dx = temp_coords(i,2,1)/(n_highways_wake-1)
             
             temp_wake_coords(wake_i,1,:) = temp_coords(i,1,1)
             
