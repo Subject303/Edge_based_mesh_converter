@@ -106,17 +106,17 @@ module manual_geom_generation_module
             
         enddo        
         
-        do i=1,wake_length
-            
-            do n=1,n_highways_wake
-                
-                !print*, temp_wake_coords(i,1,n) , ',', temp_wake_coords(i,2,n)
-                
-                write(12,'(f,a,f)') temp_wake_coords(i,1,n) , ',', temp_wake_coords(i,2,n)
-                
-            enddo
-            
-        enddo
+!         do i=1,wake_length
+!             
+!             do n=1,n_highways_wake
+!                 
+!                 !print*, temp_wake_coords(i,1,n) , ',', temp_wake_coords(i,2,n)
+!                 
+!                 write(12,'(f,a,f)') temp_wake_coords(i,1,n) , ',', temp_wake_coords(i,2,n)
+!                 
+!             enddo
+!             
+!         enddo
         
         close(12)
         
