@@ -170,11 +170,11 @@ module manual_geom_generation_module
         c_p_sum = nele*8
         
         
-        nface = (nedge + 4*nedge) * n_rotational
+        nface = (nele + 4*nele) * n_rotational
         
         allocate(f_p_index_array(nface), f_p_obj_relation_array(nface*2))
         
-        f_p_sum = nedge*4
+        f_p_sum = nele*4
         
         
         nedge = (((n_lengthways-1)*(n_highways-1)) + ((wake_length-1)*(n_highways_wake-1)) + plane_npoin) * n_rotational
