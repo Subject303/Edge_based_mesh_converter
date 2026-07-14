@@ -80,7 +80,7 @@ module manual_geom_generation_module
             
             wake_i = wake_i + 1
             
-            dx = temp_coords(i,2,1)/(n_highways_wake-1)
+            dx = temp_coords(i,2,1)/(n_highways_wake)
             
             temp_wake_coords(wake_i,1,:) = temp_coords(i,1,1)
             
