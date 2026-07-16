@@ -205,10 +205,12 @@ module manual_geom_generation_module
         j = 1
         do i=1,nele
             
-            k = ceiling(real(n_lengthways/j))
-            l = ceiling(real(plane_npoin/j))
+            k = ceiling(real(j/n_lengthways))
+            l = ceiling(real(j/plane_npoin))
             
-            print*, j, k, l
+            print*, '>'
+            
+            print*, j, k, l, n_lengthways, plane_npoin
             print*, n_lengthways*(k-1), plane_npoin*(l-1), n_lengthways*(k), plane_npoin*(l)
             
             c_p_obj_relation_array(c_p_index_array(i)  ) = n_lengthways*(k-1) + j + 0 + plane_npoin*(l-1)
