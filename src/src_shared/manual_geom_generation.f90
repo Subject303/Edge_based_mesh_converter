@@ -230,6 +230,7 @@ module manual_geom_generation_module
             
         enddo
         
+        i=nele
         
         print*, i
         print*, c_p_index_array(i-1)+1,c_p_index_array(i)
