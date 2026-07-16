@@ -24,7 +24,7 @@ module manual_geom_generation_module
     
     subroutine t_birch_slender (inner_r, outer_r, start_length, end_length, nose, scale_var ,n_highways, n_rotational, n_highways_wake)
         implicit none
-        integer(KIND=INT32)            :: i, j, n, n_lengthways, n_highways, n_rotational, n_highways_wake, wake_length, wake_start, wake_end, wake_i, scale_var, plane_npoin
+        integer(KIND=INT32)            :: i, j, k, l, n, n_lengthways, n_highways, n_rotational, n_highways_wake, wake_length, wake_start, wake_end, wake_i, scale_var, plane_npoin
         real(KIND=REAL32)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, dydx
         real(KIND=REAL32),allocatable  :: temp_coords(:,:,:), temp_wake_coords(:,:,:)
         real(KIND=REAL64)              :: pi, dOO
@@ -46,14 +46,14 @@ module manual_geom_generation_module
             
             temp_coords(i,1,:) = temp_coords(i,1,1)
             
-            if ((lambda - nose) .gt. 10.) then
-                wake_end = wake_end + 1
-                temp_coords(i,2,n_highways) = temp_coords(wake_start-1,2,n_highways)
-            else
+            !if ((lambda - nose) .gt. 10.) then
+            !    wake_end = wake_end + 1
+            !    temp_coords(i,2,n_highways) = temp_coords(wake_start-1,2,n_highways)
+            !else
                 temp_coords(i,2,n_highways) = inner_r + (i-1)*dydx
                 wake_start= i + 1
                 wake_end  = i
-            endif
+            !endif
             
         end do
         
@@ -69,28 +69,30 @@ module manual_geom_generation_module
             
         end do
         
-        wake_length = 1 + wake_end - wake_start
-        allocate(temp_wake_coords(wake_length,2,n_highways_wake))
+        wake_length = 0
         
-        temp_wake_coords(:,2,1) = 0.0
-        
-        wake_i = 0
-        
-        do i=wake_start,wake_end
-            
-            wake_i = wake_i + 1
-            
-            dx = temp_coords(i,2,1)/(n_highways_wake-1)
-            
-            temp_wake_coords(wake_i,1,:) = temp_coords(i,1,1)
-            
-            do n=2,n_highways_wake
-                
-                temp_wake_coords(wake_i,2,n) = temp_wake_coords(wake_i,2,1) + dx*(n-1)
-                
-            enddo
-            
-        end do
+        !wake_length = 1 + wake_end - wake_start
+        !allocate(temp_wake_coords(wake_length,2,n_highways_wake))
+        !
+        !temp_wake_coords(:,2,1) = 0.0
+        !
+        !wake_i = 0
+        !
+        !do i=wake_start,wake_end
+        !    
+        !    wake_i = wake_i + 1
+        !    
+        !    dx = temp_coords(i,2,1)/(n_highways_wake-1)
+        !    
+        !    temp_wake_coords(wake_i,1,:) = temp_coords(i,1,1)
+        !    
+        !    do n=2,n_highways_wake
+        !        
+        !        temp_wake_coords(wake_i,2,n) = temp_wake_coords(wake_i,2,1) + dx*(n-1)
+        !        
+        !    enddo
+        !    
+        !end do
         
         open(12,file="planar_mesh_coords.csv",access='sequential',action='write',status='replace')
         
@@ -106,17 +108,17 @@ module manual_geom_generation_module
             
         enddo        
         
-        do i=1,wake_length
-            
-            do n=1,n_highways_wake
-                
-                !print*, temp_wake_coords(i,1,n) , ',', temp_wake_coords(i,2,n)
-                
-                write(12,'(f,a,f)') temp_wake_coords(i,1,n) , ',', temp_wake_coords(i,2,n)
-                
-            enddo
-            
-        enddo
+        !do i=1,wake_length
+        !    
+        !    do n=1,n_highways_wake
+        !        
+        !        !print*, temp_wake_coords(i,1,n) , ',', temp_wake_coords(i,2,n)
+        !        
+        !        write(12,'(f,a,f)') temp_wake_coords(i,1,n) , ',', temp_wake_coords(i,2,n)
+        !        
+        !    enddo
+        !    
+        !enddo
         
         close(12)
         
@@ -140,13 +142,13 @@ module manual_geom_generation_module
                 coords(j,2) = temp_coords(i,2,n)
             enddo
         enddo  
-        do i=1,wake_length
-            do n=1,n_highways_wake
-                j=j+1
-                coords(j,1) = temp_wake_coords(i,1,n)
-                coords(j,2) = temp_wake_coords(i,2,n)
-            enddo
-        enddo  
+        !do i=1,wake_length
+        !    do n=1,n_highways_wake
+        !        j=j+1
+        !        coords(j,1) = temp_wake_coords(i,1,n)
+        !        coords(j,2) = temp_wake_coords(i,2,n)
+        !    enddo
+        !enddo  
         
         plane_npoin = j
         
@@ -165,25 +167,65 @@ module manual_geom_generation_module
         
         nele = (((n_lengthways-1)*(n_highways-1)) + (wake_length*(n_highways_wake-1))) * n_rotational
         
-        allocate(c_p_index_array(nele), c_p_obj_relation_array(nele*8))
+        allocate(c_p_index_array(0:nele), c_p_obj_relation_array(nele*8))
         
         c_p_sum = nele*8
+        c_p_index_array(1:nele) = 8
         
         
         nface = (5 * (((n_lengthways-1)*(n_highways-1)) + (wake_length*(n_highways_wake-1)))) * n_rotational
         
-        allocate(f_p_index_array(nface), f_p_obj_relation_array(nface*2))
+        allocate(f_p_index_array(0:nface), f_p_obj_relation_array(nface*2))
         
-        f_p_sum = nele*4
+        f_p_sum = nface*4
+        f_p_index_array(1:nface) = 4
         
         
         nedge = (((n_lengthways-1)*(n_highways-1)) + ((wake_length-1)*(n_highways_wake-1)) + plane_npoin) * n_rotational
         
-        allocate(e_p_index_array(nedge), e_p_obj_relation_array(nedge*2))
+        allocate(e_p_index_array(0:nedge), e_p_obj_relation_array(nedge*2))
         
         e_p_sum = nedge*2
+        e_p_index_array(1:nedge) = 2
         
         print*, npoin, nedge, nface, nele
+        
+        do i=1,nele
+            c_p_index_array(i) = c_p_index_array(i) + c_p_index_array(i-1)
+        enddo
+        do i=1,nface
+            f_p_index_array(i) = f_p_index_array(i) + f_p_index_array(i-1)
+        enddo
+        do i=1,nedge
+            e_p_index_array(i) = e_p_index_array(i) + e_p_index_array(i-1)
+        enddo
+        
+        j = 1
+        do i=1,nele
+            
+            k = ceiling(n_lengthways/j)
+            l = ceiling(plane_npoin/j)
+            
+            c_p_obj_relation_array(c_p_index_array(i)  ) = n_lengthways*(k-1) + j + 0 + plane_npoin*(l-1)
+            c_p_obj_relation_array(c_p_index_array(i)-1) = n_lengthways*(k-1) + j + 1 + plane_npoin*(l-1)
+            
+            c_p_obj_relation_array(c_p_index_array(i)-2) = n_lengthways*(k)   + j + 0 + plane_npoin*(l-1)
+            c_p_obj_relation_array(c_p_index_array(i)-3) = n_lengthways*(k)   + j + 1 + plane_npoin*(l-1)
+            
+            c_p_obj_relation_array(c_p_index_array(i)-4) = n_lengthways*(k-1) + j + 0 + plane_npoin*(l)
+            c_p_obj_relation_array(c_p_index_array(i)-5) = n_lengthways*(k-1) + j + 1 + plane_npoin*(l)
+            
+            c_p_obj_relation_array(c_p_index_array(i)-6) = n_lengthways*(k)   + j + 0 + plane_npoin*(l)
+            c_p_obj_relation_array(c_p_index_array(i)-7) = n_lengthways*(k)   + j + 1 + plane_npoin*(l)
+            
+            j = j + 2
+            
+            print*, i
+            print*, c_p_index_array(i-1)+1,c_p_index_array(i)
+            print*, c_p_obj_relation_array((c_p_index_array(i-1)+1):(c_p_index_array(i)))
+            
+        enddo
+        
         
         
     end subroutine t_birch_slender
