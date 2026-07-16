@@ -210,7 +210,7 @@ module manual_geom_generation_module
             
             print*, '>'
             
-            print*, j, k, l, n_lengthways, plane_npoin
+            print*, j, k, l, n_lengthways, plane_npoin,real(j/n_lengthways),real(j/plane_npoin)
             print*, n_lengthways*(k-1), plane_npoin*(l-1), n_lengthways*(k), plane_npoin*(l)
             
             c_p_obj_relation_array(c_p_index_array(i)  ) = n_lengthways*(k-1) + j + 0 + plane_npoin*(l-1)
