@@ -190,8 +190,6 @@ module manual_geom_generation_module
         e_p_index_array = 2
         e_p_index_array(0) = 0
         
-        print*, npoin, nedge, nface, nele
-        
         do i=1,nele
             c_p_index_array(i) = c_p_index_array(i) + c_p_index_array(i-1)
         enddo
@@ -208,10 +206,9 @@ module manual_geom_generation_module
             k = ceiling(real(j)/n_lengthways)
             l = ceiling(real(j)/plane_npoin)
             
-            print*, '>'
-            
-            print*, j, k, l, n_lengthways, plane_npoin,real(j)/n_lengthways,real(j)/plane_npoin,(j/n_lengthways),(j/plane_npoin)
-            print*, n_lengthways*(k-1), plane_npoin*(l-1), n_lengthways*(k), plane_npoin*(l)
+            !print*, '>'
+            !print*, j, k, l, n_lengthways, plane_npoin,real(j)/n_lengthways,real(j)/plane_npoin,(j/n_lengthways),(j/plane_npoin)
+            !print*, n_lengthways*(k-1), plane_npoin*(l-1), n_lengthways*(k), plane_npoin*(l)
             
             c_p_obj_relation_array(c_p_index_array(i)  ) = n_lengthways*(k-1) + j + 0 + plane_npoin*(l-1)
             c_p_obj_relation_array(c_p_index_array(i)-1) = n_lengthways*(k-1) + j + 1 + plane_npoin*(l-1)
@@ -227,12 +224,18 @@ module manual_geom_generation_module
             
             j = j + 2
             
-            print*, i
-            print*, c_p_index_array(i-1)+1,c_p_index_array(i)
-            print*, c_p_obj_relation_array((c_p_index_array(i-1)+1):(c_p_index_array(i)))
+            !print*, i
+            !print*, c_p_index_array(i-1)+1,c_p_index_array(i)
+            !print*, c_p_obj_relation_array((c_p_index_array(i-1)+1):(c_p_index_array(i)))
             
         enddo
         
+        
+        print*, i
+        print*, c_p_index_array(i-1)+1,c_p_index_array(i)
+        print*, c_p_obj_relation_array((c_p_index_array(i-1)+1):(c_p_index_array(i)))
+        
+        print*, npoin, nedge, nface, nele
         
         
     end subroutine t_birch_slender
