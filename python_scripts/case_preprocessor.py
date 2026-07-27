@@ -373,8 +373,8 @@ for i in range(nface):
         
         # so we've filtered out all impossible faces
         
-        obj1 = f_p_obj_relation_array[i]
-        obj2 = f_p_obj_relation_array[j]
+        obj1 = sorted(f_p_obj_relation_array[i])
+        obj2 = sorted(f_p_obj_relation_array[j])
         
         print(i,j)
         print(obj1)
