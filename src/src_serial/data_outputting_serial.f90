@@ -59,6 +59,10 @@ module data_outputting_serial
         character(16)                   :: offset_text, TXTnele, TXTnpoin
         logical, allocatable		    :: viable_edge(:)
         
+        print*, NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE('')
+        print*, 'WRITING VTU BINARY FILE'
+        print*, NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE('')
+        
         write(TXTnpoin, '(I16)') npoin
         write(TXTnele,  '(I16)') nele
         
