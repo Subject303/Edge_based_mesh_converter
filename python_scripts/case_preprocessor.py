@@ -363,12 +363,12 @@ for i in range(nface):
         if f_p_index[i] != f_p_index[j]:
             continue
         
-        # dont bother with faces whose max is less than our current min
-        if f_p_min[i] > f_p_max[j] :
+        # dont bother with faces with different minimums
+        if f_p_min[i] != f_p_min[j] :
             continue
         
-        # dont bother with faces whose min is more than our current max
-        if f_p_max[i] < f_p_min[j] :
+        # dont bother with faces with different maximums
+        if f_p_max[i] != f_p_max[j] :
             continue
         
         # so we've filtered out all impossible faces
