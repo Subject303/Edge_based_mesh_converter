@@ -351,6 +351,7 @@ for i in range(nface):
         continue
     
     obj1 = sorted(f_p_obj_relation_array[i])
+    face_to_rep[i] = k
     
     for j in range(i+1,nface):
         
@@ -387,8 +388,8 @@ for i in range(nface):
             
             face_to_rep[j] = k
             
-        face_to_rep[i] = k
-        k=k+1
+    
+    k=k+1
 
 temp  = []
 temp2 = []
