@@ -347,60 +347,28 @@ del temp4; gc.collect()
 
 
 
-f_p_max     = [max(obj) for obj in f_p_obj_relation_array]
-f_p_min     = [min(obj) for obj in f_p_obj_relation_array]
-f_uniqe     = [True]*nface
+f_uniqe     = [False]*nface
 face_to_rep = [-1]*nface
 
 k=0
-print('   f arrays, fp and fe',time.time()-start); sys.stdout.flush()
-for i in range(nface):
-        
-    # print('   ', i)
+print('   f arrays fp fe',time.time()-start); sys.stdout.flush()
+for i in range(nface-1):
     
-    # dont bother with faces we've already filtered out
-    if f_uniqe[i] == False: 
-        continue
-    
-    obj1 = sorted(f_p_obj_relation_array[i])
     face_to_rep[i] = k
     
-    for j in range(i+1,nface):
+    if f_p_index[i] == f_p_index[i+1]:
         
-        # print('   ', i, '   ', j)
+        obj1 = sorted_f_p[i]
+        obj2 = sorted_f_p[i+1]
         
-        # dont bother with faces we've already filtered out
-        if f_uniqe[j] == False:
-            continue
-        
-        # dont bother with faces with the wrong number of points
-        if f_p_index[i] != f_p_index[j]:
-            continue
-        
-        # dont bother with faces with different minimums
-        if f_p_min[i] != f_p_min[j] :
-            continue
-        
-        # dont bother with faces with different maximums
-        if f_p_max[i] != f_p_max[j] :
-            continue
-        
-        # so we've filtered out all impossible faces
-        
-        obj2 = sorted(f_p_obj_relation_array[j])
-        # sort the face arrays to perform the boolean check
-        
-        # print(i,j)
-        # print(obj1)
-        # print(obj2)
-        # print(obj1 == obj2)
-        
-        # raw dog comparison
-        if obj1 == obj2: 
-            f_uniqe[j] = False
-            face_to_rep[j] = k
-    k=k+1
+        for p in range(f_p_index[i]):
+            
+            if obj1[p] != obj2[p]: 
+                f_uniqe[i] = True
+                k=k+1
 
+f_uniqe[-1] = True
+face_to_rep[-1] = k
 temp  = []
 temp2 = []
 temp3 = []
