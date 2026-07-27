@@ -401,11 +401,9 @@ for i in range(nedge-1):
     obj1 = sorted_e_p[i]
     obj2 = sorted_e_p[i+1]
     
-    for p in range(2):
-        
-        if obj1[p] != obj2[p]: 
-            e_uniqe[i] = True
-            k=k+1
+    if obj1 != obj2: 
+        e_uniqe[i] = True
+        k=k+1
 
 e_uniqe[-1] = True
 edge_to_rep[-1] = k
