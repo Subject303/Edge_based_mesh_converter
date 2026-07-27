@@ -361,11 +361,6 @@ for i in range(nface-1):
         obj1 = sorted_f_p[i]
         obj2 = sorted_f_p[i+1]
         
-        print(i)
-        print(obj1)
-        print(obj2)
-        print(obj1 != obj2)
-        
         for p in range(f_p_index[i]):
             
             if obj1[p] != obj2[p]: 
@@ -375,8 +370,6 @@ for i in range(nface-1):
 
 f_uniqe[-1] = True
 face_to_rep[-1] = k
-
-print(face_to_rep)
 
 temp  = []
 temp2 = []
@@ -410,11 +403,6 @@ for i in range(nedge-1):
     
     obj1 = sorted_e_p[i]
     obj2 = sorted_e_p[i+1]
-    
-    print(i)
-    print(obj1)
-    print(obj2)
-    print(obj1 != obj2)
     
     if obj1 != obj2: 
         e_uniqe[i] = True
