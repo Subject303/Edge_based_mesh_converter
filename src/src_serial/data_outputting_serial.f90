@@ -55,6 +55,7 @@ module data_outputting_serial
 		integer(KIND=INT32)             :: i, c, f, e, offset_count, cf, fe, p, fp1, fp2
 		integer(KIND=INT8 ),allocatable :: types(:)
         integer(KIND=INT64)			    :: offset, face_offset
+        integer(KIND=REAL32),dimension(npoin,3) :: outvar
         character(:), allocatable		:: outstring
         character(16)                   :: offset_text, TXTnele, TXTnpoin
         
@@ -101,6 +102,28 @@ module data_outputting_serial
     outstring = outstring//'<DataArray type="Int32" Name="faceoffsets" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')//'&
 &</Cells>'//NEW_LINE('')//'&
 &<PointData>'//NEW_LINE('')
+
+        offset = offset + 8 + npoin*3*4
+        write(offset_text, '(i16)')  offset
+    outstring = outstring//'<DataArray type="Float32" Name="sn" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+        offset = offset + 8 + npoin*3*4
+        write(offset_text, '(i16)')  offset
+    outstring = outstring//'<DataArray type="Float32" Name="sb" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+        offset = offset + 8 + npoin*3*4
+        write(offset_text, '(i16)')  offset
+    outstring = outstring//'<DataArray type="Float32" Name="sbb" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+        offset = offset + 8 + npoin*3*4
+        write(offset_text, '(i16)')  offset
+    outstring = outstring//'<DataArray type="Float32" Name="projections" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+
+        offset = offset + 8 + npoin*4
+        write(offset_text, '(i16)')  offset
+    outstring = outstring//'<DataArray type="Float32" Name="volume" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+    
+        offset = offset + 8 + npoin*3*4
+        write(offset_text, '(i16)')  offset
+    outstring = outstring//'<DataArray type="Float32" Name="normals" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+    
         outstring = outstring//'</PointData>'//NEW_LINE('')//'&
 &</Piece>'//NEW_LINE('')//'&
 &</UnstructuredGrid>'//NEW_LINE('')//'&
@@ -153,7 +176,42 @@ module data_outputting_serial
             enddo
             write(1) offset_count
         enddo
-    
+        
+        offset = 8+npoin*3*4
+        write(1) offset
+        
+        outvar = 0.0
+        do i=1,nedge
+            outvar()
+        enddo
+        
+        write(1) sn
+        
+        offset = 8+npoin*3*4
+        write(1) offset
+        
+        write(1) sb
+        
+        offset = 8+npoin*3*4
+        write(1) offset
+        
+        write(1) sbb
+        
+        offset = 8+npoin*3*4
+        write(1) offset
+        
+        write(1) projections
+        
+        offset = 8+npoin*4
+        write(1) offset
+        
+        write(1) vol
+        
+        offset = 8+npoin*3*4
+        write(1) offset
+        
+        write(1) normals
+        
         outstring = NEW_LINE('')//'&
 &</AppendedData>'//NEW_LINE('')//'&
 &</VTKFile>'
