@@ -350,7 +350,7 @@ for i in range(nele):
     
     for j in range(i+1,nele):
         
-        print('   ', i, '   ', j)
+        #print('   ', i, '   ', j)
         
         # dont bother with cells we've already filtered out
         if c_uniqe[j] == False:
