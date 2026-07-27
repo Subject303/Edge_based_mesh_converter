@@ -340,7 +340,7 @@ del temp4; gc.collect()
 f_p_max     = [max(obj) for obj in f_p_obj_relation_array]
 f_p_min     = [min(obj) for obj in f_p_obj_relation_array]
 f_uniqe     = [True]*nface
-face_to_rep = [range(nface)]
+face_to_rep = list(range(nface))
 
 print('   f arrays, fp and fe',time.time()-start); sys.stdout.flush()
 for i in range(nface):
