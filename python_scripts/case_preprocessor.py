@@ -24,8 +24,8 @@ cdp = vtkCompositeDataPipeline()
 # might not be needed
 algo.SetDefaultExecutivePrototype(cdp)
 del cdp
-#algo.SetCaseFileName("./case/tet_sphere.case") #tet sphere
-algo.SetCaseFileName("./case/2.case") #tiny cube
+algo.SetCaseFileName("./case/tet_sphere.case") #tet sphere
+# algo.SetCaseFileName("./case/2.case") #tiny cube
 #algo.SetCaseFileName("./case/tet_cube.case") #TET cube
 #algo.SetCaseFileName("./case/star1.case") # 0.75 mil mesh
 # algo.SetCaseFileName("./case/star.case") # 24 mil mesh
@@ -115,7 +115,8 @@ for c in range(nele):
     
     cell = polyblock.GetCell(c)
     
-    c_p_obj_relation_array [c] = sorted([cell.GetPointId(p) for p in range(cell.GetNumberOfPoints())])
+    #c_p_obj_relation_array [c] = sorted([cell.GetPointId(p) for p in range(cell.GetNumberOfPoints())])
+    c_p_obj_relation_array [c] = [cell.GetPointId(p) for p in range(cell.GetNumberOfPoints())]
     
     
     nfaces = cell.GetNumberOfFaces()
