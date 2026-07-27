@@ -52,12 +52,11 @@ module data_outputting_serial
     
     subroutine output_vtu_binary_appended
         implicit none
-		integer(KIND=INT32)             :: i, c, f, e, offset_count, cf, fe, p, num_e, written_p
+		integer(KIND=INT32)             :: i, c, f, e, offset_count, cf, fe, p, fp1, fp2
 		integer(KIND=INT8 ),allocatable :: types(:)
         integer(KIND=INT64)			    :: offset, face_offset
         character(:), allocatable		:: outstring
         character(16)                   :: offset_text, TXTnele, TXTnpoin
-        logical, allocatable		    :: viable_edge(:)
         
         print*, NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE('')
         print*, 'WRITING VTU BINARY FILE'
@@ -135,8 +134,10 @@ module data_outputting_serial
             write(1) (c_f_index_array(c)-c_f_index_array(c-1)) 
             do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
                 f = c_f_obj_relation_array(cf)
+                fp1 = f_p_index_array(f-1)
+                fp2 = f_p_index_array(f)
                 ! number of points in face, points in face
-                write(1) (f_p_index_array(f)-f_p_index_array(f-1)) , f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))-1
+                write(1) (fp2-fp1) , f_p_obj_relation_array((fp1+1):fp2)-1
                 
                 enddo
             enddo
