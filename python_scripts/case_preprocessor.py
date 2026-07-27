@@ -339,7 +339,7 @@ k=0
 print('   c arrays cp cf',time.time()-start); sys.stdout.flush()
 for i in range(nele):
     
-    print('   ', i, time.time()-start); sys.stdout.flush()
+    # print('   ', i)
     
     # dont bother with cells we've already filtered out
     if c_uniqe[i] == False: 
@@ -417,7 +417,7 @@ k=0
 print('   f arrays, fp and fe',time.time()-start); sys.stdout.flush()
 for i in range(nface):
         
-    print('   ', i)
+    # print('   ', i)
     
     # dont bother with faces we've already filtered out
     if f_uniqe[i] == False: 
@@ -428,7 +428,7 @@ for i in range(nface):
     
     for j in range(i+1,nface):
         
-        print('   ', i, '   ', j)
+        # print('   ', i, '   ', j)
         
         # dont bother with faces we've already filtered out
         if f_uniqe[j] == False:
