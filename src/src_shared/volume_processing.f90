@@ -218,24 +218,24 @@ module volume_processing
         real(KIND=REAL64)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle, vol1, vol2
         logical, allocatable :: non_viable_faces(:)
         
-        do e=1,nedge
-            i1       = e_p_index_array(e-1)	+ 1
-			ef_start = e_f_index_array(e-1)	+ 1
-            ec_start = e_c_index_array(e-1)	+ 1
-            i2       = e_p_index_array(e) 
-            ef_end   = e_f_index_array(e)
-            ec_end   = e_c_index_array(e)
-            print*, 'bound ', e_bound_array(e), e_centroid(e,:)
-            print*, 'point'
-            print*, e_p_obj_relation_array(i1:i2)
-            print*, p_bound_array(e_p_obj_relation_array(i1:i2))
-            print*, 'edge'
-            print*, e_f_obj_relation_array(ef_start:ef_end)
-            print*, f_bound_array(e_f_obj_relation_array(ef_start:ef_end))
-            print*, 'face'
-            print*, e_c_obj_relation_array(ec_start:ec_end)
-            
-	    enddo
+!         do e=1,nedge
+!             i1       = e_p_index_array(e-1)	+ 1
+! 			ef_start = e_f_index_array(e-1)	+ 1
+!             ec_start = e_c_index_array(e-1)	+ 1
+!             i2       = e_p_index_array(e) 
+!             ef_end   = e_f_index_array(e)
+!             ec_end   = e_c_index_array(e)
+!             print*, 'bound ', e_bound_array(e), e_centroid(e,:)
+!             print*, 'point'
+!             print*, e_p_obj_relation_array(i1:i2)
+!             print*, p_bound_array(e_p_obj_relation_array(i1:i2))
+!             print*, 'edge'
+!             print*, e_f_obj_relation_array(ef_start:ef_end)
+!             print*, f_bound_array(e_f_obj_relation_array(ef_start:ef_end))
+!             print*, 'face'
+!             print*, e_c_obj_relation_array(ec_start:ec_end)
+!             
+! 	    enddo
         
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
@@ -283,7 +283,7 @@ module volume_processing
             
             do ! we must start on a boundary face
                 current_face = e_f_obj_relation_array(ef_start+ef)
-                print*, current_face, f_c_obj_relation_array(f_c_index_array(current_face)    ), f_c_obj_relation_array(f_c_index_array(current_face-1)+1), f_bound_array(current_face), ef, ef_start+ef, ef_end
+!                 print*, current_face, f_c_obj_relation_array(f_c_index_array(current_face)    ), f_c_obj_relation_array(f_c_index_array(current_face-1)+1), f_bound_array(current_face), ef, ef_start+ef, ef_end
                 if (f_bound_array(current_face)) exit
                 ef = ef + 1
             enddo
@@ -307,7 +307,7 @@ module volume_processing
             i=3
             
             !print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
-            print*, 'aa ', centroid_index_array
+!             print*, 'aa ', centroid_index_array
             do
                 
                 if (ef.eq.face_count) then
@@ -328,7 +328,7 @@ module volume_processing
                     centroid_index_array(i)   = current_face
                     centroid_array(i,:)   = f_centroid(current_face,:)
                     
-                    print*, current_face, cell_1, cell_2, f_bound_array(current_face), ef, ef_start+ef, ef_end
+!                     print*, current_face, cell_1, cell_2, f_bound_array(current_face), ef, ef_start+ef, ef_end
                     if (f_bound_array(current_face)) exit
                     
                     centroid_index_array(i+1) = cell_2
@@ -346,7 +346,7 @@ module volume_processing
                     centroid_index_array(i)   = current_face
                     centroid_array(i,:)   = f_centroid(current_face,:)
                     
-                    print*, current_face, cell_1, cell_2, f_bound_array(current_face), ef, ef_start+ef, ef_end
+!                     print*, current_face, cell_1, cell_2, f_bound_array(current_face), ef, ef_start+ef, ef_end
                     if (f_bound_array(current_face)) exit
                     
                     centroid_index_array(i+1) = cell_1
@@ -364,11 +364,11 @@ module volume_processing
                 endif
                 
                 !print*, ef, current_face, cell_1, cell_2 , prev_cell
-                print*, 'aa ', centroid_index_array
+!                 print*, 'aa ', centroid_index_array
                 
             enddo
 			
-            print*, 'aa ', centroid_index_array
+!             print*, 'aa ', centroid_index_array
             
             
             centroid_array_count_old = centroid_array_count
@@ -384,7 +384,7 @@ module volume_processing
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
-            print*, be, (c1(1)+c2(1))/2, (c1(2)+c2(2))/2, (c1(3)+c2(3))/2, in_progress_centroid
+!             print*, be, (c1(1)+c2(1))/2, (c1(2)+c2(2))/2, (c1(3)+c2(3))/2, in_progress_centroid
             
             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol1, vol2)
             
@@ -922,14 +922,14 @@ module volume_processing
                 !v1 = (obj_centroid - baryobj_1_centroid)
                 v2 = (obj_centroid - baryobj_2_centroid)
 				
-                print*, 'aaaaa'
-                print*, baryobj_1_centroid
-                print*, baryobj_2_centroid
-                print*, v3
-                print*, abs(planar_alignment(v1,v2,v3))! - start_angle
-                !angelee = angelee + abs(planar_alignment(v1,v2,v3))
-                !print*, angelee, planar_alignment(v1,v2,v3)
-                print*, 'aaaaa'
+!                 print*, 'aaaaa'
+!                 print*, baryobj_1_centroid
+!                 print*, baryobj_2_centroid
+!                 print*, v3
+!                 print*, abs(planar_alignment(v1,v2,v3))! - start_angle
+!                 !angelee = angelee + abs(planar_alignment(v1,v2,v3))
+!                 !print*, angelee, planar_alignment(v1,v2,v3)
+!                 print*, 'aaaaa'
                 
             enddo
         else
