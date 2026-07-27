@@ -378,6 +378,11 @@ for i in range(nface):
         obj2 = sorted(f_p_obj_relation_array[j])
         # sort the face arrays to perform the boolean check
         
+        # print(i,j)
+        # print(obj1)
+        # print(obj2)
+        # print(obj1 == obj2)
+        
         # raw dog comparison
         if obj1 == obj2: 
             f_uniqe[i] = True
@@ -386,6 +391,7 @@ for i in range(nface):
 
 for i in range(nface):
     if f_uniqe[i] == True:
+        print(i, sorted(f_p_obj_relation_array[i]))
         temp.append( f_p_obj_relation_array[i])
         temp2.append(f_p_index[i])
         temp3.append(f_e_obj_relation_array[i])
