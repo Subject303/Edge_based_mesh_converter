@@ -138,7 +138,7 @@ for c in range(nele):
             
             edge = face.GetEdge(e)
             
-            e_p_obj_relation_array.append(sorted([edge.GetPointId(0),edge.GetPointId(1)]))
+            e_p_obj_relation_array.append([edge.GetPointId(0),edge.GetPointId(1)])
             
             e_array.append(edgeid)
             edgeid = edgeid + 1
