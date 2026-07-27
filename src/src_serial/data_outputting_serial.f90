@@ -217,6 +217,10 @@ module data_outputting_serial
 		
         close(1)
         
+        print*, NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE('')
+        print*, 'FINISHED WRITING VTU BINARY FILE'
+        print*, NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE('')
+        
     end subroutine output_vtu_binary_appended
     
 end module data_outputting_serial
