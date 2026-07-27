@@ -322,7 +322,7 @@ for i in range(nele-1):
                 k=k+1
 
 c_uniqe[-1] = True
-cell_to_rep[nele] = k
+cell_to_rep[-1] = k
 temp  = []
 temp2 = []
 temp3 = []
