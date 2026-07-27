@@ -345,13 +345,10 @@ for i in range(nele):
     if c_uniqe[i] == False: 
         continue
     
-    i_range = (c for c in range(i+1,nele) if c_p_max[c] == c_p_max[i])
-    
     obj1 = sorted(c_p_obj_relation_array[i])
     cell_to_rep[i] = k
     
-    # for j in range(i+1,nele):
-    for j in i_range:
+    for j in range(i+1,nele):
         
         print('   ', i, '   ', j)
         
