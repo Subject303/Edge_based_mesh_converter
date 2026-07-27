@@ -131,69 +131,14 @@ module data_outputting_serial
     
         write(1) 8+face_offset
         do c=1,nele
-            write(1) (c_f_index_array(c)-c_f_index_array(c-1)) ! number of faces
+            ! number of faces
+            write(1) (c_f_index_array(c)-c_f_index_array(c-1)) 
             do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
                 f = c_f_obj_relation_array(cf)
                 ! number of points in face, points in face
-                write(1) (f_p_index_array(f)-f_p_index_array(f-1))! , f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))-1
+                write(1) (f_p_index_array(f)-f_p_index_array(f-1)) , f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))-1
                 
-                print*,  f_p_obj_relation_array((f_p_index_array(f-1)+1):f_p_index_array(f))
-                
-                num_e = f_e_index_array(f)-f_e_index_array(f-1)
-                allocate(viable_edge(num_e))
-                viable_edge = .false.
-                
-                print*, e, p, e_p_obj_relation_array(e_p_index_array(e)), e_p_obj_relation_array(e_p_index_array(e)-1), written_p, num_e
-                fe = 1
-                viable_edge(fe) = .true.
-                e = f_e_obj_relation_array( fe + f_e_index_array(f-1) )
-                p = e_p_obj_relation_array(e_p_index_array(e)-1)
-                write(1) p-1
-                print*, p
-                p = e_p_obj_relation_array(e_p_index_array(e))
-                write(1) p-1
-                print*, p
-                fe = 2
-                written_p = 2
-                do 
-                    if (written_p.eq.num_e) exit
-                    if (viable_edge(fe)) then
-                        if (fe .eq. num_e) then
-                            fe = 1
-                        else
-                            fe = fe + 1
-                        endif
-                    endif
-                    
-                    e = f_e_obj_relation_array(fe)
-                    
-                    print*, e, p, e_p_obj_relation_array(e_p_index_array(e)), e_p_obj_relation_array(e_p_index_array(e)-1), written_p, num_e
-                    if (p .eq. e_p_obj_relation_array(e_p_index_array(e))) then
-                        p = e_p_obj_relation_array(e_p_index_array(e)-1)
-                        write(1) p-1
-                        viable_edge(fe) = .true.
-                        written_p = written_p + 1
-                        print*, p
-                        cycle
-                        
-                    elseif (p .eq. e_p_obj_relation_array(e_p_index_array(e)-1)) then
-                        p = e_p_obj_relation_array(e_p_index_array(e))
-                        write(1) p-1
-                        viable_edge(fe) = .true.
-                        written_p = written_p + 1
-                        print*, p
-                        cycle
-                    else
-                        if (fe .eq. num_e) then
-                            fe = 1
-                        else
-                            fe = fe + 1
-                        endif
-                    endif
-                    
-                    
                 enddo
-                deallocate(viable_edge)
             enddo
         enddo
     
