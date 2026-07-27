@@ -401,6 +401,11 @@ for i in range(nedge-1):
     obj1 = sorted_e_p[i]
     obj2 = sorted_e_p[i+1]
     
+    print(i)
+    print(obj1)
+    print(obj2)
+    print(obj1 != obj2)
+    
     if obj1 != obj2: 
         e_uniqe[i] = True
         k=k+1
