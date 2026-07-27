@@ -368,6 +368,9 @@ for i in range(nface-1):
 
 f_uniqe[-1] = True
 face_to_rep[-1] = k
+
+print(face_to_rep)
+
 temp  = []
 temp2 = []
 temp3 = []
