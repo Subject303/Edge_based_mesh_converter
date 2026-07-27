@@ -290,44 +290,109 @@ for obj in f_e_obj_relation_array:
 
 print('removing duplicate connectivites',time.time()-start); sys.stdout.flush()
 
-edge_to_rep=[]
-face_to_rep=[]
-cell_to_rep=[]
 
-edge_to_del=[-1]*len(e_p_index)
-face_to_del=[-1]*len(f_p_index)
-cell_to_del=[-1]*len(c_p_index)
+# temp = []
+# temp2 = []
+# temp3 = []
+# temp4 = []
+# j=0
+# print('   c arrays cp cf',time.time()-start); sys.stdout.flush()
+# for i in range(len(c_p_index)-1):
+#     cell_to_rep.append(j)
+#     if c_p_index[i] == c_p_index[i+1]:    
+#         obj1 = c_p_obj_relation_array[i]
+#         obj2 = c_p_obj_relation_array[i+1]
+# 
+#         for p in range(c_p_index[i]):
+#             if obj1[p]!=obj2[p]:
+#                 temp.append(obj1)
+#                 temp2.append(c_p_index[i])
+#                 j=j+1
+#                 
+#                 temp3.append(c_f_obj_relation_array[i])
+#                 temp4.append(c_f_index[i])
+# 
+#                 break
+# 
+#             
+# temp.append(c_p_obj_relation_array[i+1])
+# temp2.append(c_p_index[i+1])
+# temp3.append(c_f_obj_relation_array[i+1])
+# temp4.append(c_f_index[i+1])
+# cell_to_rep.append(j)
+# c_p_obj_relation_array = temp
+# c_p_index = temp2
+# c_f_obj_relation_array = temp3
+# c_f_index = temp4
+# del temp
+# del temp2
+# del temp3
+# del temp4; gc.collect()
 
-temp = []
+c_p_max     = [max(obj) for obj in c_p_obj_relation_array]
+c_p_min     = [min(obj) for obj in c_p_obj_relation_array]
+c_uniqe     = [True]*nele
+cell_to_rep = [-1]*nele
+
+k=0
+print('   c arrays cp cf',time.time()-start); sys.stdout.flush()
+for i in range(nele):
+    
+    # dont bother with cells we've already filtered out
+    if c_uniqe[i] == False: 
+        continue
+    
+    obj1 = sorted(c_p_obj_relation_array[i])
+    cell_to_rep[i] = k
+    
+    for j in range(i+1,nele):
+        
+        # dont bother with cells we've already filtered out
+        if c_uniqe[j] == False:
+            continue
+        
+        # dont bother with cells with the wrong number of points
+        if c_p_index[i] != c_p_index[j]:
+            continue
+        
+        # dont bother with cells with different minimums
+        if c_p_min[i]   != c_p_min[j] :
+            continue
+        
+        # dont bother with cells with different maximums
+        if c_p_max[i]   != c_p_max[j] :
+            continue
+        
+        # so we've filtered out all impossible cells
+        
+        obj2 = sorted(c_p_obj_relation_array[j])
+        # sort the cell arrays to perform the boolean check
+        
+        # print(i,j)
+        # print(obj1)
+        # print(obj2)
+        # print(obj1 == obj2)
+        
+        # raw dog comparison
+        if obj1 == obj2: 
+            c_uniqe[j] = False
+            cell_to_rep[j] = k
+    k=k+1
+
+temp  = []
 temp2 = []
 temp3 = []
 temp4 = []
-j=0
-print('   c arrays cp cf',time.time()-start); sys.stdout.flush()
-for i in range(len(c_p_index)-1):
-    cell_to_rep.append(j)
-    if c_p_index[i] == c_p_index[i+1]:    
-        obj1 = c_p_obj_relation_array[i]
-        obj2 = c_p_obj_relation_array[i+1]
 
-        for p in range(c_p_index[i]):
-            if obj1[p]!=obj2[p]:
-                temp.append(obj1)
-                temp2.append(c_p_index[i])
-                j=j+1
-                
-                temp3.append(c_f_obj_relation_array[i])
-                temp4.append(c_f_index[i])
+for i in range(nele):
+    if c_uniqe[i] == True:
+        print(i, sorted(c_p_obj_relation_array[i]))
+        temp.append( c_p_obj_relation_array[i])
+        temp2.append(c_p_index[i])
+        temp3.append(c_f_obj_relation_array[i])
+        temp4.append(c_f_index[i])
 
-                break
-
-            
-temp.append(c_p_obj_relation_array[i+1])
-temp2.append(c_p_index[i+1])
-temp3.append(c_f_obj_relation_array[i+1])
-temp4.append(c_f_index[i+1])
-cell_to_rep.append(j)
-c_p_obj_relation_array = temp
+c_p_obj_relation_array = temp 
 c_p_index = temp2
 c_f_obj_relation_array = temp3
 c_f_index = temp4
@@ -335,6 +400,7 @@ del temp
 del temp2
 del temp3
 del temp4; gc.collect()
+
 
 
 f_p_max     = [max(obj) for obj in f_p_obj_relation_array]
@@ -383,12 +449,8 @@ for i in range(nface):
         
         # raw dog comparison
         if obj1 == obj2: 
-            #f_uniqe[i] = True
             f_uniqe[j] = False
-            
             face_to_rep[j] = k
-            
-    
     k=k+1
 
 temp  = []
@@ -403,10 +465,6 @@ for i in range(nface):
         temp2.append(f_p_index[i])
         temp3.append(f_e_obj_relation_array[i])
         temp4.append(f_e_index[i])
-
-print('AAAAAAAAAAAAAAA ',len(face_to_rep))
-print(face_to_rep)
-print('AAAAAAAAAAAAAAAAAAAAAAAAAAA')
 
 f_p_obj_relation_array = temp 
 f_p_index = temp2
