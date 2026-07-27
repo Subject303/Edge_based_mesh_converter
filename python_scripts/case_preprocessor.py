@@ -477,6 +477,7 @@ del temp4; gc.collect()
 
 temp = []
 temp2 = []
+edge_to_rep = []
 j=0
 print('   e arrays ep',time.time()-start); sys.stdout.flush()
 for i in range(len(e_p_index)-1):
