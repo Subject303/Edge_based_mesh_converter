@@ -389,7 +389,7 @@ for i in range(nface):
             f_uniqe[j] = False
             k=k+1
 
-face_to_rep.append(k)
+#face_to_rep.append(k)
 
 for i in range(nface):
     if f_uniqe[i] == True:
