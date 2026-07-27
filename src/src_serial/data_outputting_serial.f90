@@ -139,7 +139,6 @@ module data_outputting_serial
                 ! number of points in face, points in face
                 write(1) (fp2-fp1) , f_p_obj_relation_array((fp1+1):fp2)-1
                 
-                enddo
             enddo
         enddo
     
