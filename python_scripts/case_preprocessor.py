@@ -345,10 +345,10 @@ temp = []
 temp2 = []
 temp3 = []
 temp4 = []
-j=0
+k=0
 print('   f arrays, fp and fe',time.time()-start); sys.stdout.flush()
 for i in range(nface):
-    face_to_rep.append(j)
+    face_to_rep.append(k)
     # dont bother with faces we've already filtered out
     if f_uniqe[i] == False: 
         continue
@@ -387,7 +387,9 @@ for i in range(nface):
         if obj1 == obj2: 
             f_uniqe[i] = True
             f_uniqe[j] = False
-            j=j+1
+            k=k+1
+
+face_to_rep.append(k)
 
 for i in range(nface):
     if f_uniqe[i] == True:
@@ -397,7 +399,8 @@ for i in range(nface):
         temp3.append(f_e_obj_relation_array[i])
         temp4.append(f_e_index[i])
 
-face_to_rep.append(j)
+print('AAAAAAAAAAAAAAA ',len(face_to_rep))
+
 f_p_obj_relation_array = temp 
 f_p_index = temp2
 f_e_obj_relation_array = temp3
