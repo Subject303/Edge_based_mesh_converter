@@ -360,6 +360,11 @@ for i in range(nface-1):
         obj1 = sorted_f_p[i]
         obj2 = sorted_f_p[i+1]
         
+        print(i)
+        print(obj1)
+        print(obj2)
+        print(obj1 != obj2)
+        
         for p in range(f_p_index[i]):
             
             if obj1[p] != obj2[p]: 
