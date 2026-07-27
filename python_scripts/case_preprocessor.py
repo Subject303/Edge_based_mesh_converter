@@ -320,6 +320,7 @@ for i in range(nele-1):
             if obj1[p] != obj2[p]: 
                 c_uniqe[i] = True
                 k=k+1
+                break
 
 c_uniqe[-1] = True
 cell_to_rep[-1] = k
@@ -370,6 +371,7 @@ for i in range(nface-1):
             if obj1[p] != obj2[p]: 
                 f_uniqe[i] = True
                 k=k+1
+                break
 
 f_uniqe[-1] = True
 face_to_rep[-1] = k
