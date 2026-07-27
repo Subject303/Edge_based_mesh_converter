@@ -400,6 +400,8 @@ for i in range(nface):
         temp4.append(f_e_index[i])
 
 print('AAAAAAAAAAAAAAA ',len(face_to_rep))
+print(face_to_rep)
+print('AAAAAAAAAAAAAAAAAAAAAAAAAAA')
 
 f_p_obj_relation_array = temp 
 f_p_index = temp2
