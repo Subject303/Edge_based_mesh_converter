@@ -397,35 +397,7 @@ for i in range(nface):
         temp3.append(f_e_obj_relation_array[i])
         temp4.append(f_e_index[i])
 
-# temp = []
-# temp2 = []
-# temp3 = []
-# temp4 = []
-# j=0
-# print('   f arrays, fp and fe',time.time()-start); sys.stdout.flush()
-# for i in range(len(f_p_index)-1):
-#     face_to_rep.append(j)
-#     if f_p_index[i] == f_p_index[i+1]:    
-#         obj1 = f_p_obj_relation_array[i]
-#         obj2 = f_p_obj_relation_array[i+1]
-# 
-#         for p in range(f_p_index[i]):
-#             if obj1[p]!=obj2[p]:
-#                 temp.append(obj1)
-#                 temp2.append(f_p_index[i])
-#                 j=j+1
-#                 
-#                 temp3.append(f_e_obj_relation_array[i])
-#                 temp4.append(f_e_index[i])
-# 
-#                 break
-            
-    
-# temp.append(f_p_obj_relation_array[i+1])
-# temp2.append(f_p_index[i+1])
-# temp3.append(f_e_obj_relation_array[i+1])
-# temp4.append(f_e_index[i+1])
-# face_to_rep.append(j)
+face_to_rep.append(j)
 f_p_obj_relation_array = temp 
 f_p_index = temp2
 f_e_obj_relation_array = temp3
