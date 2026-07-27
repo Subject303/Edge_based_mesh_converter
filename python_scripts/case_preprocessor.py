@@ -382,6 +382,7 @@ for i in range(nface):
         if obj1 == obj2: 
             f_uniqe[i] = True
             f_uniqe[j] = False
+            face_to_rep[i] = i
             face_to_rep[j] = i
 
 temp  = []
