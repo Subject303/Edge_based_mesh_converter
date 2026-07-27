@@ -126,8 +126,8 @@ for c in range(nele):
         
         face = cell.GetFace(f)
         
-        f_p_obj_relation_array.append(sorted([face.GetPointId(p) for p in range(face.GetNumberOfPoints())]))
-        # f_p_obj_relation_array.append([face.GetPointId(p) for p in range(face.GetNumberOfPoints())])
+        # f_p_obj_relation_array.append(sorted([face.GetPointId(p) for p in range(face.GetNumberOfPoints())]))
+        f_p_obj_relation_array.append([face.GetPointId(p) for p in range(face.GetNumberOfPoints())])
         
         nedges = face.GetNumberOfEdges()
         
@@ -339,7 +339,7 @@ del temp4; gc.collect()
 
 f_p_max = [max(obj) for obj in f_p_obj_relation_array]
 f_p_min = [min(obj) for obj in f_p_obj_relation_array]
-
+f_uniqe = [True]*nface
 
 temp = []
 temp2 = []
@@ -347,22 +347,76 @@ temp3 = []
 temp4 = []
 j=0
 print('   f arrays, fp and fe',time.time()-start); sys.stdout.flush()
-for i in range(len(f_p_index)-1):
+for i in range(nface):
     face_to_rep.append(j)
-    if f_p_index[i] == f_p_index[i+1]:    
+    # dont bother with faces we've already filtered out
+    if f_uniqe[i] == False: 
+        continue
+    
+    for j in range(i+1,nface):
+        
+        # dont bother with faces we've already filtered out
+        if f_uniqe[j] == False:
+            continue
+        
+        # dont bother with faces with the wrong number of points
+        if f_p_index[i] != f_p_index[j]:
+            continue
+        
+        # dont bother with faces whose max is less than our current min
+        if f_p_min[i] > f_p_max[j] :
+            continue
+        
+        # dont bother with faces whose min is more than our current max
+        if f_p_max[i] < f_p_min[j] :
+            continue
+        
+        # so we've filtered out all impossible faces
+        
         obj1 = f_p_obj_relation_array[i]
-        obj2 = f_p_obj_relation_array[i+1]
+        obj2 = f_p_obj_relation_array[j]
+        
+        # raw dog comparison
+        if obj1 == obj2: 
+            f_uniqe[i] = True
+            f_uniqe[j] = False
+            j=j+1
 
-        for p in range(f_p_index[i]):
-            if obj1[p]!=obj2[p]:
-                temp.append(obj1)
-                temp2.append(f_p_index[i])
-                j=j+1
-                
-                temp3.append(f_e_obj_relation_array[i])
-                temp4.append(f_e_index[i])
+for i in range(nface):
+    if f_uniqe[i] == True:
+        temp.append( f_p_obj_relation_array[i])
+        temp2.append(f_p_index[i])
+        temp3.append(f_e_obj_relation_array[i])
+        temp4.append(f_e_index[i])
 
-                break
+print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+print(len(temp))
+print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+
+# temp = []
+# temp2 = []
+# temp3 = []
+# temp4 = []
+# j=0
+# print('   f arrays, fp and fe',time.time()-start); sys.stdout.flush()
+# for i in range(len(f_p_index)-1):
+#     face_to_rep.append(j)
+#     if f_p_index[i] == f_p_index[i+1]:    
+#         obj1 = f_p_obj_relation_array[i]
+#         obj2 = f_p_obj_relation_array[i+1]
+# 
+#         for p in range(f_p_index[i]):
+#             if obj1[p]!=obj2[p]:
+#                 temp.append(obj1)
+#                 temp2.append(f_p_index[i])
+#                 j=j+1
+#                 
+#                 temp3.append(f_e_obj_relation_array[i])
+#                 temp4.append(f_e_index[i])
+# 
+#                 break
             
     
 temp.append(f_p_obj_relation_array[i+1])
