@@ -334,6 +334,7 @@ c_p_max     = [max(obj) for obj in c_p_obj_relation_array]
 c_p_min     = [min(obj) for obj in c_p_obj_relation_array]
 c_uniqe     = [True]*nele
 cell_to_rep = [-1]*nele
+iterator    = [0]*nele
 
 k=0
 print('   c arrays cp cf',time.time()-start); sys.stdout.flush()
@@ -348,25 +349,35 @@ for i in range(nele):
     obj1 = sorted(c_p_obj_relation_array[i])
     cell_to_rep[i] = k
     
+    l=0
     for j in range(i+1,nele):
+        if c_uniqe[j] == True:
+            if c_p_index[i] == c_p_index[j]:
+                if c_p_min[i]   == c_p_min[j] :
+                    if c_p_max[i]   == c_p_max[j] :
+                        iterator[l] = j
+                        l=l+1
+    
+    for p in range(l):
+        j = iterator[p]
         
-        #print('   ', i, '   ', j)
-        
-        # dont bother with cells we've already filtered out
-        if c_uniqe[j] == False:
-            continue
-        
-        # dont bother with cells with the wrong number of points
-        if c_p_index[i] != c_p_index[j]:
-            continue
-        
-        # dont bother with cells with different minimums
-        if c_p_min[i]   != c_p_min[j] :
-            continue
-        
-        # dont bother with cells with different maximums
-        if c_p_max[i]   != c_p_max[j] :
-            continue
+#         #print('   ', i, '   ', j)
+#         
+#         # dont bother with cells we've already filtered out
+#         if c_uniqe[j] == False:
+#             continue
+#         
+#         # dont bother with cells with the wrong number of points
+#         if c_p_index[i] != c_p_index[j]:
+#             continue
+#         
+#         # dont bother with cells with different minimums
+#         if c_p_min[i]   != c_p_min[j] :
+#             continue
+#         
+#         # dont bother with cells with different maximums
+#         if c_p_max[i]   != c_p_max[j] :
+#             continue
         
         # so we've filtered out all impossible cells
         
