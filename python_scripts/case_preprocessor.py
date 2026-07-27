@@ -330,7 +330,6 @@ temp4 = []
 
 for i in range(nele):
     if c_uniqe[i] == True:
-        print(i, sorted(c_p_obj_relation_array[i]))
         temp.append( c_p_obj_relation_array[i])
         temp2.append(c_p_index[i])
         temp3.append(c_f_obj_relation_array[i])
@@ -376,7 +375,6 @@ temp4 = []
 
 for i in range(nface):
     if f_uniqe[i] == True:
-        print(i, sorted(f_p_obj_relation_array[i]))
         temp.append( f_p_obj_relation_array[i])
         temp2.append(f_p_index[i])
         temp3.append(f_e_obj_relation_array[i])
@@ -391,27 +389,35 @@ del temp2
 del temp3
 del temp4; gc.collect()
 
-temp = []
-temp2 = []
-edge_to_rep = []
-j=0
+e_uniqe     = [False]*nedge
+edge_to_rep = [-1]*nedge
+
+k=0
 print('   e arrays ep',time.time()-start); sys.stdout.flush()
-for i in range(len(e_p_index)-1):
-    edge_to_rep.append(j)
+for i in range(nedge-1):
     
-    obj1 = e_p_obj_relation_array[i]
-    obj2 = e_p_obj_relation_array[i+1]
+    edge_to_rep[i] = k
     
-    if obj1 !=obj2:
-        temp.append(obj1)
-        temp2.append(2)
-        j=j+1
+    obj1 = sorted_e_p[i]
+    obj2 = sorted_e_p[i+1]
+    
+    for p in range(2):
         
-    
-temp.append(e_p_obj_relation_array[i+1])
-temp2.append(2)
-edge_to_rep.append(j)
-e_p_obj_relation_array = temp
+        if obj1[p] != obj2[p]: 
+            e_uniqe[i] = True
+            k=k+1
+
+e_uniqe[-1] = True
+edge_to_rep[-1] = k
+temp  = []
+temp2 = []
+
+for i in range(nedge):
+    if e_uniqe[i] == True:
+        temp.append( e_p_obj_relation_array[i])
+        temp2.append(e_p_index[i])
+
+e_p_obj_relation_array = temp 
 e_p_index = temp2
 del temp
 del temp2; gc.collect()
