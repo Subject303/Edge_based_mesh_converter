@@ -419,11 +419,11 @@ print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
 #                 break
             
     
-temp.append(f_p_obj_relation_array[i+1])
-temp2.append(f_p_index[i+1])
-temp3.append(f_e_obj_relation_array[i+1])
-temp4.append(f_e_index[i+1])
-face_to_rep.append(j)
+# temp.append(f_p_obj_relation_array[i+1])
+# temp2.append(f_p_index[i+1])
+# temp3.append(f_e_obj_relation_array[i+1])
+# temp4.append(f_e_index[i+1])
+# face_to_rep.append(j)
 f_p_obj_relation_array = temp 
 f_p_index = temp2
 f_e_obj_relation_array = temp3
