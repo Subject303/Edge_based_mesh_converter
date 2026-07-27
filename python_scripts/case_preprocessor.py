@@ -126,8 +126,8 @@ for c in range(nele):
         
         face = cell.GetFace(f)
         
-        # f_p_obj_relation_array.append(sorted([face.GetPointId(p) for p in range(face.GetNumberOfPoints())]))
-        f_p_obj_relation_array.append([face.GetPointId(p) for p in range(face.GetNumberOfPoints())])
+        f_p_obj_relation_array.append(sorted([face.GetPointId(p) for p in range(face.GetNumberOfPoints())]))
+        # f_p_obj_relation_array.append([face.GetPointId(p) for p in range(face.GetNumberOfPoints())])
         
         nedges = face.GetNumberOfEdges()
         
