@@ -301,50 +301,8 @@ for obj in f_e_obj_relation_array:
 
 print('removing duplicate connectivites',time.time()-start); sys.stdout.flush()
 
-
-# temp = []
-# temp2 = []
-# temp3 = []
-# temp4 = []
-# j=0
-# print('   c arrays cp cf',time.time()-start); sys.stdout.flush()
-# for i in range(len(c_p_index)-1):
-#     cell_to_rep.append(j)
-#     if c_p_index[i] == c_p_index[i+1]:    
-#         obj1 = c_p_obj_relation_array[i]
-#         obj2 = c_p_obj_relation_array[i+1]
-# 
-#         for p in range(c_p_index[i]):
-#             if obj1[p]!=obj2[p]:
-#                 temp.append(obj1)
-#                 temp2.append(c_p_index[i])
-#                 j=j+1
-#                 
-#                 temp3.append(c_f_obj_relation_array[i])
-#                 temp4.append(c_f_index[i])
-# 
-#                 break
-# 
-#             
-# temp.append(c_p_obj_relation_array[i+1])
-# temp2.append(c_p_index[i+1])
-# temp3.append(c_f_obj_relation_array[i+1])
-# temp4.append(c_f_index[i+1])
-# cell_to_rep.append(j)
-# c_p_obj_relation_array = temp
-# c_p_index = temp2
-# c_f_obj_relation_array = temp3
-# c_f_index = temp4
-# del temp
-# del temp2
-# del temp3
-# del temp4; gc.collect()
-
-c_p_max     = [max(obj) for obj in c_p_obj_relation_array]
-c_p_min     = [min(obj) for obj in c_p_obj_relation_array]
 c_uniqe     = [False]*nele
 cell_to_rep = [-1]*nele
-iterator    = [0]*nele
 
 k=0
 print('   c arrays cp cf',time.time()-start); sys.stdout.flush()
@@ -363,8 +321,8 @@ for i in range(nele-1):
                 c_uniqe[i] = True
                 k=k+1
 
-c_uniqe[Nele] = True
-cell_to_rep[Nele] = k
+c_uniqe[nele] = True
+cell_to_rep[nele] = k
 temp  = []
 temp2 = []
 temp3 = []
