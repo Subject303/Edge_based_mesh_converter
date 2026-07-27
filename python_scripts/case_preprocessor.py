@@ -171,8 +171,9 @@ coupled = zip(sorted_c_p, c_p_obj_relation_array, c_f_obj_relation_array)
 coupled = sorted(coupled, key=lambda element: element[0])
 
 i=0
-for x, z in coupled:
-    c_p_obj_relation_array[i] = x
+for p, y, z in coupled:
+    sorted_c_p[i]             = p
+    c_p_obj_relation_array[i] = y
     c_f_obj_relation_array[i] = z
     i=i+1
 
@@ -189,9 +190,10 @@ coupled = sorted(zip(sorted_f_p, f_p_obj_relation_array, f_sort, f_e_obj_relatio
 temp = f_p_obj_relation_array
 
 i=0
-for x, y, z in coupled:
+for p, x, y, z in coupled:
+    sorted_f_p[i]             = p
     f_p_obj_relation_array[i] = x
-    f_sort[i] = y
+    f_sort[i]                 = y
     f_e_obj_relation_array[i] = z
     i=i+1
 
@@ -223,7 +225,8 @@ sorted_e_p    = [sorted(obj) for obj in e_p_obj_relation_array]
 coupled = sorted(zip(sorted_e_p, e_p_obj_relation_array, e_sort), key=lambda element: element[0])
 
 i=0
-for x, y in coupled:
+for p, x, y in coupled:
+    sorted_e_p[i] = p
     e_p_obj_relation_array[i] = x
     e_sort[i] = y
     i=i+1
