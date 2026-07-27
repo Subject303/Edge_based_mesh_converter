@@ -339,6 +339,8 @@ k=0
 print('   c arrays cp cf',time.time()-start); sys.stdout.flush()
 for i in range(nele):
     
+    print('   ', i)
+    
     # dont bother with cells we've already filtered out
     if c_uniqe[i] == False: 
         continue
@@ -347,6 +349,8 @@ for i in range(nele):
     cell_to_rep[i] = k
     
     for j in range(i+1,nele):
+        
+        print('   ', i, '   ', j)
         
         # dont bother with cells we've already filtered out
         if c_uniqe[j] == False:
@@ -412,6 +416,8 @@ face_to_rep = [-1]*nface
 k=0
 print('   f arrays, fp and fe',time.time()-start); sys.stdout.flush()
 for i in range(nface):
+        
+    print('   ', i)
     
     # dont bother with faces we've already filtered out
     if f_uniqe[i] == False: 
@@ -421,6 +427,8 @@ for i in range(nface):
     face_to_rep[i] = k
     
     for j in range(i+1,nface):
+        
+        print('   ', i, '   ', j)
         
         # dont bother with faces we've already filtered out
         if f_uniqe[j] == False:
