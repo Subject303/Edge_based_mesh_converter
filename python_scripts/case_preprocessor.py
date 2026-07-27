@@ -163,7 +163,10 @@ gc.collect()
 print('sorting connectivities',time.time()-start); sys.stdout.flush()
 
 print('   c_p',time.time()-start); sys.stdout.flush()
-coupled = zip(c_p_obj_relation_array, c_f_obj_relation_array)
+
+sorted_c_p    = [sorted(obj) for obj in c_p_obj_relation_array]
+
+coupled = zip(sorted_c_p, c_p_obj_relation_array, c_f_obj_relation_array)
 
 coupled = sorted(coupled, key=lambda element: element[0])
 
@@ -179,7 +182,9 @@ print('   f_p',time.time()-start); sys.stdout.flush()
 
 f_sort = list(range(len(f_p_obj_relation_array)))
 
-coupled = sorted(zip(f_p_obj_relation_array, f_sort, f_e_obj_relation_array), key=lambda element: element[0])
+sorted_f_p    = [sorted(obj) for obj in f_p_obj_relation_array]
+
+coupled = sorted(zip(sorted_f_p, f_p_obj_relation_array, f_sort, f_e_obj_relation_array), key=lambda element: element[0])
 
 temp = f_p_obj_relation_array
 
@@ -213,7 +218,9 @@ print('   e_p',time.time()-start); sys.stdout.flush()
 
 e_sort = list(range(len(e_p_obj_relation_array)))
 
-coupled = sorted(zip(e_p_obj_relation_array, e_sort), key=lambda element: element[0])
+sorted_e_p    = [sorted(obj) for obj in e_p_obj_relation_array]
+
+coupled = sorted(zip(sorted_e_p, e_p_obj_relation_array, e_sort), key=lambda element: element[0])
 
 i=0
 for x, y in coupled:
@@ -332,69 +339,29 @@ print('removing duplicate connectivites',time.time()-start); sys.stdout.flush()
 
 c_p_max     = [max(obj) for obj in c_p_obj_relation_array]
 c_p_min     = [min(obj) for obj in c_p_obj_relation_array]
-c_uniqe     = [True]*nele
+c_uniqe     = [False]*nele
 cell_to_rep = [-1]*nele
 iterator    = [0]*nele
 
 k=0
 print('   c arrays cp cf',time.time()-start); sys.stdout.flush()
-for i in range(nele):
+for i in range(nele-1):
     
-    # print('   ', i)
-    
-    # dont bother with cells we've already filtered out
-    if c_uniqe[i] == False: 
-        continue
-    
-    obj1 = sorted(c_p_obj_relation_array[i])
     cell_to_rep[i] = k
     
-    l=0
-    for j in range(i+1,nele):
-        if c_uniqe[j] == True:
-            if c_p_index[i] == c_p_index[j]:
-                if c_p_min[i]   == c_p_min[j] :
-                    if c_p_max[i]   == c_p_max[j] :
-                        iterator[l] = j
-                        l=l+1
-    
-    for p in range(l):
-        j = iterator[p]
+    if c_p_index[i] == c_p_index[i+1]:
         
-#         #print('   ', i, '   ', j)
-#         
-#         # dont bother with cells we've already filtered out
-#         if c_uniqe[j] == False:
-#             continue
-#         
-#         # dont bother with cells with the wrong number of points
-#         if c_p_index[i] != c_p_index[j]:
-#             continue
-#         
-#         # dont bother with cells with different minimums
-#         if c_p_min[i]   != c_p_min[j] :
-#             continue
-#         
-#         # dont bother with cells with different maximums
-#         if c_p_max[i]   != c_p_max[j] :
-#             continue
+        obj1 = sorted_c_p[i]
+        obj2 = sorted_c_p[i+1]
         
-        # so we've filtered out all impossible cells
-        
-        obj2 = sorted(c_p_obj_relation_array[j])
-        # sort the cell arrays to perform the boolean check
-        
-        # print(i,j)
-        # print(obj1)
-        # print(obj2)
-        # print(obj1 == obj2)
-        
-        # raw dog comparison
-        if obj1 == obj2: 
-            c_uniqe[j] = False
-            cell_to_rep[j] = k
-    k=k+1
+        for p in range(c_p_index[i]):
+            
+            if obj1[p] != obj2[p]: 
+                c_uniqe[i] = True
+                k=k+1
 
+c_uniqe[Nele] = True
+cell_to_rep[Nele] = k
 temp  = []
 temp2 = []
 temp3 = []
