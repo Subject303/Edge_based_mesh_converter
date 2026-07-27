@@ -376,6 +376,11 @@ for i in range(nface):
         obj1 = f_p_obj_relation_array[i]
         obj2 = f_p_obj_relation_array[j]
         
+        print(i,j)
+        print(obj1)
+        print(obj2)
+        print(obj1 == obj2)
+        
         # raw dog comparison
         if obj1 == obj2: 
             f_uniqe[i] = True
