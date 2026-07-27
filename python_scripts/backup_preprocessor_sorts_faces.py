@@ -126,8 +126,7 @@ for c in range(nele):
         
         face = cell.GetFace(f)
         
-        # f_p_obj_relation_array.append(sorted([face.GetPointId(p) for p in range(face.GetNumberOfPoints())]))
-        f_p_obj_relation_array.append([face.GetPointId(p) for p in range(face.GetNumberOfPoints())])
+        f_p_obj_relation_array.append(sorted([face.GetPointId(p) for p in range(face.GetNumberOfPoints())]))
         
         nedges = face.GetNumberOfEdges()
         
@@ -335,11 +334,6 @@ del temp
 del temp2
 del temp3
 del temp4; gc.collect()
-
-
-f_p_max = [max(obj) for obj in f_p_obj_relation_array]
-f_p_min = [min(obj) for obj in f_p_obj_relation_array]
-
 
 temp = []
 temp2 = []
