@@ -339,7 +339,7 @@ k=0
 print('   c arrays cp cf',time.time()-start); sys.stdout.flush()
 for i in range(nele):
     
-    print('   ', i, time.time()-start)
+    print('   ', i, time.time()-start); sys.stdout.flush()
     
     # dont bother with cells we've already filtered out
     if c_uniqe[i] == False: 
