@@ -340,10 +340,12 @@ del temp4; gc.collect()
 f_p_max     = [max(obj) for obj in f_p_obj_relation_array]
 f_p_min     = [min(obj) for obj in f_p_obj_relation_array]
 f_uniqe     = [True]*nface
-face_to_rep = list(range(nface))
+face_to_rep = [-1]*nface
 
+k=0
 print('   f arrays, fp and fe',time.time()-start); sys.stdout.flush()
 for i in range(nface):
+    
     # dont bother with faces we've already filtered out
     if f_uniqe[i] == False: 
         continue
@@ -380,9 +382,13 @@ for i in range(nface):
         
         # raw dog comparison
         if obj1 == obj2: 
-            f_uniqe[i] = True
+            #f_uniqe[i] = True
             f_uniqe[j] = False
-            face_to_rep[j] = i
+            
+            face_to_rep[j] = k
+            
+        face_to_rep[i] = k
+        k=k+1
 
 temp  = []
 temp2 = []
