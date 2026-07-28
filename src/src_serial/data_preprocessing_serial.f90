@@ -127,7 +127,7 @@ module data_processing_serial
         call boundary_edge_volume_processing
         call boundary_face_volume_processing
         
-!         call volume_generation
+        call volume_generation
         
         call projection_test
         
