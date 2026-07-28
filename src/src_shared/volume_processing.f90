@@ -403,7 +403,7 @@ module volume_processing
             
             print*,'aa'
             !print*, centroid_array_count, SIZE(centroid_array,1)
-            print*, ie, ' :: ', i1, i2
+            print*, ie, ' :: ', i1, i2, ' :: ', centroid_array_count
             print*, in_progress_projection
             print*, sb(ie,:)
             print*, angle
