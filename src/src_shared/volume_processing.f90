@@ -839,8 +839,8 @@ module volume_processing
         real(KIND=REAL64)          :: sn(3), i1(3), i2(3), v12(3)
         
         v12    = (i1(:) - i2(:))/2
-        vol1   = abs((sn(1)*   v12(1) ) - (sn(2)*   v12(2) ) + (sn(3)*   v12(3) ) )/3
-        vol2   = abs((sn(1)*-1*v12(1) ) - (sn(2)*-1*v12(2) ) + (sn(3)*-1*v12(3) ) )/3
+        vol1   = abs((sn(1)*  v12(1)  ) - (sn(2)*  v12(2)  ) + (sn(3)*  v12(3)  ) )/3
+        vol2   = abs((sn(1)*(-v12(1)) ) - (sn(2)*(-v12(2)) ) + (sn(3)*(-v12(3)) ) )/3
         
     end subroutine volume_from_proj
     
