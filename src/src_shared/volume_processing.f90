@@ -12,7 +12,6 @@ module volume_processing
     use utils, ONLY : alignment, planar_alignment
     ! need everything p much here.
     implicit none
-    real(KIND=REAL64) :: angelee
         
     contains
     
@@ -196,6 +195,10 @@ module volume_processing
             
             print*,'aa'
             print*, centroid_array_count, SIZE(centroid_array,1)
+            print*, ie
+            print*, in_progress_projection
+            print*, sn(ie,:)
+            print*, angle
             print*,'aa'
             
         enddo
@@ -897,8 +900,6 @@ module volume_processing
         integer(KIND=INT32)        :: i, centroid_array_count
         real(KIND=REAL64),optional :: vol1, vol2
         real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), i1(3), i2(3)
-        
-        angelee = 0.0
         
         if (present(vol1)) then
             vol1 = 0.0
