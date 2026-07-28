@@ -794,7 +794,20 @@ module volume_processing
         
     end subroutine boundary_face_volume_processing
     
-    
+!     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!     
+!     subroutine volume_from_proj(sn, i1, i2, vol1, vol2)
+!         implicit none
+!         integer(KIND=INT32)        :: i
+!         real(KIND=REAL64)          :: vol1, vol2
+!         real(KIND=REAL64)          :: sn(3), i1(3), i2(3)
+!         real(KIND=REAL64)          :: length, proj_area
+!         
+!         length    = sqrt(  ((i2(1)-i1(1))**2) + ((i2(2)-i1(2))**2) + ((i2(3)-i1(3))**2)  )
+!         proj_area = sqrt(  sqrt(sn(1)*sn(1) + sn(2)*sn(2) + sn(3)*sn(3))   )
+!         
+!     end subroutine volume_from_proj
+!     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
     subroutine projection_test
@@ -903,7 +916,7 @@ module volume_processing
         implicit none
         integer(KIND=INT32)        :: i, centroid_array_count
         real(KIND=REAL64),optional :: vol1, vol2
-        real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), i1(3), i2(3)
+        real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), i1(3), i2(3)
         
         if (present(vol1)) then
             vol1 = 0.0
@@ -930,16 +943,16 @@ module volume_processing
         real(KIND=REAL64),optional     :: vol1, vol2
         real(KIND=REAL64),dimension(3) :: v13,v14,v15,v32,v42,v52,c1415,c4252
         real(KIND=REAL64),dimension(3) :: sn, i1, i2, i3, i4, i5
-        real(KIND=REAL64),dimension(3) :: v34,v35
+        real(KIND=REAL64),dimension(3) :: v34,v35,v12
+        real(KIND=REAL64),dimension(3) :: c3435
+        
         integer(KIND=INT32) :: i
         
+
         do i=1,3
-            v13(i) = i1(i) - i3(i) ! vector from 1 to 3
-            v14(i) = i1(i) - i4(i) ! vector from 1 to 4
-            v15(i) = i1(i) - i5(i) ! vector from 1 to 5
-            v32(i) = i3(i) - i2(i) ! vector from 3 to 2
-            v42(i) = i4(i) - i2(i) ! vector from 4 to 2
-            v52(i) = i5(i) - i2(i) ! vector from 5 to 2
+            v12(i) = (i1(i) - i2(i))/2 ! vector from 1 to 2
+            v34(i) = i3(i) - i4(i) ! vector from 3 to 4
+            v35(i) = i3(i) - i5(i) ! vector from 3 to 5
         enddo
         
         ! Volume=∥a×b∥ ∥c∥ |cosϕ|=|(a×b)⋅c|. volume of parallelepiped of sides abc
@@ -947,29 +960,20 @@ module volume_processing
         !https://mathinsight.org/scalar_triple_product
         ! a = v14 b = v15
         
+        c3435(1) = (v34(2) * v35(3) - v34(3) * v35(2))/2
+        c3435(2) = (v34(3) * v35(1) - v34(1) * v35(3))/2
+        c3435(3) = (v34(1) * v35(2) - v34(2) * v35(1))/2
+            
         if (present(vol1))then
             
-            c1415(1) = v14(2) * v15(3) - v14(3) * v15(2)
-            c1415(2) = v14(3) * v15(1) - v14(1) * v15(3)
-            c1415(3) = v14(1) * v15(2) - v14(2) * v15(1)
-            c4252(1) = v42(2) * v52(3) - v42(3) * v52(2)
-            c4252(2) = v42(3) * v52(1) - v42(1) * v52(3)
-            c4252(3) = v42(1) * v52(2) - v42(2) * v52(1)
-            
-            vol1 = vol1 + abs((c1415(1)*v13(1) ) - (c1415(2)*v13(2) ) + (c1415(3)*v13(3) ) )/6
-            
-            vol2 = vol2 + abs((c4252(1)*v32(1) ) - (c4252(2)*v32(2) ) + (c4252(3)*v32(3) ) )/6
+            vol1 = vol1 + abs((c3435(1)* v12(1) ) - (c3435(2)* v12(2) ) + (c3435(3)* v12(3) ) )/3
+            vol2 = vol2 + abs((c3435(1)*-v12(1) ) - (c3435(2)*-v12(2) ) + (c3435(3)*-v12(3) ) )/3
             
 		endif
 
-        do i=1,3
-            v34(i) = i3(i) - i4(i) ! vector from 3 to 4
-            v35(i) = i3(i) - i5(i) ! vector from 3 to 5
-        enddo
-
-        sn(1) = sn(1) + ((v34(2) * v35(3) - v34(3) * v35(2))/2) ! projection in the xx axis
-        sn(2) = sn(2) + ((v34(3) * v35(1) - v34(1) * v35(3))/2) ! projection in the yy axis
-        sn(3) = sn(3) + ((v34(1) * v35(2) - v34(2) * v35(1))/2) ! projection in the zz axis
+        sn(1) = sn(1) + c3435(1) ! projection in the xx axis
+        sn(2) = sn(2) + c3435(2) ! projection in the yy axis
+        sn(3) = sn(3) + c3435(3) ! projection in the zz axis
         
         
     !                               i4--------------i5
