@@ -271,7 +271,7 @@ module data_outputting_serial
         
         outvar = 0.0
         do i=1,b_npoin
-            outvar(i,:) = outvar(i,:) + p_normal_vectors(i,:)
+            outvar(p_bound_indexing_array(i),:) = outvar(p_bound_indexing_array(i),:) + p_normal_vectors(i,:)
         enddo
         
         do i=1,npoin
