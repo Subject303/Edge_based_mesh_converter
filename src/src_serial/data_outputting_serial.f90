@@ -82,7 +82,7 @@ module data_outputting_serial
 &<Piece NumberOfPoints="'//TXTnpoin//'" NumberOfCells="'//TXTnele//'">'//NEW_LINE('')//'&
 &<Points>'//NEW_LINE('')
             offset = 0 ;write(offset_text, '(i16)')  offset
-    outstring = outstring//'<DataArray type="Float32" NumberOfComponents="3"  Name="Points" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')//'&
+    outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3"  Name="Points" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')//'&
 &</Points>'//NEW_LINE('')//'&
 &<Cells>'//NEW_LINE('')
         offset = offset + 8 + npoin*3*4
@@ -105,24 +105,24 @@ module data_outputting_serial
 
         offset = offset + 8 + nele*4
         write(offset_text, '(i16)')  offset
-    outstring = outstring//'<DataArray type="Float32" NumberOfComponents="3" Name="sn" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+    outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3" Name="sn" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + npoin*3*4
         write(offset_text, '(i16)')  offset
-    outstring = outstring//'<DataArray type="Float32" NumberOfComponents="3" Name="sb" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+    outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3" Name="sb" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + npoin*3*4
         write(offset_text, '(i16)')  offset
-    outstring = outstring//'<DataArray type="Float32" NumberOfComponents="3" Name="sbb" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+    outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3" Name="sbb" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + npoin*3*4
         write(offset_text, '(i16)')  offset
-    outstring = outstring//'<DataArray type="Float32" NumberOfComponents="3" Name="projections" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+    outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3" Name="projections" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
 
         offset = offset + 8 + npoin*3*4
         write(offset_text, '(i16)')  offset
-    outstring = outstring//'<DataArray type="Float32" Name="volume" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+    outstring = outstring//'<DataArray type="Float64" Name="volume" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
     
         offset = offset + 8 + npoin*4
         write(offset_text, '(i16)')  offset
-    outstring = outstring//'<DataArray type="Float32" NumberOfComponents="3" Name="normals" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+    outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3" Name="normals" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
     
         outstring = outstring//'</PointData>'//NEW_LINE('')//'&
 &</Piece>'//NEW_LINE('')//'&
