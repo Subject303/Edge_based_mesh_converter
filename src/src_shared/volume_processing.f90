@@ -836,7 +836,7 @@ module volume_processing
     subroutine volume_from_proj(sx, i1, i2, i3, vol1, vol2)
         implicit none
         real(KIND=REAL64)          :: vol1, vol2
-        real(KIND=REAL64)          :: sx(3), i1(3), i2(3), v31(3), v32(3)
+        real(KIND=REAL64)          :: sx(3), i1(3), i2(3), i3(3), v31(3), v32(3)
         
         v31    = i3 - i1
         v32    = i3 - i2
