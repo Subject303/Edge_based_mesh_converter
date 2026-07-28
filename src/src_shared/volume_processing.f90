@@ -796,16 +796,51 @@ module volume_processing
     
 !     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
+    subroutine volume_generation
+        implicit none
+        integer(KIND=INT32)        :: i, i1, i2, e, ie, be
+        real(KIND=REAL64)          :: vol1, vol2
+        
+        vol = 0.0
+        
+        do ie = 1, i_nedge
+            e = e_internal_indexing_array(ie)
+            ! this is a loop of all internal edges.
+            
+            i1 = e_p_obj_relation_array(e_p_index_array(e)-1)
+            i2 = e_p_obj_relation_array(e_p_index_array(e))
+            
+            call volume_from_proj(sn(ie,:), coords(i1,:), coords(i2,:), vol1, vol2)
+            
+            vol(i1)  = vol(i1) + vol1
+            vol(i2)  = vol(i2) + vol2
+            
+        enddo
+        
+        do be = 1, b_nedge
+            e = e_bound_indexing_array(be)
+            ! this is a loop of all boundary edges.
+            
+            i1 = e_p_obj_relation_array(e_p_index_array(e)-1)
+            i2 = e_p_obj_relation_array(e_p_index_array(e))
+            
+            call volume_from_proj(sb(be,:), coords(i1,:), coords(i2,:), vol1, vol2)
+            
+            vol(i1)  = vol(i1) + vol1
+            vol(i2)  = vol(i2) + vol2
+            
+        enddo
+        
+    end subroutine volume_generation
+    
     subroutine volume_from_proj(sn, i1, i2, vol1, vol2)
         implicit none
-        integer(KIND=INT32)        :: i
         real(KIND=REAL64)          :: vol1, vol2
         real(KIND=REAL64)          :: sn(3), i1(3), i2(3), v12(3)
-        real(KIND=REAL64)          :: length, proj_area
         
-        v12    = i1(:) - i2(:)
-        vol1   = abs((sn(1)* v12(1) ) - (sn(2)* v12(2) ) + (sn(3)* v12(3) ) )/6
-        vol2   = abs((sn(1)*-v12(1) ) - (sn(2)*-v12(2) ) + (sn(3)*-v12(3) ) )/6
+        v12    = (i1(:) - i2(:))/2
+        vol1   = abs((sn(1)* v12(1) ) - (sn(2)* v12(2) ) + (sn(3)* v12(3) ) )/3
+        vol2   = abs((sn(1)*-v12(1) ) - (sn(2)*-v12(2) ) + (sn(3)*-v12(3) ) )/3
         
     end subroutine volume_from_proj
     
@@ -951,7 +986,7 @@ module volume_processing
         
 
         do i=1,3
-            v12(i) = (i1(i) - i2(i))/2 ! vector from 1 to 2
+!             v12(i) = (i1(i) - i2(i))/2 ! vector from 1 to 2
             v34(i) = i3(i) - i4(i) ! vector from 3 to 4
             v35(i) = i3(i) - i5(i) ! vector from 3 to 5
         enddo
@@ -965,12 +1000,12 @@ module volume_processing
         c3435(2) = (v34(3) * v35(1) - v34(1) * v35(3))/2
         c3435(3) = (v34(1) * v35(2) - v34(2) * v35(1))/2
             
-        if (present(vol1))then
-            
-            vol1 = vol1 + abs((c3435(1)* v12(1) ) - (c3435(2)* v12(2) ) + (c3435(3)* v12(3) ) )/3
-            vol2 = vol2 + abs((c3435(1)*-v12(1) ) - (c3435(2)*-v12(2) ) + (c3435(3)*-v12(3) ) )/3
-            
-		endif
+!         if (present(vol1))then
+!             
+!             vol1 = vol1 + abs((c3435(1)* v12(1) ) - (c3435(2)* v12(2) ) + (c3435(3)* v12(3) ) )/3
+!             vol2 = vol2 + abs((c3435(1)*-v12(1) ) - (c3435(2)*-v12(2) ) + (c3435(3)*-v12(3) ) )/3
+!             
+! 		endif
 
         sn(1) = sn(1) + c3435(1) ! projection in the xx axis
         sn(2) = sn(2) + c3435(2) ! projection in the yy axis
