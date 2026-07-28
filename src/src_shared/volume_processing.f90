@@ -200,6 +200,12 @@ module volume_processing
             print*, sn(ie,:)
             print*, angle
             print*,'aa'
+            print*,in_progress_centroid
+            print*,'aa'
+            do i=1, centroid_array_count
+                print*,i,' :: ', centroid_array(i,:)
+            enddo
+            print*,'aa'
             
         enddo
         
