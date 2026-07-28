@@ -1004,8 +1004,6 @@ module volume_processing
             
         if (present(vol1))then
             
-            vol11 = abs()/6
-            
             vol1 = vol1 + abs((c3435(1)* v31(1) ) - (c3435(2)* v31(2) ) + (c3435(3)* v31(3) ) )/3
             vol2 = vol2 + abs((c3435(1)* v32(1) ) - (c3435(2)* v32(2) ) + (c3435(3)* v32(3) ) )/3
             
