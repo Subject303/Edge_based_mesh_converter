@@ -795,19 +795,20 @@ module volume_processing
     end subroutine boundary_face_volume_processing
     
 !     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!     
-!     subroutine volume_from_proj(sn, i1, i2, vol1, vol2)
-!         implicit none
-!         integer(KIND=INT32)        :: i
-!         real(KIND=REAL64)          :: vol1, vol2
-!         real(KIND=REAL64)          :: sn(3), i1(3), i2(3)
-!         real(KIND=REAL64)          :: length, proj_area
-!         
-!         length    = sqrt(  ((i2(1)-i1(1))**2) + ((i2(2)-i1(2))**2) + ((i2(3)-i1(3))**2)  )
-!         proj_area = sqrt(  sqrt(sn(1)*sn(1) + sn(2)*sn(2) + sn(3)*sn(3))   )
-!         
-!     end subroutine volume_from_proj
-!     
+    
+    subroutine volume_from_proj(sn, i1, i2, vol1, vol2)
+        implicit none
+        integer(KIND=INT32)        :: i
+        real(KIND=REAL64)          :: vol1, vol2
+        real(KIND=REAL64)          :: sn(3), i1(3), i2(3), v12(3)
+        real(KIND=REAL64)          :: length, proj_area
+        
+        v12    = i1(:) - i2(:)
+        vol1   = abs((sn(1)* v12(1) ) - (sn(2)* v12(2) ) + (sn(3)* v12(3) ) )/6
+        vol2   = abs((sn(1)*-v12(1) ) - (sn(2)*-v12(2) ) + (sn(3)*-v12(3) ) )/6
+        
+    end subroutine volume_from_proj
+    
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
     subroutine projection_test
