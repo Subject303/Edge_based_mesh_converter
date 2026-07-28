@@ -55,7 +55,7 @@ module utils
     
     real(KIND=REAL64) function alignment_single(v1,v2)
         implicit none
-        real(KIND=REAL64) :: v1(3), v2(3)
+        real(KIND=REAL32) :: v1(3), v2(3)
         
         alignment_single = (v1(1)*v2(1) + v1(2)*v2(2) + v1(3)*v2(3))/ (sqrt(v1(1)*v1(1) + v1(2)*v1(2) + v1(3)*v1(3)) * sqrt(v2(1)*v2(1) + v2(2)*v2(2) + v2(3)*v2(3)))
         
@@ -69,9 +69,9 @@ module utils
         
     end function alignment_double
     
-    real(KIND=REAL64) function planar_alignment_single(v1,v2,v3)
+    real(KIND=REAL32) function planar_alignment_single(v1,v2,v3)
         implicit none
-        real(KIND=REAL64) :: v1(3), v2(3), v3(3), mag(3), det, dot
+        real(KIND=REAL32) :: v1(3), v2(3), v3(3), mag(3), det, dot
         
         !mag(1) = sqrt(v1(1)*v1(1)+v1(2)*v1(2)+v1(3)*v1(3))
         v1(:) = v1(:)! / mag(1)
