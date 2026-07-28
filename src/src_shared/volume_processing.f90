@@ -924,7 +924,7 @@ module volume_processing
     subroutine volume_generation
         implicit none
         integer(KIND=INT32)        :: i, i1, i2, e, ie, be
-        real(KIND=REAL64)          :: vol1, vol2, c1(3), c2(3), c3(3)
+        real(KIND=REAL64)          :: vol1, vol2, c1(3), c2(3), c3(3), sxx(3)
         
         allocate(vol(npoin))
         vol = 0.0
@@ -940,7 +940,9 @@ module volume_processing
             c2 = coords(i2,:)
             c3 = e_centroid(e,:)
             
-            call volume_from_proj(sn(ie,:), c1, c2, c3, vol1, vol2)
+            sxx(:) = sn(ie,:)
+            
+            call volume_from_proj(sxx, c1, c2, c3, vol1, vol2)
             
             vol(i1)  = vol(i1) + vol1
             vol(i2)  = vol(i2) + vol2
@@ -958,7 +960,9 @@ module volume_processing
             c2 = coords(i2,:)
             c3 = e_centroid(e,:)
             
-            call volume_from_proj(sb(be,:), c1, c2, c3, vol1, vol2)
+            sxx(:) = sn(ie,:)
+            
+            call volume_from_proj(sxx, c1, c2, c3, vol1, vol2)
             
             vol(i1)  = vol(i1) + vol1
             vol(i2)  = vol(i2) + vol2
