@@ -34,7 +34,7 @@ COMPLIST=" ./src/src_shared/global_data.f90 ./src/src_shared/quicksort.f90 ./src
 
 COMPLIST=$COMPLIST" ./src/src_serial/read_data_serial.f90 ./src/src_serial/data_outputting_serial.f90 ./src/src_serial/data_preprocessing_serial.f90 ./src/src_serial/main_prog_serial.f90 "
 
-COMP_OPTIONS=" -o2 -fdec-format-defaults -ffree-line-length-none -g3 -fcheck=all -fbacktrace -ffpe-trap=zero,overflow  "
+COMP_OPTIONS=" -o0 -fdec-format-defaults -ffree-line-length-none -g3 -fcheck=all -fbacktrace -ffpe-trap=zero,overflow  "
 # COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -ffpe-trap=zero,overflow  "
 
 echo ' beginning compilation ' # 2>&1 | tee $LOG
