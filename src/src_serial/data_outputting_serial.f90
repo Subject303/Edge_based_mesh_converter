@@ -103,7 +103,7 @@ module data_outputting_serial
 &</Cells>'//NEW_LINE('')//'&
 &<PointData>'//NEW_LINE('')
 
-        offset = offset + 8 + npoin*3*4
+        offset = offset + 8 + nele*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float32" Name="sn" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + npoin*3*4
@@ -116,11 +116,11 @@ module data_outputting_serial
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float32" Name="projections" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
 
-        offset = offset + 8 + npoin*4
+        offset = offset + 8 + npoin*3*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float32" Name="volume" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
     
-        offset = offset + 8 + npoin*3*4
+        offset = offset + 8 + npoin*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float32" Name="normals" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
     
