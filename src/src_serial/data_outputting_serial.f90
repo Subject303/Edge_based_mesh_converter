@@ -103,7 +103,7 @@ module data_outputting_serial
 &</Cells>'//NEW_LINE('')//'&
 &<PointData>'//NEW_LINE('')
 
-        offset = offset + 8 + nele*real_length
+        offset = offset + 8 + nele*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3" Name="sn" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + npoin*3*real_length
