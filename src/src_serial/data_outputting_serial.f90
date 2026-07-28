@@ -52,10 +52,10 @@ module data_outputting_serial
     
     subroutine output_vtu_binary_appended
         implicit none
-		integer(KIND=INT32)             :: i, c, f, e, offset_count, cf, fe, p, fp1, fp2
+		integer(KIND=INT32)             :: i, i1, i2, c, f, e, offset_count, cf, fe, p, fp1, fp2
 		integer(KIND=INT8 ),allocatable :: types(:)
         integer(KIND=INT64)			    :: offset, face_offset
-        integer(KIND=REAL32),dimension(npoin,3) :: outvar
+        integer(KIND=REAL32),dimension(npoin,3) :: outvar, tot_proj
         character(:), allocatable		:: outstring
         character(16)                   :: offset_text, TXTnele, TXTnpoin
         
@@ -180,27 +180,57 @@ module data_outputting_serial
         offset = 8+npoin*3*4
         write(1) offset
         
+        tot_proj = 0.0 
+        
         outvar = 0.0
-        do i=1,nedge
-            outvar()
+        do i=1,i_nedge
+        
+            i1 = e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(i))-1)
+            i2 = e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(i)))
+            
+            outvar(i1,:) = outvar(i1,:) + sn(i,:)
+            outvar(i2,:) = outvar(i2,:) - sn(i,:)
+            
         enddo
         
-        write(1) sn
+        write(1) outvar
         
         offset = 8+npoin*3*4
         write(1) offset
         
-        write(1) sb
+        tot_proj = tot_proj + outvar
+        outvar = 0.0
+        do i=1,b_nedge
+            i1 = e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(i))-1)
+            i2 = e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(i)))
+            
+            outvar(i1,:) = outvar(i1,:) + sb(i,:)
+            outvar(i2,:) = outvar(i2,:) - sb(i,:)
+            
+        enddo
+        
+        write(1) outvar
         
         offset = 8+npoin*3*4
         write(1) offset
         
-        write(1) sbb
+        tot_proj = tot_proj + outvar
+        outvar = 0.0
+        do i=1,b_npoin
+            i1 = p_bound_indexing_array(i)
+            
+            outvar(i1,:) = outvar(i1,:) + sbb(i,:)
+            
+        enddo
+        
+        tot_proj = tot_proj + outvar
+        
+        write(1) outvar
         
         offset = 8+npoin*3*4
         write(1) offset
         
-        write(1) projections
+        write(1) tot_proj
         
         offset = 8+npoin*4
         write(1) offset
@@ -210,7 +240,12 @@ module data_outputting_serial
         offset = 8+npoin*3*4
         write(1) offset
         
-        write(1) normals
+        outvar = 0.0
+        do i=1,b_npoin
+            outvar(i,:) = outvar(i,:) + p_normal_vectors(i,:)
+        enddo
+        
+        write(1) outvar
         
         outstring = NEW_LINE('')//'&
 &</AppendedData>'//NEW_LINE('')//'&
