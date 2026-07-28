@@ -184,15 +184,15 @@ module volume_processing
             
             angle = alignment(in_progress_projection, direction_array)
             
-            if (angle .lt. 0.) then
-                sn(ie,:) = -in_progress_projection(:)
-                vol(i1)  = vol(i1) + vol1
-                vol(i2)  = vol(i2) + vol2
-			else
+!             if (angle .lt. 0.) then
+!                 sn(ie,:) = -in_progress_projection(:)
+!                 vol(i1)  = vol(i1) + vol1
+!                 vol(i2)  = vol(i2) + vol2
+! 			else
                 sn(ie,:) = in_progress_projection
                 vol(i1)  = vol(i1) + vol1
                 vol(i2)  = vol(i2) + vol2
-			endif
+! 			endif
             
             print*,'aa'
             print*, centroid_array_count, SIZE(centroid_array,1)
@@ -392,15 +392,15 @@ module volume_processing
             
             angle = alignment(in_progress_projection, direction_array)
             
-            if (angle .lt. 0.) then
-                sb(be,:) = -in_progress_projection(:)
-                vol(i1)  = vol(i1) + vol1
-                vol(i2)  = vol(i2) + vol2
-			else
+!             if (angle .lt. 0.) then
+!                 sb(be,:) = -in_progress_projection(:)
+!                 vol(i1)  = vol(i1) + vol1
+!                 vol(i2)  = vol(i2) + vol2
+! 			else
                 sb(be,:) = in_progress_projection
                 vol(i1)  = vol(i1) + vol1
                 vol(i2)  = vol(i2) + vol2
-			endif
+! 			endif
             
             
             
@@ -774,7 +774,7 @@ module volume_processing
             
             angle = alignment(in_progress_projection, direction_array)
             
-            if (angle .lt. 0.) in_progress_projection(:) = -in_progress_projection(:)
+!             if (angle .lt. 0.) in_progress_projection(:) = -in_progress_projection(:)
             
             sbb(bp,:) = in_progress_projection
             
@@ -897,7 +897,6 @@ module volume_processing
         integer(KIND=INT32)        :: i, centroid_array_count
         real(KIND=REAL64),optional :: vol1, vol2
         real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3), anp(3), i1(3), i2(3)
-        real(KIND=REAL64)          :: v1(3),v2(3), v3(3), start_angle
         
         angelee = 0.0
         
@@ -905,32 +904,10 @@ module volume_processing
             vol1 = 0.0
             vol2 = 0.0
             
-            v3 = i1 - i2
-            v1 = (obj_centroid - centroid_array(1,:))
-            v2 = (obj_centroid - centroid_array(2,:))
-			
-            start_angle = abs(planar_alignment(v1,v2,v3))
-                
             do i=2,centroid_array_count
                 baryobj_1_centroid = centroid_array(i-1,:)
                 baryobj_2_centroid = centroid_array(i,:) 
                 call cvolume(obj_projection, obj_centroid, baryobj_1_centroid, baryobj_2_centroid, i1, i2, vol1, vol2)
-                
-                
-                v3 = i1 - i2
-                v1 = (obj_centroid - centroid_array(1,:))
-                !v1 = (obj_centroid - baryobj_1_centroid)
-                v2 = (obj_centroid - baryobj_2_centroid)
-				
-!                 print*, 'aaaaa'
-!                 print*, baryobj_1_centroid
-!                 print*, baryobj_2_centroid
-!                 print*, v3
-!                 print*, abs(planar_alignment(v1,v2,v3))! - start_angle
-!                 !angelee = angelee + abs(planar_alignment(v1,v2,v3))
-!                 !print*, angelee, planar_alignment(v1,v2,v3)
-!                 print*, 'aaaaa'
-                
             enddo
         else
             do i=2,centroid_array_count
