@@ -55,7 +55,7 @@ module data_outputting_serial
 		integer(KIND=INT32)             :: i, i1, i2, c, f, e, offset_count, cf, fe, p, fp1, fp2
 		integer(KIND=INT8 ),allocatable :: types(:)
         integer(KIND=INT64)			    :: offset, face_offset
-        integer(KIND=REAL32),dimension(npoin,3) :: outvar, tot_proj
+        real(KIND=REAL32),dimension(npoin,3) :: outvar, tot_proj
         character(:), allocatable		:: outstring
         character(16)                   :: offset_text, TXTnele, TXTnpoin
         
