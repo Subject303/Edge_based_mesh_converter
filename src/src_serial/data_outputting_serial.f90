@@ -204,10 +204,6 @@ module data_outputting_serial
             
         enddo
         
-        outvar(:,1) = 1.0
-        outvar(:,2) = 2.0
-        outvar(:,3) = 3.0
-        
         do i=1,npoin
             write(1) outvar(i,:)
 		enddo
