@@ -977,7 +977,6 @@ module volume_processing
     subroutine cvolume(sx, i3, i4, i5, i1, i2, vol1, vol2)
         implicit none
         real(KIND=REAL64),optional     :: vol1, vol2
-        real(KIND=REAL64),dimension(3) :: v13,v14,v15,v32,v42,v52,c1415,c4252
         real(KIND=REAL64),dimension(3) :: sx, i1, i2, i3, i4, i5
         real(KIND=REAL64),dimension(3) :: v34,v35,v31,v32 
         real(KIND=REAL64),dimension(3) :: c3435
