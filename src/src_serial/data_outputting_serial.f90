@@ -85,7 +85,7 @@ module data_outputting_serial
     outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3"  Name="Points" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')//'&
 &</Points>'//NEW_LINE('')//'&
 &<Cells>'//NEW_LINE('')
-        offset = offset + 8 + npoin*3*4
+        offset = offset + 8 + npoin*3*real_length
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="offsets" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + nele*4
@@ -103,24 +103,24 @@ module data_outputting_serial
 &</Cells>'//NEW_LINE('')//'&
 &<PointData>'//NEW_LINE('')
 
-        offset = offset + 8 + nele*4
+        offset = offset + 8 + nele*real_length
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3" Name="sn" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + npoin*3*4
+        offset = offset + 8 + npoin*3*real_length
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3" Name="sb" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + npoin*3*4
+        offset = offset + 8 + npoin*3*real_length
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3" Name="sbb" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-        offset = offset + 8 + npoin*3*4
+        offset = offset + 8 + npoin*3*real_length
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3" Name="projections" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
 
-        offset = offset + 8 + npoin*3*4
+        offset = offset + 8 + npoin*3*real_length
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float64" Name="volume" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
     
-        offset = offset + 8 + npoin*4
+        offset = offset + 8 + npoin*real_length
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3" Name="normals" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
     
@@ -136,7 +136,7 @@ module data_outputting_serial
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         !offsets
-        offset = 8+npoin*3*4
+        offset = 8+npoin*3*real_length
         write(1) offset
         do i=1,npoin
             write(1) coords(i,:)
@@ -188,7 +188,7 @@ module data_outputting_serial
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         !sn
-        offset = 8+npoin*3*4
+        offset = 8+npoin*3*real_length
         write(1) offset
         
         tot_proj = 0.0 
@@ -210,7 +210,7 @@ module data_outputting_serial
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         !sb
-        offset = 8+npoin*3*4
+        offset = 8+npoin*3*real_length
         write(1) offset
         
         tot_proj = tot_proj + outvar
@@ -230,7 +230,7 @@ module data_outputting_serial
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         !sbb
-        offset = 8+npoin*3*4
+        offset = 8+npoin*3*real_length
         write(1) offset
         
         tot_proj = tot_proj + outvar
@@ -250,7 +250,7 @@ module data_outputting_serial
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         !total projections
-        offset = 8+npoin*3*4
+        offset = 8+npoin*3*real_length
         write(1) offset
         
         do i=1,npoin
@@ -259,14 +259,14 @@ module data_outputting_serial
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         !volumes
-        offset = 8+npoin*4
+        offset = 8+npoin*real_length
         write(1) offset
         
         write(1) vol
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         !normals
-        offset = 8+npoin*3*4
+        offset = 8+npoin*3*real_length
         write(1) offset
         
         outvar = 0.0
