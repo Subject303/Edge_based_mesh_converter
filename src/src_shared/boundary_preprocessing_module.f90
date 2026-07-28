@@ -188,7 +188,7 @@ module boundary_routine_module
         use centroid_data
         implicit none
         integer(KIND=INT32) :: f, bf, fp_start, p1, p2, p3, p, bp, pf_start, pf_end, number_of_points, i, j
-        real(KIND=REAL32)   :: v1(3), v2(3), sumV, magnitude, angle
+        real(KIND=REAL64)   :: v1(3), v2(3), sumV, magnitude, angle
         
         
         allocate(f_normal_vectors(b_nface,3))
@@ -266,7 +266,7 @@ module boundary_routine_module
     subroutine boundary_angle_feature_flagging
         implicit none
         integer(KIND=INT32) :: i, j, be, e, f1, f2
-        real(KIND=REAL32)   :: nv1(3), nv2(3), angle
+        real(KIND=REAL64)   :: nv1(3), nv2(3), angle
         
         allocate(feature_edges(b_nedge))
         feature_edges = .false.

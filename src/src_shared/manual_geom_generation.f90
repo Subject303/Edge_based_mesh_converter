@@ -25,8 +25,8 @@ module manual_geom_generation_module
     subroutine t_birch_slender (inner_r, outer_r, start_length, end_length, nose, scale_var ,n_highways, n_rotational, n_highways_wake)
         implicit none
         integer(KIND=INT32)            :: i, j, k, l, n, n_lengthways, n_highways, n_rotational, n_highways_wake, wake_length, wake_start, wake_end, wake_i, scale_var, plane_npoin
-        real(KIND=REAL32)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, dydx
-        real(KIND=REAL32),allocatable  :: temp_coords(:,:,:), temp_wake_coords(:,:,:)
+        real(KIND=REAL64)              :: inner_r, outer_r, start_length, end_length, nose, single_coord(2), lambda, dx, dydx
+        real(KIND=REAL64),allocatable  :: temp_coords(:,:,:), temp_wake_coords(:,:,:)
         real(KIND=REAL64)              :: pi, dOO
         
         n_lengthways = 1 + (end_length - start_length) * scale_var
@@ -256,9 +256,9 @@ module manual_geom_generation_module
     
     function paramaterised_line(lambda, funct, beta)
         implicit none
-        real(KIND=REAL32), dimension(2) :: paramaterised_line
-        real(KIND=REAL32)             :: lambda, D
-        real(KIND=REAL32),optional    :: beta
+        real(KIND=REAL64), dimension(2) :: paramaterised_line
+        real(KIND=REAL64)             :: lambda, D
+        real(KIND=REAL64),optional    :: beta
         integer(KIND=INT32)           :: funct
         integer(KIND=INT32),parameter :: straight_line=1, angled_line=2, trever_birch_proj=3
         

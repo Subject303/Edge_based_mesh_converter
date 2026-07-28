@@ -172,8 +172,6 @@ module volume_processing
             in_progress_projection(:) = 0.0
             in_progress_centroid = e_centroid(e,:)
             
-            direction_array(:) = sign(1., coords(i1,:) - coords(i2,:))
-            
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
@@ -185,8 +183,8 @@ module volume_processing
             
             if (angle .lt. 0.) then
                 sn(ie,:) = -in_progress_projection(:)
-                vol(i1)  = vol(i1) + vol2 ! may need to swap these volumes for direction reversal
-                vol(i2)  = vol(i2) + vol1
+                vol(i1)  = vol(i1) + vol1 ! may need to swap these volumes for direction reversal
+                vol(i2)  = vol(i2) + vol2
 			else
                 sn(ie,:) = in_progress_projection
                 vol(i1)  = vol(i1) + vol1
@@ -403,8 +401,8 @@ module volume_processing
             
             if (angle .lt. 0.) then
                 sb(be,:) = -in_progress_projection(:)
-                vol(i1)  = vol(i1) + vol2
-                vol(i2)  = vol(i2) + vol1
+                vol(i1)  = vol(i1) + vol1
+                vol(i2)  = vol(i2) + vol2
 			else
                 sb(be,:) = in_progress_projection
                 vol(i1)  = vol(i1) + vol1

@@ -101,9 +101,9 @@ for p in range(npoin):
     # y_coords.append(struct.pack('<f' ,polyblock.GetPoint(p)[1]))
     # z_coords.append(struct.pack('<f' ,polyblock.GetPoint(p)[2]))
     
-    x_coords[p] = struct.pack('<f' ,polyblock.GetPoint(p)[0])
-    y_coords[p] = struct.pack('<f' ,polyblock.GetPoint(p)[1])
-    z_coords[p] = struct.pack('<f' ,polyblock.GetPoint(p)[2])
+    x_coords[p] = struct.pack('<d' ,polyblock.GetPoint(p)[0])
+    y_coords[p] = struct.pack('<d' ,polyblock.GetPoint(p)[1])
+    z_coords[p] = struct.pack('<d' ,polyblock.GetPoint(p)[2])
     
     # node: these will include the duplicated points from the boundary data
 

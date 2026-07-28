@@ -18,7 +18,7 @@ module raw_data
     use iso_fortran_env
     implicit none
     
-    real(KIND=REAL32), allocatable :: coords(:,:)
+    real(KIND=REAL64), allocatable :: coords(:,:)
     
     ! raw connectivity arrays 
     integer(KIND=INT32) :: c_p_sum, f_p_sum, e_p_sum
@@ -90,7 +90,7 @@ module boundary_data
     integer(KIND=INT32), allocatable :: reversed_p_bound_indexing_array(:) , reversed_e_bound_indexing_array(:), reversed_f_bound_indexing_array(:)
     
     ! for boundary normal vectors it makes sense to both calculate  normals for faces, and then derive point normals
-    real(KIND=REAL32), allocatable :: p_normal_vectors(:,:), f_normal_vectors(:,:)
+    real(KIND=REAL64), allocatable :: p_normal_vectors(:,:), f_normal_vectors(:,:)
     
     ! logical array identifying feature points and edges
     logical, allocatable :: feature_points(:), feature_edges(:)
@@ -101,7 +101,7 @@ module projection_data
     use iso_fortran_env
     implicit none
     
-    real(KIND=REAL32), allocatable :: sn(:,:), sb(:,:), sbb(:,:), vol(:)
+    real(KIND=REAL64), allocatable :: sn(:,:), sb(:,:), sbb(:,:), vol(:)
     
 end module projection_data
 
@@ -109,7 +109,7 @@ module centroid_data
     use iso_fortran_env
     implicit none
     
-    real(KIND=REAL32), allocatable :: e_centroid(:,:), f_centroid(:,:), c_centroid(:,:)
+    real(KIND=REAL64), allocatable :: e_centroid(:,:), f_centroid(:,:), c_centroid(:,:)
     
 end module centroid_data
 
