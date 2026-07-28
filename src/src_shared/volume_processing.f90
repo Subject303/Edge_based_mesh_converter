@@ -960,7 +960,7 @@ module volume_processing
             c2 = coords(i2,:)
             c3 = e_centroid(e,:)
             
-            sxx(:) = sn(ie,:)
+            sxx(:) = sb(be,:)
             
             call volume_from_proj(sxx, c1, c2, c3, vol1, vol2)
             
