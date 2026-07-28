@@ -18,9 +18,8 @@ module volume_processing
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     subroutine volume_alloc
         implicit none
-        allocate(vol(npoin),sn(i_nedge,3),sb(b_nedge,3),sbb(b_npoin,3))
+        allocate(sn(i_nedge,3),sb(b_nedge,3),sbb(b_npoin,3))
         
-        vol = 0.0
         sn  = 0.0
         sb  = 0.0
         sbb = 0.0
@@ -175,7 +174,7 @@ module volume_processing
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
-            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol1, vol2)
+            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array)
             
             direction_array(:) = c1(:) - c2(:)
             
@@ -183,12 +182,8 @@ module volume_processing
             
             if (angle .lt. 0.) then
                 sn(ie,:) = -in_progress_projection(:)
-                vol(i1)  = vol(i1) + vol1 ! may need to swap these volumes for direction reversal
-                vol(i2)  = vol(i2) + vol2
 			else
                 sn(ie,:) = in_progress_projection
-                vol(i1)  = vol(i1) + vol1
-                vol(i2)  = vol(i2) + vol2
 			endif
             
             print*,'aa'
@@ -393,7 +388,7 @@ module volume_processing
             
 !             print*, be, (c1(1)+c2(1))/2, (c1(2)+c2(2))/2, (c1(3)+c2(3))/2, in_progress_centroid
             
-            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array, c1, c2, vol1, vol2)
+            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array)
             
             direction_array(:) = c1(:) - c2(:)
             
@@ -401,12 +396,8 @@ module volume_processing
             
             if (angle .lt. 0.) then
                 sb(be,:) = -in_progress_projection(:)
-                vol(i1)  = vol(i1) + vol1
-                vol(i2)  = vol(i2) + vol2
 			else
                 sb(be,:) = in_progress_projection
-                vol(i1)  = vol(i1) + vol1
-                vol(i2)  = vol(i2) + vol2
 			endif
             
             
@@ -775,7 +766,7 @@ module volume_processing
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
-            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count_real, centroid_array, c1, c2)
+            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count_real, centroid_array)
             
             direction_array(:) = p_normal_vectors(bp,:)
             
@@ -922,6 +913,7 @@ module volume_processing
         integer(KIND=INT32)        :: i, i1, i2, e, ie, be
         real(KIND=REAL64)          :: vol1, vol2
         
+        allocate(vol(npoin))
         vol = 0.0
         
         do ie = 1, i_nedge
