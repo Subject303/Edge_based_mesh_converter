@@ -208,9 +208,9 @@ module data_outputting_serial
         outvar(:,2) = 2.0
         outvar(:,3) = 3.0
         
-        write(1) outvar(:,1)
-        write(1) outvar(:,2)
-        write(1) outvar(:,3)
+        do i=1,npoin
+            write(1) outvar(i,:)
+		enddo
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         !sb
@@ -228,9 +228,9 @@ module data_outputting_serial
             
         enddo
         
-        write(1) outvar(:,1)
-        write(1) outvar(:,2)
-        write(1) outvar(:,3)
+        do i=1,npoin
+            write(1) outvar(i,:)
+		enddo
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         !sbb
@@ -248,18 +248,18 @@ module data_outputting_serial
         
         tot_proj = tot_proj + outvar
         
-        write(1) outvar(:,1)
-        write(1) outvar(:,2)
-        write(1) outvar(:,3)
+        do i=1,npoin
+            write(1) outvar(i,:)
+		enddo
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         !total projections
         offset = 8+npoin*3*4
         write(1) offset
         
-        write(1) tot_proj(:,1)
-        write(1) tot_proj(:,2)
-        write(1) tot_proj(:,3)
+        do i=1,npoin
+            write(1) tot_proj(i,:)
+		enddo
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         !volumes
@@ -278,9 +278,9 @@ module data_outputting_serial
             outvar(i,:) = outvar(i,:) + p_normal_vectors(i,:)
         enddo
         
-        write(1) outvar(:,1)
-        write(1) outvar(:,2)
-        write(1) outvar(:,3)
+        do i=1,npoin
+            write(1) outvar(i,:)
+		enddo
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         outstring = NEW_LINE('')//'&
