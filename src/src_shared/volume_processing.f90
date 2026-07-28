@@ -833,14 +833,14 @@ module volume_processing
         
     end subroutine volume_generation
     
-    subroutine volume_from_proj(sn, i1, i2, vol1, vol2)
+    subroutine volume_from_proj(sx, i1, i2, vol1, vol2)
         implicit none
         real(KIND=REAL64)          :: vol1, vol2
-        real(KIND=REAL64)          :: sn(3), i1(3), i2(3), v12(3)
+        real(KIND=REAL64)          :: sx(3), i1(3), i2(3), v12(3)
         
         v12    = (i1(:) - i2(:))/2
-        vol1   = abs((sn(1)*  v12(1)  ) - (sn(2)*  v12(2)  ) + (sn(3)*  v12(3)  ) )/3
-        vol2   = abs((sn(1)*(-v12(1)) ) - (sn(2)*(-v12(2)) ) + (sn(3)*(-v12(3)) ) )/3
+        vol1   = abs((sx(1)*  v12(1)  ) - (sx(2)*  v12(2)  ) + (sx(3)*  v12(3)  ) )/3
+        vol2   = abs((sx(1)*(-v12(1)) ) - (sx(2)*(-v12(2)) ) + (sx(3)*(-v12(3)) ) )/3
         
     end subroutine volume_from_proj
     
@@ -974,11 +974,11 @@ module volume_processing
         
     end subroutine centroid_array_routine
     
-    subroutine cvolume(sn, i3, i4, i5, i1, i2, vol1, vol2)
+    subroutine cvolume(sx, i3, i4, i5, i1, i2, vol1, vol2)
         implicit none
         real(KIND=REAL64),optional     :: vol1, vol2
         real(KIND=REAL64),dimension(3) :: v13,v14,v15,v32,v42,v52,c1415,c4252
-        real(KIND=REAL64),dimension(3) :: sn, i1, i2, i3, i4, i5
+        real(KIND=REAL64),dimension(3) :: sx, i1, i2, i3, i4, i5
         real(KIND=REAL64),dimension(3) :: v34,v35,v12
         real(KIND=REAL64),dimension(3) :: c3435
         
@@ -1007,9 +1007,9 @@ module volume_processing
 !             
 ! 		endif
 
-        sn(1) = sn(1) + c3435(1) ! projection in the xx axis
-        sn(2) = sn(2) + c3435(2) ! projection in the yy axis
-        sn(3) = sn(3) + c3435(3) ! projection in the zz axis
+        sx(1) = sx(1) + c3435(1) ! projection in the xx axis
+        sx(2) = sx(2) + c3435(2) ! projection in the yy axis
+        sx(3) = sx(3) + c3435(3) ! projection in the zz axis
         
         
     !                               i4--------------i5
