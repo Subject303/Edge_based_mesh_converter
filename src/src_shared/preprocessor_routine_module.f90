@@ -327,7 +327,7 @@ module preprocessor_routine_module
             
             if ((backward_index(y-1)+1-x_count).lt.0)then
                 print*, 'no fucking idea'
-                print*, y, backward_leading_obj_count
+                print*, y, y_index(x_count - 1),y_index(x_count),y_index(x_count + 1)
                 print*,(backward_index(y-1)+1), x_count, size(backward_obj_relation_array)
                 print*,backward_obj_relation_array((backward_index(y-1)+1)),backward_obj_relation_array(x_count)
             endif
