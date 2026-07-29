@@ -325,7 +325,7 @@ module preprocessor_routine_module
                 if (x_count .eq. forward_sum) exit
             enddo
             
-            if ((backward_index(y-1)+1-x_count).lt.0)then
+            if ((backward_index(y-1)+1).gt.x_count)then
                 print*, 'no fucking idea'
                 print*, y, y_index(x_count - 1),y_index(x_count),y_index(x_count + 1)
                 print*,(backward_index(y-1)+1), x_count, size(backward_obj_relation_array)
