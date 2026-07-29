@@ -145,7 +145,7 @@ module preprocessor_routine_module
             n_con_edges = 0
             do cf_index = cf_start_index, cf_end_index
                 
-                if (cf_index .gt. 3111791) print*, cf_index, cf_start_index, cf_end_index
+                if (cf_index .gt. 3111791) print*, c, nele, cf_index, cf_start_index, cf_end_index
                 
                 f = c_f_obj_relation_array(cf_index)
                 
