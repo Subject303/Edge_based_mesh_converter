@@ -542,7 +542,7 @@ print('writing header',time.time()-start); sys.stdout.flush()
 # writing header
 file.write(struct.pack('<4i' ,npoin,nedge,nface,nele))
 print('mesh contains : ')
-print('points, elements, faces, edges ')
+print('points, edges, faces, elements ')
 print(npoin,nedge,nface,nele)        
 print( 'Relation array sums: ')
 print( 'c_p_sum,  f_p_sum,  e_p_sum,  c_f_sum,  f_e_sum')
