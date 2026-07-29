@@ -368,11 +368,6 @@ for i in range(nface-1):
         
         for p in range(f_p_index[i]):
             
-            # if obj1[p] == 12983:
-            #     print('obj1, ', k+1)
-            # if obj2[p] == 12983:
-            #     print('obj2, ', k+1)
-            
             if obj1[p] != obj2[p]: 
                 f_uniqe[i] = True
                 k=k+1
