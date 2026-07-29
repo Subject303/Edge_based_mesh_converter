@@ -43,7 +43,7 @@ module data_processing_serial
         call p_c_preprocess ! don't think p_c is ever actually needed but weh
         call p_f_preprocess
         
-        stop
+!         stop
         
         call p_e_preprocess
         
@@ -51,7 +51,7 @@ module data_processing_serial
         ! the inverse of the e f c relations
         ! e_c, e_f, e_c 
 
-        stop
+!         stop
         
         call f_c_preprocess
         call e_f_preprocess
