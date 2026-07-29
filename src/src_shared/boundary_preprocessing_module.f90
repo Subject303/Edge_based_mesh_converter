@@ -333,7 +333,7 @@ module boundary_routine_module
         feature_edges  = .false.
         feature_points = .false.
         
-        
+        allocate(p_boundary_flags(b_npoin))
         
     end subroutine dummy_feature_flagging
     

@@ -89,6 +89,9 @@ module boundary_data
     ! index arrays for moving from global object index to boundary index
     integer(KIND=INT32), allocatable :: reversed_p_bound_indexing_array(:) , reversed_e_bound_indexing_array(:), reversed_f_bound_indexing_array(:)
     
+    ! bounfary condition flagging array
+    integer(KIND=INT32), allocatable :: p_boundary_flags(:)
+    
     ! for boundary normal vectors it makes sense to both calculate  normals for faces, and then derive point normals
     real(KIND=REAL64), allocatable :: p_normal_vectors(:,:), f_normal_vectors(:,:)
     
