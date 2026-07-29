@@ -327,7 +327,7 @@ module preprocessor_routine_module
             
             if ((backward_index(y-1)+1).gt.x_count)then
                 print*, 'one of these objects isnt connected to the other and thats probably fucked mate'
-                print*, y, y_index(x_count - 1),y_index(x_count),y_index(x_count + 1)
+                print*, y, y_index(x_count - 10:x_count + 10)
                 print*,(backward_index(y-1)+1), x_count, size(backward_obj_relation_array)
                 print*,backward_obj_relation_array((backward_index(y-1)+1)),backward_obj_relation_array(x_count)
                 stop
