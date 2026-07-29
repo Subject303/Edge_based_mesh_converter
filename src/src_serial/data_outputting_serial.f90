@@ -37,7 +37,7 @@ module data_outputting_serial
     
     subroutine output_binary_internal
         implicit none
-		integer(KIND=INT32)             :: f, offset_count, cf, fp1, fp2
+		integer(KIND=INT32)             :: c, f, offset_count, cf, fp1, fp2
 		integer(KIND=INT8 ),allocatable :: types(:)
         integer(KIND=INT64)			    :: offset, face_offset
         
