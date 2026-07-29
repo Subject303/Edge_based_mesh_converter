@@ -41,10 +41,10 @@ module data_processing_serial
         print*,  c_e_sum
         
         call p_c_preprocess ! don't think p_c is ever actually needed but weh
+        call p_f_preprocess
         
         stop
         
-        call p_f_preprocess
         call p_e_preprocess
         
         ! I now need the last three directions,
