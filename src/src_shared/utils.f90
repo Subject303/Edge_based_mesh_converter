@@ -32,8 +32,6 @@ module utils
         
         !call quicksort(temparray,1,size(temparray)) ! must be start_index because indexing arrays start at zero
         
-        print*, size(array)
-        
         call quicksort(array,1 ,size(array) ) ! must be start_index because indexing arrays start at zero
         
         do indexer=2,size(array)

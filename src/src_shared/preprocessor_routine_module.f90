@@ -334,6 +334,8 @@ module preprocessor_routine_module
             
                 ! flag duplicates
                 
+                if (size(backward_obj_relation_array((backward_index(y-1)+1):x_count)).eq.0) print*,backward_obj_relation_array((backward_index(y-1)+1):x_count)
+                
                 call sort_and_flag_duplicates(backward_obj_relation_array((backward_index(y-1)+1):x_count))
                 
                 do i=(backward_index(y-1)+1),x_count
