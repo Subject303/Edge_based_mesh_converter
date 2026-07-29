@@ -40,8 +40,6 @@ module data_processing_serial
         print*, 'c_e_sum'
         print*,  c_e_sum
         
-        stop
-        
         call p_c_preprocess ! don't think p_c is ever actually needed but weh
         
         stop
