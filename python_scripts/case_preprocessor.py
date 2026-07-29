@@ -549,6 +549,8 @@ print( 'c_p_sum,  f_p_sum,  e_p_sum,  c_f_sum,  f_e_sum')
 print(c_p_sum,f_p_sum,e_p_sum,c_f_sum,f_e_sum)
 print(len(c_f_obj_relation_array),len(f_e_obj_relation_array))
 
+print(sum([len(obj) for obj in c_f_obj_relation_array]))
+print(sum([len(obj) for obj in f_e_obj_relation_array]))
 
 print('writing coordinates',time.time()-start); sys.stdout.flush()
 # writing coordinate data
