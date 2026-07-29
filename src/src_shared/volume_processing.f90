@@ -186,19 +186,19 @@ module volume_processing
                 sn(ie,:) = in_progress_projection
 			endif
             
-            print*,'aa'
-            !print*, centroid_array_count, SIZE(centroid_array,1)
-            print*, ie, ' :: ', i1-1, i2-1
-            print*, in_progress_projection
-            print*, sn(ie,:)
-            print*, angle
-            print*,'aa'
-            print*,in_progress_centroid
-            print*,'aa'
-            do i=1, centroid_array_count
-                print*,i,' :: ', centroid_array(i,:)
-            enddo
-            print*,'aa'
+!             print*,'aa'
+!             !print*, centroid_array_count, SIZE(centroid_array,1)
+!             print*, ie, ' :: ', i1-1, i2-1
+!             print*, in_progress_projection
+!             print*, sn(ie,:)
+!             print*, angle
+!             print*,'aa'
+!             print*,in_progress_centroid
+!             print*,'aa'
+!             do i=1, centroid_array_count
+!                 print*,i,' :: ', centroid_array(i,:)
+!             enddo
+!             print*,'aa'
             
         enddo
         
@@ -401,19 +401,19 @@ module volume_processing
                 sb(be,:) = in_progress_projection
 			endif
             
-            print*,'aa'
-            !print*, centroid_array_count, SIZE(centroid_array,1)
-            print*, be, ' :: ', i1-1, i2-1, ' :: ', centroid_array_count
-            print*, in_progress_projection
-            print*, sb(be,:)
-            print*, angle
-            print*,'aa'
-            print*,in_progress_centroid
-            print*,'aa'
-            do i=1, centroid_array_count
-                print*,i,' :: ', centroid_array(i,:)
-            enddo
-            print*,'aa'
+!             print*,'aa'
+!             !print*, centroid_array_count, SIZE(centroid_array,1)
+!             print*, be, ' :: ', i1-1, i2-1, ' :: ', centroid_array_count
+!             print*, in_progress_projection
+!             print*, sb(be,:)
+!             print*, angle
+!             print*,'aa'
+!             print*,in_progress_centroid
+!             print*,'aa'
+!             do i=1, centroid_array_count
+!                 print*,i,' :: ', centroid_array(i,:)
+!             enddo
+!             print*,'aa'
             
         enddo
         
