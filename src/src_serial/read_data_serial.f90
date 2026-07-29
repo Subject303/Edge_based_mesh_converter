@@ -109,7 +109,7 @@ module read_data_serial
         print*, ' '
         
         
-        stop
+!         stop
     end subroutine read_data
     
 end module read_data_serial
