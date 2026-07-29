@@ -43,6 +43,9 @@ module data_processing_serial
         stop
         
         call p_c_preprocess ! don't think p_c is ever actually needed but weh
+        
+        stop
+        
         call p_f_preprocess
         call p_e_preprocess
         
