@@ -335,6 +335,8 @@ module boundary_routine_module
         
         allocate(p_boundary_flags(b_npoin))
         
+        p_boundary_flags = -1
+        
     end subroutine dummy_feature_flagging
     
     ! end contains    
