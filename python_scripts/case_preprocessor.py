@@ -299,6 +299,10 @@ for obj in f_e_obj_relation_array:
 # and sort the relation arrays and delete duplicated stuff
 # I just need to filter out boundary duplicated nodes
 
+
+print(len(c_p_index),len(c_f_index),len(c_f_obj_relation_array))
+print(len(f_p_index),len(f_e_index),len(f_e_obj_relation_array))
+
 print('removing duplicate connectivites',time.time()-start); sys.stdout.flush()
 
 c_uniqe     = [False]*nele
@@ -422,7 +426,11 @@ e_p_obj_relation_array = temp
 e_p_index = temp2
 del temp
 del temp2; gc.collect()
-    
+
+
+print(len(c_p_index),len(c_f_index),len(c_f_obj_relation_array))
+print(len(f_p_index),len(f_e_index),len(f_e_obj_relation_array))
+
 print('   updating c f mapping',time.time()-start); sys.stdout.flush()
 
 for i in range(len(c_f_obj_relation_array)):
@@ -482,6 +490,9 @@ del temp
 del temp2; gc.collect()
 
 gc.collect()
+
+print(len(c_p_index),len(c_f_index),len(c_f_obj_relation_array))
+print(len(f_p_index),len(f_e_index),len(f_e_obj_relation_array))
 
 print('indexifying index arrays',time.time()-start); sys.stdout.flush()
 # indexifying the index arrays
@@ -549,8 +560,8 @@ print( 'c_p_sum,  f_p_sum,  e_p_sum,  c_f_sum,  f_e_sum')
 print(c_p_sum,f_p_sum,e_p_sum,c_f_sum,f_e_sum)
 print(len(c_f_index),len(f_e_index))
 
-print(sum([len(obj) for obj in c_f_obj_relation_array]))
-print(sum([len(obj) for obj in f_e_obj_relation_array]))
+print(len(c_p_index),len(c_f_index),len(c_f_obj_relation_array))
+print(len(f_p_index),len(f_e_index),len(f_e_obj_relation_array))
 
 print('writing coordinates',time.time()-start); sys.stdout.flush()
 # writing coordinate data
