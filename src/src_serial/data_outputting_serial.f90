@@ -50,11 +50,17 @@ module data_outputting_serial
         write(2) e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(:))  )
         write(2) e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(:))-1)
         
+        print*, e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(:))  ), e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(:))-1)
+        
         write(2) e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(:))  )
         write(2) e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(:))-1)
         
+        print*, e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(:))  ), e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(:))-1)
+        
         write(2) p_bound_indexing_array
         write(2) p_boundary_flags
+        
+        print*, p_bound_indexing_array
         
         write(2) coords(:,1)
         write(2) coords(:,2)
