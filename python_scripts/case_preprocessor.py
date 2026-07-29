@@ -187,8 +187,6 @@ sorted_f_p    = [sorted(obj) for obj in f_p_obj_relation_array]
 
 coupled = sorted(zip(sorted_f_p, f_p_obj_relation_array, f_sort, f_e_obj_relation_array), key=lambda element: element[0])
 
-temp = f_p_obj_relation_array
-
 i=0
 for p, x, y, z in coupled:
     sorted_f_p[i]             = p
@@ -366,6 +364,9 @@ for i in range(nface-1):
         obj2 = sorted_f_p[i+1]
         
         for p in range(f_p_index[i]):
+            
+            if obj1[p] == 12984:
+                print(k+1)
             
             if obj1[p] != obj2[p]: 
                 f_uniqe[i] = True
