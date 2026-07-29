@@ -446,50 +446,50 @@ for i in range(len(f_e_obj_relation_array)):
         obj[j] = edge_to_rep[obj[j]] 
     f_e_obj_relation_array[i] = sorted(obj)
 
-temp = []
-temp2 = []
-print('   c_f'); sys.stdout.flush()
-for i in range(len(c_f_index)-1):
-    if c_f_index[i] == c_f_index[i+1]:    
-        obj1 = c_f_obj_relation_array[i]
-        obj2 = c_f_obj_relation_array[i+1]
-
-        for p in range(c_f_index[i]):
-            if obj1[p]!=obj2[p]:
-                temp.append(obj1)
-                temp2.append(c_f_index[i])
-                break
-
-
-temp.append(c_f_obj_relation_array[i+1])
-temp2.append(c_f_index[i+1])
-c_f_obj_relation_array = temp
-c_f_index = temp2
-del temp
-del temp2; gc.collect()
-
-temp = []
-temp2 = []
-print('   f_e'); sys.stdout.flush()
-for i in range(len(f_e_index)-1):
-    if f_e_index[i] == f_e_index[i+1]:    
-        obj1 = f_e_obj_relation_array[i]
-        obj2 = f_e_obj_relation_array[i+1]
-
-        for p in range(f_e_index[i]):
-            if obj1[p]!=obj2[p]:
-                temp.append(obj1)
-                temp2.append(f_e_index[i])
-                break
-            
-temp.append(f_e_obj_relation_array[i+1])
-temp2.append(f_e_index[i+1])
-f_e_obj_relation_array = temp
-f_e_index = temp2
-del temp
-del temp2; gc.collect()
-
-gc.collect()
+# temp = []
+# temp2 = []
+# print('   c_f'); sys.stdout.flush()
+# for i in range(len(c_f_index)-1):
+#     if c_f_index[i] == c_f_index[i+1]:    
+#         obj1 = c_f_obj_relation_array[i]
+#         obj2 = c_f_obj_relation_array[i+1]
+# 
+#         for p in range(c_f_index[i]):
+#             if obj1[p]!=obj2[p]:
+#                 temp.append(obj1)
+#                 temp2.append(c_f_index[i])
+#                 break
+# 
+# 
+# temp.append(c_f_obj_relation_array[i+1])
+# temp2.append(c_f_index[i+1])
+# c_f_obj_relation_array = temp
+# c_f_index = temp2
+# del temp
+# del temp2; gc.collect()
+# 
+# temp = []
+# temp2 = []
+# print('   f_e'); sys.stdout.flush()
+# for i in range(len(f_e_index)-1):
+#     if f_e_index[i] == f_e_index[i+1]:    
+#         obj1 = f_e_obj_relation_array[i]
+#         obj2 = f_e_obj_relation_array[i+1]
+# 
+#         for p in range(f_e_index[i]):
+#             if obj1[p]!=obj2[p]:
+#                 temp.append(obj1)
+#                 temp2.append(f_e_index[i])
+#                 break
+#             
+# temp.append(f_e_obj_relation_array[i+1])
+# temp2.append(f_e_index[i+1])
+# f_e_obj_relation_array = temp
+# f_e_index = temp2
+# del temp
+# del temp2; gc.collect()
+# 
+# gc.collect()
 
 print(len(c_p_index),len(c_f_index),len(c_f_obj_relation_array))
 print(len(f_p_index),len(f_e_index),len(f_e_obj_relation_array))
