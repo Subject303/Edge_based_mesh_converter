@@ -48,6 +48,8 @@ module data_processing_serial
         ! the inverse of the e f c relations
         ! e_c, e_f, e_c 
 
+        stop
+        
         call f_c_preprocess
         call e_f_preprocess
         call e_c_preprocess ! remember this specific one must be synced in the mpi implementation
