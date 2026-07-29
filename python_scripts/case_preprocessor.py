@@ -541,7 +541,12 @@ file = open(file_name, "wb")
 print('writing header',time.time()-start); sys.stdout.flush()
 # writing header
 file.write(struct.pack('<4i' ,npoin,nedge,nface,nele))
-print(npoin,nedge,nface,nele)
+print('mesh contains : ')
+print('points, elements, faces, edges ')
+print(npoin,nedge,nface,nele)        
+print( 'Relation array sums: ')
+print( 'c_p_sum,  f_p_sum,  e_p_sum,  c_f_sum,  f_e_sum')
+print(c_p_sum,f_p_sum,e_p_sum,c_f_sum,f_e_sum)
 
 
 print('writing coordinates',time.time()-start); sys.stdout.flush()
@@ -563,8 +568,6 @@ for entry in c_p_index:
 file.write(struct.pack('<2i' ,f_p_sum, 0))
 for entry in f_p_index:
     file.write(struct.pack('<i' ,entry))
-
-print(c_p_sum,f_p_sum,e_p_sum,c_f_sum,f_e_sum)
 
 for obj in c_p_obj_relation_array:
     for entry in obj:
