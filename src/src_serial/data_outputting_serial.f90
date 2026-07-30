@@ -79,27 +79,16 @@ module data_outputting_serial
         write(2) p_normal_vectors(:,2)
         write(2) p_normal_vectors(:,3)
         
-        do c=1,nele
-            
-            elesize(c) = c_p_index_array(c) - c_p_index_array(c-1)
-            nfaces(c)  = c_f_index_array(c) - c_f_index_array(c-1)
-            
-        enddo
+        write(2) c_p_sum
+        write(2) c_f_sum
+        write(2) f_p_sum
         
-        write(2) elesize
+        write(2) c_p_index_array
+        write(2) c_f_index_array
+        write(2) f_p_index_array
         
         write(2) c_p_obj_relation_array
-        
-        write(2) nfaces
-        
-        do f=1,nface
-            
-            facesize(f) = f_p_index_array(f) - f_p_index_array(f-1)
-            
-        enddo
-        
-        write(2) facesize
-        
+        write(2) c_f_obj_relation_array
         write(2) f_p_obj_relation_array
         
         close(2)
@@ -201,29 +190,31 @@ module data_outputting_serial
         write(1) outstring
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        !offsets
+        !coords
         offset = 8+npoin*3*real_length
         write(1) offset
         do i=1,npoin
             write(1) coords(i,:)
 		enddo
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        !types
+        !offsets
         offset = 8+nele*4
         write(1) offset, c_p_index_array(1:nele)
     
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        !types
         allocate(types(nele))
         types = 42
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        !connectivity
         offset = 8+nele
         write(1) offset, types(:)
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        !faces
+        !connectivity
         offset = 8+c_p_sum*4
         write(1) offset, c_p_obj_relation_array(:)-1
     
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        !faces
         write(1) 8+face_offset
         do c=1,nele
             ! number of faces
