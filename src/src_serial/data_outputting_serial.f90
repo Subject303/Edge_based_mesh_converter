@@ -38,7 +38,7 @@ module data_outputting_serial
     subroutine output_binary_internal
         implicit none
 		integer(KIND=INT32)             :: c, f, offset_count, cf, fp1, fp2
-		integer(KIND=INT32 )            :: elesize(nele)
+		integer(KIND=INT32 )            :: elesize(nele), nfaces(nele), facesize(nface)
         integer(KIND=INT64)			    :: offset, face_offset
         
         
@@ -82,42 +82,25 @@ module data_outputting_serial
         do c=1,nele
             
             elesize(c) = c_p_index_array(c) - c_p_index_array(c-1)
+            nfaces(c)  = c_f_index_array(c) - c_f_index_array(c-1)
             
         enddo
         
-        print*, elesize
+        write(2) elesize
         
-!         ! offsets
-!         write(2) c_p_index_array(1:nele)
-! !         ! types
-! !         write(2) types(:)
-!         ! connectivity
-!         write(2) c_p_obj_relation_array(:)-1
-!         ! faces
-!         do c=1,nele
-!             ! number of faces
-!             write(2) (c_f_index_array(c)-c_f_index_array(c-1)) 
-!             do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
-!                 f = c_f_obj_relation_array(cf)
-!                 fp1 = f_p_index_array(f-1)
-!                 fp2 = f_p_index_array(f)
-!                 ! number of points in face, points in face
-!                 write(2) (fp2-fp1) , f_p_obj_relation_array((fp1+1):fp2)-1
-!                 
-!             enddo
-!         enddo
-!         ! faceoffsets
-!         offset_count = 0
-!         do c=1,nele
-!             offset_count =  offset_count + 1 + c_f_index_array(c) - c_f_index_array(c-1)
-!             do cf=(1+c_f_index_array(c-1)),c_f_index_array(c)
-!                 f = c_f_obj_relation_array(cf)
-!                 offset_count = offset_count + (f_p_index_array(f)-f_p_index_array(f-1))
-!             enddo
-!             write(2) offset_count
-!         enddo
+        write(2) c_p_obj_relation_array
         
+        write(2) nfaces
         
+        do f=1,nface
+            
+            facesize(f) = f_p_index_array(f) - f_p_index_array(f-1)
+            
+        enddo
+        
+        write(2) facesize
+        
+        write(2) f_p_obj_relation_array
         
         close(2)
         
