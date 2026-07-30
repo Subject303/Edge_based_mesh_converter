@@ -79,6 +79,7 @@ module data_outputting_serial
         write(2) p_normal_vectors(:,2)
         write(2) p_normal_vectors(:,3)
         
+        write(2) nface
         write(2) c_p_sum
         write(2) c_f_sum
         write(2) f_p_sum
