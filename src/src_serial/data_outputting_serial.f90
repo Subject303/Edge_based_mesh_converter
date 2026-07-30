@@ -79,9 +79,9 @@ module data_outputting_serial
         write(2) p_normal_vectors(:,2)
         write(2) p_normal_vectors(:,3)
         
-        do i=1,nele
+        do c=1,nele
             
-            elesize(i) = c_p_index_array(i) - c_p_index_array(-1)
+            elesize(c) = c_p_index_array(c) - c_p_index_array(c-1)
             
         enddo
         
