@@ -46,14 +46,17 @@ module data_outputting_serial
         
         write(2) npoin, i_nedge, b_nedge, b_npoin, nele
         
+        ! PLEASE REMEMEBER
+        ! ORDER I1 I2 MATTERS SO e_p... -1 is i1, and e_p.... is i2, if you flip these the directions are all wrong
+        
         ! double check this should be i1 i1 i1 i2 i2 i2 or i1 i2 i1 i2 i1 i2
-        write(2) e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(:))  )
         write(2) e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(:))-1)
+        write(2) e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(:))  )
         
 !         print*, e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(:))  ), e_p_obj_relation_array(e_p_index_array(e_internal_indexing_array(:))-1)
         
-        write(2) e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(:))  )
         write(2) e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(:))-1)
+        write(2) e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(:))  )
         
 !         print*, e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(:))  ), e_p_obj_relation_array(e_p_index_array(e_bound_indexing_array(:))-1)
         
