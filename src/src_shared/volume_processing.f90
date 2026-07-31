@@ -181,9 +181,9 @@ module volume_processing
             angle = alignment(in_progress_projection, direction_array)
             
             if (angle .lt. 0.) then
-                sn(ie,:) = -in_progress_projection(:)
+                sn(ie,:) = in_progress_projection(:)
 			else
-                sn(ie,:) = in_progress_projection
+                sn(ie,:) = -in_progress_projection
 			endif
             
 !             print*,'aa'
@@ -396,9 +396,9 @@ module volume_processing
             angle = alignment(in_progress_projection, direction_array)
             
             if (angle .lt. 0.) then
-                sb(be,:) = -in_progress_projection(:)
+                sb(be,:) = in_progress_projection(:)
 			else
-                sb(be,:) = in_progress_projection
+                sb(be,:) = -in_progress_projection
 			endif
             
 !             print*,'aa'
@@ -785,7 +785,11 @@ module volume_processing
             
             angle = alignment(in_progress_projection, direction_array)
             
-            if (angle .lt. 0.) in_progress_projection(:) = -in_progress_projection(:)
+            if (angle .lt. 0.) then
+                in_progress_projection(:) = in_progress_projection(:)
+            else
+                in_progress_projection(:) = -in_progress_projection(:)
+            endif
             
             sbb(bp,:) = in_progress_projection
             
