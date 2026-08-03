@@ -316,11 +316,36 @@ module boundary_routine_module
         feature_edges(be) = .true.
         
         e = e_bound_indexing_array(be)
-            
+        
         p1 = e_p_obj_relation_array(e_p_index_array(e)  )
         p2 = e_p_obj_relation_array(e_p_index_array(e)-1)
         
         
+        
+!         
+!         
+!         
+!         okay so
+!         plan
+!         
+!         splitting edges directly is a cunt of a job because then we have to 
+!         selectivly search for barycentres that are in different planes in the volume selection
+!         
+!         this is not elegantly viable really I dont think
+!         
+!         so practical alternative is going to be here
+!         
+!         we maintain a list of feature points
+!         
+!         then when we go over boundary faces we can do as we have done for non feature points
+!         and have a seperate system for feature points
+!         
+!         said seperate system will maintain the barycentre listings manually from here
+!         
+!         because thats less fucked
+!         
+!         and we process them as we do 
+!         
         
     end subroutine split_feature_edges
     
