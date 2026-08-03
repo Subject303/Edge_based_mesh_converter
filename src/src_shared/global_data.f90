@@ -98,6 +98,12 @@ module boundary_data
     ! logical array identifying feature points and edges
     logical, allocatable :: feature_points(:), feature_edges(:)
     
+    ! feature point indexing array
+    integer(KIND=INT32), allocatable :: n_fb_point_index(:), n_fb_point_count(:)
+    
+    ! number of feature points
+    integer(KIND=INT32)  :: n_fb_points
+    
 end module boundary_data
 
 module projection_data

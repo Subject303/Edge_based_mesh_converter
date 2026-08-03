@@ -265,7 +265,7 @@ module boundary_routine_module
     
     subroutine boundary_angle_feature_flagging
         implicit none
-        integer(KIND=INT32) :: i, j, be, e, f1, f2
+        integer(KIND=INT32) :: i, j, be, e, f1, f2, bp1, bp2
         real(KIND=REAL64)   :: nv1(3), nv2(3), angle
         
         allocate(feature_edges(b_nedge))
@@ -301,7 +301,16 @@ module boundary_routine_module
             angle = acosd(alignment(nv1, nv2))
             
             if (angle.gt.15.) then
-                call split_feature_edges(e,be, f1, f2)
+            
+                feature_edges(be) = .true.
+                
+                bp1 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)  ))
+                bp2 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)-1))
+                
+                feature_points(bp1) = .true.
+                feature_points(bp2) = .true.
+                
+                !call split_feature_edges(e,be, f1, f2)
             endif
             
         enddo
@@ -310,17 +319,9 @@ module boundary_routine_module
     
     subroutine split_feature_edges(e,be,f1,f2)
         implicit none
-        integer(KIND=INT32) :: i, j, be, e, p1, p2, f1, f2
-        
-        
-        feature_edges(be) = .true.
-        
-        e = e_bound_indexing_array(be)
-        
-        p1 = e_p_obj_relation_array(e_p_index_array(e)  )
-        p2 = e_p_obj_relation_array(e_p_index_array(e)-1)
-        
-        
+        integer(KIND=INT32) :: i, j, fbp, bp, p, face_count, processed_count, bound_count
+        integer(KIND=INT32),allocatable :: face_vector(:), bound_vector(:)
+        real(KIND=REAL64)   :: nv1(3), nv2(3), angle
         
 !         
 !         
@@ -347,9 +348,104 @@ module boundary_routine_module
 !         and we process them as we do 
 !         
 !         and we'll have to concatenate stuff at the end I suppose
-! 
-! 
 
+
+!         
+!         to actually build the lists we flag feature points
+!         
+!         a feature point is connected to a number of boundary faces
+!         
+!         we can pick a reference face, and compare the angles between the normals and all other faces
+!         
+!         faces that are of a low angle difference get grouped, a new ref face is selected and creates new groups
+!         
+!         these groups become our seperate sbb groups
+!         
+!         then we gotta add back the edges but thats a piece of piss probably
+!         
+        
+        
+        n_fb_points = 0
+        
+        do i=1, b_npoin
+            if (feature_points(i)) n_fb_points = n_fb_points + 1
+        enddo
+        
+        allocate(n_fb_point_index(n_fb_points), n_fb_point_count(n_fb_points))
+        
+        n_fb_point_count = 0
+        
+        j=0
+        do i=1, b_npoin
+            if (feature_points(i)) then
+                j=j+1
+                n_fb_point_index(j) = i
+            endif
+        enddo
+        
+        
+        do fbp=1, n_fb_points
+            bp = n_fb_point_index(fbp)
+            
+            p = p_bound_indexing_array(bp)
+            
+            
+            pf_start = p_f_index_array(p-1)
+            pf_end   = p_f_index_array(p)
+            
+            face_count = pf_end-pf_start
+            
+            do i=1, face_count
+                if (.not.f_bound_array(p_f_obj_relation_array(i+pf_start))) then
+                    face_count = face_count - 1
+                    ! found number of boundary faces
+                endif
+            enddo
+            
+            allocate(face_vector(face_count), bound_vector(face_count))
+            
+            do i=1, face_count
+                if (f_bound_array(p_f_obj_relation_array(i+pf_start))) then
+                    face_vector(i) = f_bound_indexing_array(p_f_obj_relation_array(i+pf_start)
+                endif
+            enddo
+            
+            processed_count = 1
+            nv1(:) = f_normal_vectors(f_bound_array(p_f_obj_relation_array(1+pf_start)),:)
+            bound_vector = -1
+            bound_count = 1
+            
+            do
+                
+                do i=1, face_count
+                    nv2(:) = f_normal_vectors(face_vector(i),:)
+                    
+                    angle = acosd(alignment(nv1, nv2))
+                    
+                    if (angle .lt. 15.) then
+                        processed_count = processed_count + 1
+                        bound_vector(i) = bound_count
+                    endif
+                    
+                enddo
+                
+                if (face_count .eq. processed_count) exit
+                
+                do i=1, face_count
+                    if (bound_vector(i) .lt. 0) then
+                        bound_count = bound_count + 1
+                        nv1(:) = f_normal_vectors(f_bound_array(p_f_obj_relation_array(i+pf_start)),:)
+                        exit
+                    endif
+                enddo
+                
+            enddo
+            
+        enddo
+        
+        
+        
+        
         
     end subroutine split_feature_edges
     
