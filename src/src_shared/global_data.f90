@@ -99,10 +99,10 @@ module boundary_data
     logical, allocatable :: feature_points(:), feature_edges(:)
     
     ! feature point indexing array
-    integer(KIND=INT32), allocatable :: n_fb_point_index(:), n_fb_point_count(:)
+    integer(KIND=INT32), allocatable :: n_fb_point_index(:), n_fb_point_count(:), fbp_f_index(:), fbp_f_obj_relation_array(:)
     
     ! number of feature points
-    integer(KIND=INT32)  :: n_fb_points
+    integer(KIND=INT32)  :: n_fb_points, fbp_f_sum
     
 end module boundary_data
 

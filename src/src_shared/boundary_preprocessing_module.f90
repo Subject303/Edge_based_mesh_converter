@@ -383,6 +383,33 @@ module boundary_routine_module
             endif
         enddo
         
+        allocate(fbp_f_index(n_fb_point_count))
+        
+        fbp_f_sum = 0
+        
+        do fbp=1, n_fb_points
+            bp = n_fb_point_index(fbp)
+            
+            p = p_bound_indexing_array(bp)
+            
+            
+            pf_start = p_f_index_array(p-1)
+            pf_end   = p_f_index_array(p)
+            
+            face_count = 0
+            
+            do i=1, face_count
+                if (f_bound_array(p_f_obj_relation_array(i+pf_start))) then
+                    face_count = face_count + 1
+                endif
+            enddo
+            
+            fbp_f_sum = fbp_f_sum + face_count
+            fbp_f_index(fbp) = fbp_f_sum
+            
+        enddo
+        
+        allocate(fbp_f_obj_relation_array(fbp_f_sum))
         
         do fbp=1, n_fb_points
             bp = n_fb_point_index(fbp)
@@ -440,6 +467,10 @@ module boundary_routine_module
                 enddo
                 
             enddo
+            
+            
+            fbp_f_obj_relation_array ! THEN WE ADD THE FACE INDEXES INTO THE RELATION ARRAY BUT HEAD HURT I GO EEP
+            
             
         enddo
         
