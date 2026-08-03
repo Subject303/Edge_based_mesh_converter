@@ -346,6 +346,10 @@ module boundary_routine_module
 !         
 !         and we process them as we do 
 !         
+!         and we'll have to concatenate stuff at the end I suppose
+! 
+! 
+
         
     end subroutine split_feature_edges
     
