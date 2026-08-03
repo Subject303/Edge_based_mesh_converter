@@ -982,8 +982,8 @@ module volume_processing
         
         v31    = i3 - i1
         v32    = i3 - i2
-        vol1   = abs((sx(1)*v31(1)) - (sx(2)*v31(2)) + (sx(3)*v31(3)) )/3
-        vol2   = abs((sx(1)*v32(1)) - (sx(2)*v32(2)) + (sx(3)*v32(3)) )/3
+        vol1   = abs((sx(1)*v31(1)) + (sx(2)*v31(2)) + (sx(3)*v31(3)) )/3
+        vol2   = abs((sx(1)*v32(1)) + (sx(2)*v32(2)) + (sx(3)*v32(3)) )/3
         
     end subroutine volume_from_proj
     
