@@ -461,7 +461,7 @@ module volume_processing
             
             if (feature_points(bp)) then
                 
-                call feature_point_projection_logic(bp)
+!                 call feature_point_projection_logic(bp)
                 
             else
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
