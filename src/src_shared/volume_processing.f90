@@ -457,158 +457,24 @@ module volume_processing
             i2 = p
             ! i1 and i2 are the constituent points of edge e
             
-            pe_start = p_e_index_array(p-1)
-            pf_start = p_f_index_array(p-1)
-            pe_end   = p_e_index_array(p)
-            pf_end   = p_f_index_array(p)
             
-            edge_count = pe_end-pe_start
-            face_count = pf_end-pf_start
             
             if (feature_points(bp)) then
                 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                ! FEATURE POINTS
-                ! IE CORNERS
+                call feature_point_projection_logic(bp)
                 
-                print*, bp, p, 'inside feature statement'
-                
-                centroid_array_count = edge_count + face_count
-            
-                ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
-            
-                if (centroid_array_count_old .ne. centroid_array_count) then
-                    deallocate(centroid_index_array,non_viable_edges,centroid_array)
-                    allocate(centroid_index_array(centroid_array_count), non_viable_edges(edge_count), centroid_array(centroid_array_count,3))
-                endif
-            
-                pe = 1
-            
-                non_viable_edges = .false.
-                
-                do ! we must start on a feature edge
-                    current_edge = p_e_obj_relation_array(pe_start+pe)
-                    if (e_internal_array(current_edge)) non_viable_edges(pe) = .true.
-                    if (feature_edges(reversed_e_bound_indexing_array(current_edge))) exit
-                    
-                    if (pe.eq.edge_count) then
-                        pe = 1
-                    else
-                        pe=pe+1
-                    endif
-                    
-                enddo
-                
-                non_viable_edges(pe) = .true.
-                
-                j = e_f_index_array(current_edge-1)
-                do 
-                    j=j+1
-                    if (f_bound_array(e_f_obj_relation_array(j))) exit
-                enddo
-                face_1 = e_f_obj_relation_array(j)
-                face_2 = -1
-                
-                if (j.gt.e_f_index_array(current_edge))then
-                    print*, ' non-feature boundary edge has more than 2 faces '
-                    stop
-                endif
-                
-                centroid_index_array(1) = current_edge
-                centroid_index_array(2) = face_1
-            
-                centroid_array(1,:) = e_centroid(current_edge,:)
-                centroid_array(2,:) = f_centroid(face_1,:)
-                    
-                prev_face = face_1
-            
-                !print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
-            
-                i=3
-            
-                !print*, ef, current_face, cell_1, cell_2 ,prev_cell, 'prev_cell'
-            
-                do
-                
-                    if (pe.eq.edge_count) then
-                        pe = 1
-                    else
-                        pe=pe+1
-                    endif
-
-                
-                    if (non_viable_edges(pe)) cycle
-                
-                    do ! we must only use boundary edges
-                        current_edge = p_e_obj_relation_array(pe_start+pe)
-                        if (e_bound_array(current_edge)) exit
-                        non_viable_edges(pe) = .true.
-                        
-                        if (pe.eq.edge_count) then
-                            pe = 1
-                        else
-                            pe=pe+1
-                        endif
-                    enddo
-                    
-                    j = e_f_index_array(current_edge-1)
-                    do 
-                        j=j+1
-                        if (f_bound_array(e_f_obj_relation_array(j))) exit
-                    enddo
-                    face_1 = e_f_obj_relation_array(j)
-                    face_2 = -1
-                    
-                    if (j.gt.e_f_index_array(current_edge))then
-                        print*, ' non-feature boundary edge has more than 2 faces '
-                        stop
-                    endif
-                    
-                    if (prev_face .eq. face_1) then
-            
-                        centroid_index_array(i)   = current_edge
-                        centroid_array(i,:)   = e_centroid(current_edge,:)
-                    
-                        if (feature_edges(reversed_e_bound_indexing_array(current_edge))) exit  
-                    
-                        centroid_index_array(i+1) = face_2
-                        centroid_array(i+1,:) = f_centroid(face_2,:)
-                    
-                        non_viable_edges(pe) = .true.
-                    
-                        prev_face = centroid_index_array(i+1)
-                        i=i+2 
-                    
-                        print*, 'i-1 = face_1, i+1 = face_2'
-                    
-                    elseif (prev_face .eq. face_2) then
-                    
-                        centroid_index_array(i)   = current_edge
-                        centroid_array(i,:)   = e_centroid(current_edge,:)
-                    
-                        if (feature_edges(reversed_e_bound_indexing_array(current_edge))) exit
-                    
-                        centroid_index_array(i+1) = face_1
-                        centroid_array(i+1,:) = f_centroid(face_1,:)
-                    
-                        non_viable_edges(pe) = .true.
-                    
-                        prev_face = centroid_index_array(i+1)
-                        i=i+2 
-                    
-                        print*, 'swapped'
-                    
-                    else
-                        !print*, 'none, looping'
-                    endif
-                
-                    !print*, ef, current_edge, face_1, face_2 , prev_face
-                
-                enddo
             else
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 ! NON FEATURE POINTS
                 ! IE NOT CORNERS
+                
+                pe_start = p_e_index_array(p-1)
+                pf_start = p_f_index_array(p-1)
+                pe_end   = p_e_index_array(p)
+                pf_end   = p_f_index_array(p)
+                
+                edge_count = pe_end-pe_start
+                face_count = pf_end-pf_start
                 
                 centroid_array_count = 1 + edge_count + face_count
             
@@ -802,7 +668,12 @@ module volume_processing
         
     end subroutine boundary_face_volume_processing
     
-
+    subroutine feature_point_projection_logic(bp)
+    
+    
+    end subroutine
+    
+    
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     

@@ -300,7 +300,7 @@ module boundary_routine_module
             
             angle = acosd(alignment(nv1, nv2))
             
-            if (angle.gt.15.) then
+            if (angle.gt.splitting_angle) then
             
                 feature_edges(be) = .true.
                 
@@ -317,7 +317,192 @@ module boundary_routine_module
         
     end subroutine boundary_angle_feature_flagging
     
-    subroutine split_feature_edges(e,be,f1,f2)
+    
+    subroutine boundary_region_face_flagging
+        
+        allocate(f_bound_flags(b_nface), e_bound_flags(b_nedge))
+        
+        f_bound_flags = 999
+        e_bound_flags = 999
+        
+        ! so we have a list of flags, 999 for non feature edges, 1 for feature edges, 2 for feature faces
+        do be=1,b_nedge
+            e_bound_flags(be) = 1
+        enddo
+        
+        bf=1
+        current_flag = -1
+        
+        allocate(flagged_faces(b_nface), flagged_edges(b_nedge))
+        
+        ff_index = 1
+        fe_index = 0
+        
+        ff_index_old = 1
+        fe_index_old = 1
+        
+        flagged_faces(ff_index) = bf
+        f_bound_flags(bf) = current_flag
+        
+        
+        do 
+            
+            
+            ! loop over all flagged faces we havn't already looped over
+            do i=ff_index_old,ffindex
+                bf = flagged_faces(i)
+                
+                f = f_bound_indexing_array(bf)
+                
+                fe_stt = f_e_index_array(f-1)+1
+                fe_end = f_e_index_array(f)
+                
+                all_edges_feature = .true.
+                
+                ! loop over all flagged edges connected to flagged faces
+                do fe=fe_stt,fe_end
+                    be = reversed_e_bound_indexing_array(f_e_obj_relation_array(fe))
+                    
+                    ! if the flagged edge is not a feature then flag it
+                    if ((e_bound_flags(be).ne.1).or.(e_bound_flags(be).ne.current_flag)) then
+                        ! if any edges are non feature we know we can keep going
+                        all_edges_feature = .false.
+                        
+                        fe_index = fe_index + 1
+                        
+                        flagged_edges(fe_index) = be
+                        e_bound_flags(be) = current_flag
+                        
+                        ! fe_index is the number of flagged edges
+                    endif
+                enddo
+            enddo
+            
+            ! do somthing with exit conditions here
+            ! all_edges_feature .true. stuff
+            
+            ff_index_old = ff_index
+            
+            ! this is the condition to create a new boundary region
+            if (all_edges_feature) then
+                
+                ! first check that we're not just already done.
+                if (ff_index .eq. b_nface)then
+                    exit
+                endif
+                
+                ! otherwise we need to start a new flag and a new unseeded face
+                current_flag = current_flag - 1
+                
+                do i=1,b_nface
+                    if (f_bound_flags(i).eq.999) then
+                        bf = i
+                        
+                        ff_index = ff_index + 1
+                        
+                        flagged_faces(ff_index) = bf
+                        f_bound_flags(bf) = current_flag
+                        
+                        exit
+                    endif
+                enddo
+                
+                ! skip the next loop
+                cycle
+                
+            endif
+            
+            
+            ! now we update the flagged faces to restart the loop 
+            
+            ! so again loop over all flagged edges we havn't already looped over
+            do i=fe_index_old,fe_index
+                be = flagged_edges(be)
+                
+                e = e_bound_indexing_array(be)
+                
+                ef_stt = e_f_index_array(e-1)+1
+                ef_end = e_f_index_array(e)
+                
+                ! then loop over connected faces
+                do ef=ef_stt,ef_end
+                    f = e_f_obj_relation_array(ef)
+                    
+                    ! ignore internal faces
+                    if (f_internal_array(f)) cycle
+                    
+                    bf = reversed_f_bound_indexing_array(f)
+                    
+                    ff_index = ff_index + 1
+                    
+                    ! and add all the boundary faces
+                    flagged_edges(ff_index) = be
+                    f_bound_flags(bf) = current_flag
+                    
+                enddo
+                
+            enddo
+            
+            fe_index_old = fe_index
+            
+        enddo
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        ! we're scanning down connected boundary edges 
+        do 
+        
+            ! first find a b_face that isnt connected to a feature and already has a flag
+            if (f_bound_flags(bf).eq.2) then
+                do i=1,b_nface
+                    if (f_bound_flags(i).lt.0) bf = i
+                    exit
+                enddo
+            endif
+            
+            ! if the face isn't flagged, create a new region and start
+            if (f_bound_flags(bf).eq.999) then
+                current_flag = current_flag - 1
+            endif
+            
+            f_bound_flags(bf) = current_flag
+            
+            f = f_bound_indexing_array(bf)
+            
+            fe_stt = f_e_index_array(f-1)+1
+            fe_end = f_e_index_array(f)
+            
+            e_count = fe_end - fe_stt + 1
+            
+            e_bound_flags(reversed_e_bound_indexing_array(f_e_obj_relation_array(fe_stt:fe_end))) = current_flag
+            
+        enddo
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    end subroutine boundary_region_face_flagging
+    
+    subroutine split_corners
         implicit none
         integer(KIND=INT32) :: i, j, fbp, bp, p, face_count, processed_count, bound_count
         integer(KIND=INT32),allocatable :: face_vector(:), bound_vector(:)
@@ -364,7 +549,7 @@ module boundary_routine_module
 !         then we gotta add back the edges but thats a piece of piss probably
 !         
         
-        
+        ! count feature points
         n_fb_points = 0
         
         do i=1, b_npoin
@@ -375,6 +560,7 @@ module boundary_routine_module
         
         n_fb_point_count = 0
         
+        ! we create an indexing array to go from fbp to bp index
         j=0
         do i=1, b_npoin
             if (feature_points(i)) then
@@ -387,6 +573,7 @@ module boundary_routine_module
         
         fbp_f_sum = 0
         
+        ! we count the number of boundary faces per fbp, to allocate a face array
         do fbp=1, n_fb_points
             bp = n_fb_point_index(fbp)
             
@@ -409,7 +596,9 @@ module boundary_routine_module
             
         enddo
         
-        allocate(fbp_f_obj_relation_array(fbp_f_sum))
+        ! this array is the feature faces in left and the planar alignment in the right
+        ! so for point fbp we have a list [f1,f2,f3,f4,f5,f6] and a list [1,1,2,2,2,3] 
+        allocate(fbp_f_obj_relation_array(fbp_f_sum,2))
         
         do fbp=1, n_fb_points
             bp = n_fb_point_index(fbp)
@@ -449,7 +638,7 @@ module boundary_routine_module
                     
                     angle = acosd(alignment(nv1, nv2))
                     
-                    if (angle .lt. 15.) then
+                    if (angle .lt. splitting_angle) then
                         processed_count = processed_count + 1
                         bound_vector(i) = bound_count
                     endif
@@ -468,17 +657,20 @@ module boundary_routine_module
                 
             enddo
             
+            call quicksort(bound_vector,1,face_count,face_vector)
             
-            fbp_f_obj_relation_array ! THEN WE ADD THE FACE INDEXES INTO THE RELATION ARRAY BUT HEAD HURT I GO EEP
-            
+            fbp_f_obj_relation_array((fbp_f_index(fbp-1)+1):fbp_f_index(fbp),1) = face_vector
+            fbp_f_obj_relation_array((fbp_f_index(fbp-1)+1):fbp_f_index(fbp),2) = f_bound_array
             
         enddo
         
+        ! ok so to flag boundary regions we need to unfuck the boundary relation lists
+        ! because basically if we scan alternating edges and faces to create boundary regions
+        ! we then need to figure out how to flag the corners
         
+        ! mabye we flag all non feature faces prior, then we can decide based on the flag here
         
-        
-        
-    end subroutine split_feature_edges
+    end subroutine split_corners
     
     subroutine dummy_feature_flagging
         implicit none

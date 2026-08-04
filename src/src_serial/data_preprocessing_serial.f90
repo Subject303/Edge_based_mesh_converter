@@ -103,7 +103,7 @@ module data_processing_serial
         print*, 'starting boundary flagging routines'
         
 !         call boundary_angle_feature_flagging
-!         call split_feature_edges
+!         call split_corners
 !         call flag_boundary_regions
         
         call dummy_feature_flagging

@@ -99,10 +99,16 @@ module boundary_data
     logical, allocatable :: feature_points(:), feature_edges(:)
     
     ! feature point indexing array
-    integer(KIND=INT32), allocatable :: n_fb_point_index(:), n_fb_point_count(:), fbp_f_index(:), fbp_f_obj_relation_array(:)
+    integer(KIND=INT32), allocatable :: n_fb_point_index(:), n_fb_point_count(:), fbp_f_index(:), fbp_f_obj_relation_array(:,:)
     
     ! number of feature points
     integer(KIND=INT32)  :: n_fb_points, fbp_f_sum
+    
+    ! boundary flag regions
+    integer(KIND=INT32), allocatable :: f_bound_flags(:)
+    
+    ! the angle we class feature edges with
+    real(KIND=REAL64)   :: splitting_angle = 15.0
     
 end module boundary_data
 
