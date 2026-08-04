@@ -398,7 +398,7 @@ module boundary_routine_module
             ! this is the condition to create a new boundary region
             if (all_edges_feature) then
                 
-               ! stop
+                stop
                 
                 ! first check that we're not just already done.
                 if (ff_index .eq. b_nface)then
@@ -421,8 +421,8 @@ module boundary_routine_module
                     endif
                 enddo
                 
-                ! skip the next loop
-                !cycle
+                ! skip the next loop because there shouldnt be any connected faces
+                cycle
                 
             endif
             
