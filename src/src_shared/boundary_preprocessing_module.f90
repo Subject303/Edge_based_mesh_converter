@@ -320,7 +320,7 @@ module boundary_routine_module
     
     subroutine boundary_region_face_flagging
         implicit none
-        integer(KIND=INT32) :: be, bf, current_flag, ff_index, fe_index, ff_index_old, fe_index_old, f, e, fe_stt, fe_end, ef_stt, ef_end, fe, ef
+        integer(KIND=INT32) :: i, be, bf, current_flag, ff_index, fe_index, ff_index_old, fe_index_old, f, e, fe_stt, fe_end, ef_stt, ef_end, fe, ef
         integer(KIND=INT32), allocatable :: flagged_faces(:), flagged_edges(:)
         logical :: all_edges_feature
         
