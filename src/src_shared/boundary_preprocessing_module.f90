@@ -357,7 +357,7 @@ module boundary_routine_module
             
             
             ! loop over all flagged faces we havn't already looped over
-            do i=ff_index_old,ffindex
+            do i=ff_index_old,ff_index
                 bf = flagged_faces(i)
                 
                 f = f_bound_indexing_array(bf)
