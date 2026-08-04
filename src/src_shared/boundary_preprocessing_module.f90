@@ -509,176 +509,176 @@ module boundary_routine_module
         
         
     end subroutine boundary_region_face_flagging
-    
-    subroutine split_corners
-        implicit none
-        integer(KIND=INT32) :: i, j, fbp, bp, p, face_count, processed_count, bound_count
-        integer(KIND=INT32),allocatable :: face_vector(:), bound_vector(:)
-        real(KIND=REAL64)   :: nv1(3), nv2(3), angle
-        
+!     
+!     subroutine split_corners
+!         implicit none
+!         integer(KIND=INT32) :: i, j, fbp, bp, p, face_count, processed_count, bound_count
+!         integer(KIND=INT32),allocatable :: face_vector(:), bound_vector(:)
+!         real(KIND=REAL64)   :: nv1(3), nv2(3), angle
 !         
+! !         
+! !         
+! !         
+! !         okay so
+! !         plan
+! !         
+! !         splitting edges directly is a cunt of a job because then we have to 
+! !         selectivly search for barycentres that are in different planes in the volume selection
+! !         
+! !         this is not elegantly viable really I dont think
+! !         
+! !         so practical alternative is going to be here
+! !         
+! !         we maintain a list of feature points
+! !         
+! !         then when we go over boundary faces we can do as we have done for non feature points
+! !         and have a seperate system for feature points
+! !         
+! !         said seperate system will maintain the barycentre listings manually from here
+! !         
+! !         because thats less fucked
+! !         
+! !         and we process them as we do 
+! !         
+! !         and we'll have to concatenate stuff at the end I suppose
+! 
+! 
+! !         
+! !         to actually build the lists we flag feature points
+! !         
+! !         a feature point is connected to a number of boundary faces
+! !         
+! !         we can pick a reference face, and compare the angles between the normals and all other faces
+! !         
+! !         faces that are of a low angle difference get grouped, a new ref face is selected and creates new groups
+! !         
+! !         these groups become our seperate sbb groups
+! !         
+! !         then we gotta add back the edges but thats a piece of piss probably
+! !         
 !         
+!         ! count feature points
+!         n_fb_points = 0
 !         
-!         okay so
-!         plan
+!         do i=1, b_npoin
+!             if (feature_points(i)) n_fb_points = n_fb_points + 1
+!         enddo
 !         
-!         splitting edges directly is a cunt of a job because then we have to 
-!         selectivly search for barycentres that are in different planes in the volume selection
+!         allocate(n_fb_point_index(n_fb_points), n_fb_point_count(n_fb_points))
 !         
-!         this is not elegantly viable really I dont think
+!         n_fb_point_count = 0
 !         
-!         so practical alternative is going to be here
+!         ! we create an indexing array to go from fbp to bp index
+!         j=0
+!         do i=1, b_npoin
+!             if (feature_points(i)) then
+!                 j=j+1
+!                 n_fb_point_index(j) = i
+!             endif
+!         enddo
 !         
-!         we maintain a list of feature points
+!         allocate(fbp_f_index(n_fb_point_count))
 !         
-!         then when we go over boundary faces we can do as we have done for non feature points
-!         and have a seperate system for feature points
+!         fbp_f_sum = 0
 !         
-!         said seperate system will maintain the barycentre listings manually from here
+!         ! we count the number of boundary faces per fbp, to allocate a face array
+!         do fbp=1, n_fb_points
+!             bp = n_fb_point_index(fbp)
+!             
+!             p = p_bound_indexing_array(bp)
+!             
+!             
+!             pf_start = p_f_index_array(p-1)
+!             pf_end   = p_f_index_array(p)
+!             
+!             face_count = 0
+!             
+!             do i=1, face_count
+!                 if (f_bound_array(p_f_obj_relation_array(i+pf_start))) then
+!                     face_count = face_count + 1
+!                 endif
+!             enddo
+!             
+!             fbp_f_sum = fbp_f_sum + face_count
+!             fbp_f_index(fbp) = fbp_f_sum
+!             
+!         enddo
 !         
-!         because thats less fucked
+!         ! this array is the feature faces in left and the planar alignment in the right
+!         ! so for point fbp we have a list [f1,f2,f3,f4,f5,f6] and a list [1,1,2,2,2,3] 
+!         allocate(fbp_f_obj_relation_array(fbp_f_sum,2))
 !         
-!         and we process them as we do 
+!         do fbp=1, n_fb_points
+!             bp = n_fb_point_index(fbp)
+!             
+!             p = p_bound_indexing_array(bp)
+!             
+!             
+!             pf_start = p_f_index_array(p-1)
+!             pf_end   = p_f_index_array(p)
+!             
+!             face_count = pf_end-pf_start
+!             
+!             do i=1, face_count
+!                 if (.not.f_bound_array(p_f_obj_relation_array(i+pf_start))) then
+!                     face_count = face_count - 1
+!                     ! found number of boundary faces
+!                 endif
+!             enddo
+!             
+!             allocate(face_vector(face_count), bound_vector(face_count))
+!             
+!             do i=1, face_count
+!                 if (f_bound_array(p_f_obj_relation_array(i+pf_start))) then
+!                     face_vector(i) = f_bound_indexing_array(p_f_obj_relation_array(i+pf_start)
+!                 endif
+!             enddo
+!             
+!             processed_count = 1
+!             nv1(:) = f_normal_vectors(f_bound_array(p_f_obj_relation_array(1+pf_start)),:)
+!             bound_vector = -1
+!             bound_count = 1
+!             
+!             do
+!                 
+!                 do i=1, face_count
+!                     nv2(:) = f_normal_vectors(face_vector(i),:)
+!                     
+!                     angle = acosd(alignment(nv1, nv2))
+!                     
+!                     if (angle .lt. splitting_angle) then
+!                         processed_count = processed_count + 1
+!                         bound_vector(i) = bound_count
+!                     endif
+!                     
+!                 enddo
+!                 
+!                 if (face_count .eq. processed_count) exit
+!                 
+!                 do i=1, face_count
+!                     if (bound_vector(i) .lt. 0) then
+!                         bound_count = bound_count + 1
+!                         nv1(:) = f_normal_vectors(f_bound_array(p_f_obj_relation_array(i+pf_start)),:)
+!                         exit
+!                     endif
+!                 enddo
+!                 
+!             enddo
+!             
+!             call quicksort(bound_vector,1,face_count,face_vector)
+!             
+!             fbp_f_obj_relation_array((fbp_f_index(fbp-1)+1):fbp_f_index(fbp),1) = face_vector
+!             fbp_f_obj_relation_array((fbp_f_index(fbp-1)+1):fbp_f_index(fbp),2) = f_bound_array
+!             
+!         enddo
 !         
-!         and we'll have to concatenate stuff at the end I suppose
-
-
+!         ! ok so to flag boundary regions we need to unfuck the boundary relation lists
+!         ! because basically if we scan alternating edges and faces to create boundary regions
+!         ! we then need to figure out how to flag the corners
 !         
-!         to actually build the lists we flag feature points
+!         ! mabye we flag all non feature faces prior, then we can decide based on the flag here
 !         
-!         a feature point is connected to a number of boundary faces
-!         
-!         we can pick a reference face, and compare the angles between the normals and all other faces
-!         
-!         faces that are of a low angle difference get grouped, a new ref face is selected and creates new groups
-!         
-!         these groups become our seperate sbb groups
-!         
-!         then we gotta add back the edges but thats a piece of piss probably
-!         
-        
-        ! count feature points
-        n_fb_points = 0
-        
-        do i=1, b_npoin
-            if (feature_points(i)) n_fb_points = n_fb_points + 1
-        enddo
-        
-        allocate(n_fb_point_index(n_fb_points), n_fb_point_count(n_fb_points))
-        
-        n_fb_point_count = 0
-        
-        ! we create an indexing array to go from fbp to bp index
-        j=0
-        do i=1, b_npoin
-            if (feature_points(i)) then
-                j=j+1
-                n_fb_point_index(j) = i
-            endif
-        enddo
-        
-        allocate(fbp_f_index(n_fb_point_count))
-        
-        fbp_f_sum = 0
-        
-        ! we count the number of boundary faces per fbp, to allocate a face array
-        do fbp=1, n_fb_points
-            bp = n_fb_point_index(fbp)
-            
-            p = p_bound_indexing_array(bp)
-            
-            
-            pf_start = p_f_index_array(p-1)
-            pf_end   = p_f_index_array(p)
-            
-            face_count = 0
-            
-            do i=1, face_count
-                if (f_bound_array(p_f_obj_relation_array(i+pf_start))) then
-                    face_count = face_count + 1
-                endif
-            enddo
-            
-            fbp_f_sum = fbp_f_sum + face_count
-            fbp_f_index(fbp) = fbp_f_sum
-            
-        enddo
-        
-        ! this array is the feature faces in left and the planar alignment in the right
-        ! so for point fbp we have a list [f1,f2,f3,f4,f5,f6] and a list [1,1,2,2,2,3] 
-        allocate(fbp_f_obj_relation_array(fbp_f_sum,2))
-        
-        do fbp=1, n_fb_points
-            bp = n_fb_point_index(fbp)
-            
-            p = p_bound_indexing_array(bp)
-            
-            
-            pf_start = p_f_index_array(p-1)
-            pf_end   = p_f_index_array(p)
-            
-            face_count = pf_end-pf_start
-            
-            do i=1, face_count
-                if (.not.f_bound_array(p_f_obj_relation_array(i+pf_start))) then
-                    face_count = face_count - 1
-                    ! found number of boundary faces
-                endif
-            enddo
-            
-            allocate(face_vector(face_count), bound_vector(face_count))
-            
-            do i=1, face_count
-                if (f_bound_array(p_f_obj_relation_array(i+pf_start))) then
-                    face_vector(i) = f_bound_indexing_array(p_f_obj_relation_array(i+pf_start)
-                endif
-            enddo
-            
-            processed_count = 1
-            nv1(:) = f_normal_vectors(f_bound_array(p_f_obj_relation_array(1+pf_start)),:)
-            bound_vector = -1
-            bound_count = 1
-            
-            do
-                
-                do i=1, face_count
-                    nv2(:) = f_normal_vectors(face_vector(i),:)
-                    
-                    angle = acosd(alignment(nv1, nv2))
-                    
-                    if (angle .lt. splitting_angle) then
-                        processed_count = processed_count + 1
-                        bound_vector(i) = bound_count
-                    endif
-                    
-                enddo
-                
-                if (face_count .eq. processed_count) exit
-                
-                do i=1, face_count
-                    if (bound_vector(i) .lt. 0) then
-                        bound_count = bound_count + 1
-                        nv1(:) = f_normal_vectors(f_bound_array(p_f_obj_relation_array(i+pf_start)),:)
-                        exit
-                    endif
-                enddo
-                
-            enddo
-            
-            call quicksort(bound_vector,1,face_count,face_vector)
-            
-            fbp_f_obj_relation_array((fbp_f_index(fbp-1)+1):fbp_f_index(fbp),1) = face_vector
-            fbp_f_obj_relation_array((fbp_f_index(fbp-1)+1):fbp_f_index(fbp),2) = f_bound_array
-            
-        enddo
-        
-        ! ok so to flag boundary regions we need to unfuck the boundary relation lists
-        ! because basically if we scan alternating edges and faces to create boundary regions
-        ! we then need to figure out how to flag the corners
-        
-        ! mabye we flag all non feature faces prior, then we can decide based on the flag here
-        
-    end subroutine split_corners
+!     end subroutine split_corners
     
     subroutine dummy_feature_flagging
         implicit none
