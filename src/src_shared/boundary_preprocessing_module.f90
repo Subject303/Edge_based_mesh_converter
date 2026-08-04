@@ -320,6 +320,8 @@ module boundary_routine_module
     
     subroutine boundary_region_face_flagging
         
+        implicit none
+        
         allocate(f_bound_flags(b_nface), e_bound_flags(b_nedge))
         
         f_bound_flags = 999
