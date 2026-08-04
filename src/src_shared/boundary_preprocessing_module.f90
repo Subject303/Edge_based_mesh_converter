@@ -268,8 +268,9 @@ module boundary_routine_module
         integer(KIND=INT32) :: i, j, be, e, f1, f2, bp1, bp2
         real(KIND=REAL64)   :: nv1(3), nv2(3), angle
         
-        allocate(feature_edges(b_nedge))
+        allocate(feature_edges(b_nedge), feature_points(b_npoin))
         feature_edges = .false.
+        feature_points = .false.
         
         do be=1,b_nedge
             e = e_bound_indexing_array(be)
