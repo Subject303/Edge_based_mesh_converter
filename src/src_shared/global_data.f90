@@ -105,7 +105,7 @@ module boundary_data
     integer(KIND=INT32)  :: n_fb_points, fbp_f_sum
     
     ! boundary flag regions
-    integer(KIND=INT32), allocatable :: f_bound_flags(:)
+    integer(KIND=INT32), allocatable :: f_bound_flags(:), e_bound_flags(:)
     
     ! the angle we class feature edges with
     real(KIND=REAL64)   :: splitting_angle = 15.0
