@@ -376,7 +376,7 @@ module boundary_routine_module
                     be = reversed_e_bound_indexing_array(f_e_obj_relation_array(fe))
                     
                     ! if the flagged edge is not a feature AND is not already flagged then flag it
-                    if ((e_bound_flags(be).eq.1000).and.(e_bound_flags(be).eq.current_flag)) then
+                    if ((e_bound_flags(be).ne.1000).and.(e_bound_flags(be).ne.current_flag)) then
                         ! if any edges are non feature we know we can keep going
                         all_edges_feature = .false.
                         
@@ -398,7 +398,7 @@ module boundary_routine_module
             ! this is the condition to create a new boundary region
             if (all_edges_feature) then
                 
-                stop
+               ! stop
                 
                 ! first check that we're not just already done.
                 if (ff_index .eq. b_nface)then
@@ -422,7 +422,7 @@ module boundary_routine_module
                 enddo
                 
                 ! skip the next loop
-                cycle
+                !cycle
                 
             endif
             
