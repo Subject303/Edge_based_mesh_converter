@@ -432,6 +432,7 @@ module boundary_routine_module
                 
                 print*, 'NEW FLAG ', current_flag
                 
+                fe_index_old = fe_index
                 ! skip the next loop because there shouldnt be any connected faces
                 cycle
                 
