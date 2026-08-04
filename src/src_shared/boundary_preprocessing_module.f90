@@ -448,7 +448,7 @@ module boundary_routine_module
                     ff_index = ff_index + 1
                     
                     ! and add all the boundary faces
-                    flagged_edges(ff_index) = be
+                    flagged_faces(ff_index) = bf
                     f_bound_flags(bf) = current_flag
                     
                 enddo
