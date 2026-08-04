@@ -460,54 +460,6 @@ module boundary_routine_module
         
         
         
-        
-        
-        
-        
-        ! we're scanning down connected boundary edges 
-        do 
-        
-            ! first find a b_face that isnt connected to a feature and already has a flag
-            if (f_bound_flags(bf).eq.2) then
-                do i=1,b_nface
-                    if (f_bound_flags(i).lt.0) bf = i
-                    exit
-                enddo
-            endif
-            
-            ! if the face isn't flagged, create a new region and start
-            if (f_bound_flags(bf).eq.999) then
-                current_flag = current_flag - 1
-            endif
-            
-            f_bound_flags(bf) = current_flag
-            
-            f = f_bound_indexing_array(bf)
-            
-            fe_stt = f_e_index_array(f-1)+1
-            fe_end = f_e_index_array(f)
-            
-            e_count = fe_end - fe_stt + 1
-            
-            e_bound_flags(reversed_e_bound_indexing_array(f_e_obj_relation_array(fe_stt:fe_end))) = current_flag
-            
-        enddo
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     end subroutine boundary_region_face_flagging
 !     
 !     subroutine split_corners
