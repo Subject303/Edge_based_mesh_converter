@@ -424,8 +424,10 @@ module boundary_routine_module
             
             ! now we update the flagged faces to restart the loop 
             
-!             print*, fe_index_old,fe_index
-!             print*, flagged_edges
+             print*, flagged_faces
+             print*, f_bound_flags
+             print*, flagged_edges
+             print*, e_bound_flags
             
             ! so again loop over all flagged edges we havn't already looped over
             do i=fe_index_old,fe_index
