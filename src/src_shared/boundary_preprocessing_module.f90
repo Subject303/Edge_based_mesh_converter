@@ -350,7 +350,7 @@ module boundary_routine_module
         ff_index = 1
         fe_index = 0
         
-        ff_index_old = 0
+        ff_index_old = 1
         fe_index_old = 0
         
         flagged_faces(ff_index) = bf
