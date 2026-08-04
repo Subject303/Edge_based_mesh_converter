@@ -344,6 +344,9 @@ module boundary_routine_module
         
         allocate(flagged_faces(b_nface), flagged_edges(b_nedge))
         
+        flagged_faces = -999
+        flagged_edges = -999
+        
         ff_index = 1
         fe_index = 0
         
