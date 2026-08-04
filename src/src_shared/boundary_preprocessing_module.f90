@@ -350,14 +350,16 @@ module boundary_routine_module
         ff_index = 1
         fe_index = 0
         
-        ff_index_old = 1
-        fe_index_old = 1
+        ff_index_old = 0
+        fe_index_old = 0
         
         flagged_faces(ff_index) = bf
         f_bound_flags(bf) = current_flag
         
         
         do 
+            fe_index_old = fe_index + 1
+            
             print*, 'FLAG 1', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
             
             ! loop over all flagged faces we havn't already looped over
@@ -403,7 +405,7 @@ module boundary_routine_module
             ! do somthing with exit conditions here
             ! all_edges_feature .true. stuff
             
-            ff_index_old = ff_index
+            ff_index_old = ff_index + 1
             
             ! this is the condition to create a new boundary region
             if (all_edges_feature) then
@@ -474,7 +476,6 @@ module boundary_routine_module
                 
             enddo
             
-            fe_index_old = fe_index
             
         enddo
         
