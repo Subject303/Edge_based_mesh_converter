@@ -450,11 +450,13 @@ module boundary_routine_module
                     
                     bf = reversed_f_bound_indexing_array(f)
                     
-                    ff_index = ff_index + 1
-                    
-                    ! and add all the boundary faces
-                    flagged_faces(ff_index) = bf
-                    f_bound_flags(bf) = current_flag
+                    if (f_bound_flags(bf).ne.current_flag) then
+                        ff_index = ff_index + 1
+                        
+                        ! and add all the boundary faces
+                        flagged_faces(ff_index) = bf
+                        f_bound_flags(bf) = current_flag
+                    endif
                     
                 enddo
                 
