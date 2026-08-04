@@ -107,6 +107,8 @@ module data_processing_serial
 !         call split_corners
 !         call flag_boundary_regions
         
+        stop
+        
         call dummy_feature_flagging
         
         print*, 'finished boundary flagging routines'
