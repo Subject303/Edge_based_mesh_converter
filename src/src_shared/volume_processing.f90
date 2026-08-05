@@ -649,7 +649,7 @@ module volume_processing
                         prev_face = centroid_index_array(i+1)
                         i=i+2 
                     
-                        print*, 'i-1 = face_1, i+1 = face_2',flag,e_boundary_flags(reversed_e_bound_indexing_array(current_edge),feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1
+                        print*, 'i-1 = face_1, i+1 = face_2',flag,e_boundary_flags(reversed_e_bound_indexing_array(current_edge)),feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1
                     
                     elseif (prev_face .eq. face_2) then
                     
@@ -666,7 +666,7 @@ module volume_processing
                         prev_face = centroid_index_array(i+1)
                         i=i+2 
                     
-                        print*, 'swapped',flag,e_boundary_flags(reversed_e_bound_indexing_array(current_edge),feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1
+                        print*, 'swapped',flag,e_boundary_flags(reversed_e_bound_indexing_array(current_edge)),feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1
                     
                     else
                         print*, 'none, looping',feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1, edge_count, face_count
