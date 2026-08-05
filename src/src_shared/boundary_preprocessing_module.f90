@@ -520,12 +520,14 @@ module boundary_routine_module
         
         ! we make the number of projections negative to play with the sorting algo later dw
         do be=1,b_nedge
-            e = e_bound_indexing_array(be)
-            
-            bp1 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)  ))
-            bp2 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)-1))
             
             if (feature_edges(be))then
+                
+                e = e_bound_indexing_array(be)
+            
+                bp1 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)  ))
+                bp2 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)-1))
+                
                 number_of_projections(bp1) = number_of_projections(bp1) - 1
                 number_of_projections(bp2) = number_of_projections(bp2) - 1
             endif
