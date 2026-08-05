@@ -562,17 +562,13 @@ module volume_processing
                 i=4
                 
                 do
-                    print*, ' '
-                    print*, pe, current_edge, face_1, face_2 , prev_face
-                    print*, ' '
-                    print*, 'centroid array ', centroid_index_array
-                    print*, ' '
                 
                     if (pe.eq.edge_count) then
                         pe = 1
                     else
                         pe=pe+1
                     endif
+                    
 
 !                     print*, pe, non_viable_edges
                     if (non_viable_edges(pe)) cycle
@@ -680,6 +676,11 @@ module volume_processing
 !                     print*, pe, current_edge, face_1, face_2 , prev_face
                     
                     
+                    print*, ' '
+                    print*, pe, current_edge, face_1, face_2 , prev_face
+                    print*, ' '
+                    print*, 'centroid array ', centroid_index_array
+                    print*, ' '
                     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
