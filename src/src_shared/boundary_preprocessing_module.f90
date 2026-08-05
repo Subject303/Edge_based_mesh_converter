@@ -329,14 +329,14 @@ module boundary_routine_module
         
         
         
-        allocate(f_bound_flags(b_nface), e_bound_flags(b_nedge))
+        allocate(f_boundary_flags(b_nface), e_boundary_flags(b_nedge))
         
-        f_bound_flags = 999
-        e_bound_flags = 999
+        f_boundary_flags = 999
+        e_boundary_flags = 999
         
         ! so we have a list of flags, 999 for non feature edges, 1 for feature edges
         do be=1,b_nedge
-            if (feature_edges(be)) e_bound_flags(be) = 1000
+            if (feature_edges(be)) e_boundary_flags(be) = 1000
         enddo
         
         bf=1
@@ -354,7 +354,7 @@ module boundary_routine_module
         fe_index_old = 0
         
         flagged_faces(ff_index) = bf
-        f_bound_flags(bf) = current_flag
+        f_boundary_flags(bf) = current_flag
         
         
         do 
@@ -379,17 +379,17 @@ module boundary_routine_module
                     be = reversed_e_bound_indexing_array(f_e_obj_relation_array(fe))
                     
                     ! if the flagged edge is not a feature and is not already flagged then flag it
-                    !if ((e_bound_flags(be).ne.1000).and.(e_bound_flags(be).ne.current_flag)) then
+                    !if ((e_boundary_flags(be).ne.1000).and.(e_boundary_flags(be).ne.current_flag)) then
                     
                     ! if the flagged edge is not already flagged
-                    if (e_bound_flags(be).eq.999) then
+                    if (e_boundary_flags(be).eq.999) then
                         ! if any edges are non feature we know we can keep going
                         all_edges_feature = .false.
                         
                         fe_index = fe_index + 1
                         
                         flagged_edges(fe_index) = be
-                        e_bound_flags(be) = current_flag
+                        e_boundary_flags(be) = current_flag
                         
                         ! fe_index is the number of flagged edges
                     endif
@@ -400,10 +400,10 @@ module boundary_routine_module
 !                 print*, ''
 !                 print*, ''
 !                 print*, flagged_faces
-!                 print*, f_bound_flags
+!                 print*, f_boundary_flags
 !                 print*, ''
 !                 print*, flagged_edges
-!                 print*, e_bound_flags
+!                 print*, e_boundary_flags
 !                 print*, ''
 !                 print*, ''
             !endif
@@ -426,13 +426,13 @@ module boundary_routine_module
                 current_flag = current_flag - 1
                 
                 do i=1,b_nface
-                    if (f_bound_flags(i).eq.999) then
+                    if (f_boundary_flags(i).eq.999) then
                         bf = i
                         
                         ff_index = ff_index + 1
                         
                         flagged_faces(ff_index) = bf
-                        f_bound_flags(bf) = current_flag
+                        f_boundary_flags(bf) = current_flag
                         
                         exit
                     endif
@@ -470,12 +470,12 @@ module boundary_routine_module
                     bf = reversed_f_bound_indexing_array(f)
                     
                     ! if the face is not already flagged
-                    if (f_bound_flags(bf).eq.999) then
+                    if (f_boundary_flags(bf).eq.999) then
                         ff_index = ff_index + 1
                         
                         ! and add all the boundary faces
                         flagged_faces(ff_index) = bf
-                        f_bound_flags(bf) = current_flag
+                        f_boundary_flags(bf) = current_flag
                     endif
                     
                 enddo
@@ -601,8 +601,8 @@ module boundary_routine_module
                     
                     bf = reversed_f_bound_indexing_array(f)
                     
-                    if (f_bound_flags(bf) .ne. flag)then
-                        flag = f_bound_flags(bf)
+                    if (f_boundary_flags(bf) .ne. flag)then
+                        flag = f_boundary_flags(bf)
                         exit
                     endif
                     
