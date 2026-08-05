@@ -602,7 +602,7 @@ module volume_processing
                     enddo
                     face_1 = e_f_obj_relation_array(j)
                     
-                    if ((prev_face .eq. face_1) .and. (feature_edges(reversed_e_bound_indexing_array(current_edge)))) then
+                    if (((prev_face .eq. face_1).or.(prev_face .eq. face_2)) .and. (feature_edges(reversed_e_bound_indexing_array(current_edge)))) then
                         
                         centroid_index_array(i)   = current_edge
                     
