@@ -491,7 +491,123 @@ module boundary_routine_module
         
         
     end subroutine boundary_region_face_flagging
-    
+     
+    subroutine split_corners
+        implicit none
+        integer(KIND=INT32) :: i, j, f, p, bf, bp, pf, pf_stt, pf_end, bp1, bp2, e, new_b_npoin, num_feature_points, num_feat_projections, new_bp, flag
+        integer(KIND=INT32),allocatable :: number_of_projections(:)
+        
+        ! ok so
+        ! realistically here I want to reconstruct my boundry points into to lists, non feature points and feature points
+        ! at the minute I have bp indexes and p indexes
+        ! this means I can scan connected things to p from bp, and I can have multiple bp occupy the same p index
+        ! so ideally I can just add however many projections a p has as extra bp 
+        ! this will break the reverse list so a condition of the reversed list is non feature points
+        ! as long as this is the last step in processing that should be fine
+        !
+!         reversed_p_bound_indexing_array
+!         p_bound_indexing_array
+!         p_internal_indexing_array
+!         b_npoin
+!         i_npoin
+!         p_boundary_flags
+        
+        ! first step i think is to count the number of boundaries each point will have
+        ! we can do this by adding the number of feature edges connected to a point, all non feature points have a count of 1
+        
+        allocate(number_of_projections(b_npoin))
+        
+        ! we make the number of projections negative to play with the sorting algo later dw
+        do be=1,b_nedge
+            e = e_bound_indexing_array(be)
+            
+            bp1 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)  ))
+            bp2 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)-1))
+            
+            if (feature_edges(be))then
+                number_of_projections(bp1) = number_of_projections(bp1) - 1
+                number_of_projections(bp2) = number_of_projections(bp2) - 1
+            else
+                number_of_projections(bp1) = -1
+                number_of_projections(bp2) = -1
+            endif
+            
+        enddo
+        
+        ! this means lines of feature edges will split into two projections, the meeting point of 3 edges becomes 3 bounds ect
+        ! feature edges that lead into a smooth surface will only have 1 projection on the last point and 2 on the next
+        
+        new_b_npoin = sum(number_of_projections)
+        allocate(temp_p_bound_indexing_array,source=p_bound_indexing_array)
+        
+        ! this will sort the p indexing array by number of bounds
+        ! largest number of bounds first
+        call quicksort(number_of_projections,1,b_npoin,temp_p_bound_indexing_array)
+        
+        ! fix the positivity of the counts
+        number_of_projections(:) = abs(number_of_projections(:))
+        
+        ! this finds the last feature point in the index so we can seperate these out
+        num_feature_points = 0
+        do bp=1,b_npoin-1
+            if (number_of_projections(bp+1).eq.1) num_feature_points = bp
+        enddo
+        
+        ! so now we can loop from 1:num_feature_points or num_feature_points+1:b_npoin
+        ! if we want feat or non feat
+        
+        num_feat_projections = sum(number_of_projections(1:num_feature_points))
+        
+        deallocate(p_bound_indexing_array)
+        allocate(p_bound_indexing_array(new_b_npoin), p_boundary_flags(new_b_npoin))
+        
+        new_bp = 0
+        do bp=1,b_npoin
+            
+            flag = 999
+            
+            p = temp_p_bound_indexing_array(bp)
+                
+            pf_stt = p_f_index_array(p-1)+1
+            pf_end = p_f_index_array(p)
+            
+            pf = pf_stt
+            
+            do i=1,number_of_projections(bp)
+                new_bp = new_bp + 1
+                
+                p_bound_indexing_array(new_bp) = p
+                
+                ! this is so we only look forward into the face array
+                do pf=pf,pf_end
+                    
+                    f = p_f_obj_relation_array(pf)
+                    
+                    if (f_internal_array(f)) cycle
+                    
+                    bf = reversed_f_bound_indexing_array(f)
+                    
+                    if (f_boundary_flags(bf) .ne. flag)then
+                        flag = f_boundary_flags(bf)
+                        exit
+                    endif
+                    
+                enddo
+                
+                p_boundary_flags(new_bp) = flag
+                
+            enddo
+            
+        enddo
+        
+        print*, p_boundary_flags
+        
+        print*, 'EARLY KILLING FOR TESTING ,1'
+        stop
+        
+    end subroutine split_corners
+
+
 !     subroutine split_corners
 !         implicit none
 !         integer(KIND=INT32) :: i, j, fbp, bp, p, face_count, processed_count, bound_count

@@ -109,7 +109,7 @@ module data_processing_serial
         
         call boundary_angle_feature_flagging
         call boundary_region_face_flagging
-!         call split_corners
+        call split_corners
 !         call flag_boundary_regions
         
         
