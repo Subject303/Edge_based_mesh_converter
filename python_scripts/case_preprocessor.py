@@ -24,9 +24,9 @@ cdp = vtkCompositeDataPipeline()
 # might not be needed
 algo.SetDefaultExecutivePrototype(cdp)
 del cdp
-algo.SetCaseFileName("./case/tet_sphere.case") #tet sphere
+# algo.SetCaseFileName("./case/tet_sphere.case") #tet sphere
 # algo.SetCaseFileName("./case/666cube.case") #666 cube
-# algo.SetCaseFileName("./case/2.case") #tiny cube
+algo.SetCaseFileName("./case/2.case") #tiny cube
 # algo.SetCaseFileName("./case/tet_cube.case") #TET cube
 # algo.SetCaseFileName("./case/2_rad_sphere_poly.case") #4 diameter poly sphere
 # algo.SetCaseFileName("./case/star1.case") # 0.75 mil mesh

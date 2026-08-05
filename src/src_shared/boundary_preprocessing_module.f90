@@ -360,7 +360,8 @@ module boundary_routine_module
         do 
             fe_index_old = fe_index + 1
             
-            if (ff_index_old .ge. 11367) print*, 'FLAG 1', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
+            !if (ff_index_old .ge. 11367) 
+            print*, 'FLAG 1', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
             
             ! loop over all flagged faces we havn't already looped over
             do i=ff_index_old,ff_index
@@ -395,7 +396,7 @@ module boundary_routine_module
                 enddo
             enddo
             
-            if (ff_index_old .ge. 11367) then
+            !if (ff_index_old .ge. 11367) then
                 print*, ''
                 print*, ''
                 print*, flagged_faces
@@ -405,7 +406,7 @@ module boundary_routine_module
                 print*, e_bound_flags
                 print*, ''
                 print*, ''
-            endif
+            !endif
             
             ! do somthing with exit conditions here
             ! all_edges_feature .true. stuff
@@ -445,7 +446,8 @@ module boundary_routine_module
             endif
             
             
-            if (ff_index_old .ge. 11367) print*, 'FLAG 2', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
+            !if (ff_index_old .ge. 11367) 
+            print*, 'FLAG 2', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
             
             ! now we update the flagged faces to restart the loop 
             
