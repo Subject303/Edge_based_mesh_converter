@@ -90,7 +90,7 @@ module boundary_data
     integer(KIND=INT32), allocatable :: reversed_p_bound_indexing_array(:) , reversed_e_bound_indexing_array(:), reversed_f_bound_indexing_array(:)
     
     ! bounfary condition flagging array
-    integer(KIND=INT32), allocatable :: p_boundary_flags(:)
+    integer(KIND=INT32), allocatable :: p_boundary_flags(:), f_bound_flags(:), e_bound_flags(:)
     
     ! for boundary normal vectors it makes sense to both calculate  normals for faces, and then derive point normals
     real(KIND=REAL64), allocatable :: p_normal_vectors(:,:), f_normal_vectors(:,:)
@@ -103,9 +103,6 @@ module boundary_data
     
     ! number of feature points
     integer(KIND=INT32)  :: n_fb_points, fbp_f_sum
-    
-    ! boundary flag regions
-    integer(KIND=INT32), allocatable :: f_bound_flags(:), e_bound_flags(:)
     
     ! the angle we class feature edges with
     real(KIND=REAL64)   :: splitting_angle = 45.0
