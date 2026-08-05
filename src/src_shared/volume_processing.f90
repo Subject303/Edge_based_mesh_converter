@@ -563,6 +563,9 @@ module volume_processing
                 
                 do
                 
+                
+                    print*, 'centroid array ', centroid_index_array
+                
                     if (pe.eq.edge_count) then
                         pe = 1
                     else
@@ -679,7 +682,7 @@ module volume_processing
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
                 
-                print*, 'centroid array ', centroid_index_array
+                print*, 'centroid array end', centroid_index_array
                 
             else
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
