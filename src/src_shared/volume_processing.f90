@@ -564,8 +564,9 @@ module volume_processing
                 do
                     print*, ' '
                     print*, pe, current_edge, face_1, face_2 , prev_face
-                
-!                     print*, 'centroid array ', centroid_index_array
+                    print*, ' '
+                    print*, 'centroid array ', centroid_index_array
+                    print*, ' '
                 
                     if (pe.eq.edge_count) then
                         pe = 1
