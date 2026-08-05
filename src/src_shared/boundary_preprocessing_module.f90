@@ -587,8 +587,8 @@ module boundary_routine_module
                     
                     bf = reversed_f_bound_indexing_array(f)
                     
-                    if (f_boundary_flags(bf) .ne. flag)then
-                        flag = f_boundary_flags(bf)
+                    if (f_bound_flags(bf) .ne. flag)then
+                        flag = f_bound_flags(bf)
                         exit
                     endif
                     
