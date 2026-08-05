@@ -41,7 +41,7 @@ module setup_configuration_module
                         
                     case('feature_angle=')
                         print*, current_line(indexer+1:)
-                        read(current_line(indexer+1:), '(f)') splitting_angle
+                        read(current_line(indexer+1:), '(BN,f,:)') splitting_angle
                         print*, splitting_angle
                         
                     case('manual_geom=')
