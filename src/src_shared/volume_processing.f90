@@ -681,6 +681,8 @@ module volume_processing
                     print*, ' '
                     print*, 'centroid array ', centroid_index_array
                     print*, ' '
+                    print*, ' '
+                    print*, ' '
                     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
