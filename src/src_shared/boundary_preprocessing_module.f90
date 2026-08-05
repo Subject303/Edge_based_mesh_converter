@@ -494,8 +494,8 @@ module boundary_routine_module
      
     subroutine split_corners
         implicit none
-        integer(KIND=INT32) :: i, j, f, p, bf, bp, pf, pf_stt, pf_end, bp1, bp2, e, new_b_npoin, num_feature_points, num_feat_projections, new_bp, flag
-        integer(KIND=INT32),allocatable :: number_of_projections(:)
+        integer(KIND=INT32) :: i, j, f, p, be, bf, bp, pf, pf_stt, pf_end, bp1, bp2, e, new_b_npoin, num_feature_points, num_feat_projections, new_bp, flag
+        integer(KIND=INT32),allocatable :: number_of_projections(:), temp_p_bound_indexing_array, 
         
         ! ok so
         ! realistically here I want to reconstruct my boundry points into to lists, non feature points and feature points
