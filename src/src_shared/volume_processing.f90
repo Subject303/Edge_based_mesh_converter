@@ -509,6 +509,15 @@ module volume_processing
                 do ! we must only use boundary edges that are flagged correctly or are feature edges
                     current_edge = p_e_obj_relation_array(pe_start+pe)
                     if (e_bound_array(current_edge)) exit
+                    if (e_internal_array(current_edge)) then
+                        non_viable_edges(pe) = .true.
+                        if (pe.eq.edge_count) then
+                            pe = 1
+                        else
+                            pe=pe+1
+                        endif
+                        cycle
+                    endif
                     if (e_boundary_flags(reversed_e_bound_indexing_array(current_edge)) .eq. flag ) exit
                     if (e_boundary_flags(reversed_e_bound_indexing_array(current_edge)) .ne. 1000 ) non_viable_edges(pe) = .true.
                     
@@ -564,6 +573,15 @@ module volume_processing
                     do ! we must only use boundary edges that are flagged correctly or are feature edges
                         current_edge = p_e_obj_relation_array(pe_start+pe)
                         if (e_bound_array(current_edge)) exit
+                        if (e_internal_array(current_edge)) then
+                            non_viable_edges(pe) = .true.
+                            if (pe.eq.edge_count) then
+                                pe = 1
+                            else
+                                pe=pe+1
+                            endif
+                            cycle
+                        endif
                         if (e_boundary_flags(reversed_e_bound_indexing_array(current_edge)) .eq. flag ) exit
                         if (e_boundary_flags(reversed_e_bound_indexing_array(current_edge)) .ne. 1000 ) non_viable_edges(pe) = .true.
                         
