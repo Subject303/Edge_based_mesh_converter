@@ -516,6 +516,7 @@ module boundary_routine_module
         ! we can do this by adding the number of feature edges connected to a point, all non feature points have a count of 1
         
         allocate(number_of_projections(b_npoin))
+        number_of_projections = 0
         
         ! we make the number of projections negative to play with the sorting algo later dw
         do be=1,b_nedge
