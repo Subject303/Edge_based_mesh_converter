@@ -531,12 +531,16 @@ module volume_processing
                 j = e_f_index_array(current_edge-1)
                 do 
                     j=j+1
-                    if (f_bound_array(e_f_obj_relation_array(j))) exit
+                    if (f_bound_array(e_f_obj_relation_array(j))) then
+                        if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
+                    endif
                 enddo
                 face_1 = e_f_obj_relation_array(j)
                 do 
                     j=j+1
-                    if (f_bound_array(e_f_obj_relation_array(j))) exit
+                    if (f_bound_array(e_f_obj_relation_array(j))) then
+                        if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
+                    endif
                 enddo
                 face_2 = e_f_obj_relation_array(j)
                 
@@ -598,7 +602,9 @@ module volume_processing
                     j = e_f_index_array(current_edge-1)
                     do 
                         j=j+1
-                        if (f_bound_array(e_f_obj_relation_array(j))) exit
+                        if (f_bound_array(e_f_obj_relation_array(j))) then
+                            if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
+                        endif
                     enddo
                     face_1 = e_f_obj_relation_array(j)
                     
@@ -625,7 +631,9 @@ module volume_processing
                     
                     do 
                         j=j+1
-                        if (f_bound_array(e_f_obj_relation_array(j))) exit
+                        if (f_bound_array(e_f_obj_relation_array(j))) then
+                            if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
+                        endif
                     enddo
                     face_2 = e_f_obj_relation_array(j)
                     
