@@ -479,12 +479,12 @@ module volume_processing
                 edge_count = pe_end-pe_start
                 
                 edge_count_real = 2 ! remember that feature edges wont be counted here
-                do pe=pe_start,pe_end
+                do pe=pe_start+1,pe_end
                     if (e_boundary_flags(reversed_e_bound_indexing_array(p_e_obj_relation_array(pe))) .eq. flag) edge_count_real = edge_count_real + 1
                 enddo
                 
                 face_count_real = 0
-                do pf=pf_start,pf_end
+                do pf=pf_start+1,pf_end
                     if (f_boundary_flags(reversed_f_bound_indexing_array(p_f_obj_relation_array(pf))) .eq. flag) face_count_real = face_count_real + 1
                 enddo
                 
