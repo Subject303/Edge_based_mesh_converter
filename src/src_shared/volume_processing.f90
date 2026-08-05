@@ -429,7 +429,7 @@ module volume_processing
         implicit none
         integer(KIND=INT32) :: bp, p, i, j, i1, i2, centroid_array_count, centroid_array_count_real, centroid_array_count_old, pe, pe_start, pf_start, pe_end, pf_end
         integer(KIND=INT32) :: edge_count, face_count, current_edge, face_1, face_2, prev_face
-        integer(KIND=INT32) :: edge_count_real, face_count_real, flag, remainder_count
+        integer(KIND=INT32) :: k, edge_count_real, face_count_real, flag, remainder_count
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL64),allocatable   :: centroid_array(:,:)
         real(KIND=REAL64)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle
