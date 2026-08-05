@@ -669,7 +669,7 @@ module volume_processing
                         print*, 'swapped',flag,e_boundary_flags(reversed_e_bound_indexing_array(current_edge)),feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1
                     
                     else
-                        print*, 'none, looping',feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1, edge_count, face_count
+                        print*, 'none, looping',flag,e_boundary_flags(reversed_e_bound_indexing_array(current_edge)),feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1, edge_count, face_count
                         
                     endif
                 
