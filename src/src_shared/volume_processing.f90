@@ -555,6 +555,8 @@ module volume_processing
                 centroid_array(2,:) = e_centroid(current_edge,:)
                 centroid_array(3,:) = f_centroid(face_2,:)
                 
+                print*, bp , face_1, current_edge, face_2
+                
                 prev_face = face_2
                 
                 i=4
