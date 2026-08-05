@@ -601,7 +601,11 @@ module boundary_routine_module
             
         enddo
         
-        print*, p_boundary_flags
+        i=0
+        do new_bp=1,new_b_npoin
+            if (p_boundary_flags(new_bp).eq.-1) i=i+1
+        enddo
+        print*, i
         
         print*, 'EARLY KILLING FOR TESTING ,1'
         stop
