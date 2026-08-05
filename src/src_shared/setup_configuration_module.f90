@@ -40,7 +40,7 @@ module setup_configuration_module
                         raw_data_path = current_line(indexer+1:)
                         
                     case('feature_angle=')
-                        read(current_line(indexer+1:), '(f16.6)') splitting_angle
+                        read(current_line(indexer+1:), '(f12.9)') splitting_angle
                         
                     case('manual_geom=')
                         indexer = index(current_line,'true')
