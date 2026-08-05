@@ -534,6 +534,10 @@ module boundary_routine_module
             
         enddo
         
+        do bp=1,b_npoin
+            if (number_of_projections(bp).eq.0) number_of_projections(bp) = 1
+        enddo
+        
         ! this means lines of feature edges will split into two projections, the meeting point of 3 edges becomes 3 bounds ect
         ! feature edges that lead into a smooth surface will only have 1 projection on the last point and 2 on the next
         
