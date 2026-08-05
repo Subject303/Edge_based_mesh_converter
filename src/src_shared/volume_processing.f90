@@ -572,7 +572,7 @@ module volume_processing
                         pe=pe+1
                     endif
 
-                    !print*, pe, non_viable_edges
+                    print*, pe, non_viable_edges
                     if (non_viable_edges(pe)) cycle
                 
                     do ! we must only use boundary edges that are flagged correctly or are feature edges
@@ -675,7 +675,7 @@ module volume_processing
                         
                     endif
                 
-                    !print*, pe, current_edge, face_1, face_2 , prev_face
+                    print*, pe, current_edge, face_1, face_2 , prev_face
                     
                     
                     
