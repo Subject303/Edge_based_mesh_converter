@@ -554,6 +554,8 @@ module boundary_routine_module
             if (number_of_projections(bp+1).eq.1) num_feature_points = bp
         enddo
         
+        print*,number_of_projections
+        
         ! so now we can loop from 1:num_feature_points or num_feature_points+1:b_npoin
         ! if we want feat or non feat
         
