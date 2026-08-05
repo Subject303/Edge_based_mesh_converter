@@ -651,7 +651,7 @@ module volume_processing
                         prev_face = centroid_index_array(i+1)
                         i=i+2 
                     
-                        !print*, 'i-1 = face_1, i+1 = face_2', i, centroid_array_count+1
+                        print*, 'i-1 = face_1, i+1 = face_2', i, centroid_array_count+1
                     
                     elseif (prev_face .eq. face_2) then
                     
@@ -668,10 +668,10 @@ module volume_processing
                         prev_face = centroid_index_array(i+1)
                         i=i+2 
                     
-                        !print*, 'swapped', i, centroid_array_count+1
+                        print*, 'swapped', i, centroid_array_count+1
                     
                     else
-                        !print*, 'none, looping', i, centroid_array_count+1, edge_count, face_count
+                        print*, 'none, looping', i, centroid_array_count+1, edge_count, face_count
                         
                     endif
                 
