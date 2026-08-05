@@ -361,7 +361,7 @@ module boundary_routine_module
             fe_index_old = fe_index + 1
             
             !if (ff_index_old .ge. 11367) 
-            print*, 'FLAG 1', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
+!             print*, 'FLAG 1', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
             
             ! loop over all flagged faces we havn't already looped over
             do i=ff_index_old,ff_index
@@ -397,15 +397,15 @@ module boundary_routine_module
             enddo
             
             !if (ff_index_old .ge. 11367) then
-                print*, ''
-                print*, ''
-                print*, flagged_faces
-                print*, f_bound_flags
-                print*, ''
-                print*, flagged_edges
-                print*, e_bound_flags
-                print*, ''
-                print*, ''
+!                 print*, ''
+!                 print*, ''
+!                 print*, flagged_faces
+!                 print*, f_bound_flags
+!                 print*, ''
+!                 print*, flagged_edges
+!                 print*, e_bound_flags
+!                 print*, ''
+!                 print*, ''
             !endif
             
             ! do somthing with exit conditions here
@@ -438,7 +438,7 @@ module boundary_routine_module
                     endif
                 enddo
                 
-                print*, 'NEW FLAG ', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
+!                 print*, 'NEW FLAG ', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
                 
                 ! skip the next loop because there shouldnt be any connected faces
                 cycle
@@ -447,7 +447,7 @@ module boundary_routine_module
             
             
             !if (ff_index_old .ge. 11367) 
-            print*, 'FLAG 2', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
+!             print*, 'FLAG 2', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
             
             ! now we update the flagged faces to restart the loop 
             
