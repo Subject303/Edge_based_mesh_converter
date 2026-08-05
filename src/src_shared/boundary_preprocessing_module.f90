@@ -496,6 +496,7 @@ module boundary_routine_module
         implicit none
         integer(KIND=INT32) :: i, j, f, p, be, bf, bp, pf, pf_stt, pf_end, bp1, bp2, e, new_b_npoin, num_feature_points, num_feat_projections, new_bp, flag
         integer(KIND=INT32),allocatable :: number_of_projections(:), temp_p_bound_indexing_array(:)
+        logical, allocatable :: temp_feature_points(:)
         
         ! ok so
         ! realistically here I want to reconstruct my boundry points into to lists, non feature points and feature points
@@ -511,6 +512,7 @@ module boundary_routine_module
 !         b_npoin
 !         i_npoin
 !         p_boundary_flags
+!         feature_points
         
         ! first step i think is to count the number of boundaries each point will have
         ! we can do this by adding the number of feature edges connected to a point, all non feature points have a count of 1
@@ -567,6 +569,10 @@ module boundary_routine_module
         deallocate(p_bound_indexing_array)
         allocate(p_bound_indexing_array(new_b_npoin), p_boundary_flags(new_b_npoin))
         
+        allocate(temp_feature_points,source=feature_points)
+        deallocate(feature_points)
+        allocate(feature_points(new_bp))
+        
         new_bp = 0
         do bp=1,b_npoin
             
@@ -581,6 +587,8 @@ module boundary_routine_module
             
             do i=1,number_of_projections(bp)
                 new_bp = new_bp + 1
+                
+                feature_points(new_bp) = temp_feature_points(bp)
                 
                 p_bound_indexing_array(new_bp) = p
                 
@@ -606,14 +614,20 @@ module boundary_routine_module
             
         enddo
         
-        i=0
-        do new_bp=1,new_b_npoin
-            if (p_boundary_flags(new_bp).eq.-6) i=i+1
-        enddo
-        print*, i, new_b_npoin
+        b_npoin = new_b_npoin
         
-        print*, 'EARLY KILLING FOR TESTING ,1'
-        stop
+!         reversed_p_bound_indexing_array
+!         p_bound_indexing_array          ! done
+!         p_internal_indexing_array
+!         b_npoin                         ! done
+!         i_npoin
+!         p_boundary_flags                ! done
+!         feature_points                  ! done
+        
+        ! I dont think any of the other arrays are necessarily in use post here anyway
+        ! so I'm going to be lazy
+        ! wish me luck
+        
         
     end subroutine split_corners
 
