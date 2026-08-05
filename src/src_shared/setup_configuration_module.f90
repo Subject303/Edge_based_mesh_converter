@@ -3,6 +3,7 @@
 module setup_configuration_module
     
     use io_data
+    use boundary_data
     
     implicit none
     
@@ -37,6 +38,9 @@ module setup_configuration_module
                 
                     case('prerocessed_data_file=')
                         raw_data_path = current_line(indexer+1:)
+                        
+                    case('feature_angle=')
+                        read(splitting_angle, '(f)') current_line(indexer+1:)
                         
                     case('manual_geom=')
                         indexer = index(current_line,'true')

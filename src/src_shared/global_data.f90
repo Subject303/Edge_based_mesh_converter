@@ -108,7 +108,7 @@ module boundary_data
     integer(KIND=INT32), allocatable :: f_bound_flags(:), e_bound_flags(:)
     
     ! the angle we class feature edges with
-    real(KIND=REAL64)   :: splitting_angle = 90.0
+    real(KIND=REAL64)   :: splitting_angle = 45.0
     
 end module boundary_data
 
