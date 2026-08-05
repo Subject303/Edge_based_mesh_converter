@@ -611,6 +611,8 @@ module volume_processing
                         
                         remainder_count = centroid_array_count - centroid_array_count_real
                         
+                        print*, 'centroid array pre shuffle', centroid_index_array
+                        
                         do k=centroid_array_count_real, 1, -1
                             centroid_index_array( k+ remainder_count) = centroid_index_array(k)
                             centroid_array(k + remainder_count,:) = centroid_array(k,:)
@@ -672,12 +674,12 @@ module volume_processing
                 
                     !print*, pe, current_edge, face_1, face_2 , prev_face
                     
-                    print*, 'centroid array ', centroid_index_array
+                    
                     
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 enddo
                 
-                
+                print*, 'centroid array ', centroid_index_array
                 
             else
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
