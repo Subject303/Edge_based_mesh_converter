@@ -392,15 +392,17 @@ module boundary_routine_module
                 enddo
             enddo
             
-             print*, ''
-             print*, ''
-             print*, flagged_faces
-             print*, f_bound_flags
-             print*, ''
-             print*, flagged_edges
-             print*, e_bound_flags
-             print*, ''
-             print*, ''
+            if (ff_index_old .ge. 11367) then
+                print*, ''
+                print*, ''
+                print*, flagged_faces
+                print*, f_bound_flags
+                print*, ''
+                print*, flagged_edges
+                print*, e_bound_flags
+                print*, ''
+                print*, ''
+            endif
             
             ! do somthing with exit conditions here
             ! all_edges_feature .true. stuff
