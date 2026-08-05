@@ -538,15 +538,15 @@ module boundary_routine_module
         ! this means lines of feature edges will split into two projections, the meeting point of 3 edges becomes 3 bounds ect
         ! feature edges that lead into a smooth surface will only have 1 projection on the last point and 2 on the next
         
-        ! this will sort the p indexing array by number of bounds
-        ! largest number of bounds first
-        call quicksort(number_of_projections,1,b_npoin,temp_p_bound_indexing_array)
-        
         ! fix the positivity of the counts
         number_of_projections(:) = abs(number_of_projections(:))
         
         new_b_npoin = sum(number_of_projections)
         allocate(temp_p_bound_indexing_array,source=p_bound_indexing_array)
+        
+        ! this will sort the p indexing array by number of bounds
+        ! largest number of bounds first
+        call quicksort(number_of_projections,1,b_npoin,temp_p_bound_indexing_array)
         
         ! this finds the last feature point in the index so we can seperate these out
         num_feature_points = 0
