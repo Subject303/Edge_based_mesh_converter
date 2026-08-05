@@ -528,9 +528,6 @@ module boundary_routine_module
             if (feature_edges(be))then
                 number_of_projections(bp1) = number_of_projections(bp1) - 1
                 number_of_projections(bp2) = number_of_projections(bp2) - 1
-            else
-                number_of_projections(bp1) = -1
-                number_of_projections(bp2) = -1
             endif
             
         enddo
