@@ -6,6 +6,8 @@ module data_processing_serial
     use boundary_routine_module
     use object_counts
     use volume_processing
+    use boundary_data
+    
     
     implicit none
     
@@ -101,6 +103,9 @@ module data_processing_serial
         print*, 'finished calculating boundary normal vectors'        
         print*, ' '
         print*, 'starting boundary flagging routines'
+        print*, 'identifying feature edges with an angle of ', splitting_angle
+        print*, ' '
+        
         
         call boundary_angle_feature_flagging
         call boundary_region_face_flagging
