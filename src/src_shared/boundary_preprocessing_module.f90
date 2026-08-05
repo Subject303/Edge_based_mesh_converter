@@ -377,8 +377,8 @@ module boundary_routine_module
                 do fe=fe_stt,fe_end
                     be = reversed_e_bound_indexing_array(f_e_obj_relation_array(fe))
                     
-                    ! if the flagged edge is not a feature AND is not already flagged then flag it
-                    if ((e_bound_flags(be).ne.1000).and.(e_bound_flags(be).ne.current_flag)) then
+                    ! if the flagged edge is not a feature or is not already flagged then flag it
+                    if ((e_bound_flags(be).eq.999).or.(e_bound_flags(be).ne.current_flag)) then
                         ! if any edges are non feature we know we can keep going
                         all_edges_feature = .false.
                         
