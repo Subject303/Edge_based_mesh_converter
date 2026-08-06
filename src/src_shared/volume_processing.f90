@@ -297,6 +297,7 @@ module volume_processing
 			endif
 			
 			if ((sb(be,1) + sb(be,2) + sb(be,3)) .eq. 0.0) then
+                print*, in_progress_centroid
                 print*, centroid_array(:,1)
                 print*, centroid_array(:,2)
                 print*, centroid_array(:,3)
