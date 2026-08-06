@@ -997,6 +997,9 @@ module volume_processing
                     tt(1) = f_c_obj_relation_array(f_c_index_array(mm)    )
                     tt(2) = f_c_obj_relation_array(f_c_index_array(mm-1)+1)
                     
+                    print*, tt(1), mm, tt(2)
+                    print*, centroid_obj_array
+                    
                     call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
                     
                     if (state) then
@@ -1007,7 +1010,6 @@ module volume_processing
                         if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) exit
                     endif
                     
-                    print*, centroid_obj_array
                     
                     if (k.gt.50) stop
                     
