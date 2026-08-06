@@ -988,7 +988,7 @@ module volume_processing
         ! all main objects are viable to begin with.
         viable_mains = .true.
         
-        call obj_select(m_i, m_stt, mm, tt, obj_type)
+        call obj_select(m_i, m_stt, mm, tt)
         
         ! we just assign our values into the first available slots
         centroid_obj_array(1) = tt(1)
@@ -1011,7 +1011,7 @@ module volume_processing
             if (.not.viable_mains(m_i)) cycle
             
             ! obviously we get our objects
-            call obj_select(m_i, m_stt, mm, tt, obj_type)
+            call obj_select(m_i, m_stt, mm, tt)
             
 !                     print*, fwd_i, bck_i
             
@@ -1027,7 +1027,7 @@ module volume_processing
                 
                 viable_mains(m_i) = .false.
                 
-                call obj_endconditions(e_state, fwd_i, bck_i, centroid_obj_array, centroid_array_count, obj_type)
+                call obj_endconditions(e_state, fwd_i, bck_i, centroid_obj_array, centroid_array_count)
                 ! our end condition is the first edge and last edge being the same
                 if (e_state) exit
             endif
@@ -1037,7 +1037,7 @@ module volume_processing
         
         print*, centroid_obj_array
         
-        call centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count, obj_type)
+        call centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count)
         
         do i=1,centroid_array_count
             print*, centroid_obj_array(i)
@@ -1046,7 +1046,7 @@ module volume_processing
         
     end subroutine centroid_assembler
     
-    subroutine obj_select(m_i, m_stt, mm, tt, obj_type)
+    subroutine obj_select(m_i, m_stt, mm, tt)
         implicit none
         integer(KIND=INT32) :: m_i, m_stt, mm, tt(2)
         
@@ -1076,7 +1076,7 @@ module volume_processing
             
     end subroutine obj_select
     
-    subroutine centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count, obj_type)
+    subroutine centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count)
         implicit none
         integer(KIND=INT32) :: i, centroid_obj_array(:), centroid_array_count
         real(KIND=REAL64)  ,allocatable :: centroid_array(:,:)
@@ -1111,7 +1111,7 @@ module volume_processing
             
     end subroutine centroid_float_assembler
     
-    subroutine obj_endconditions(e_state, fwd_i, bck_i, centroid_obj_array, centroid_array_count, obj_type)
+    subroutine obj_endconditions(e_state, fwd_i, bck_i, centroid_obj_array, centroid_array_count)
         implicit none
         integer(KIND=INT32) :: fwd_i, bck_i, centroid_array_count
         integer(KIND=INT32) :: centroid_obj_array(:)
