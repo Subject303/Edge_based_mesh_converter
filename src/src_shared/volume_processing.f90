@@ -295,7 +295,7 @@ module volume_processing
                 sb(be,:) = -in_progress_projection
 			endif
 			
-			print*, be, sb(be,:)
+! 			print*, be, sb(be,:)
             
 !             ef_start = e_f_index_array(e-1)
 !             ec_start = e_c_index_array(e-1)
@@ -1290,7 +1290,7 @@ module volume_processing
         
         if (change.gt.0)then
         
-            if (i + change .gt. c_size) then
+            if (i + change .ge. 1+c_size) then
                 do k=j, i
                     c_array(k-change) = c_array(k)
                 enddo
@@ -1302,7 +1302,7 @@ module volume_processing
             
         elseif (change.lt.0)then
         
-            if (j + change .lt. 0) then
+            if (j + change .le. -1) then
                 do k=i, j, -1
                     c_array(k-change) = c_array(k)
                 enddo
