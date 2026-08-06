@@ -983,7 +983,7 @@ module volume_processing
         ! all main objects are viable to begin with.
         viable_mains = .true.
         
-        obj_select(m_i, m_stt, mm, tt, obj_type)
+        call obj_select(m_i, m_stt, mm, tt, obj_type)
         
         ! we just assign our values into the first available slots
         centroid_obj_array(1) = tt(1)
@@ -1006,7 +1006,7 @@ module volume_processing
             if (.not.viable_mains(m_i)) cycle
             
             ! obviously we get our objects
-            obj_select(m_i, m_stt, mm, tt, obj_type)
+            call obj_select(m_i, m_stt, mm, tt, obj_type)
             
 !                     print*, fwd_i, bck_i
             
