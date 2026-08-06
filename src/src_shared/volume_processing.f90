@@ -952,15 +952,15 @@ module volume_processing
                 m_end   = e_f_index_array(obj)
                 t_end   = e_c_index_array(obj)
                 
-            main_count = m_end-m_stt
-            tert_count = t_end-t_stt
-            
-            ! for i_edge the centroid will consist of all adjacent centroids plus one repeat
-            centroid_array_count = 1 + main_count + tert_count
-            
-            ! inital edge setup doesnt matter much for i_edge
-            ! just pick a random edge, my end condition is whenever the first cell is equal to the last cell
-            m_i = 1
+                main_count = m_end-m_stt
+                tert_count = t_end-t_stt
+                
+                ! for i_edge the centroid will consist of all adjacent centroids plus one repeat
+                centroid_array_count = 1 + main_count + tert_count
+                
+                ! inital edge setup doesnt matter much for i_edge
+                ! just pick a random edge, my end condition is whenever the first cell is equal to the last cell
+                m_i = 1
             
             case(boundary_edge)
                 
@@ -1035,6 +1035,8 @@ module volume_processing
         print*, centroid_obj_array
         
         call centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count, obj_type)
+        
+        print*,centroid_array
         
     end subroutine centroid_assembler
     
