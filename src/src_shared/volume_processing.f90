@@ -1066,7 +1066,7 @@ module volume_processing
     subroutine obj_endconditions(e_state, fwd_i, bck_i, centroid_obj_array, centroid_array_count, obj_type)
         implicit none
         integer(KIND=INT32) :: fwd_i, bck_i, centroid_array_count
-        integer(KIND=INT32) :: centroid_obj_array(:)
+        integer(KIND=INT32) :: centroid_obj_array(:), obj_type
         integer(KIND=INT32),parameter :: internal_edge=1, boundary_edge=2, featre_point=3, non_feature_point=4
         logical ::  e_state
         
