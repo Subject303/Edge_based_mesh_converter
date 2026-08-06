@@ -1048,6 +1048,9 @@ module volume_processing
         
         select case(obj_type)
             case(internal_edge)
+            
+                ! faces are main
+                ! cells are tertiary
                 mm    = e_f_obj_relation_array(m_stt + m_i)
                 tt(1) = f_c_obj_relation_array(f_c_index_array(mm)    )
                 tt(2) = f_c_obj_relation_array(f_c_index_array(mm-1)+1)
@@ -1079,6 +1082,8 @@ module volume_processing
                 
                 allocate(centroid_array(centroid_array_count))
                 
+                ! faces are main
+                ! cells are tertiary
                 do i=2,centroid_array_count-1,2
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
