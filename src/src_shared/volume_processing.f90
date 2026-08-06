@@ -1114,7 +1114,7 @@ module volume_processing
         if (change.gt.0)then
         
             if (i + change .gt. c_size) then
-                do k=i, j
+                do k=i, j, -1
                     c_array(k-change) = c_array(k)
                 enddo
                 
@@ -1126,7 +1126,7 @@ module volume_processing
         elseif (change.lt.0)then
         
             if (j + change .lt. 0) then
-                do k=j, i, -1
+                do k=j, i
                     c_array(k-change) = c_array(k)
                 enddo
                 
