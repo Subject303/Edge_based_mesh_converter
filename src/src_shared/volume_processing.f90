@@ -1244,6 +1244,7 @@ module volume_processing
                 
             case(non_feature_point)
                 
+                allocate(centroid_array(centroid_array_count,3))
                 
 !                 edges are main
 !                 faces are tertiary
