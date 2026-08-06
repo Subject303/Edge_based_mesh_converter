@@ -494,11 +494,6 @@ module volume_processing
             p = p_bound_indexing_array(bp)
             ! this is a loop of all boundary edges.
             
-            
-            i1 = p
-            i2 = p
-            ! i1 and i2 are the constituent points of edge e
-            
             if (feature_points(bp)) then
                 ! corners
                 obj_type = featre_point
