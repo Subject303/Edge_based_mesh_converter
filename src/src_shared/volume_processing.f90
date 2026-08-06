@@ -76,11 +76,11 @@ module volume_processing
             
             angle = alignment(in_progress_projection, direction_array)
             
-!             if (angle .lt. 0.) then
+            if (angle .lt. 0.) then
                 sn(ie,:) = in_progress_projection(:)
-! 			else
-!                 sn(ie,:) = -in_progress_projection
-! 			endif
+			else
+                sn(ie,:) = -in_progress_projection
+			endif
 			
 			print*, ie, sn(ie,:), angle
             
@@ -290,11 +290,17 @@ module volume_processing
             
             angle = alignment(in_progress_projection, direction_array)
             
-!             if (angle .lt. 0.) then
+            if (angle .lt. 0.) then
                 sb(be,:) = in_progress_projection(:)
-! 			else
-!                 sb(be,:) = -in_progress_projection
-! 			endif
+			else
+                sb(be,:) = -in_progress_projection
+			endif
+			
+			if ((sb(be,1) + sb(be,2) + sb(be,3)) .eq. 0.0) then
+                print*, centroid_array(:,1)
+                print*, centroid_array(:,2)
+                print*, centroid_array(:,3)
+			endif
 			
 			print*, be, sb(be,:), angle
             
@@ -515,11 +521,11 @@ module volume_processing
             
             angle = alignment(in_progress_projection, direction_array)
             
-!             if (angle .lt. 0.) then
+            if (angle .lt. 0.) then
                 sbb(bp,:) = in_progress_projection(:)
-!             else
-!                 sbb(bp,:) = -in_progress_projection(:)
-!             endif
+            else
+                sbb(bp,:) = -in_progress_projection(:)
+            endif
             
 			print*, bp, sbb(bp,:), angle
             
