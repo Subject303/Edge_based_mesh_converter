@@ -12,7 +12,9 @@ module volume_processing
     use utils, ONLY : alignment, planar_alignment
     ! need everything p much here.
     implicit none
-        
+    integer(KIND=INT32),parameter :: internal_edge=1, boundary_edge=2, featre_point=3, non_feature_point=4
+    integer(KIND=INT32) :: obj_type
+    
     contains
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -50,6 +52,8 @@ module volume_processing
         !centroid_array_count_old = -1
         allocate(centroid_index_array(0),non_viable_faces(0),centroid_array(0,0))
         
+        obj_type = internal_edge
+        
         do ie = 1, i_nedge
             e = e_internal_indexing_array(ie)
             ! this is a loop of all internal edges.
@@ -58,7 +62,7 @@ module volume_processing
             i2 = e_p_obj_relation_array(e_p_index_array(e))
             ! i1 and i2 are the constituent points of edge e
             
-            call centroid_assembler(e, 1, centroid_array)
+            call centroid_assembler(e, centroid_array)
             
             in_progress_projection(:) = 0.0
             in_progress_centroid = e_centroid(e,:)
@@ -929,11 +933,10 @@ module volume_processing
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
-    subroutine centroid_assembler(obj, obj_type, centroid_array)
+    subroutine centroid_assembler(obj, centroid_array)
         implicit none
-        integer(KIND=INT32) :: obj, obj_type
+        integer(KIND=INT32) :: obj
         integer(KIND=INT32) :: mm, tt(2), i, j, k, m_i, m_stt, m_end, t_stt, t_end, fwd_i, bck_i
-        integer(KIND=INT32),parameter :: internal_edge=1, boundary_edge=2, featre_point=3, non_feature_point=4
         integer(KIND=INT32) :: main_count, tert_count, centroid_array_count
         integer(KIND=INT32),allocatable :: main_obj(:), tert_obj(:), centroid_obj_array(:)
         real(KIND=REAL64)  ,allocatable :: centroid_array(:,:)
@@ -1045,9 +1048,7 @@ module volume_processing
     
     subroutine obj_select(m_i, m_stt, mm, tt, obj_type)
         implicit none
-        integer(KIND=INT32) :: obj_type
         integer(KIND=INT32) :: m_i, m_stt, mm, tt(2)
-        integer(KIND=INT32),parameter :: internal_edge=1, boundary_edge=2, featre_point=3, non_feature_point=4
         
         
         select case(obj_type)
@@ -1077,8 +1078,7 @@ module volume_processing
     
     subroutine centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count, obj_type)
         implicit none
-        integer(KIND=INT32) :: obj_type, i, centroid_obj_array(:), centroid_array_count
-        integer(KIND=INT32),parameter :: internal_edge=1, boundary_edge=2, featre_point=3, non_feature_point=4
+        integer(KIND=INT32) :: i, centroid_obj_array(:), centroid_array_count
         real(KIND=REAL64)  ,allocatable :: centroid_array(:,:)
         
         select case(obj_type)
@@ -1114,8 +1114,7 @@ module volume_processing
     subroutine obj_endconditions(e_state, fwd_i, bck_i, centroid_obj_array, centroid_array_count, obj_type)
         implicit none
         integer(KIND=INT32) :: fwd_i, bck_i, centroid_array_count
-        integer(KIND=INT32) :: centroid_obj_array(:), obj_type
-        integer(KIND=INT32),parameter :: internal_edge=1, boundary_edge=2, featre_point=3, non_feature_point=4
+        integer(KIND=INT32) :: centroid_obj_array(:)
         logical ::  e_state
         
         e_state = .false.
