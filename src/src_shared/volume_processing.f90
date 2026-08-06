@@ -513,11 +513,6 @@ module volume_processing
             
             in_progress_projection(:) = 0.0
             in_progress_centroid = coords(p,:)
-            ! by making i1, i2, i3 all p, the volume change should be zero
-            
-            
-            c1(:) = coords(i1,:)
-            c2(:) = coords(i2,:)
             
             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array)
             
