@@ -275,9 +275,25 @@ module volume_processing
             i2 = e_p_obj_relation_array(e_p_index_array(e))
             ! i1 and i2 are the constituent points of edge e
             
-
             call centroid_assembler(e, centroid_array)
             
+            in_progress_projection(:) = 0.0
+            in_progress_centroid = e_centroid(e,:)
+            
+            c1(:) = coords(i1,:)
+            c2(:) = coords(i2,:)
+            
+            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array)
+            
+            direction_array(:) = c1(:) - c2(:)
+            
+            angle = alignment(in_progress_projection, direction_array)
+            
+            if (angle .lt. 0.) then
+                sb(be,:) = in_progress_projection(:)
+			else
+                sb(be,:) = -in_progress_projection
+			endif
             
 !             ef_start = e_f_index_array(e-1)
 !             ec_start = e_c_index_array(e-1)
@@ -397,26 +413,26 @@ module volume_processing
             !if (centroid_index_array(1).ne.centroid_index_array(centroid_array_count)) print*, 'internal centroid array start and end wrong'
             
             
-            in_progress_projection(:) = 0.0
-            in_progress_centroid = e_centroid(e,:)
-            
-            c1(:) = coords(i1,:)
-            c2(:) = coords(i2,:)
-            
-!             print*, be, (c1(1)+c2(1))/2, (c1(2)+c2(2))/2, (c1(3)+c2(3))/2, in_progress_centroid
-            
-!             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array)
-            
-            
-            direction_array(:) = c1(:) - c2(:)
-            
-            angle = alignment(in_progress_projection, direction_array)
-            
-            if (angle .lt. 0.) then
-                sb(be,:) = in_progress_projection(:)
-			else
-                sb(be,:) = -in_progress_projection
-			endif
+!             in_progress_projection(:) = 0.0
+!             in_progress_centroid = e_centroid(e,:)
+!             
+!             c1(:) = coords(i1,:)
+!             c2(:) = coords(i2,:)
+!             
+! !             print*, be, (c1(1)+c2(1))/2, (c1(2)+c2(2))/2, (c1(3)+c2(3))/2, in_progress_centroid
+!             
+! !             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array)
+!             
+!             
+!             direction_array(:) = c1(:) - c2(:)
+!             
+!             angle = alignment(in_progress_projection, direction_array)
+!             
+!             if (angle .lt. 0.) then
+!                 sb(be,:) = in_progress_projection(:)
+! 			else
+!                 sb(be,:) = -in_progress_projection
+! 			endif
             
 !             print*,'aa'
 !             !print*, centroid_array_count, SIZE(centroid_array,1)
@@ -1145,8 +1161,8 @@ module volume_processing
                 ! so we drop that
                 allocate(centroid_array(centroid_array_count-1,3))
                 
-                ! faces are main
-                ! cells are tertiary
+!                 faces are main
+!                 cells are tertiary
                 do i=1,centroid_array_count-1,2
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
@@ -1154,10 +1170,10 @@ module volume_processing
                     centroid_array(i,:) = c_centroid(centroid_obj_array(i),:)
                 enddo
                 
-                do i=1,centroid_array_count-1
-                    print*, centroid_obj_array(i)
-                    print*, centroid_array(i,:)
-                enddo
+!                 do i=1,centroid_array_count-1
+!                     print*, centroid_obj_array(i)
+!                     print*, centroid_array(i,:)
+!                 enddo
                 
             case(non_feature_point)
                 
