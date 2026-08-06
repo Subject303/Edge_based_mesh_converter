@@ -62,7 +62,7 @@ module volume_processing
             i2 = e_p_obj_relation_array(e_p_index_array(e))
             ! i1 and i2 are the constituent points of edge e
             
-            call centroid_assembler(e, centroid_array, centroid_array_count)
+            call centroid_assembler(e, centroid_array)
             
             in_progress_projection(:) = 0.0
             in_progress_centroid = e_centroid(e,:)
@@ -70,7 +70,7 @@ module volume_processing
             c1(:) = coords(i1,:)
             c2(:) = coords(i2,:)
             
-            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array)
+            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array)
             
             direction_array(:) = c1(:) - c2(:)
             
@@ -933,7 +933,7 @@ module volume_processing
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
-    subroutine centroid_assembler(obj, centroid_array, centroid_array_count)
+    subroutine centroid_assembler(obj, centroid_array)
         implicit none
         integer(KIND=INT32) :: obj
         integer(KIND=INT32) :: mm, tt(2), i, j, k, m_i, m_stt, m_end, t_stt, t_end, fwd_i, bck_i
@@ -1344,11 +1344,12 @@ module volume_processing
         
     end subroutine projection_test
     
-    subroutine centroid_array_routine(obj_projection, obj_centroid, centroid_array_count, centroid_array)
+    subroutine centroid_array_routine(obj_projection, obj_centroid, centroid_array)
         implicit none
-        integer(KIND=INT32)        :: i, centroid_array_count
+        integer(KIND=INT32)        :: i
         real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3)
         
+        centroid_array_count = size(centroid_array,1)
 
         do i=2,centroid_array_count
             baryobj_1_centroid = centroid_array(i-1,:)
