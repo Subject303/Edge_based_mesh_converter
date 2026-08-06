@@ -1066,6 +1066,7 @@ module volume_processing
         implicit none
         integer(KIND=INT32) :: fwd_i, bck_i, centroid_array_count
         integer(KIND=INT32) :: centroid_obj_array(:)
+        integer(KIND=INT32),parameter :: internal_edge=1, boundary_edge=2, featre_point=3, non_feature_point=4
         logical ::  e_state
         
         e_state = .false.
