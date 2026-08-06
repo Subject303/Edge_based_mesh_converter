@@ -1346,7 +1346,7 @@ module volume_processing
     
     subroutine centroid_array_routine(obj_projection, obj_centroid, centroid_array)
         implicit none
-        integer(KIND=INT32)        :: i
+        integer(KIND=INT32)        :: i, centroid_array_count
         real(KIND=REAL64)          :: obj_projection(3), centroid_array(:,:), obj_centroid(3), baryobj_1_centroid(3), baryobj_2_centroid(3)
         
         centroid_array_count = size(centroid_array,1)
