@@ -1036,7 +1036,9 @@ module volume_processing
         
         call centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count, obj_type)
         
-        print*,centroid_array
+        do i=1,centroid_array_count
+            print*,centroid_array(i,:)
+        enddo
         
     end subroutine centroid_assembler
     
