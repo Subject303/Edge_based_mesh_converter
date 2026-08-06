@@ -979,7 +979,9 @@ module volume_processing
                 fwd_i = 3
                 bck_i = 1
                 
+                k=1
                 do
+                    k=k+1
                     ! now we loop about our centroids
                     if (m_i.eq.main_count) then
                         m_i = 1
@@ -1006,6 +1008,8 @@ module volume_processing
                     endif
                     
                     print*, centroid_obj_array
+                    
+                    if (k.gt.50) stop
                     
                 enddo
                 
