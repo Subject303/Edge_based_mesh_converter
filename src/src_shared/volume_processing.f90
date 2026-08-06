@@ -966,6 +966,8 @@ module volume_processing
                 ! for i_edge the centroid will consist of all adjacent centroids plus one repeat
                 centroid_array_count = 1 + main_count + tert_count
                 
+                allocate(centroid_obj_array(centroid_array_count))
+                
                 ! inital edge setup doesnt matter much for i_edge
                 ! just pick a random edge, my end condition is whenever the first cell is equal to the last cell
                 m_i = 1
@@ -1003,6 +1005,8 @@ module volume_processing
                 ! for b_edge the centroid will consist of all adjacent centroids
                 centroid_array_count = 1 + main_count + tert_count
                 ! but for convinience we accept that the last entry can be dropped so subroutines can be simpler
+                
+                allocate(centroid_obj_array(centroid_array_count))
                 
                 ! we must start on a boundary face
                 m_i = 1
