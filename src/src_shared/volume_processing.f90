@@ -82,7 +82,7 @@ module volume_processing
                 sn(ie,:) = -in_progress_projection
 			endif
 			
-! 			print*, ie, sn(ie,:)
+			print*, ie, sn(ie,:), angle
             
         enddo
 !             ef_start = e_f_index_array(e-1)
@@ -296,7 +296,7 @@ module volume_processing
                 sb(be,:) = -in_progress_projection
 			endif
 			
-! 			print*, be, sb(be,:)
+			print*, be, sb(be,:), angle
             
         enddo
 !             ef_start = e_f_index_array(e-1)
@@ -523,7 +523,7 @@ module volume_processing
             
             sbb(bp,:) = in_progress_projection
             
-! 			print*, bp, sbb(bp,:)
+			print*, bp, sbb(bp,:), angle
             
         enddo
 !             if (feature_points(bp)) then
@@ -1244,7 +1244,7 @@ module volume_processing
                 
                 allocate(centroid_array(centroid_array_count,3))
                 
-                print*, 'count sn ', centroid_array_count
+!                 print*, 'count sn ', centroid_array_count
                 
                 ! start on a tertiary
                 
@@ -1263,7 +1263,7 @@ module volume_processing
                 ! so we drop that
                 allocate(centroid_array(centroid_array_count-1,3))
                 
-                print*, 'count sbb ', centroid_array_count
+!                 print*, 'count sb ', centroid_array_count
                 
                 ! start on a main
                 
@@ -1281,7 +1281,7 @@ module volume_processing
                 
                 allocate(centroid_array(centroid_array_count,3))
                 
-                print*, 'count sbb ', centroid_array_count
+!                 print*, 'count sbb ', centroid_array_count
                 
                 ! start on a tertiary
                 
