@@ -1125,7 +1125,7 @@ module volume_processing
         elseif (change.lt.0)then
         
             if (j + change .lt. 0) then
-                do k=j, i, - 1
+                do k=j, i, -1
                     c_array(k-change) = c_array(k)
                 enddo
                 
