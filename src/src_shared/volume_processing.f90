@@ -1005,9 +1005,10 @@ module volume_processing
                         if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) exit
                     endif
                     
+                    print*, centroid_obj_array
+                    
                 enddo
                 
-                print*, centroid_obj_array
                 
             case(boundary_edge)
                 
