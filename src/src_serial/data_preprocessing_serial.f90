@@ -107,12 +107,12 @@ module data_processing_serial
         print*, ' '
         
         
-        call boundary_angle_feature_flagging
-        call boundary_region_face_flagging
-        call split_corners
+!         call boundary_angle_feature_flagging
+!         call boundary_region_face_flagging
+!         call split_corners
 !         call flag_boundary_regions
         
-!         call dummy_feature_flagging
+        call dummy_feature_flagging
         
         print*, 'finished boundary flagging routines'
         print*, ' '
@@ -129,8 +129,8 @@ module data_processing_serial
         
         call volume_alloc
         
-!         call internal_edge_volume_processing
-!         call boundary_edge_volume_processing
+        call internal_edge_volume_processing
+        call boundary_edge_volume_processing
         call boundary_face_volume_processing
         
         call volume_generation

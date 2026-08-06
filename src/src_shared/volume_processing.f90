@@ -82,7 +82,7 @@ module volume_processing
                 sn(ie,:) = -in_progress_projection
 			endif
 			
-			print*, ie, sn(ie,:)
+! 			print*, ie, sn(ie,:)
             
         enddo
 !             ef_start = e_f_index_array(e-1)
@@ -296,7 +296,7 @@ module volume_processing
                 sb(be,:) = -in_progress_projection
 			endif
 			
-			print*, be, sb(be,:)
+! 			print*, be, sb(be,:)
             
         enddo
 !             ef_start = e_f_index_array(e-1)
@@ -523,7 +523,7 @@ module volume_processing
             
             sbb(bp,:) = in_progress_projection
             
-			print*, bp, sbb(bp,:)
+! 			print*, bp, sbb(bp,:)
             
         enddo
 !             if (feature_points(bp)) then
@@ -978,9 +978,6 @@ module volume_processing
         !enddo
         !print*, 'aaa'
         
-        print*, 'BACKSTOP IN BOUND FACE VOLUME PROCESSING'
-        stop
-        
     end subroutine boundary_face_volume_processing
 
     
@@ -1284,10 +1281,10 @@ module volume_processing
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
                 
-                do i=1,centroid_array_count-1
-                    print*, centroid_obj_array(i)
-                    print*, centroid_array(i,:)
-                enddo
+!                 do i=1,centroid_array_count-1
+!                     print*, centroid_obj_array(i)
+!                     print*, centroid_array(i,:)
+!                 enddo
                 
                 
             case(featre_point)
