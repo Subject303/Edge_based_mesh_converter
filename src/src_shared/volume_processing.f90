@@ -47,8 +47,8 @@ module volume_processing
         ! 3:
         !   call the processer subroutine and sum the projections and volumes
         
-        centroid_array_count_old = -1
-        allocate(centroid_index_array(0),non_viable_faces(0),centroid_array(0,0))
+        !centroid_array_count_old = -1
+        !allocate(centroid_index_array(0),non_viable_faces(0),centroid_array(0,0))
         
         do ie = 1, i_nedge
             e = e_internal_indexing_array(ie)
@@ -937,6 +937,8 @@ module volume_processing
         !real(KIND=REAL64)  ,allocatable :: centroid_array(:,3)
         logical, allocatable :: viable_mains(:)
         logical ::  state
+        
+        deallocate(centroid_obj_array)
         
         select case(obj_type)
             case(internal_edge)
