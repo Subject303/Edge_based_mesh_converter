@@ -1091,7 +1091,6 @@ module volume_processing
             
         end select
             
-    end subroutine obj_select
     end subroutine obj_endconditions
     
     subroutine centroid_swapper(mm, tt, fwd_i, bck_i, c_array, state)
