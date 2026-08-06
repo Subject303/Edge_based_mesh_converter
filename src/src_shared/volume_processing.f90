@@ -964,6 +964,8 @@ module volume_processing
                 
                 ! inital edge setup doesnt matter much for i_edge
                 ! just pick a random edge, my end condition is whenever the first cell is equal to the last cell
+                m_i = 1
+                
                 mm    = e_f_obj_relation_array(m_stt + m_i)
                 tt(1) = f_c_obj_relation_array(f_c_index_array(mm)    )
                 tt(2) = f_c_obj_relation_array(f_c_index_array(mm-1)+1)
