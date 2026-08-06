@@ -58,9 +58,27 @@ module volume_processing
 !             i2 = e_p_obj_relation_array(e_p_index_array(e))
             ! i1 and i2 are the constituent points of edge e
             
-            call centroid_assembler(e, 1, centroid_index_array)
+            call centroid_assembler(e, 1, centroid_array)
             
+            in_progress_projection(:) = 0.0
+            in_progress_centroid = e_centroid(e,:)
             
+            c1(:) = coords(i1,:)
+            c2(:) = coords(i2,:)
+            
+            call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array)
+            
+            direction_array(:) = c1(:) - c2(:)
+            
+            angle = alignment(in_progress_projection, direction_array)
+            
+            if (angle .lt. 0.) then
+                sn(ie,:) = in_progress_projection(:)
+			else
+                sn(ie,:) = -in_progress_projection
+			endif
+			
+			print*, ie, sn(ie,:)
             
 !             ef_start = e_f_index_array(e-1)
 !             ec_start = e_c_index_array(e-1)
@@ -172,38 +190,22 @@ module volume_processing
 !             
 !             !print*, centroid_index_array
 !             
-!             in_progress_projection(:) = 0.0
-!             in_progress_centroid = e_centroid(e,:)
-!             
-!             c1(:) = coords(i1,:)
-!             c2(:) = coords(i2,:)
-!             
-!             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count, centroid_array)
-!             
-!             direction_array(:) = c1(:) - c2(:)
-!             
-!             angle = alignment(in_progress_projection, direction_array)
-!             
-!             if (angle .lt. 0.) then
-!                 sn(ie,:) = in_progress_projection(:)
-! 			else
-!                 sn(ie,:) = -in_progress_projection
-! 			endif
-!             
-! !             print*,'aa'
-! !             !print*, centroid_array_count, SIZE(centroid_array,1)
-! !             print*, ie, ' :: ', i1-1, i2-1
-! !             print*, in_progress_projection
-! !             print*, sn(ie,:)
-! !             print*, angle
-! !             print*,'aa'
-! !             print*,in_progress_centroid
-! !             print*,'aa'
-! !             do i=1, centroid_array_count
-! !                 print*,i,' :: ', centroid_array(i,:)
-! !             enddo
-! !             print*,'aa'
-!             
+
+            
+!             print*,'aa'
+!             !print*, centroid_array_count, SIZE(centroid_array,1)
+!             print*, ie, ' :: ', i1-1, i2-1
+!             print*, in_progress_projection
+!             print*, sn(ie,:)
+!             print*, angle
+!             print*,'aa'
+!             print*,in_progress_centroid
+!             print*,'aa'
+!             do i=1, centroid_array_count
+!                 print*,i,' :: ', centroid_array(i,:)
+!             enddo
+!             print*,'aa'
+            
         enddo
         
         !print*,'aaaa'
@@ -927,14 +929,14 @@ module volume_processing
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
-    subroutine centroid_assembler(obj, obj_type, centroid_obj_array)
+    subroutine centroid_assembler(obj, obj_type, centroid_array)
         implicit none
         integer(KIND=INT32) :: obj, obj_type
         integer(KIND=INT32) :: mm, tt(2), i, j, k, m_i, m_stt, m_end, t_stt, t_end, fwd_i, bck_i
         integer(KIND=INT32),parameter :: internal_edge=1, boundary_edge=2, featre_point=3, non_feature_point=4
         integer(KIND=INT32) :: main_count, tert_count, centroid_array_count
         integer(KIND=INT32),allocatable :: main_obj(:), tert_obj(:), centroid_obj_array(:)
-        !real(KIND=REAL64)  ,allocatable :: centroid_array(:,3)
+        real(KIND=REAL64)  ,allocatable :: centroid_array(:,3)
         logical, allocatable :: viable_mains(:)
         logical ::  e_state, state
         
@@ -1032,6 +1034,9 @@ module volume_processing
         
         print*, centroid_obj_array
         
+        call centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count, obj_type)
+        
+        
     end subroutine centroid_assembler
     
     subroutine obj_select(m_i, m_stt, mm, tt, obj_type)
@@ -1062,6 +1067,40 @@ module volume_processing
         end select
             
     end subroutine obj_select
+    
+    subroutine centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count, obj_type)
+        implicit none
+        integer(KIND=INT32) :: obj_type, i, centroid_obj_array(:), centroid_array_count
+        integer(KIND=INT32),parameter :: internal_edge=1, boundary_edge=2, featre_point=3, non_feature_point=4
+        real(KIND=REAL64)  ,allocatable :: centroid_array(:,3)
+        
+        select case(obj_type)
+            case(internal_edge)
+                
+                allocate(centroid_array(centroid_array_count))
+                
+                do i=2,centroid_array_count-1,2
+                    centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
+                enddo
+                do i=1,centroid_array_count,2
+                    centroid_array(i,:) = c_centroid(centroid_obj_array(i),:)
+                enddo
+                
+            case(boundary_edge)
+                
+                
+                
+                
+            case(non_feature_point)
+                
+                
+                
+                
+            case(featre_point)
+            
+        end select
+            
+    end subroutine centroid_float_assembler
     
     subroutine obj_endconditions(e_state, fwd_i, bck_i, centroid_obj_array, centroid_array_count, obj_type)
         implicit none
