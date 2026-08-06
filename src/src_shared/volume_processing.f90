@@ -1076,13 +1076,13 @@ module volume_processing
                 main_count = m_end-m_stt
                 tert_count = t_end-t_stt
                 
-                centroid_array_count = 1 + main_count + tert_count
-                
                 ! allocate my temp arrays
-                allocate(viable_mains(main_count), centroid_obj_array(centroid_array_count))
+                allocate(viable_mains(main_count))
                 
                 ! here we flag only boundary edges as viable
                 viable_mains = .false.
+                
+                centroid_array_count = 1 + main_count + tert_count
                 
                 m_i = 1
                 do m_i=1, main_count
@@ -1090,9 +1090,11 @@ module volume_processing
                     if (e_bound_array(mm)) then
                         viable_mains(m_i) = .true.
                     else
-                        centroid_array_count = centroid_array_count - 2
+                        centroid_array_count = centroid_array_count - 1
                     endif
                 enddo
+                
+                allocate(centroid_obj_array(centroid_array_count))
                 
                 m_i = 1
                 ! then select a viable edge (ie a boundary edge)
@@ -1293,8 +1295,6 @@ module volume_processing
             case(non_feature_point)
                 
                 print*, centroid_array_count
-                print*, centroid_obj_array(1), centroid_obj_array(centroid_array_count)
-                print*, centroid_obj_array
                 
                 if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) e_state = .true.
                 
