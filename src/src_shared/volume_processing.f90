@@ -997,12 +997,12 @@ module volume_processing
                     tt(1) = f_c_obj_relation_array(f_c_index_array(mm)    )
                     tt(2) = f_c_obj_relation_array(f_c_index_array(mm-1)+1)
                     
-                    print*, tt(1), mm, tt(2)
-                    print*, centroid_obj_array
                     print*, fwd_i, bck_i
                     
                     call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
                     
+                    print*, tt(1), mm, tt(2)
+                    print*, centroid_obj_array
                     print*, fwd_i, bck_i, state
                     print*, ''
                     print*, ''
@@ -1011,7 +1011,7 @@ module volume_processing
                         
                         viable_mains(m_i) = .false.
                         
-                        ! our end condition is we start and end on the same value
+                        ! our end condition is the first edge and last edge being the same
                         if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) exit
                     endif
                     
