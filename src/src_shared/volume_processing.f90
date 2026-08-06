@@ -84,6 +84,7 @@ module volume_processing
 			
 			print*, ie, sn(ie,:)
             
+        enddo
 !             ef_start = e_f_index_array(e-1)
 !             ec_start = e_c_index_array(e-1)
 !             ef_end   = e_f_index_array(e)
@@ -209,8 +210,8 @@ module volume_processing
 !                 print*,i,' :: ', centroid_array(i,:)
 !             enddo
 !             print*,'aa'
-            
-        enddo
+!             
+!         enddo
         
         !print*,'aaaa'
         !do i=1,i_nedge
@@ -297,6 +298,7 @@ module volume_processing
 			
 			print*, be, sb(be,:)
             
+        enddo
 !             ef_start = e_f_index_array(e-1)
 !             ec_start = e_c_index_array(e-1)
 !             ef_end   = e_f_index_array(e)
@@ -449,8 +451,8 @@ module volume_processing
 !                 print*,i,' :: ', centroid_array(i,:)
 !             enddo
 !             print*,'aa'
-            
-        enddo
+!             
+!         enddo
         
         !do i=1,b_nedge
         !    print*, i, sqrt(sb(i,1)*sb(i,1) + sb(i,2)*sb(i,2) + sb(i,3)*sb(i,3)), sb(i,:)
@@ -458,8 +460,8 @@ module volume_processing
         !print*,'aaaa'
         
         
-        print*,'backstop in b_edge'
-        stop
+!         print*,'backstop in b_edge'
+!         stop
     end subroutine boundary_edge_volume_processing
     
     
