@@ -1074,7 +1074,7 @@ module volume_processing
         implicit none
         integer(KIND=INT32) :: obj_type, i, centroid_obj_array(:), centroid_array_count
         integer(KIND=INT32),parameter :: internal_edge=1, boundary_edge=2, featre_point=3, non_feature_point=4
-        real(KIND=REAL64)  ,allocatable :: centroid_array(:,3)
+        real(KIND=REAL64)  ,allocatable :: centroid_array(:,:)
         
         select case(obj_type)
             case(internal_edge)
