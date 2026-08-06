@@ -1259,6 +1259,8 @@ module volume_processing
                 ! so we drop that
                 allocate(centroid_array(centroid_array_count-1,3))
                 
+                print*, 'count ', centroid_array_count-1
+                
 !                 faces are main
 !                 cells are tertiary
                 do i=1,centroid_array_count-1,2
@@ -1309,7 +1311,9 @@ module volume_processing
                 
             case(boundary_edge)
                 
-                if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
+                if (f_bound_array(centroid_obj_array(centroid_array_count-1))) e_state = .true.
+                
+                !if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
                 
             case(non_feature_point)
                 
