@@ -457,8 +457,6 @@ module volume_processing
         !enddo
         !print*,'aaaa'
         
-        print*, 'backstop b_edge volume procs'
-        stop
     end subroutine boundary_edge_volume_processing
     
     
@@ -496,453 +494,464 @@ module volume_processing
             i2 = p
             ! i1 and i2 are the constituent points of edge e
             
-            
-            
             if (feature_points(bp)) then
+                ! corners
+                obj_type = featre_point
                 
-                ! FEATURE POINTS
-                ! IE CORNERS
+            else
+                ! not corners
+                obj_type = non_feature_point
                 
-                ! so remember in boundary preprocessing, I've flagged faces and points with boundary flags already
-                ! this means we just need to produce the edge, face array comprised only of the correct boundary flag 
-                ! AND remembering to start on the correct two feature edges
+                call centroid_assembler(p, centroid_array)
                 
-                flag = p_boundary_flags(bp)
-                
-                pe_start = p_e_index_array(p-1)
-                pf_start = p_f_index_array(p-1)
-                pe_end   = p_e_index_array(p)
-                pf_end   = p_f_index_array(p)
-                
-                edge_count = pe_end-pe_start
-                
-                edge_count_real = 2 ! remember that feature edges wont be counted here
-                do pe=(pe_start+1),pe_end
-                    current_edge = p_e_obj_relation_array(pe)
-                    if (e_internal_array(current_edge)) cycle
-                    if (e_boundary_flags(reversed_e_bound_indexing_array(current_edge)) .eq. flag) edge_count_real = edge_count_real + 1
-                enddo
-                
-                face_count_real = 0
-                do pf=(pf_start+1),pf_end
-                    current_face = p_f_obj_relation_array(pf)
-                    if (f_internal_array(current_face)) cycle
-                    if (f_boundary_flags(reversed_f_bound_indexing_array(current_face)) .eq. flag) face_count_real = face_count_real + 1
-                enddo
-                
-                centroid_array_count = edge_count_real + face_count_real
-                
-                ! ok so here we're going to pick a random edge in the list that does have the correct flag, and search connections forward until we hit a feature edge
-                ! then count how many short we are and shuffle the array forward and search backwards
-                
-                if (centroid_array_count_old .ne. centroid_array_count) then
-                    deallocate(centroid_index_array,non_viable_edges,centroid_array)
-                    allocate(centroid_index_array(centroid_array_count), non_viable_edges(edge_count), centroid_array(centroid_array_count,3))
-                endif
-                
-                non_viable_edges = .false.
-                
-                ! flag all wrong flag edges
-                do pe=1, edge_count
-                    current_edge  = p_e_obj_relation_array(pe_start+pe)
-                    if (e_internal_array(current_edge)) then
-                        non_viable_edges(pe) = .true.
-                        cycle
-                    endif
-                    
-                    be = reversed_e_bound_indexing_array(current_edge)
-                    if ((e_boundary_flags(be).ne.flag) .or. (.not.feature_edges(be)) ) non_viable_edges(pe) = .true.
-                    
-                enddo
-                
-                ! select a correctly flagged edge
-                do pe=1,edge_count
-                    if (non_viable_edges(pe)) cycle
-                    
-                    current_edge  = p_e_obj_relation_array(pe_start+pe)
-                    be = reversed_e_bound_indexing_array(current_edge)
-                    
-                    if (e_boundary_flags(be).eq.flag) exit
-                enddo
-                
-                ! we dont need to double back on edges here
-                non_viable_edges(pe) = .true.
-                
-                ! find two correctly flagged faces
-                j = e_f_index_array(current_edge-1)
-                do 
-                    j=j+1
-                    if (f_bound_array(e_f_obj_relation_array(j))) then
-                        if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
-                    endif
-                enddo
-                face_1 = e_f_obj_relation_array(j)
-                do 
-                    j=j+1
-                    if (f_bound_array(e_f_obj_relation_array(j))) then
-                        if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
-                    endif
-                enddo
-                face_2 = e_f_obj_relation_array(j)
-                
-                if (j.gt.e_f_index_array(current_edge))then
-                    print*, ' non-feature boundary edge has more than 2 faces '
-                    stop
-                endif
-                
-                
-                
-                ! ok so we set positions 2,3,4 as this edge because we know 100% that we cant start on a flagged edge
-                centroid_index_array(2) = face_1
-                centroid_index_array(3) = current_edge
-                centroid_index_array(4) = face_2
+            endif
             
-                centroid_array_count_real = 4
-                
-                centroid_array(2,:) = f_centroid(face_1,:)
-                centroid_array(3,:) = e_centroid(current_edge,:)
-                centroid_array(4,:) = f_centroid(face_2,:)
-                
-                !print*, bp , face_1, current_edge, face_2
-                
-                prev_face = face_2
-                
-                ! i is the forward index
-                ! k is the backwards index
-                i=5
-                k=1
-                
-                do
-                
-                    if (pe.eq.edge_count) then
-                        pe = 1
-                    else
-                        pe=pe+1
-                    endif
-                    
-
-!                     print*, pe, non_viable_edges
-
-                    ! skip anything inviable
-                    if (non_viable_edges(pe)) cycle
-                
-                    current_edge = p_e_obj_relation_array(pe_start+pe)
-                    be = reversed_e_bound_indexing_array(current_edge)
-                    
-                    if (.not.feature_edges(be)) then
-                        ! find two faces and proceed as normal
-                        j = e_f_index_array(current_edge-1)
-                        do 
-                            j=j+1
-                            if (f_bound_array(e_f_obj_relation_array(j))) then
-                                if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
-                            endif
-                        enddo
-                        face_1 = e_f_obj_relation_array(j)
-                        do 
-                            j=j+1
-                            if (f_bound_array(e_f_obj_relation_array(j))) then
-                                if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
-                            endif
-                        enddo
-                        face_2 = e_f_obj_relation_array(j)
-                        if (j.gt.e_f_index_array(current_edge))then
-                            print*, ' non-feature boundary edge has more than 2 faces '
-                            stop
-                        endif
-                        
-                        if (prev_face .eq. face_1) then
-                            
-                            if (i+2 .gt. centroid_array_count) then
-                                
-                                do j=k,i
-                                    centroid_index_array(j-2) = centroid_index_array(j)
-                                    centroid_array(j-2,:)     = centroid_array(j,:)
-                                enddo
-                                
-                                i = i - 2
-                                
-                            endif
-                            
-                            centroid_index_array(i)   = current_edge
-                            centroid_index_array(i+1) = face_2
-                        
-                            centroid_array(i,:)   = e_centroid(current_edge,:)
-                            centroid_array(i+1,:) = f_centroid(face_2,:)
-                        
-                            centroid_array_count_real = centroid_array_count_real + 2
-                            
-                            non_viable_edges(pe) = .true.
-                        
-                            prev_face = centroid_index_array(i+1)
-                            i=i+2 
-                        
-                            print*, 'i-1 = face_1, i+1 = face_2',flag,e_boundary_flags(reversed_e_bound_indexing_array(current_edge)),feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1
-                        
-                        elseif (prev_face .eq. face_2) then
-                        
-                            if (k-2 .lt. 1) then
-                                
-                                do j=k,i,-1
-                                    centroid_index_array(j+2) = centroid_index_array(j)
-                                    centroid_array(j+2,:)     = centroid_array(j,:)
-                                enddo
-                                
-                                k = k + 2
-                                
-                            endif
-                        
-                            centroid_index_array(k)   = current_edge
-                            centroid_index_array(k-1) = face_1
-                        
-                            centroid_array(k,:)   = e_centroid(current_edge,:)
-                            centroid_array(k-1,:) = f_centroid(face_1,:)
-                        
-                            centroid_array_count_real = centroid_array_count_real + 2
-                            
-                            non_viable_edges(pe) = .true.
-                        
-                            prev_face = centroid_index_array(k-1)
-                            k=k-2 
-                        
-                            print*, 'swapped',flag,e_boundary_flags(reversed_e_bound_indexing_array(current_edge)),feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1
-                        
-                        else
-                            print*, 'none, looping',flag,e_boundary_flags(reversed_e_bound_indexing_array(current_edge)),feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1, edge_count, face_count
-                            
-                        endif
-                        
-                        
-                    else
-                        ! only find a single face
-                        ! and make sure its flagged right
-                        j = e_f_index_array(current_edge-1)
-                        do 
-                            j=j+1
-                            if (f_bound_array(e_f_obj_relation_array(j))) then
-                                if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
-                            endif
-                        enddo
-                        face_1 = e_f_obj_relation_array(j)
-                        
-                        
-                        
-                    endif
-                    
-                    
-                
+            
+!             if (feature_points(bp)) then
+!                 
+!                 ! FEATURE POINTS
+!                 ! IE CORNERS
+!                 
+!                 ! so remember in boundary preprocessing, I've flagged faces and points with boundary flags already
+!                 ! this means we just need to produce the edge, face array comprised only of the correct boundary flag 
+!                 ! AND remembering to start on the correct two feature edges
+!                 
+!                 flag = p_boundary_flags(bp)
+!                 
+!                 pe_start = p_e_index_array(p-1)
+!                 pf_start = p_f_index_array(p-1)
+!                 pe_end   = p_e_index_array(p)
+!                 pf_end   = p_f_index_array(p)
+!                 
+!                 edge_count = pe_end-pe_start
+!                 
+!                 edge_count_real = 2 ! remember that feature edges wont be counted here
+!                 do pe=(pe_start+1),pe_end
+!                     current_edge = p_e_obj_relation_array(pe)
+!                     if (e_internal_array(current_edge)) cycle
+!                     if (e_boundary_flags(reversed_e_bound_indexing_array(current_edge)) .eq. flag) edge_count_real = edge_count_real + 1
+!                 enddo
+!                 
+!                 face_count_real = 0
+!                 do pf=(pf_start+1),pf_end
+!                     current_face = p_f_obj_relation_array(pf)
+!                     if (f_internal_array(current_face)) cycle
+!                     if (f_boundary_flags(reversed_f_bound_indexing_array(current_face)) .eq. flag) face_count_real = face_count_real + 1
+!                 enddo
+!                 
+!                 centroid_array_count = edge_count_real + face_count_real
+!                 
+!                 ! ok so here we're going to pick a random edge in the list that does have the correct flag, and search connections forward until we hit a feature edge
+!                 ! then count how many short we are and shuffle the array forward and search backwards
+!                 
+!                 if (centroid_array_count_old .ne. centroid_array_count) then
+!                     deallocate(centroid_index_array,non_viable_edges,centroid_array)
+!                     allocate(centroid_index_array(centroid_array_count), non_viable_edges(edge_count), centroid_array(centroid_array_count,3))
+!                 endif
+!                 
+!                 non_viable_edges = .false.
+!                 
+!                 ! flag all wrong flag edges
+!                 do pe=1, edge_count
+!                     current_edge  = p_e_obj_relation_array(pe_start+pe)
+!                     if (e_internal_array(current_edge)) then
+!                         non_viable_edges(pe) = .true.
+!                         cycle
+!                     endif
+!                     
+!                     be = reversed_e_bound_indexing_array(current_edge)
+!                     if ((e_boundary_flags(be).ne.flag) .or. (.not.feature_edges(be)) ) non_viable_edges(pe) = .true.
+!                     
+!                 enddo
+!                 
+!                 ! select a correctly flagged edge
+!                 do pe=1,edge_count
+!                     if (non_viable_edges(pe)) cycle
+!                     
+!                     current_edge  = p_e_obj_relation_array(pe_start+pe)
+!                     be = reversed_e_bound_indexing_array(current_edge)
+!                     
+!                     if (e_boundary_flags(be).eq.flag) exit
+!                 enddo
+!                 
+!                 ! we dont need to double back on edges here
+!                 non_viable_edges(pe) = .true.
+!                 
+!                 ! find two correctly flagged faces
+!                 j = e_f_index_array(current_edge-1)
+!                 do 
+!                     j=j+1
+!                     if (f_bound_array(e_f_obj_relation_array(j))) then
+!                         if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
+!                     endif
+!                 enddo
+!                 face_1 = e_f_obj_relation_array(j)
+!                 do 
+!                     j=j+1
+!                     if (f_bound_array(e_f_obj_relation_array(j))) then
+!                         if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
+!                     endif
+!                 enddo
+!                 face_2 = e_f_obj_relation_array(j)
+!                 
+!                 if (j.gt.e_f_index_array(current_edge))then
+!                     print*, ' non-feature boundary edge has more than 2 faces '
+!                     stop
+!                 endif
+!                 
+!                 
+!                 
+!                 ! ok so we set positions 2,3,4 as this edge because we know 100% that we cant start on a flagged edge
+!                 centroid_index_array(2) = face_1
+!                 centroid_index_array(3) = current_edge
+!                 centroid_index_array(4) = face_2
+!             
+!                 centroid_array_count_real = 4
+!                 
+!                 centroid_array(2,:) = f_centroid(face_1,:)
+!                 centroid_array(3,:) = e_centroid(current_edge,:)
+!                 centroid_array(4,:) = f_centroid(face_2,:)
+!                 
+!                 !print*, bp , face_1, current_edge, face_2
+!                 
+!                 prev_face = face_2
+!                 
+!                 ! i is the forward index
+!                 ! k is the backwards index
+!                 i=5
+!                 k=1
+!                 
+!                 do
+!                 
+!                     if (pe.eq.edge_count) then
+!                         pe = 1
+!                     else
+!                         pe=pe+1
+!                     endif
+!                     
+! 
+! !                     print*, pe, non_viable_edges
+! 
+!                     ! skip anything inviable
+!                     if (non_viable_edges(pe)) cycle
+!                 
+!                     current_edge = p_e_obj_relation_array(pe_start+pe)
+!                     be = reversed_e_bound_indexing_array(current_edge)
+!                     
+!                     if (.not.feature_edges(be)) then
+!                         ! find two faces and proceed as normal
+!                         j = e_f_index_array(current_edge-1)
+!                         do 
+!                             j=j+1
+!                             if (f_bound_array(e_f_obj_relation_array(j))) then
+!                                 if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
+!                             endif
+!                         enddo
+!                         face_1 = e_f_obj_relation_array(j)
+!                         do 
+!                             j=j+1
+!                             if (f_bound_array(e_f_obj_relation_array(j))) then
+!                                 if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
+!                             endif
+!                         enddo
+!                         face_2 = e_f_obj_relation_array(j)
+!                         if (j.gt.e_f_index_array(current_edge))then
+!                             print*, ' non-feature boundary edge has more than 2 faces '
+!                             stop
+!                         endif
+!                         
+!                         if (prev_face .eq. face_1) then
+!                             
+!                             if (i+2 .gt. centroid_array_count) then
+!                                 
+!                                 do j=k,i
+!                                     centroid_index_array(j-2) = centroid_index_array(j)
+!                                     centroid_array(j-2,:)     = centroid_array(j,:)
+!                                 enddo
+!                                 
+!                                 i = i - 2
+!                                 
+!                             endif
+!                             
+!                             centroid_index_array(i)   = current_edge
+!                             centroid_index_array(i+1) = face_2
+!                         
+!                             centroid_array(i,:)   = e_centroid(current_edge,:)
+!                             centroid_array(i+1,:) = f_centroid(face_2,:)
+!                         
+!                             centroid_array_count_real = centroid_array_count_real + 2
+!                             
+!                             non_viable_edges(pe) = .true.
+!                         
+!                             prev_face = centroid_index_array(i+1)
+!                             i=i+2 
+!                         
+!                             print*, 'i-1 = face_1, i+1 = face_2',flag,e_boundary_flags(reversed_e_bound_indexing_array(current_edge)),feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1
+!                         
+!                         elseif (prev_face .eq. face_2) then
+!                         
+!                             if (k-2 .lt. 1) then
+!                                 
+!                                 do j=k,i,-1
+!                                     centroid_index_array(j+2) = centroid_index_array(j)
+!                                     centroid_array(j+2,:)     = centroid_array(j,:)
+!                                 enddo
+!                                 
+!                                 k = k + 2
+!                                 
+!                             endif
+!                         
+!                             centroid_index_array(k)   = current_edge
+!                             centroid_index_array(k-1) = face_1
+!                         
+!                             centroid_array(k,:)   = e_centroid(current_edge,:)
+!                             centroid_array(k-1,:) = f_centroid(face_1,:)
+!                         
+!                             centroid_array_count_real = centroid_array_count_real + 2
+!                             
+!                             non_viable_edges(pe) = .true.
+!                         
+!                             prev_face = centroid_index_array(k-1)
+!                             k=k-2 
+!                         
+!                             print*, 'swapped',flag,e_boundary_flags(reversed_e_bound_indexing_array(current_edge)),feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1
+!                         
+!                         else
+!                             print*, 'none, looping',flag,e_boundary_flags(reversed_e_bound_indexing_array(current_edge)),feature_edges(reversed_e_bound_indexing_array(current_edge))!, i, centroid_array_count+1, edge_count, face_count
+!                             
+!                         endif
+!                         
+!                         
+!                     else
+!                         ! only find a single face
+!                         ! and make sure its flagged right
+!                         j = e_f_index_array(current_edge-1)
+!                         do 
+!                             j=j+1
+!                             if (f_bound_array(e_f_obj_relation_array(j))) then
+!                                 if (f_boundary_flags(reversed_f_bound_indexing_array(e_f_obj_relation_array(j))) .eq. flag ) exit
+!                             endif
+!                         enddo
+!                         face_1 = e_f_obj_relation_array(j)
+!                         
+!                         
+!                         
+!                     endif
+!                     
+!                     
+!                 
+! !                     print*, pe, current_edge, face_1, face_2 , prev_face
+!                     
+!                     
+!                     print*, ' '
 !                     print*, pe, current_edge, face_1, face_2 , prev_face
-                    
-                    
-                    print*, ' '
-                    print*, pe, current_edge, face_1, face_2 , prev_face
-                    print*, ' '
-                    print*, 'centroid array ', centroid_index_array
-                    print*, ' '
-                    print*, ' '
-                    print*, ' '
-                    
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                enddo
-                
-                print*, 'centroid array end', centroid_index_array
-                
-            else
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                ! NON FEATURE POINTS
-                ! IE NOT CORNERS
-                
-                pe_start = p_e_index_array(p-1)
-                pf_start = p_f_index_array(p-1)
-                pe_end   = p_e_index_array(p)
-                pf_end   = p_f_index_array(p)
-                
-                edge_count = pe_end-pe_start
-                face_count = pf_end-pf_start
-                
-                centroid_array_count = 1 + edge_count + face_count
-            
-                ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
-            
-                if (centroid_array_count_old .ne. centroid_array_count) then
-                    deallocate(centroid_index_array,non_viable_edges,centroid_array)
-                    allocate(centroid_index_array(centroid_array_count), non_viable_edges(edge_count), centroid_array(centroid_array_count,3))
-                endif
-            
-                pe = 1
-                
-                non_viable_edges = .false.
-            
-                do ! we must only use boundary edges
-                    current_edge = p_e_obj_relation_array(pe_start+pe)
-                    if (e_bound_array(current_edge)) exit
-                    non_viable_edges(pe) = .true.
-                    
-                    if (pe.eq.edge_count) then
-                        pe = 1
-                    else
-                        pe=pe+1
-                    endif
-                enddo
-                
-                j = e_f_index_array(current_edge-1)
-                do 
-                    j=j+1
-                    if (f_bound_array(e_f_obj_relation_array(j))) exit
-                enddo
-                face_1 = e_f_obj_relation_array(j)
-                do 
-                    j=j+1
-                    if (f_bound_array(e_f_obj_relation_array(j))) exit
-                enddo
-                face_2 = e_f_obj_relation_array(j)
-                
-                if (j.gt.e_f_index_array(current_edge))then
-                    print*, ' non-feature boundary edge has more than 2 faces '
-                    stop
-                endif
-                
-                centroid_index_array(1) = face_1
-                centroid_index_array(2) = current_edge
-                centroid_index_array(3) = face_2
-            
-                centroid_array_count_real = 3
-                
-                centroid_array(1,:) = f_centroid(face_1,:)
-                centroid_array(2,:) = e_centroid(current_edge,:)
-                centroid_array(3,:) = f_centroid(face_2,:)
-                
-                prev_face = face_2
-            
-                !print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
-            
-                i=4
-            
-                !print*, pe, current_edge, face_1, face_2 , prev_face
-                
-                do
-                
-                    if (pe.eq.edge_count) then
-                        pe = 1
-                    else
-                        pe=pe+1
-                    endif
-
-                    !print*, pe, non_viable_edges
-                    if (non_viable_edges(pe)) cycle
-                
-                    do ! we must only use boundary edges
-                        current_edge = p_e_obj_relation_array(pe_start+pe)
-                        if (e_bound_array(current_edge)) exit
-                        non_viable_edges(pe) = .true.
-                        
-                        if (pe.eq.edge_count) then
-                            pe = 1
-                        else
-                            pe=pe+1
-                        endif
-                        
-                    enddo
-                    
-                    j = e_f_index_array(current_edge-1)
-                    do 
-                        j=j+1
-                        if (f_bound_array(e_f_obj_relation_array(j))) exit
-                    enddo
-                    face_1 = e_f_obj_relation_array(j)
-                    do 
-                        j=j+1
-                        if (f_bound_array(e_f_obj_relation_array(j))) exit
-                    enddo
-                    face_2 = e_f_obj_relation_array(j)
-                    
-                    if (j.gt.e_f_index_array(current_edge))then
-                        print*, ' non-feature boundary edge has more than 2 faces '
-                        stop
-                    endif
-                        
-                    if (prev_face .eq. face_1) then
-            
-                        centroid_index_array(i)   = current_edge
-                        centroid_index_array(i+1) = face_2
-                    
-                        centroid_array(i,:)   = e_centroid(current_edge,:)
-                        centroid_array(i+1,:) = f_centroid(face_2,:)
-                    
-                        centroid_array_count_real = centroid_array_count_real + 2
-                        
-                        non_viable_edges(pe) = .true.
-                    
-                        prev_face = centroid_index_array(i+1)
-                        i=i+2 
-                    
-                        !print*, 'i-1 = face_1, i+1 = face_2', i, centroid_array_count+1
-                    
-                        if (face_2 .eq. centroid_index_array(1)) exit
-                    
-                    elseif (prev_face .eq. face_2) then
-                    
-                        centroid_index_array(i)   = current_edge
-                        centroid_index_array(i+1) = face_1
-                    
-                        centroid_array(i,:)   = e_centroid(current_edge,:)
-                        centroid_array(i+1,:) = f_centroid(face_1,:)
-                    
-                        centroid_array_count_real = centroid_array_count_real + 2
-                        
-                        non_viable_edges(pe) = .true.
-                    
-                        prev_face = centroid_index_array(i+1)
-                        i=i+2 
-                    
-                        !print*, 'swapped', i, centroid_array_count+1
-                    
-                        if (face_1 .eq. centroid_index_array(1)) exit
-                    
-                    else
-                        !print*, 'none, looping', i, centroid_array_count+1, edge_count, face_count
-                        
-                    endif
-                
-                    !print*, pe, current_edge, face_1, face_2 , prev_face
-                    
-                    !print*, 'centroid array ', centroid_index_array
-                    
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                enddo
-            
-               ! print*, 'centroid array ', centroid_index_array(1:centroid_array_count_real)
-                
-            endif
-            centroid_array_count_old = centroid_array_count
-            
-            
-            !if (i.ne.centroid_array_count+1) print*, 'centroid array count broken'
-            !if (centroid_index_array(1).ne.centroid_index_array(centroid_array_count)) print*, 'internal centroid array start and end wrong'
-            
-            
-            in_progress_projection(:) = 0.0
-            in_progress_centroid = coords(p,:)
-            ! by making i1, i2, i3 all p, the volume change should be zero
-            
-            
-            c1(:) = coords(i1,:)
-            c2(:) = coords(i2,:)
-            
-!             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count_real, centroid_array)
-            
-            direction_array(:) = p_normal_vectors(bp,:)
-            
-            angle = alignment(in_progress_projection, direction_array)
-            
-            if (angle .lt. 0.) then
-                in_progress_projection(:) = in_progress_projection(:)
-            else
-                in_progress_projection(:) = -in_progress_projection(:)
-            endif
-            
-            sbb(bp,:) = in_progress_projection
-            
+!                     print*, ' '
+!                     print*, 'centroid array ', centroid_index_array
+!                     print*, ' '
+!                     print*, ' '
+!                     print*, ' '
+!                     
+! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!                 enddo
+!                 
+!                 print*, 'centroid array end', centroid_index_array
+!                 
+!             else
+! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!                 ! NON FEATURE POINTS
+!                 ! IE NOT CORNERS
+!                 
+!                 pe_start = p_e_index_array(p-1)
+!                 pf_start = p_f_index_array(p-1)
+!                 pe_end   = p_e_index_array(p)
+!                 pf_end   = p_f_index_array(p)
+!                 
+!                 edge_count = pe_end-pe_start
+!                 face_count = pf_end-pf_start
+!                 
+!                 centroid_array_count = 1 + edge_count + face_count
+!             
+!                 ! sum of number of faces, number of edges plus 1 for the duplicate starting edge
+!             
+!                 if (centroid_array_count_old .ne. centroid_array_count) then
+!                     deallocate(centroid_index_array,non_viable_edges,centroid_array)
+!                     allocate(centroid_index_array(centroid_array_count), non_viable_edges(edge_count), centroid_array(centroid_array_count,3))
+!                 endif
+!             
+!                 pe = 1
+!                 
+!                 non_viable_edges = .false.
+!             
+!                 do ! we must only use boundary edges
+!                     current_edge = p_e_obj_relation_array(pe_start+pe)
+!                     if (e_bound_array(current_edge)) exit
+!                     non_viable_edges(pe) = .true.
+!                     
+!                     if (pe.eq.edge_count) then
+!                         pe = 1
+!                     else
+!                         pe=pe+1
+!                     endif
+!                 enddo
+!                 
+!                 j = e_f_index_array(current_edge-1)
+!                 do 
+!                     j=j+1
+!                     if (f_bound_array(e_f_obj_relation_array(j))) exit
+!                 enddo
+!                 face_1 = e_f_obj_relation_array(j)
+!                 do 
+!                     j=j+1
+!                     if (f_bound_array(e_f_obj_relation_array(j))) exit
+!                 enddo
+!                 face_2 = e_f_obj_relation_array(j)
+!                 
+!                 if (j.gt.e_f_index_array(current_edge))then
+!                     print*, ' non-feature boundary edge has more than 2 faces '
+!                     stop
+!                 endif
+!                 
+!                 centroid_index_array(1) = face_1
+!                 centroid_index_array(2) = current_edge
+!                 centroid_index_array(3) = face_2
+!             
+!                 centroid_array_count_real = 3
+!                 
+!                 centroid_array(1,:) = f_centroid(face_1,:)
+!                 centroid_array(2,:) = e_centroid(current_edge,:)
+!                 centroid_array(3,:) = f_centroid(face_2,:)
+!                 
+!                 prev_face = face_2
+!             
+!                 !print*, 'number of faces ', face_count, ' number of cells ', cell_count, ' count ', centroid_array_count
+!             
+!                 i=4
+!             
+!                 !print*, pe, current_edge, face_1, face_2 , prev_face
+!                 
+!                 do
+!                 
+!                     if (pe.eq.edge_count) then
+!                         pe = 1
+!                     else
+!                         pe=pe+1
+!                     endif
+! 
+!                     !print*, pe, non_viable_edges
+!                     if (non_viable_edges(pe)) cycle
+!                 
+!                     do ! we must only use boundary edges
+!                         current_edge = p_e_obj_relation_array(pe_start+pe)
+!                         if (e_bound_array(current_edge)) exit
+!                         non_viable_edges(pe) = .true.
+!                         
+!                         if (pe.eq.edge_count) then
+!                             pe = 1
+!                         else
+!                             pe=pe+1
+!                         endif
+!                         
+!                     enddo
+!                     
+!                     j = e_f_index_array(current_edge-1)
+!                     do 
+!                         j=j+1
+!                         if (f_bound_array(e_f_obj_relation_array(j))) exit
+!                     enddo
+!                     face_1 = e_f_obj_relation_array(j)
+!                     do 
+!                         j=j+1
+!                         if (f_bound_array(e_f_obj_relation_array(j))) exit
+!                     enddo
+!                     face_2 = e_f_obj_relation_array(j)
+!                     
+!                     if (j.gt.e_f_index_array(current_edge))then
+!                         print*, ' non-feature boundary edge has more than 2 faces '
+!                         stop
+!                     endif
+!                         
+!                     if (prev_face .eq. face_1) then
+!             
+!                         centroid_index_array(i)   = current_edge
+!                         centroid_index_array(i+1) = face_2
+!                     
+!                         centroid_array(i,:)   = e_centroid(current_edge,:)
+!                         centroid_array(i+1,:) = f_centroid(face_2,:)
+!                     
+!                         centroid_array_count_real = centroid_array_count_real + 2
+!                         
+!                         non_viable_edges(pe) = .true.
+!                     
+!                         prev_face = centroid_index_array(i+1)
+!                         i=i+2 
+!                     
+!                         !print*, 'i-1 = face_1, i+1 = face_2', i, centroid_array_count+1
+!                     
+!                         if (face_2 .eq. centroid_index_array(1)) exit
+!                     
+!                     elseif (prev_face .eq. face_2) then
+!                     
+!                         centroid_index_array(i)   = current_edge
+!                         centroid_index_array(i+1) = face_1
+!                     
+!                         centroid_array(i,:)   = e_centroid(current_edge,:)
+!                         centroid_array(i+1,:) = f_centroid(face_1,:)
+!                     
+!                         centroid_array_count_real = centroid_array_count_real + 2
+!                         
+!                         non_viable_edges(pe) = .true.
+!                     
+!                         prev_face = centroid_index_array(i+1)
+!                         i=i+2 
+!                     
+!                         !print*, 'swapped', i, centroid_array_count+1
+!                     
+!                         if (face_1 .eq. centroid_index_array(1)) exit
+!                     
+!                     else
+!                         !print*, 'none, looping', i, centroid_array_count+1, edge_count, face_count
+!                         
+!                     endif
+!                 
+!                     !print*, pe, current_edge, face_1, face_2 , prev_face
+!                     
+!                     !print*, 'centroid array ', centroid_index_array
+!                     
+! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!                 enddo
+!             
+!                ! print*, 'centroid array ', centroid_index_array(1:centroid_array_count_real)
+!                 
+!             endif
+!             centroid_array_count_old = centroid_array_count
+!             
+!             
+!             !if (i.ne.centroid_array_count+1) print*, 'centroid array count broken'
+!             !if (centroid_index_array(1).ne.centroid_index_array(centroid_array_count)) print*, 'internal centroid array start and end wrong'
+!             
+!             
+!             in_progress_projection(:) = 0.0
+!             in_progress_centroid = coords(p,:)
+!             ! by making i1, i2, i3 all p, the volume change should be zero
+!             
+!             
+!             c1(:) = coords(i1,:)
+!             c2(:) = coords(i2,:)
+!             
+! !             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count_real, centroid_array)
+!             
+!             direction_array(:) = p_normal_vectors(bp,:)
+!             
+!             angle = alignment(in_progress_projection, direction_array)
+!             
+!             if (angle .lt. 0.) then
+!                 in_progress_projection(:) = in_progress_projection(:)
+!             else
+!                 in_progress_projection(:) = -in_progress_projection(:)
+!             endif
+!             
+!             sbb(bp,:) = in_progress_projection
+!             
         enddo
         
         !do i=1,b_npoin
@@ -1051,9 +1060,37 @@ module volume_processing
                 viable_mains(m_i) = .false.
                 
             case(non_feature_point)
+            
+                ! edges are main
+                ! faces are tertiary
+                m_stt   = p_e_index_array(obj-1)
+                t_stt   = p_f_index_array(obj-1)
+                m_end   = p_e_index_array(obj)
+                t_end   = p_f_index_array(obj)
                 
+                main_count = m_end-m_stt
+                tert_count = t_end-t_stt
                 
+                centroid_array_count = 1 + edge_count + face_count
                 
+                ! allocate my temp arrays
+                allocate(viable_mains(main_count), centroid_obj_array(centroid_array_count))
+                
+                ! here we flag only boundary edges as viable
+                viable_mains = .false.
+                
+                m_i = 1
+                do m_i=1, edge_count
+                    mm = p_e_obj_relation_array(m_stt+m_i)
+                    if (e_bound_array(mm)) viable_mains(m_i) = .true.
+                enddo
+                m_i = 1
+                
+                ! then select a viable edge (ie a boundary edge)
+                do 
+                    if (viable_mains(m_i)) exit
+                    m_i = m_i + 1
+                enddo
                 
             case(featre_point)
                 
@@ -1077,15 +1114,7 @@ module volume_processing
             ! obviously we get our objects
             call obj_select(m_i, m_stt, mm, tt)
             
-!                     print*, fwd_i, bck_i
-            
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
-            
-!                     print*, tt(1), mm, tt(2)
-!                     print*, centroid_obj_array
-!                     print*, fwd_i, bck_i, state
-!                     print*, ''
-!                     print*, ''
             
             if (state) then
                 
@@ -1105,7 +1134,7 @@ module volume_processing
     
     subroutine obj_select(m_i, m_stt, mm, tt)
         implicit none
-        integer(KIND=INT32) :: m_i, m_stt, mm, tt(2)
+        integer(KIND=INT32) :: i, m_i, m_stt, mm, tt(2)
         
         
         select case(obj_type)
@@ -1127,7 +1156,26 @@ module volume_processing
                 
             case(non_feature_point)
                 
+                ! edges are main
+                ! faces are tertiary
+                mm = p_e_obj_relation_array(m_stt+m_i)
                 
+                i = e_f_index_array(mm-1)
+                do 
+                    i=i+1
+                    if (f_bound_array(e_f_obj_relation_array(i))) exit
+                enddo
+                tt(1) = e_f_obj_relation_array(i)
+                do 
+                    i=i+1
+                    if (f_bound_array(e_f_obj_relation_array(i))) exit
+                enddo
+                tt(2) = e_f_obj_relation_array(i)
+                
+                if (i.gt.e_f_index_array(mm))then
+                    print*, ' non-feature boundary edge has more than 2 faces '
+                    stop
+                endif
                 
                 
             case(featre_point)
@@ -1172,14 +1220,22 @@ module volume_processing
                     centroid_array(i,:) = c_centroid(centroid_obj_array(i),:)
                 enddo
                 
-!                 do i=1,centroid_array_count-1
-!                     print*, centroid_obj_array(i)
-!                     print*, centroid_array(i,:)
-!                 enddo
-                
             case(non_feature_point)
                 
                 
+!                 edges are main
+!                 faces are tertiary
+                do i=2,centroid_array_count-1,2
+                    centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
+                enddo
+                do i=1,centroid_array_count,2
+                    centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
+                enddo
+!                 
+! !                 do i=1,centroid_array_count-1
+! !                     print*, centroid_obj_array(i)
+! !                     print*, centroid_array(i,:)
+! !                 enddo
                 
                 
             case(featre_point)
@@ -1207,8 +1263,7 @@ module volume_processing
                 
             case(non_feature_point)
                 
-                
-                
+                if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) e_state = .true.
                 
             case(featre_point)
             
