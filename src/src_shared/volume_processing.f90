@@ -1263,6 +1263,8 @@ module volume_processing
                 ! so we drop that
                 allocate(centroid_array(centroid_array_count-1,3))
                 
+                print*, 'count sbb ', centroid_array_count
+                
                 ! start on a main
                 
 !                 faces are main
