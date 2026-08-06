@@ -502,7 +502,7 @@ module volume_processing
             if (feature_points(bp)) then
                 ! corners
                 obj_type = featre_point
-                
+                cycle
             else
                 ! not corners
                 obj_type = non_feature_point
@@ -511,6 +511,29 @@ module volume_processing
                 
             endif
             
+            in_progress_projection(:) = 0.0
+            in_progress_centroid = coords(p,:)
+            ! by making i1, i2, i3 all p, the volume change should be zero
+            
+            
+            c1(:) = coords(i1,:)
+            c2(:) = coords(i2,:)
+            
+!             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array_count_real, centroid_array)
+            
+            direction_array(:) = p_normal_vectors(bp,:)
+            
+            angle = alignment(in_progress_projection, direction_array)
+            
+            if (angle .lt. 0.) then
+                in_progress_projection(:) = in_progress_projection(:)
+            else
+                in_progress_projection(:) = -in_progress_projection(:)
+            endif
+            
+            sbb(bp,:) = in_progress_projection
+            
+			print*, bp, sbb(be,:)
             
         enddo
 !             if (feature_points(bp)) then
@@ -1147,11 +1170,11 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-            print*, tt(1), mm, tt(2)
-            print*, centroid_obj_array
-            print*, ''
-            print*, ''
-            print*, ''
+!             print*, tt(1), mm, tt(2)
+!             print*, centroid_obj_array
+!             print*, ''
+!             print*, ''
+!             print*, ''
             
             if (state) then
                 
@@ -1271,10 +1294,10 @@ module volume_processing
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
                 
-!                 do i=1,centroid_array_count-1
-!                     print*, centroid_obj_array(i)
-!                     print*, centroid_array(i,:)
-!                 enddo
+                do i=1,centroid_array_count-1
+                    print*, centroid_obj_array(i)
+                    print*, centroid_array(i,:)
+                enddo
                 
                 
             case(featre_point)
@@ -1301,8 +1324,6 @@ module volume_processing
                 if (f_bound_array(centroid_obj_array(centroid_array_count-1))) e_state = .true.
                 
             case(non_feature_point)
-                
-                print*, centroid_array_count
                 
                 if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) e_state = .true.
                 
