@@ -997,15 +997,15 @@ module volume_processing
                     tt(1) = f_c_obj_relation_array(f_c_index_array(mm)    )
                     tt(2) = f_c_obj_relation_array(f_c_index_array(mm-1)+1)
                     
-                    print*, fwd_i, bck_i
+!                     print*, fwd_i, bck_i
                     
                     call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
                     
-                    print*, tt(1), mm, tt(2)
-                    print*, centroid_obj_array
-                    print*, fwd_i, bck_i, state
-                    print*, ''
-                    print*, ''
+!                     print*, tt(1), mm, tt(2)
+!                     print*, centroid_obj_array
+!                     print*, fwd_i, bck_i, state
+!                     print*, ''
+!                     print*, ''
                     
                     if (state) then
                         
@@ -1016,10 +1016,11 @@ module volume_processing
                     endif
                     
                     
-                    if (k.gt.50) stop
+!                     if (k.gt.50) stop
                     
                 enddo
                 
+                print*, centroid_obj_array
                 
             case(boundary_edge)
                 
@@ -1063,9 +1064,6 @@ module volume_processing
         
         ! if tt(1) = jj(2) then our centroid array should look like tt(2), mm, jj swap tt go backward
         ! if tt(2) = jj(2) then our centroid array should look like tt(1), mm, jj no swap go backward
-        
-        print*, 'inside', c_array
-        
         if    (tt(1).eq.jj(1)) then
             
             call centroid_shuffle(c_array, fwd_i, bck_i,  2)
