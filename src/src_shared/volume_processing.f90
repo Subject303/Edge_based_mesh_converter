@@ -457,6 +457,9 @@ module volume_processing
         !enddo
         !print*,'aaaa'
         
+        
+        print*,'backstop in b_edge'
+        stop
     end subroutine boundary_edge_volume_processing
     
     
