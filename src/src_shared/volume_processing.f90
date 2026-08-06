@@ -533,7 +533,7 @@ module volume_processing
             
             sbb(bp,:) = in_progress_projection
             
-			print*, bp, sbb(be,:)
+			print*, bp, sbb(bp,:)
             
         enddo
 !             if (feature_points(bp)) then
