@@ -303,6 +303,7 @@ module volume_processing
                 print*, centroid_array(:,3)
 			endif
 			
+			print*,in_progress_projection
 			print*, be, sb(be,:), angle
             
         enddo
