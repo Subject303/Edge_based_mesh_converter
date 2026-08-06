@@ -58,7 +58,7 @@ module volume_processing
 !             i2 = e_p_obj_relation_array(e_p_index_array(e))
             ! i1 and i2 are the constituent points of edge e
             
-            call centroid_assembler(e, 1, centroid_array)
+            call centroid_assembler(e, 1, centroid_index_array)
             
             
             
