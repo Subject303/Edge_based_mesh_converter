@@ -439,7 +439,7 @@ module volume_processing
         !enddo
         !print*,'aaaa'
         
-        print*, 'backstop i_edge volume procs'
+        print*, 'backstop b_edge volume procs'
         stop
     end subroutine boundary_edge_volume_processing
     
@@ -1081,14 +1081,7 @@ module volume_processing
             
         enddo
         
-        print*, centroid_obj_array
-        
         call centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count)
-        
-        do i=1,centroid_array_count
-            print*, centroid_obj_array(i)
-            print*, centroid_array(i,:)
-        enddo
         
     end subroutine centroid_assembler
     
@@ -1148,7 +1141,8 @@ module volume_processing
                 
             case(boundary_edge)
                 
-                
+                ! we allowed ourselves one extra space on our allocations to make the swapper happy, 
+                ! so we drop that
                 allocate(centroid_array(centroid_array_count-1,3))
                 
                 ! faces are main
@@ -1160,6 +1154,10 @@ module volume_processing
                     centroid_array(i,:) = c_centroid(centroid_obj_array(i),:)
                 enddo
                 
+                do i=1,centroid_array_count-1
+                    print*, centroid_obj_array(i)
+                    print*, centroid_array(i,:)
+                enddo
                 
             case(non_feature_point)
                 
