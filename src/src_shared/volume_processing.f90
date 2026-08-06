@@ -1244,6 +1244,8 @@ module volume_processing
                 
                 allocate(centroid_array(centroid_array_count,3))
                 
+                print*, 'count sn ', centroid_array_count
+                
                 ! faces are main
                 ! cells are tertiary
                 do i=2,centroid_array_count-1,2
@@ -1259,8 +1261,6 @@ module volume_processing
                 ! so we drop that
                 allocate(centroid_array(centroid_array_count-1,3))
                 
-                print*, 'count ', centroid_array_count-1
-                
 !                 faces are main
 !                 cells are tertiary
                 do i=1,centroid_array_count-1,2
@@ -1274,6 +1274,8 @@ module volume_processing
             case(non_feature_point)
                 
                 allocate(centroid_array(centroid_array_count,3))
+                
+                print*, 'count sbb ', centroid_array_count
                 
 !                 edges are main
 !                 faces are tertiary
