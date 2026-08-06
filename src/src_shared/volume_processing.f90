@@ -1092,6 +1092,17 @@ module volume_processing
                     m_i = m_i + 1
                 enddo
                 
+                call obj_select(m_i, m_stt, mm, tt)
+                
+                ! we just assign our values into the first available slots
+                centroid_obj_array(1) = tt(1)
+                centroid_obj_array(2) = mm
+                centroid_obj_array(3) = tt(2)
+                
+                ! and initialise our indexers
+                fwd_i = 3
+                bck_i = 1
+                
             case(featre_point)
                 
                 
