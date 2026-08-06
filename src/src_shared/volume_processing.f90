@@ -295,7 +295,7 @@ module volume_processing
                 sb(be,:) = -in_progress_projection
 			endif
 			
-! 			print*, be, sb(be,:)
+			print*, be, sb(be,:)
             
 !             ef_start = e_f_index_array(e-1)
 !             ec_start = e_c_index_array(e-1)
