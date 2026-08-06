@@ -1132,6 +1132,12 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
+            print*, mm, tt(1), tt(2)
+            print*, centroid_obj_array
+            print*, ''
+            print*, ''
+            print*, ''
+            
             if (state) then
                 
                 viable_mains(m_i) = .false.
@@ -1247,11 +1253,11 @@ module volume_processing
                 do i=1,centroid_array_count,2
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
-!                 
-! !                 do i=1,centroid_array_count-1
-! !                     print*, centroid_obj_array(i)
-! !                     print*, centroid_array(i,:)
-! !                 enddo
+                
+!                 do i=1,centroid_array_count-1
+!                     print*, centroid_obj_array(i)
+!                     print*, centroid_array(i,:)
+!                 enddo
                 
                 
             case(featre_point)
