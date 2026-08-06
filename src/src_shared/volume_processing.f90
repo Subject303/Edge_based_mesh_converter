@@ -48,7 +48,7 @@ module volume_processing
         !   call the processer subroutine and sum the projections and volumes
         
         !centroid_array_count_old = -1
-        !allocate(centroid_index_array(0),non_viable_faces(0),centroid_array(0,0))
+        allocate(centroid_index_array(0),non_viable_faces(0),centroid_array(0,0))
         
         do ie = 1, i_nedge
             e = e_internal_indexing_array(ie)
