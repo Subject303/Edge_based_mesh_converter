@@ -1071,7 +1071,7 @@ module volume_processing
                 main_count = m_end-m_stt
                 tert_count = t_end-t_stt
                 
-                centroid_array_count = 1 + edge_count + face_count
+                centroid_array_count = 1 + main_count + tert_count
                 
                 ! allocate my temp arrays
                 allocate(viable_mains(main_count), centroid_obj_array(centroid_array_count))
