@@ -1064,6 +1064,8 @@ module volume_processing
         ! if tt(1) = jj(2) then our centroid array should look like tt(2), mm, jj swap tt go backward
         ! if tt(2) = jj(2) then our centroid array should look like tt(1), mm, jj no swap go backward
         
+        print*, 'inside', c_array
+        
         if    (tt(1).eq.jj(1)) then
             
             call centroid_shuffle(c_array, fwd_i, bck_i,  2)
