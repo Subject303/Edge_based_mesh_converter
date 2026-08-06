@@ -290,7 +290,7 @@ module volume_processing
             
             angle = alignment(in_progress_projection, direction_array)
             
-            if (angle .le. 0.) then
+            if (angle .lt. 0.) then
                 sb(be,:) = in_progress_projection(:)
 			else
                 sb(be,:) = -in_progress_projection
@@ -1267,6 +1267,10 @@ module volume_processing
                 do i=2,centroid_array_count-2,2
                     centroid_array(i,:) = c_centroid(centroid_obj_array(i),:)
                 enddo
+                
+                print*, centroid_array_count-1
+                print*, centroid_array_count-2
+                print*, centroid_obj_array
                 
             case(non_feature_point)
                 
