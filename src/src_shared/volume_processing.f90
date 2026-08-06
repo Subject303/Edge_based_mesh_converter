@@ -1084,8 +1084,8 @@ module volume_processing
                     mm = p_e_obj_relation_array(m_stt+m_i)
                     if (e_bound_array(mm)) viable_mains(m_i) = .true.
                 enddo
-                m_i = 1
                 
+                m_i = 1
                 ! then select a viable edge (ie a boundary edge)
                 do 
                     if (viable_mains(m_i)) exit
