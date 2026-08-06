@@ -1315,7 +1315,10 @@ module volume_processing
                 
             case(boundary_edge)
                 
-                if (f_bound_array(centroid_obj_array(centroid_array_count-1))) e_state = .true.
+                !if (f_bound_array(centroid_obj_array(centroid_array_count-1))) e_state = .true.
+                
+                
+                if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
                 
             case(non_feature_point)
                 
