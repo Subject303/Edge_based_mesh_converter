@@ -1002,9 +1002,13 @@ module volume_processing
                     
                     call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
                     
+                    print*, state
+                    print*, ''
+                    print*, ''
+                    
                     if (state) then
                         
-                        !viable_mains(m_i) = .false.
+                        viable_mains(m_i) = .false.
                         
                         ! our end condition is we start and end on the same value
                         if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) exit
