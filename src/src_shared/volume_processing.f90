@@ -289,7 +289,7 @@ module volume_processing
             
             angle = alignment(in_progress_projection, direction_array)
             
-            if (angle .lt. 0.) then
+            if (angle .le. 0.) then
                 sb(be,:) = in_progress_projection(:)
 			else
                 sb(be,:) = -in_progress_projection
@@ -1290,7 +1290,7 @@ module volume_processing
         
         if (change.gt.0)then
         
-            if (i + change .ge. 1+c_size) then
+            if (i + change .gt. c_size) then
                 do k=j, i
                     c_array(k-change) = c_array(k)
                 enddo
@@ -1302,7 +1302,7 @@ module volume_processing
             
         elseif (change.lt.0)then
         
-            if (j + change .le. -1) then
+            if (j + change .lt. 0) then
                 do k=i, j, -1
                     c_array(k-change) = c_array(k)
                 enddo
