@@ -1080,7 +1080,7 @@ module volume_processing
                 viable_mains = .false.
                 
                 m_i = 1
-                do m_i=1, edge_count
+                do m_i=1, main_count
                     mm = p_e_obj_relation_array(m_stt+m_i)
                     if (e_bound_array(mm)) viable_mains(m_i) = .true.
                 enddo
