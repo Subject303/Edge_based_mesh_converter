@@ -1036,8 +1036,6 @@ module volume_processing
         
         call centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count, obj_type)
         
-        deallocate(centroid_obj_array)
-        
     end subroutine centroid_assembler
     
     subroutine obj_select(m_i, m_stt, mm, tt, obj_type)
