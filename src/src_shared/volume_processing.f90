@@ -936,7 +936,7 @@ module volume_processing
         integer(KIND=INT32),allocatable :: main_obj(:), tert_obj(:), centroid_obj_array(:)
         !real(KIND=REAL64)  ,allocatable :: centroid_array(:,3)
         logical, allocatable :: viable_mains(:)
-        logical ::  state
+        logical ::  e_state, state
         
         deallocate(centroid_obj_array)
         
@@ -950,78 +950,16 @@ module volume_processing
                 m_end   = e_f_index_array(obj)
                 t_end   = e_c_index_array(obj)
                 
-                main_count = m_end-m_stt
-                tert_count = t_end-t_stt
-                
-                ! for i_edge the centroid will consist of all adjacent centroids plus one repeat
-                centroid_array_count = 1 + main_count + tert_count
-                
-                ! allocate my temp arrays
-                allocate(viable_mains(main_count), centroid_obj_array(centroid_array_count))
-                
-                ! all main objects are viable to begin with.
-                viable_mains = .true.
-                
-                ! inital edge setup doesnt matter much for i_edge
-                ! just pick a random edge, my end condition is whenever the first cell is equal to the last cell
-                m_i = 1
-                
-                mm    = e_f_obj_relation_array(m_stt + m_i)
-                tt(1) = f_c_obj_relation_array(f_c_index_array(mm)    )
-                tt(2) = f_c_obj_relation_array(f_c_index_array(mm-1)+1)
-                
-                ! we just assign our values into the first available slots
-                centroid_obj_array(1) = tt(1)
-                centroid_obj_array(2) = mm
-                centroid_obj_array(3) = tt(2)
-                
-                ! and initialise our indexers
-                fwd_i = 3
-                bck_i = 1
-                
-                k=1
-                do
-                    k=k+1
-                    ! now we loop about our centroids
-                    if (m_i.eq.main_count) then
-                        m_i = 1
-                    else
-                        m_i=m_i+1
-                    endif
-                    
-                    ! if we know the centroid isnt viable we skip it
-                    if (.not.viable_mains(m_i)) cycle
-                    
-                    ! obviously we get our objects
-                    mm    = e_f_obj_relation_array(m_stt + m_i)
-                    tt(1) = f_c_obj_relation_array(f_c_index_array(mm)    )
-                    tt(2) = f_c_obj_relation_array(f_c_index_array(mm-1)+1)
-                    
-!                     print*, fwd_i, bck_i
-                    
-                    call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
-                    
-!                     print*, tt(1), mm, tt(2)
-!                     print*, centroid_obj_array
-!                     print*, fwd_i, bck_i, state
-!                     print*, ''
-!                     print*, ''
-                    
-                    if (state) then
-                        
-                        viable_mains(m_i) = .false.
-                        
-                        ! our end condition is the first edge and last edge being the same
-                        if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) exit
-                    endif
-                    
-                    
-!                     if (k.gt.50) stop
-                    
-                enddo
-                
-                print*, centroid_obj_array
-                
+            main_count = m_end-m_stt
+            tert_count = t_end-t_stt
+            
+            ! for i_edge the centroid will consist of all adjacent centroids plus one repeat
+            centroid_array_count = 1 + main_count + tert_count
+            
+            ! inital edge setup doesnt matter much for i_edge
+            ! just pick a random edge, my end condition is whenever the first cell is equal to the last cell
+            m_i = 1
+            
             case(boundary_edge)
                 
                 
@@ -1039,9 +977,119 @@ module volume_processing
                 
         end select
         
+        ! allocate my temp arrays
+        allocate(viable_mains(main_count), centroid_obj_array(centroid_array_count))
+        
+        ! all main objects are viable to begin with.
+        viable_mains = .true.
+        
+        obj_select(m_i, m_stt, mm, tt, obj_type)
+        
+        ! we just assign our values into the first available slots
+        centroid_obj_array(1) = tt(1)
+        centroid_obj_array(2) = mm
+        centroid_obj_array(3) = tt(2)
+        
+        ! and initialise our indexers
+        fwd_i = 3
+        bck_i = 1
+        
+        do
+            ! now we loop about our centroids
+            if (m_i.eq.main_count) then
+                m_i = 1
+            else
+                m_i=m_i+1
+            endif
+            
+            ! if we know the centroid isnt viable we skip it
+            if (.not.viable_mains(m_i)) cycle
+            
+            ! obviously we get our objects
+            obj_select(m_i, m_stt, mm, tt, obj_type)
+            
+!                     print*, fwd_i, bck_i
+            
+            call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
+            
+!                     print*, tt(1), mm, tt(2)
+!                     print*, centroid_obj_array
+!                     print*, fwd_i, bck_i, state
+!                     print*, ''
+!                     print*, ''
+            
+            if (state) then
+                
+                viable_mains(m_i) = .false.
+                
+                call obj_endconditions(e_state, fwd_i, bck_i, centroid_obj_array, centroid_array_count, obj_type)
+                ! our end condition is the first edge and last edge being the same
+                if (e_state) exit
+            endif
+            
+            
+        enddo
+        
+        print*, centroid_obj_array
         
     end subroutine centroid_assembler
     
+    subroutine obj_select(m_i, m_stt, mm, tt, obj_type)
+        implicit none
+        integer(KIND=INT32) :: obj_type
+        integer(KIND=INT32) :: m_i, m_stt, mm, tt(2)
+        integer(KIND=INT32),parameter :: internal_edge=1, boundary_edge=2, featre_point=3, non_feature_point=4
+        
+        
+        select case(obj_type)
+            case(internal_edge)
+                mm    = e_f_obj_relation_array(m_stt + m_i)
+                tt(1) = f_c_obj_relation_array(f_c_index_array(mm)    )
+                tt(2) = f_c_obj_relation_array(f_c_index_array(mm-1)+1)
+                
+            case(boundary_edge)
+                
+                
+                
+                
+            case(non_feature_point)
+                
+                
+                
+                
+            case(featre_point)
+            
+            
+    end subroutine obj_select
+    
+    subroutine obj_endconditions(e_state, fwd_i, bck_i, centroid_obj_array, centroid_array_count, obj_type)
+        implicit none
+        integer(KIND=INT32) :: fwd_i, bck_i, centroid_array_count
+        integer(KIND=INT32) :: centroid_obj_array(:)
+        logical ::  e_state
+        
+        e_state = .false.
+        select case(obj_type)
+            
+            case(internal_edge)
+            
+                if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) e_state = .true.
+                
+            case(boundary_edge)
+                
+                
+                
+                
+            case(non_feature_point)
+                
+                
+                
+                
+            case(featre_point)
+            
+            
+    end subroutine obj_select
+    end subroutine obj_endconditions
     
     subroutine centroid_swapper(mm, tt, fwd_i, bck_i, c_array, state)
         implicit none
