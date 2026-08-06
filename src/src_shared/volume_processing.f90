@@ -1084,6 +1084,7 @@ module volume_processing
                 
                 centroid_array_count = 1 + main_count + tert_count
                 
+                ! we also remove the internal centroids from the centroid array count
                 m_i = 1
                 do m_i=1, main_count
                     mm = p_e_obj_relation_array(m_stt+m_i)
@@ -1092,6 +1093,13 @@ module volume_processing
                     else
                         centroid_array_count = centroid_array_count - 1
                     endif
+                enddo
+                
+                ! and the same for internal faces
+                m_i = 1
+                do m_i=1, main_count
+                    mm = p_f_obj_relation_array(t_stt+m_i)
+                    if (.not. f_bound_array(mm)) centroid_array_count = centroid_array_count - 1
                 enddo
                 
                 allocate(centroid_obj_array(centroid_array_count))
