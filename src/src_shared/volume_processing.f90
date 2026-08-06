@@ -1136,11 +1136,11 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-!             print*, mm, tt(1), tt(2)
-!             print*, centroid_obj_array
-!             print*, ''
-!             print*, ''
-!             print*, ''
+            print*, tt(1), mm, tt(2)
+            print*, centroid_obj_array
+            print*, ''
+            print*, ''
+            print*, ''
             
             if (state) then
                 
