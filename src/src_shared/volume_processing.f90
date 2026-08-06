@@ -1130,7 +1130,7 @@ module volume_processing
         end select
         
         
-        do k=1,50
+        do 
             ! now we loop about our centroids
             if (m_i.eq.main_count) then
                 m_i = 1
@@ -1166,7 +1166,6 @@ module volume_processing
         
         call centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count)
         
-        stop
         
     end subroutine centroid_assembler
     
