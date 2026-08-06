@@ -1248,11 +1248,11 @@ module volume_processing
                 
                 ! faces are main
                 ! cells are tertiary
-                do i=2,centroid_array_count-1,2
-                    centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
-                enddo
                 do i=1,centroid_array_count,2
                     centroid_array(i,:) = c_centroid(centroid_obj_array(i),:)
+                enddo
+                do i=2,centroid_array_count-1,2
+                    centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
                 
             case(boundary_edge)
@@ -1279,11 +1279,11 @@ module volume_processing
                 
 !                 edges are main
 !                 faces are tertiary
-                do i=2,centroid_array_count-1,2
-                    centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
-                enddo
                 do i=1,centroid_array_count,2
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
+                enddo
+                do i=2,centroid_array_count-1,2
+                    centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
                 enddo
                 
 !                 do i=1,centroid_array_count-1
