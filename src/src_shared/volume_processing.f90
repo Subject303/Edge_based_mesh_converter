@@ -999,10 +999,11 @@ module volume_processing
                     
                     print*, tt(1), mm, tt(2)
                     print*, centroid_obj_array
+                    print*, fwd_i, bck_i
                     
                     call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
                     
-                    print*, state
+                    print*, fwd_i, bck_i, state
                     print*, ''
                     print*, ''
                     
