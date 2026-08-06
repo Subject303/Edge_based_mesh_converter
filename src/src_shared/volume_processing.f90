@@ -936,7 +936,7 @@ module volume_processing
         integer(KIND=INT32),parameter :: internal_edge=1, boundary_edge=2, featre_point=3, non_feature_point=4
         integer(KIND=INT32) :: main_count, tert_count, centroid_array_count
         integer(KIND=INT32),allocatable :: main_obj(:), tert_obj(:), centroid_obj_array(:)
-        real(KIND=REAL64)  ,allocatable :: centroid_array(:,3)
+        real(KIND=REAL64)  ,allocatable :: centroid_array(:,:)
         logical, allocatable :: viable_mains(:)
         logical ::  e_state, state
         
@@ -1079,7 +1079,7 @@ module volume_processing
         select case(obj_type)
             case(internal_edge)
                 
-                allocate(centroid_array(centroid_array_count))
+                allocate(centroid_array(centroid_array_count,3))
                 
                 ! faces are main
                 ! cells are tertiary
