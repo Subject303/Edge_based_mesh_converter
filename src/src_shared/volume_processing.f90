@@ -1105,6 +1105,10 @@ module volume_processing
                 do k=i, j
                     c_array(k-change) = c_array(k)
                 enddo
+                
+                i = i - change
+                j = j - change
+                
             endif
             
         elseif (change.lt.0)then
@@ -1113,6 +1117,10 @@ module volume_processing
                 do k=j, i
                     c_array(k-change) = c_array(k)
                 enddo
+                
+                i = i - change
+                j = j - change
+                
             endif
             
         endif
