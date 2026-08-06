@@ -966,7 +966,11 @@ module volume_processing
                 ! for i_edge the centroid will consist of all adjacent centroids plus one repeat
                 centroid_array_count = 1 + main_count + tert_count
                 
-                allocate(centroid_obj_array(centroid_array_count))
+                ! allocate my temp arrays
+                allocate(viable_mains(main_count), centroid_obj_array(centroid_array_count))
+                
+                ! all main objects are viable to begin with.
+                viable_mains = .true.
                 
                 ! inital edge setup doesnt matter much for i_edge
                 ! just pick a random edge, my end condition is whenever the first cell is equal to the last cell
@@ -984,12 +988,6 @@ module volume_processing
                 fwd_i = 3
                 bck_i = 1
                 
-                ! allocate my temp arrays
-                allocate(viable_mains(main_count), centroid_obj_array(centroid_array_count))
-                
-                ! all main objects are viable to begin with.
-                viable_mains = .true.
-                
             case(boundary_edge)
                 
                 ! faces are main
@@ -1006,7 +1004,11 @@ module volume_processing
                 centroid_array_count = 1 + main_count + tert_count
                 ! but for convinience we accept that the last entry can be dropped so subroutines can be simpler
                 
-                allocate(centroid_obj_array(centroid_array_count))
+                ! allocate my temp arrays
+                allocate(viable_mains(main_count), centroid_obj_array(centroid_array_count))
+                
+                ! all main objects are viable to begin with.
+                viable_mains = .true.
                 
                 ! we must start on a boundary face
                 m_i = 1
@@ -1026,12 +1028,6 @@ module volume_processing
                 ! and initialise our indexers
                 fwd_i = 2
                 bck_i = 1
-                
-                ! allocate my temp arrays
-                allocate(viable_mains(main_count), centroid_obj_array(centroid_array_count))
-                
-                ! all main objects are viable to begin with.
-                viable_mains = .true.
                 
                 ! other than the current edge
                 viable_mains(m_i) = .false.
