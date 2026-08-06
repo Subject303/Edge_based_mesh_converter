@@ -435,7 +435,7 @@ module volume_processing
     subroutine boundary_face_volume_processing
         implicit none
         integer(KIND=INT32) :: bp, p, i, j, i1, i2, centroid_array_count, centroid_array_count_real, centroid_array_count_old, pe, pe_start, pf_start, pe_end, pf_end
-        integer(KIND=INT32) :: edge_count, face_count, current_edge, face_1, face_2, prev_face
+        integer(KIND=INT32) :: edge_count, face_count, current_edge, face_1, face_2, prev_face,be
         integer(KIND=INT32) :: k, pf, edge_count_real, face_count_real, flag, remainder_count, current_face
         integer(KIND=INT32),allocatable :: centroid_index_array(:)
         real(KIND=REAL64),allocatable   :: centroid_array(:,:)
@@ -962,7 +962,7 @@ module volume_processing
                 
                 ! inital edge setup doesnt matter much for i_edge
                 ! just pick a random edge, my end condition is whenever the first cell is equal to the last cell
-                mm = = e_f_obj_relation_array(m_stt + m_i)
+                mm    = e_f_obj_relation_array(m_stt + m_i)
                 tt(1) = f_c_obj_relation_array(f_c_index_array(mm)    )
                 tt(2) = f_c_obj_relation_array(f_c_index_array(mm-1)+1)
                 
@@ -987,7 +987,7 @@ module volume_processing
                     if (.not.viable_mains(m_i)) cycle
                     
                     ! obviously we get our objects
-                    mm = = e_f_obj_relation_array(m_stt + m_i)
+                    mm    = e_f_obj_relation_array(m_stt + m_i)
                     tt(1) = f_c_obj_relation_array(f_c_index_array(mm)    )
                     tt(2) = f_c_obj_relation_array(f_c_index_array(mm-1)+1)
                     
@@ -995,7 +995,7 @@ module volume_processing
                     
                     if (state) then
                         
-                        viable_mains(m_i) = .false.
+                        !viable_mains(m_i) = .false.
                         
                         ! our end condition is we start and end on the same value
                         if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) exit
@@ -1057,7 +1057,7 @@ module volume_processing
             
             state = .true.
             
-        elseif(tt(2).eq.jj(1)) 
+        elseif(tt(2).eq.jj(1)) then
             
             call centroid_shuffle(c_array, fwd_i, bck_i,  2)
             
