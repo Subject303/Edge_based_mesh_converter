@@ -1059,6 +1059,7 @@ module volume_processing
                 
             case(featre_point)
             
+        end select
             
     end subroutine obj_select
     
@@ -1088,6 +1089,7 @@ module volume_processing
                 
             case(featre_point)
             
+        end select
             
     end subroutine obj_select
     end subroutine obj_endconditions
