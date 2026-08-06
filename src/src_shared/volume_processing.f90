@@ -1044,7 +1044,8 @@ module volume_processing
                 tert_count = t_end-t_stt
                 
                 ! for b_edge the centroid will consist of all adjacent centroids
-                centroid_array_count = main_count + tert_count
+                centroid_array_count = 1 + main_count + tert_count
+                ! but for convinience we accept that the last entry can be dropped so subroutines can be simpler
                 
                 ! allocate my temp arrays
                 allocate(viable_mains(main_count), centroid_obj_array(centroid_array_count))
@@ -1267,12 +1268,6 @@ module volume_processing
                     centroid_array(i,:) = c_centroid(centroid_obj_array(i),:)
                 enddo
                 
-                print*, centroid_array_count-1
-                print*, centroid_array_count-2
-                print*, centroid_obj_array
-                print*, f_bound_array(centroid_obj_array(:))
-                print*, ''
-                print*, ''
                 
             case(non_feature_point)
                 
@@ -1313,9 +1308,6 @@ module volume_processing
                 if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) e_state = .true.
                 
             case(boundary_edge)
-                
-                !if (f_bound_array(centroid_obj_array(centroid_array_count-1))) e_state = .true.
-                
                 
                 if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
                 
