@@ -62,7 +62,7 @@ module volume_processing
             i2 = e_p_obj_relation_array(e_p_index_array(e))
             ! i1 and i2 are the constituent points of edge e
             
-            call centroid_assembler(e, centroid_array)
+            call centroid_assembler(e, centroid_array, centroid_array_count)
             
             in_progress_projection(:) = 0.0
             in_progress_centroid = e_centroid(e,:)
@@ -933,7 +933,7 @@ module volume_processing
     
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
-    subroutine centroid_assembler(obj, centroid_array)
+    subroutine centroid_assembler(obj, centroid_array, centroid_array_count)
         implicit none
         integer(KIND=INT32) :: obj
         integer(KIND=INT32) :: mm, tt(2), i, j, k, m_i, m_stt, m_end, t_stt, t_end, fwd_i, bck_i
