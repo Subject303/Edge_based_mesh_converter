@@ -943,8 +943,6 @@ module volume_processing
         logical, allocatable :: viable_mains(:)
         logical ::  e_state, state
         
-        deallocate(centroid_array)
-        
         select case(obj_type)
             case(internal_edge)
                 
@@ -1080,6 +1078,8 @@ module volume_processing
         implicit none
         integer(KIND=INT32) :: i, centroid_obj_array(:), centroid_array_count
         real(KIND=REAL64)  ,allocatable :: centroid_array(:,:)
+        
+        deallocate(centroid_array)
         
         select case(obj_type)
             case(internal_edge)
