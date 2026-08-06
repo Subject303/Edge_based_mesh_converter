@@ -1080,7 +1080,7 @@ module volume_processing
                 allocate(centroid_array(centroid_array_count))
                 
                 do i=2,centroid_array_count-1,2
-                    centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
+                    centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
                 do i=1,centroid_array_count,2
                     centroid_array(i,:) = c_centroid(centroid_obj_array(i),:)
