@@ -1087,7 +1087,11 @@ module volume_processing
                 m_i = 1
                 do m_i=1, main_count
                     mm = p_e_obj_relation_array(m_stt+m_i)
-                    if (e_bound_array(mm)) viable_mains(m_i) = .true.
+                    if (e_bound_array(mm)) then
+                        viable_mains(m_i) = .true.
+                    else
+                        centroid_array_count = centroid_array_count - 2
+                    endif
                 enddo
                 
                 m_i = 1
@@ -1288,7 +1292,7 @@ module volume_processing
                 
             case(non_feature_point)
                 
-                if (centroid_obj_array(fwd_i) .eq. centroid_obj_array(bck_i)) e_state = .true.
+                if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) e_state = .true.
                 
             case(featre_point)
             
