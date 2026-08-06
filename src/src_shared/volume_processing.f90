@@ -995,6 +995,8 @@ module volume_processing
                     
                     if (state) then
                         
+                        viable_mains(m_i) = .false.
+                        
                         ! our end condition is we start and end on the same value
                         if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) exit
                     endif
