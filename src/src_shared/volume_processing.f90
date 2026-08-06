@@ -512,6 +512,7 @@ module volume_processing
             endif
             
             
+        enddo
 !             if (feature_points(bp)) then
 !                 
 !                 ! FEATURE POINTS
@@ -956,8 +957,8 @@ module volume_processing
 !             endif
 !             
 !             sbb(bp,:) = in_progress_projection
-!             
-        enddo
+! !             
+!         enddo
         
         !do i=1,b_npoin
         !    print*, i, sqrt(sbb(i,1)*sbb(i,1) + sbb(i,2)*sbb(i,2) + sbb(i,3)*sbb(i,3)), sbb(i,:)
