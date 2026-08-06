@@ -1271,6 +1271,9 @@ module volume_processing
                 print*, centroid_array_count-1
                 print*, centroid_array_count-2
                 print*, centroid_obj_array
+                print*, f_bound_array(centroid_obj_array(:))
+                print*, ''
+                print*, ''
                 
             case(non_feature_point)
                 
