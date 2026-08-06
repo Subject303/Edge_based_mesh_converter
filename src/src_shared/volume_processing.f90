@@ -286,6 +286,8 @@ module volume_processing
             
             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array)
             
+			print*,in_progress_projection
+			
             direction_array(:) = c1(:) - c2(:)
             
             angle = alignment(in_progress_projection, direction_array)
@@ -303,7 +305,6 @@ module volume_processing
                 print*, centroid_array(:,3)
 			endif
 			
-			print*,in_progress_projection
 			print*, be, sb(be,:), angle
             
         enddo
