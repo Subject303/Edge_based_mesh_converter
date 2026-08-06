@@ -1122,8 +1122,8 @@ module volume_processing
                     c_array(k-change) = c_array(k)
                 enddo
                 
-                i = i - change
-                j = j - change
+!                 i = i - change
+!                 j = j - change
                 
             endif
             
@@ -1134,8 +1134,8 @@ module volume_processing
                     c_array(k-change) = c_array(k)
                 enddo
                 
-                i = i - change
-                j = j - change
+!                 i = i - change
+!                 j = j - change
                 
             endif
             
