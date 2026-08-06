@@ -1072,6 +1072,7 @@ module volume_processing
             c_array(fwd_i+2) = tt(2)
             
             state = .true.
+            fwd_i = fwd_i + 2
             
         elseif(tt(2).eq.jj(1)) then
             
@@ -1081,6 +1082,7 @@ module volume_processing
             c_array(fwd_i+2) = tt(1)
             
             state = .true.
+            fwd_i = fwd_i + 2
             
         elseif(tt(1).eq.jj(2)) then
             
@@ -1090,6 +1092,7 @@ module volume_processing
             c_array(bck_i-2) = tt(2)
             
             state = .true.
+            bck_i = bck_i - 2
             
         elseif(tt(2).eq.jj(2)) then
             
@@ -1099,6 +1102,7 @@ module volume_processing
             c_array(bck_i-2) = tt(1)
             
             state = .true.
+            bck_i = bck_i - 2
             
         endif
         
