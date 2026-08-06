@@ -933,7 +933,6 @@ module volume_processing
         integer(KIND=INT32) :: mm, tt(2), i, j, k, m_i, m_stt, m_end, t_stt, t_end, fwd_i, bck_i
         integer(KIND=INT32) :: internal_edge=1, boundary_edge=2, featre_point=3, non_feature_point=4
         integer(KIND=INT32) :: main_count, tert_count, centroid_array_count
-        integer(KIND=INT32) :: 
         integer(KIND=INT32),allocatable :: main_obj(:), tert_obj(:), centroid_obj_array(:)
         !real(KIND=REAL64)  ,allocatable :: centroid_array(:,3)
         logical, allocatable :: viable_mains(:)
