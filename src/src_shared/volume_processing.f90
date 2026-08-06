@@ -1136,11 +1136,11 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-            print*, mm, tt(1), tt(2)
-            print*, centroid_obj_array
-            print*, ''
-            print*, ''
-            print*, ''
+!             print*, mm, tt(1), tt(2)
+!             print*, centroid_obj_array
+!             print*, ''
+!             print*, ''
+!             print*, ''
             
             if (state) then
                 
@@ -1291,6 +1291,10 @@ module volume_processing
                 if (f_bound_array(centroid_obj_array(centroid_array_count-1))) e_state = .true.
                 
             case(non_feature_point)
+                
+                print*, centroid_array_count
+                print*, centroid_obj_array(1), centroid_obj_array(centroid_array_count)
+                print*, centroid_obj_array
                 
                 if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) e_state = .true.
                 
