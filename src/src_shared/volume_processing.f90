@@ -1246,6 +1246,8 @@ module volume_processing
                 
                 print*, 'count sn ', centroid_array_count
                 
+                ! start on a tertiary
+                
                 ! faces are main
                 ! cells are tertiary
                 do i=1,centroid_array_count,2
@@ -1260,6 +1262,8 @@ module volume_processing
                 ! we allowed ourselves one extra space on our allocations to make the swapper happy, 
                 ! so we drop that
                 allocate(centroid_array(centroid_array_count-1,3))
+                
+                ! start on a main
                 
 !                 faces are main
 !                 cells are tertiary
@@ -1276,6 +1280,8 @@ module volume_processing
                 allocate(centroid_array(centroid_array_count,3))
                 
                 print*, 'count sbb ', centroid_array_count
+                
+                ! start on a tertiary
                 
 !                 edges are main
 !                 faces are tertiary
