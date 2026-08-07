@@ -885,6 +885,10 @@ module volume_processing
         
         if (k.eq.1001) then
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
+            
+            print*, centroid_array_count
+            print*, centroid_obj_array
+            
             stop
         endif
         
@@ -995,11 +999,6 @@ module volume_processing
 !                 edges are main
 !                 faces are tertiary
                 do i=1,centroid_array_count,2
-                    if (centroid_obj_array(i) .eq. -1) then
-                        print*, centroid_array_count, centroid_obj_array(1), centroid_obj_array(centroid_array_count)
-                        print*, centroid_obj_array
-                        stop
-                    endif
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
                 do i=2,centroid_array_count-1,2
