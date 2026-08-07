@@ -508,7 +508,7 @@ module boundary_routine_module
                     ! if the face is not already flagged
                     if (f_boundary_flags(bf).ne.current_flag) then
                         
-                        if (f_boundary_flags(bf).lt.current_flag) then
+                        if (f_boundary_flags(bf).gt.current_flag) then
                             do i=1, b_nface
                                 if (f_boundary_flags(i) .eq. current_flag) f_boundary_flags(i) = f_boundary_flags(bf)
                             enddo
@@ -516,7 +516,7 @@ module boundary_routine_module
                             do i=1, b_nedge
                                 if (e_boundary_flags(i) .eq. current_flag) e_boundary_flags(i) = f_boundary_flags(bf)
                             enddo
-                        elseif (f_boundary_flags(bf).gt.current_flag) then
+                        elseif (f_boundary_flags(bf).lt.current_flag) then
                             do i=1, b_nface
                                 if (f_boundary_flags(i) .eq. f_boundary_flags(bf)) f_boundary_flags(i) = current_flag
                             enddo
