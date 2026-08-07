@@ -506,7 +506,7 @@ module volume_processing
             
             if (obj_type.eq.featre_point) then
                 print*, 'cunt', fwd_i,centroid_array_count
-                if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-3)) cycle
+                if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-4)) cycle
             endif
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
