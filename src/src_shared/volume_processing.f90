@@ -82,7 +82,7 @@ module volume_processing
                 sn(ie,:) = -in_progress_projection
 			endif
 			
-			print*, ie, sn(ie,:), angle
+! 			print*, ie, sn(ie,:), angle
             
         enddo
         
@@ -142,7 +142,7 @@ module volume_processing
                 sb(be,:) = -in_progress_projection
 			endif
 			
-			print*, be, sb(be,:), angle
+! 			print*, be, sb(be,:), angle
             
         enddo
         
@@ -208,7 +208,7 @@ module volume_processing
                 sbb(bp,:) = -in_progress_projection(:)
             endif
             
-			print*, bp, sbb(bp,:), angle
+! 			print*, bp, sbb(bp,:), angle
             
         enddo
         
