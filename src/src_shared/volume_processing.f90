@@ -848,7 +848,7 @@ module volume_processing
         end select
         
         
-        do 
+        do k=1,100
             ! now we loop about our centroids
             if (m_i.eq.main_count) then
                 m_i = 1
