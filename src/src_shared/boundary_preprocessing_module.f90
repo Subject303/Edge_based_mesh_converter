@@ -487,6 +487,8 @@ module boundary_routine_module
         
         do be=1,b_nedge
             
+            if (e_boundary_flags(be) .eq. 1000) cycle
+            
             current_flag = -999
             
             e = e_bound_indexing_array(be)
