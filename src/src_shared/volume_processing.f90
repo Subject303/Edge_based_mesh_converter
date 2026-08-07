@@ -772,17 +772,21 @@ module volume_processing
                 print*, centroid_array_count
                 print*, centroid_obj_array
                 
-                if ((centroid_obj_array(1) .ne. -1) .and. (centroid_obj_array(centroid_array_count-1) .ne. -1)) then
-                    
-                    do i=1,centroid_array_count-1,2
-                        print*, centroid_obj_array(i), e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(i)))
-                    enddo
-                    do i=2,centroid_array_count-2,2
-                        print*, centroid_obj_array(i), f_boundary_flags(reversed_f_bound_indexing_array(centroid_obj_array(i)) )
-                    enddo
-                    
-                    if ((e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(centroid_array_count-1))) .eq. 1000) .and. (e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(1))) .eq. 1000)) e_state = .true.
+                if ((centroid_obj_array(centroid_array_count-2) .ne. -1) .and. (centroid_obj_array(centroid_array_count) .ne. -1)) then
+                    if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
                 endif
+                
+!                 if ((centroid_obj_array(1) .ne. -1) .and. (centroid_obj_array(centroid_array_count-1) .ne. -1)) then
+!                     
+!                     do i=1,centroid_array_count-1,2
+!                         print*, centroid_obj_array(i), e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(i)))
+!                     enddo
+!                     do i=2,centroid_array_count-2,2
+!                         print*, centroid_obj_array(i), f_boundary_flags(reversed_f_bound_indexing_array(centroid_obj_array(i)) )
+!                     enddo
+!                     
+!                     if ((e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(centroid_array_count-1))) .eq. 1000) .and. (e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(1))) .eq. 1000)) e_state = .true.
+!                 endif
                 
         end select
             
