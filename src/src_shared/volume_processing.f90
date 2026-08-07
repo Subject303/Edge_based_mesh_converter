@@ -179,8 +179,8 @@ module volume_processing
             ! this is a loop of all boundary edges.
             
             if (feature_points(bp)) then
-                sbb(bp,:) = 0.0
-                cycle
+!                 sbb(bp,:) = 0.0
+!                 cycle
                 ! corners
                 obj_type = featre_point
                 
