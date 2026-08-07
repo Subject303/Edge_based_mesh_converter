@@ -628,6 +628,7 @@ module boundary_routine_module
         ! so I'm going to be lazy
         ! wish me luck
         
+        print*,feature_points
         
     end subroutine split_corners
 
