@@ -848,7 +848,8 @@ module volume_processing
         end select
         
         
-        do k=1,100
+        do k=1,1000 ! this k limit is here to stop infinite loops, it needs to be set to an unreasonable number to not trip incorrectly
+            
             ! now we loop about our centroids
             if (m_i.eq.main_count) then
                 m_i = 1
@@ -881,6 +882,11 @@ module volume_processing
             
             
         enddo
+        
+        if (k.eq.1000) then
+            print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
+            stop
+        endif
         
         call centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count)
         
