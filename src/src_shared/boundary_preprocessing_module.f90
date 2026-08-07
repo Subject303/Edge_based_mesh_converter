@@ -473,7 +473,7 @@ module boundary_routine_module
                     bf = reversed_f_bound_indexing_array(f)
                     
                     ! if the face is not already flagged
-                    if (f_boundary_flags(bf).eq.999) then
+                    if (f_boundary_flags(bf).ne.current_flag) then
                         ff_index = ff_index + 1
                         
                         ! and add all the boundary faces
