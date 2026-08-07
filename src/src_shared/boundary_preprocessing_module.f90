@@ -299,7 +299,7 @@ module boundary_routine_module
             nv1(:)=f_normal_vectors(f1,:)
             nv2(:)=f_normal_vectors(f2,:)
             
-            angle = acosd(alignment(nv1, nv2))
+            angle = abs(acosd(alignment(nv1, nv2)))
             
             if (angle.gt.splitting_angle) then
             
