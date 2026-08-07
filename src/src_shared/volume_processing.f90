@@ -769,6 +769,7 @@ module volume_processing
                 
             case(featre_point)
                 
+                print*, centroid_array_count
                 print*, centroid_obj_array
                 
                 do i=1,centroid_array_count-1,2
