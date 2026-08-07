@@ -510,6 +510,7 @@ module volume_processing
             
             print*, tt(1), mm, tt(2)
             print*, centroid_obj_array
+            print*, fwd_i, centroid_array_count
             print*, ''
             print*, ''
             print*, ''
