@@ -814,7 +814,7 @@ module volume_processing
                 
                 ! and the same for internal faces
                 m_i = 1
-                do m_i=1, main_count
+                do m_i=1, tert_count
                     mm = p_f_obj_relation_array(t_stt+m_i)
                     if (.not. f_bound_array(mm)) centroid_array_count = centroid_array_count - 1
                 enddo
@@ -998,10 +998,10 @@ module volume_processing
                 
 !                 edges are main
 !                 faces are tertiary
-                do i=1,fwd_i,2
+                do i=1,centroid_array_count,2
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
-                do i=2,fwd_i-1,2
+                do i=2,centroid_array_count-1,2
                     centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
                 enddo
                 
@@ -1040,6 +1040,8 @@ module volume_processing
 !                 if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
                 
             case(non_feature_point)
+                
+                if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) e_state = .true.
                 
                 if (centroid_obj_array(fwd_i) .eq. centroid_obj_array(bck_i)) e_state = .true.
                 
