@@ -505,7 +505,7 @@ module volume_processing
             call obj_select(m_i, m_stt, mm, tt)
             
             if (obj_type) then
-                if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-1)) cycle
+                if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-3)) cycle
             endif
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
