@@ -18,6 +18,8 @@ program converter_serial
     
     ! start of program
     
+    print*, 'STARTING MAIN PROCESSOR SCRIPT'
+    
     call setup_configuration
     
     if (manual_geom) then
@@ -34,5 +36,6 @@ program converter_serial
     
     ! end of program
     
+    print*, 'EXITTING MAIN PROCESSOR SCRIPT'
     
 end program converter_serial
