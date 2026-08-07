@@ -1037,7 +1037,9 @@ module volume_processing
                 
             case(non_feature_point)
                 
-                if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) e_state = .true.
+                if (centroid_obj_array(centroid_array_count) .ne. -1) then
+                    if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) e_state = .true.
+                endif
                 
             case(featre_point)
             
