@@ -736,7 +736,7 @@ module volume_processing
     
     subroutine obj_endconditions(e_state, fwd_i, bck_i, centroid_obj_array, centroid_array_count)
         implicit none
-        integer(KIND=INT32) :: fwd_i, bck_i, centroid_array_count
+        integer(KIND=INT32) :: fwd_i, bck_i, centroid_array_count, i
         integer(KIND=INT32) :: centroid_obj_array(:)
         logical ::  e_state
         
