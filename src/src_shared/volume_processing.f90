@@ -1311,7 +1311,9 @@ module volume_processing
             
         end select
         
-        print*, centroid_array
+        print*, centroid_array(:,1)
+        print*, centroid_array(:,2)
+        print*, centroid_array(:,3)
         
     end subroutine centroid_float_assembler
     
