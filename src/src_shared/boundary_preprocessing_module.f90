@@ -610,12 +610,13 @@ module boundary_routine_module
                     
                     bf = reversed_f_bound_indexing_array(f)
                     
+                    p_normal_vectors(new_bp,:) = p_normal_vectors(new_bp,:) + f_normal_vectors(bf,:)
+                    
                     if (f_boundary_flags(bf) .ne. flag)then
                         flag = f_boundary_flags(bf)
                         exit
                     endif
                     
-                    p_normal_vectors(new_bp,:) = p_normal_vectors(new_bp,:) + f_normal_vectors(bf,:)
                     
                 enddo
                 
