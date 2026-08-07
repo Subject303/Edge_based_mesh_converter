@@ -781,7 +781,7 @@ module volume_processing
                         print*, centroid_obj_array(i), f_boundary_flags(reversed_f_bound_indexing_array(centroid_obj_array(i)) )
                     enddo
                     
-                    if ((e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(centroid_array_count-1))) .eq. 1000) .and. (e_boundary_flags(reversed_e_bound_indexing_arraycentroid_obj_array(1))) .eq. 1000)) e_state = .true.
+                    if ((e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(centroid_array_count-1))) .eq. 1000) .and. (e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(1))) .eq. 1000)) e_state = .true.
                 endif
                 
         end select
