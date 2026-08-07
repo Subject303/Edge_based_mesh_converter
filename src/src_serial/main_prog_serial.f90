@@ -22,17 +22,28 @@ program converter_serial
     
     call setup_configuration
     
+    print*, 'FINISHED READING CONFIG FILE'
+    
     if (manual_geom) then
         call manual_geom_generation
     else
         call read_data
+        
+        print*, 'FINISHED READING PREPROCESSED MESH FILE'
+        
     endif
     
     call data_preprocessing
     
+    print*, 'FINISHED CONNECTIVITY PREPROCCESSING'
+    
     call data_processing
     
+    print*, 'FINISHED DATA PROCESSING'
+    
     call data_outputting
+    
+    print*, 'FINISHED DATA OUTPUT'
     
     ! end of program
     
