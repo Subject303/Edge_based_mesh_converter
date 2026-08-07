@@ -715,6 +715,7 @@ module volume_processing
                 do i=2,centroid_array_count-2,2
                     centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
                 enddo
+                
         end select
         
     end subroutine centroid_float_assembler
