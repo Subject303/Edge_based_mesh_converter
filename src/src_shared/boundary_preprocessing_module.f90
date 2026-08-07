@@ -470,7 +470,7 @@ module boundary_routine_module
                     bf = reversed_f_bound_indexing_array(f)
                     
                     ! if the face is not already flagged
-                    if (f_boundary_flags(bf).ne.current_flag) then
+                    if (f_boundary_flags(bf).eq.999) then
                         ff_index = ff_index + 1
                         
                         ! and add all the boundary faces
@@ -485,7 +485,42 @@ module boundary_routine_module
             
         enddo
         
-        
+        do be=1,b_nedge
+            
+            current_flag = -999
+            
+            e = e_bound_indexing_array(be)
+            
+            ef_stt = e_f_index_array(e-1)+1
+            ef_end = e_f_index_array(e)
+            
+            do ef=ef_stt,ef_end
+                f = e_f_obj_relation_array(ef)
+                
+                ! ignore internal faces
+                if (f_internal_array(f)) cycle
+                
+                bf = reversed_f_bound_indexing_array(f)
+                
+                if (current_flag .ne. -999) then
+                    ! if the face is not already flagged
+                    if (f_boundary_flags(bf).ne.current_flag) then
+                        
+                        do i=1, b_nface
+                            if (f_boundary_flags(i) .eq. f_boundary_flags(bf)) f_boundary_flags(i) = current_flag
+                        enddo
+                        
+                        do i=1, b_nedge
+                            if (e_boundary_flags(i) .eq. f_boundary_flags(bf)) e_boundary_flags(i) = current_flag
+                        enddo
+                        exit
+                    endif
+                endif
+                
+                current_flag = f_boundary_flags(bf)
+                
+            enddo
+        enddo
         
         
         
