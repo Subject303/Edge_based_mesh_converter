@@ -720,8 +720,6 @@ module volume_processing
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
                 
-                stop
-                
         end select
         
     end subroutine centroid_float_assembler
