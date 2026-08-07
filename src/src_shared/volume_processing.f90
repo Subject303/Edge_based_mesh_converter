@@ -300,12 +300,13 @@ module volume_processing
                 call obj_select(m_i, m_stt, mm, tt)
                 
                 ! this differs from internal because our first val will be a face and only connects to one cell
-                centroid_obj_array(1) = mm
-                centroid_obj_array(2) = tt(1)
+                centroid_obj_array(1) = -1
+                centroid_obj_array(2) = mm
+                centroid_obj_array(3) = tt(1)
                 ! tt(1) and tt(2) should be identical here 
                 
                 ! and initialise our indexers
-                fwd_i = 2
+                fwd_i = 3
                 bck_i = 1
                 
                 ! other than the current edge
@@ -673,16 +674,16 @@ module volume_processing
                 
                 ! we allowed ourselves one extra space on our allocations to make the swapper happy, 
                 ! so we drop that
-                allocate(centroid_array(centroid_array_count-1,3))
+                allocate(centroid_array(centroid_array_count-2,3))
                 
                 ! start on a main
                 
 !                 faces are main
 !                 cells are tertiary
-                do i=1,centroid_array_count-1,2
+                do i=2,centroid_array_count-1,2
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
-                do i=2,centroid_array_count-2,2
+                do i=3,centroid_array_count-2,2
                     centroid_array(i,:) = c_centroid(centroid_obj_array(i),:)
                 enddo
                 
