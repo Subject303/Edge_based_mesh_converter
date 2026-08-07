@@ -1059,6 +1059,9 @@ module volume_processing
                 allocate(viable_mains(main_count), centroid_obj_array(centroid_array_count))
                 centroid_obj_array = 0
                 
+                print*, centroid_array_count
+                print*, centroid_obj_array
+                
                 ! all main objects are viable to begin with.
                 viable_mains = .true.
                 
