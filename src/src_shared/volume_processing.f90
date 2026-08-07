@@ -418,14 +418,12 @@ module volume_processing
                 viable_mains = .false.
                 
                 centroid_array_count = 1 + main_count + tert_count
-                print*, coords(obj,:)
+                
                 ! we also remove the wrong flagged centroids from the centroid array count
                 m_i = 1
                 do m_i=1, main_count
                     mm = p_e_obj_relation_array(m_stt+m_i)
-                    print*, m_i, mm, e_bound_array(mm)
                     if (e_bound_array(mm)) then
-                        print*, flag, e_boundary_flags(reversed_e_bound_indexing_array(mm))
                         if     (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. flag) then
                             viable_mains(m_i) = .true.
                         elseif (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) then
@@ -445,8 +443,6 @@ module volume_processing
                             tt(2) = e_f_obj_relation_array(i)
                             
                             ! and then we check if either of them are flagged correctly
-                            print*, flag, f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
-                            print*, m_i
                             
                             if ((f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .eq. flag ) .or. (f_boundary_flags(reversed_f_bound_indexing_array(tt(2))) .eq. flag )) then
                                 viable_mains(m_i) = .true.

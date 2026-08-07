@@ -576,7 +576,6 @@ module boundary_routine_module
         deallocate(p_bound_indexing_array)
         allocate(p_bound_indexing_array(new_b_npoin), p_boundary_flags(new_b_npoin))
         
-        print*,feature_points
         allocate(temp_feature_points,source=feature_points)
         deallocate(feature_points)
         allocate(feature_points(new_b_npoin))
@@ -637,7 +636,6 @@ module boundary_routine_module
         ! so I'm going to be lazy
         ! wish me luck
         
-        print*,feature_points
         
     end subroutine split_corners
 
