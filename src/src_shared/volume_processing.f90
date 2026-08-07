@@ -489,8 +489,9 @@ module volume_processing
                 call obj_select(m_i, m_stt, mm, tt)
                 
                 ! we just assign our values into the first available slots
-                centroid_obj_array(1) = mm
-                centroid_obj_array(2) = tt(1)
+                centroid_obj_array(1) = -1
+                centroid_obj_array(2) = mm
+                centroid_obj_array(3) = tt(1)
                 
                 ! and initialise our indexers
                 fwd_i = 2
@@ -729,10 +730,10 @@ module volume_processing
                 
 !                 edges are main
 !                 faces are tertiary
-                do i=1,centroid_array_count-1,2
+                do i=2,centroid_array_count-1,2
                     centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
                 enddo
-                do i=2,centroid_array_count-2,2
+                do i=3,centroid_array_count-2,2
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
                 
