@@ -619,7 +619,7 @@ module boundary_routine_module
                     
                 enddo
                 
-                p_boundary_flags(new_bp,3) = flag
+                p_boundary_flags(new_bp) = flag
                 
             enddo
             
