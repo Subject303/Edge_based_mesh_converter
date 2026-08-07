@@ -90,6 +90,7 @@ module outputting_routines
 		integer(KIND=INT32)             :: i, i1, i2, c, f, e, offset_count, cf, fe, p, fp1, fp2
 		integer(KIND=INT8 ),allocatable :: types(:)
         integer(KIND=INT64)			    :: offset, face_offset
+		integer(KIND=INT32),allocatable :: flagout(:)
         real(KIND=REAL64),dimension(npoin,3) :: outvar, tot_proj
         character(:), allocatable		:: outstring
         character(16)                   :: offset_text, TXTnele, TXTnpoin
@@ -154,8 +155,10 @@ module outputting_routines
         offset = offset + 8 + npoin*3*real_length
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float64" Name="volume" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
-    
         offset = offset + 8 + npoin*real_length
+        write(offset_text, '(i16)')  offset
+    outstring = outstring//'<DataArray type="Int32" Name="flags" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+        offset = offset + 8 + npoin*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3" Name="normals" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
     
@@ -300,6 +303,19 @@ module outputting_routines
         write(1) offset
         
         write(1) vol
+        
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        !bound flags
+        offset = 8+npoin*4
+        write(1) offset
+        
+        allocate(flagout(npoin))
+        flagout = 0
+        do i=1,b_npoin
+            flagout(p_bound_indexing_array(i)) = flagout(p_bound_indexing_array(i)) + p_boundary_flags(i)
+        enddo
+        
+        write(1) flagout
         
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         !normals
