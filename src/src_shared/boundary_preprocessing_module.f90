@@ -665,7 +665,7 @@ module boundary_routine_module
         
         do bp=1,b_npoin
             p_normal_vectors(bp,:) = p_normal_vectors(bp,:) / sqrt(p_normal_vectors(bp,1)**2 + p_normal_vectors(bp,2)**2 + p_normal_vectors(bp,3)**2)
-            p_normal_vectors(bp,:)
+            print*, p_normal_vectors(bp,:)
         enddo
         
         
