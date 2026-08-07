@@ -279,7 +279,7 @@ module volume_processing
                 tert_count = t_end-t_stt
                 
                 ! for b_edge the centroid will consist of all adjacent centroids
-                centroid_array_count = 2 + main_count + tert_count
+                centroid_array_count = 1 + main_count + tert_count
                 ! but for convinience we accept that the last entry can be dropped so subroutines can be simpler
                 
                 ! allocate my temp arrays
@@ -300,13 +300,12 @@ module volume_processing
                 call obj_select(m_i, m_stt, mm, tt)
                 
                 ! this differs from internal because our first val will be a face and only connects to one cell
-                centroid_obj_array(1) = -1
-                centroid_obj_array(2) = mm
-                centroid_obj_array(3) = tt(1)
+                centroid_obj_array(1) = mm
+                centroid_obj_array(2) = tt(1)
                 ! tt(1) and tt(2) should be identical here 
                 
                 ! and initialise our indexers
-                fwd_i = 3
+                fwd_i = 2
                 bck_i = 1
                 
                 ! other than the current edge
@@ -396,7 +395,7 @@ module volume_processing
                 ! unlike with non feature points however, we must also only flag feature edges and edges with the correct boundary flag.
                 viable_mains = .false.
                 
-                centroid_array_count = 2 + main_count + tert_count
+                centroid_array_count = 1 + main_count + tert_count
                 
                 ! we also remove the wrong flagged centroids from the centroid array count
                 m_i = 1
@@ -425,16 +424,13 @@ module volume_processing
                             
                             if ((f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .eq. flag ) .or. (f_boundary_flags(reversed_f_bound_indexing_array(tt(2))) .eq. flag )) then
                                 viable_mains(m_i) = .true.
-                            else
-                                centroid_array_count = centroid_array_count - 1
                             endif
-                        else
-                            centroid_array_count = centroid_array_count - 1
+                            
                         endif
                     else
                         centroid_array_count = centroid_array_count - 1
                     endif
-                    if (obj_type.eq.featre_point) print*, m_i, viable_mains(m_i), mm, e_boundary_flags(reversed_e_bound_indexing_array(mm))
+!                     print*, m_i, viable_mains(m_i)
                 enddo
                 
                 ! and the same for internal faces but we dont need to worry about features
@@ -506,17 +502,11 @@ module volume_processing
             ! obviously we get our objects
             call obj_select(m_i, m_stt, mm, tt)
             
-!             if (obj_type.eq.featre_point) then
-!                 print*, fwd_i, centroid_array_count, e_boundary_flags(reversed_e_bound_indexing_array(mm))
-!                 if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i .ne. (centroid_array_count-1))) cycle
-!             endif
-            
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-            if (obj_type.eq.featre_point) then
+            if (k.gt.950) then
                 print*, tt(1), mm, tt(2)
                 print*, centroid_obj_array
-                print*, fwd_i, centroid_array_count, e_boundary_flags(reversed_e_bound_indexing_array(mm))
                 print*, ''
                 print*, ''
                 print*, ''
@@ -536,11 +526,6 @@ module volume_processing
         
         if (k.eq.1001) then
             
-            print*, tt(1), mm, tt(2)
-            print*, centroid_obj_array
-            print*, ''
-            print*, ''
-            print*, ''
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
             
             stop
@@ -682,10 +667,10 @@ module volume_processing
                 
 !                 faces are main
 !                 cells are tertiary
-                do i=2,centroid_array_count-1,2
+                do i=1,centroid_array_count-1,2
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
-                do i=3,centroid_array_count-2,2
+                do i=2,centroid_array_count-2,2
                     centroid_array(i,:) = c_centroid(centroid_obj_array(i),:)
                 enddo
                 
@@ -711,16 +696,16 @@ module volume_processing
                 ! again we allowed ourselves one extra space on our allocations to make the swapper happy, 
                 ! so we drop that
                 ! and also a space at the beginning that we drop as well
-                allocate(centroid_array(centroid_array_count-1,3))
+                allocate(centroid_array(centroid_array_count-2,3))
             
                 ! start on a main
                 
 !                 edges are main
 !                 faces are tertiary
-                do i=2,centroid_array_count,2
+                do i=2,centroid_array_count-1,2
                     centroid_array(i-1,:) = e_centroid(centroid_obj_array(i),:)
                 enddo
-                do i=3,centroid_array_count-1,2
+                do i=3,centroid_array_count-2,2
                     centroid_array(i-1,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
                 
@@ -764,7 +749,7 @@ module volume_processing
             case(featre_point)
                 
 !                 print*, centroid_array_count
-                print*, centroid_obj_array
+!                 print*, centroid_obj_array
                 
                 if ((centroid_obj_array(centroid_array_count-2) .ne. -1) .and. (centroid_obj_array(centroid_array_count) .ne. -1)) then
                     if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
