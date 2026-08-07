@@ -579,7 +579,7 @@ module boundary_routine_module
         print*,feature_points
         allocate(temp_feature_points,source=feature_points)
         deallocate(feature_points)
-        allocate(feature_points(new_bp))
+        allocate(feature_points(new_b_npoin))
         feature_points = .false.
         
         new_bp = 0
