@@ -693,17 +693,17 @@ module volume_processing
                 
                 ! again we allowed ourselves one extra space on our allocations to make the swapper happy, 
                 ! so we drop that
-                allocate(centroid_array(centroid_array_count-1,3))
+                allocate(centroid_array(centroid_array_count-2,3))
             
                 ! start on a main
                 
 !                 edges are main
 !                 faces are tertiary
                 do i=2,centroid_array_count-1,2
-                    centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
+                    centroid_array(i-1,:) = e_centroid(centroid_obj_array(i),:)
                 enddo
                 do i=3,centroid_array_count-2,2
-                    centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
+                    centroid_array(i-1,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
                 
         end select
