@@ -501,7 +501,12 @@ module volume_processing
             
         end select!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
-        
+        print*, tt(1), mm, tt(2)
+        print*, centroid_obj_array
+        print*, ''
+        print*, ''
+        print*, ''
+            
         do k=1,1000 ! this k limit is here to stop infinite loops, it needs to be set to an unreasonable number to not trip incorrectly
             
             ! now we loop about our centroids
