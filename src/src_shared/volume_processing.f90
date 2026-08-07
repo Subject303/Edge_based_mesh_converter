@@ -496,7 +496,7 @@ module volume_processing
                 bck_i = 1
                 
                 ! dont want to double back on our starting feature edge
-!                 viable_mains(m_i) = .false.
+                viable_mains(m_i) = .false.
             
             
         end select!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -519,11 +519,11 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-!             print*, tt(1), mm, tt(2)
-!             print*, centroid_obj_array
-!             print*, ''
-!             print*, ''
-!             print*, ''
+            print*, tt(1), mm, tt(2)
+            print*, centroid_obj_array
+            print*, ''
+            print*, ''
+            print*, ''
             
             if (state) then
                 
