@@ -707,6 +707,8 @@ module volume_processing
             
                 ! start on a main
                 
+                print*,centroid_array_count
+                print*,centroid_obj_array
 !                 edges are main
 !                 faces are tertiary
                 do i=1,centroid_array_count-1,2
