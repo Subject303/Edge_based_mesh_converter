@@ -443,6 +443,8 @@ module volume_processing
                             tt(2) = e_f_obj_relation_array(i)
                             
                             ! and then we check if either of them are flagged correctly
+                            print*, flag, f_boundary_flags(reversed_e_bound_indexing_array(tt(1))), f_boundary_flags(reversed_e_bound_indexing_array(tt(2)))
+                            print*, m_i
                             
                             if ((f_boundary_flags(reversed_e_bound_indexing_array(tt(1))) .eq. flag ) .or. (f_boundary_flags(reversed_e_bound_indexing_array(tt(2))) .eq. flag )) then
                                 viable_mains(m_i) = .true.
@@ -476,15 +478,13 @@ module volume_processing
                 ! we need a feature edge and then we need to make sure we select only the correctly flagged face
                 
                 ! so we make sure we start on a feature edge
-                m_i=1
-                do 
+                do m_i=1, main_count
                     if (viable_mains(m_i)) then
                         mm = p_e_obj_relation_array(m_stt+m_i)
                         if (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) then
                             exit
                         endif
                     endif
-                    m_i=m_i+1
                 enddo
                 
                 call obj_select(m_i, m_stt, mm, tt)
