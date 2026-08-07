@@ -458,7 +458,7 @@ module volume_processing
                 m_i = 1
                 do m_i=1, tert_count
                     mm = p_f_obj_relation_array(t_stt+m_i)
-                    if (f_bound_array(mm)) 
+                    if (f_bound_array(mm)) then
                         ! no wrong flags
                         if (f_boundary_flags(reversed_f_bound_indexing_array(mm)) .ne. flag) then
                             centroid_array_count = centroid_array_count - 1
