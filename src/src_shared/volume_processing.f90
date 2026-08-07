@@ -395,7 +395,7 @@ module volume_processing
                 ! unlike with non feature points however, we must also only flag feature edges and edges with the correct boundary flag.
                 viable_mains = .false.
                 
-                centroid_array_count = 1 + main_count + tert_count
+                centroid_array_count = main_count + tert_count
                 
                 ! we also remove the wrong flagged centroids from the centroid array count
                 m_i = 1
@@ -503,10 +503,10 @@ module volume_processing
             ! obviously we get our objects
             call obj_select(m_i, m_stt, mm, tt)
             
-            if (obj_type.eq.featre_point) then
-                print*, fwd_i, centroid_array_count, e_boundary_flags(reversed_e_bound_indexing_array(mm))
-                if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i .ne. (centroid_array_count-1))) cycle
-            endif
+!             if (obj_type.eq.featre_point) then
+!                 print*, fwd_i, centroid_array_count, e_boundary_flags(reversed_e_bound_indexing_array(mm))
+!                 if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i .ne. (centroid_array_count-1))) cycle
+!             endif
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
@@ -708,16 +708,16 @@ module volume_processing
                 ! again we allowed ourselves one extra space on our allocations to make the swapper happy, 
                 ! so we drop that
                 ! and also a space at the beginning that we drop as well
-                allocate(centroid_array(centroid_array_count-2,3))
+                allocate(centroid_array(centroid_array_count-1,3))
             
                 ! start on a main
                 
 !                 edges are main
 !                 faces are tertiary
-                do i=2,centroid_array_count-1,2
+                do i=2,centroid_array_count,2
                     centroid_array(i-1,:) = e_centroid(centroid_obj_array(i),:)
                 enddo
-                do i=3,centroid_array_count-2,2
+                do i=3,centroid_array_count-1,2
                     centroid_array(i-1,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
                 
