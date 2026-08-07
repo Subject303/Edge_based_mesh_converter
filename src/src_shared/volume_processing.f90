@@ -504,7 +504,7 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-            if (k.gt.950) then
+            if (k.gt.800) then
                 print*, tt(1), mm, tt(2)
                 print*, centroid_obj_array
                 print*, ''
