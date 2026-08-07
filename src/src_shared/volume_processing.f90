@@ -674,7 +674,7 @@ module volume_processing
                 
                 ! we allowed ourselves one extra space on our allocations to make the swapper happy, 
                 ! so we drop that
-                allocate(centroid_array(centroid_array_count-2,3))
+                allocate(centroid_array(centroid_array_count-1,3))
                 
                 ! start on a main
                 
