@@ -1021,13 +1021,13 @@ module volume_processing
                 ! the last and 2nd to last values are the same it implies a face is only connected to one cell
                 ! and is therefore a boundary face
                 
-!                 if (centroid_obj_array(centroid_array_count-1) .ne. -1) then
-!                     if (f_bound_array(centroid_obj_array(centroid_array_count-1))) e_state = .true.
-!                 endif
+                if (centroid_obj_array(centroid_array_count-1) .ne. -1) then
+                    if (f_bound_array(centroid_obj_array(centroid_array_count-1))) e_state = .true.
+                endif
                 
                 ! this is just slightly faster and more robust to upstream chicanery
                 
-                if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
+!                 if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
                 
             case(non_feature_point)
                 
