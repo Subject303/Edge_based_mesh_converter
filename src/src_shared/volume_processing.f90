@@ -1000,10 +1000,6 @@ module volume_processing
             
         end select
         
-!         print*, centroid_array(:,1)
-!         print*, centroid_array(:,2)
-!         print*, centroid_array(:,3)
-        
     end subroutine centroid_float_assembler
     
     subroutine obj_endconditions(e_state, fwd_i, bck_i, centroid_obj_array, centroid_array_count)
@@ -1350,8 +1346,6 @@ module volume_processing
         c3435(1) = (v34(2) * v35(3) - v34(3) * v35(2))/2
         c3435(2) = (v34(3) * v35(1) - v34(1) * v35(3))/2
         c3435(3) = (v34(1) * v35(2) - v34(2) * v35(1))/2
-
-!         print*, c3435
         
         sx(1) = sx(1) + c3435(1) ! projection in the xx axis
         sx(2) = sx(2) + c3435(2) ! projection in the yy axis
