@@ -580,7 +580,7 @@ module boundary_routine_module
         deallocate(feature_points, p_normal_vectors)
         allocate(feature_points(new_b_npoin), p_normal_vectors(new_b_npoin,3))
         feature_points = .false.
-        p_boundary_flags = 0.0
+        p_boundary_flags = 0
         
         new_bp = 0
         do bp=1,b_npoin
@@ -609,8 +609,6 @@ module boundary_routine_module
                     if (f_internal_array(f)) cycle
                     
                     bf = reversed_f_bound_indexing_array(f)
-                    
-                    p_normal_vectors(new_bp,:) = p_normal_vectors(new_bp,:) + f_normal_vectors(bf,:)
                     
                     if (f_boundary_flags(bf) .ne. flag)then
                         flag = f_boundary_flags(bf)
@@ -641,6 +639,29 @@ module boundary_routine_module
         ! wish me luck
         
         ! forgot normals :(
+        
+
+        do bp=1,b_npoin
+            
+            flag = p_boundary_flags(bp)
+            
+            p = temp_p_bound_indexing_array(bp)
+            
+            pf_stt = p_f_index_array(p-1)+1
+            pf_end = p_f_index_array(p)
+            do pf=pf_stt,pf_end
+            
+                f = p_f_obj_relation_array(pf)
+                
+                if (f_internal_array(f)) cycle
+                
+                bf = reversed_f_bound_indexing_array(f)
+                
+                if (flag .eq. f_boundary_flags(bf)) then
+                    p_normal_vectors(bp,:) = p_normal_vectors(bp,:) + f_normal_vectors(bf,:)
+                endif
+            enddo
+        enddo
         
         do bp=1,b_npoin
             p_normal_vectors(bp,:) = p_normal_vectors(bp,:) / sqrt(p_normal_vectors(bp,1)**2 + p_normal_vectors(bp,2)**2 + p_normal_vectors(bp,3)**2)
