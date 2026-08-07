@@ -996,6 +996,7 @@ module volume_processing
 !                 faces are tertiary
                 do i=1,centroid_array_count,2
                     if (centroid_obj_array(i) .eq. -1) then
+                        print*, centroid_array_count
                         print*, centroid_obj_array
                         stop
                     endif
