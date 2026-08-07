@@ -452,6 +452,7 @@ module volume_processing
                     else
                         centroid_array_count = centroid_array_count - 1
                     endif
+                    print*, mm, viable_mains(m_i)
                 enddo
                 
                 ! and the same for internal faces but we dont need to worry about features
