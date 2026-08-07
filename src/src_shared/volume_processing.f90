@@ -705,15 +705,15 @@ module volume_processing
                 
             case(featre_point)
             
-                ! start on a tertiary
+                ! start on a main
                 
 !                 edges are main
 !                 faces are tertiary
                 do i=1,centroid_array_count-1,2
-                    centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
+                    centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
                 enddo
                 do i=2,centroid_array_count-2,2
-                    centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
+                    centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
                 
         end select
