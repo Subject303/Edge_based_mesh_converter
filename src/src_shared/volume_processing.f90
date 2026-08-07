@@ -494,7 +494,7 @@ module volume_processing
                 centroid_obj_array(3) = tt(1)
                 
                 ! and initialise our indexers
-                fwd_i = 2
+                fwd_i = 3
                 bck_i = 1
                 
                 ! dont want to double back on our starting feature edge
