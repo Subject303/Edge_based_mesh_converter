@@ -577,9 +577,10 @@ module boundary_routine_module
         allocate(p_bound_indexing_array(new_b_npoin), p_boundary_flags(new_b_npoin))
         
         allocate(temp_feature_points,source=feature_points)
-        deallocate(feature_points)
-        allocate(feature_points(new_b_npoin))
+        deallocate(feature_points, p_normal_vectors)
+        allocate(feature_points(new_b_npoin), p_normal_vectors(new_b_npoin,3))
         feature_points = .false.
+        p_boundary_flags = 0.0
         
         new_bp = 0
         do bp=1,b_npoin
@@ -614,9 +615,11 @@ module boundary_routine_module
                         exit
                     endif
                     
+                    p_normal_vectors(new_bp,:) = p_normal_vectors(new_bp,:) + f_normal_vectors(bf,:)
+                    
                 enddo
                 
-                p_boundary_flags(new_bp) = flag
+                p_boundary_flags(new_bp,3) = flag
                 
             enddo
             
@@ -635,6 +638,14 @@ module boundary_routine_module
         ! I dont think any of the other arrays are necessarily in use post here anyway
         ! so I'm going to be lazy
         ! wish me luck
+        
+        ! forgot normals :(
+        
+        do bp=1,b_npoin
+            p_normal_vectors(bp,:) = p_normal_vectors(bp,:) / sqrt(p_normal_vectors(bp,1)**2 + p_normal_vectors(bp,2)**2 + p_normal_vectors(bp,3)**2)
+        enddo
+        
+        
         
         
     end subroutine split_corners
