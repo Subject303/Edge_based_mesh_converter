@@ -443,10 +443,10 @@ module volume_processing
                             tt(2) = e_f_obj_relation_array(i)
                             
                             ! and then we check if either of them are flagged correctly
-                            print*, flag, f_boundary_flags(reversed_e_bound_indexing_array(tt(1))), f_boundary_flags(reversed_e_bound_indexing_array(tt(2)))
+                            print*, flag, f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
                             print*, m_i
                             
-                            if ((f_boundary_flags(reversed_e_bound_indexing_array(tt(1))) .eq. flag ) .or. (f_boundary_flags(reversed_e_bound_indexing_array(tt(2))) .eq. flag )) then
+                            if ((f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .eq. flag ) .or. (f_boundary_flags(reversed_f_bound_indexing_array(tt(2))) .eq. flag )) then
                                 viable_mains(m_i) = .true.
                             endif
                             
@@ -615,7 +615,7 @@ module volume_processing
                     enddo
                     tt(2) = e_f_obj_relation_array(i)
                     
-                    if (f_boundary_flags(reversed_e_bound_indexing_array(tt(1))) .eq. flag ) then
+                    if (f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .eq. flag ) then
                         tt(2) = tt(1)
                     else
                         tt(1) = tt(2)
