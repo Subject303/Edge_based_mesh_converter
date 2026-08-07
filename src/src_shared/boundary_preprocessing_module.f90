@@ -645,7 +645,7 @@ module boundary_routine_module
             
             flag = p_boundary_flags(bp)
             
-            p = temp_p_bound_indexing_array(bp)
+            p = p_bound_indexing_array(bp)
             
             pf_stt = p_f_index_array(p-1)+1
             pf_end = p_f_index_array(p)
