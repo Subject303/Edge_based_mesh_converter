@@ -202,11 +202,11 @@ module volume_processing
             
             angle = alignment(in_progress_projection, direction_array)
             
-!             if (angle .lt. 0.) then
+            if (angle .lt. 0.) then
                 sbb(bp,:) = in_progress_projection(:)
-!             else
-!                 sbb(bp,:) = -in_progress_projection(:)
-!             endif
+            else
+                sbb(bp,:) = -in_progress_projection(:)
+            endif
             
 ! 			print*, bp, sbb(bp,:), angle
             
@@ -425,6 +425,8 @@ module volume_processing
                             
                             if ((f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .eq. flag ) .or. (f_boundary_flags(reversed_f_bound_indexing_array(tt(2))) .eq. flag )) then
                                 viable_mains(m_i) = .true.
+                            else
+                                centroid_array_count = centroid_array_count - 1
                             endif
                         else
                             centroid_array_count = centroid_array_count - 1
