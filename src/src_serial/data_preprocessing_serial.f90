@@ -129,8 +129,18 @@ module data_processing_serial
         
         call volume_alloc
         
+        
+        print*, ' '
+        print*, 'Moving to internal edge projection processing. '
+        print*, ' '
         call internal_edge_volume_processing
+        print*, ' '
+        print*, 'Moving to boundary edge projection processing. '
+        print*, ' '
         call boundary_edge_volume_processing
+        print*, ' '
+        print*, 'Moving to boundary face projection processing. '
+        print*, ' '
         call boundary_face_volume_processing
         
         call volume_generation
