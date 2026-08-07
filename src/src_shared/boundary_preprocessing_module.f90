@@ -559,8 +559,6 @@ module boundary_routine_module
             if (number_of_projections(bp+1).eq.1) num_feature_points = bp
         enddo
         
-        print*,number_of_projections
-        
         ! so now we can loop from 1:num_feature_points or num_feature_points+1:b_npoin
         ! if we want feat or non feat
         
@@ -569,9 +567,11 @@ module boundary_routine_module
         deallocate(p_bound_indexing_array)
         allocate(p_bound_indexing_array(new_b_npoin), p_boundary_flags(new_b_npoin))
         
+        print*,feature_points
         allocate(temp_feature_points,source=feature_points)
         deallocate(feature_points)
         allocate(feature_points(new_bp))
+        feature_points = .false.
         
         new_bp = 0
         do bp=1,b_npoin
