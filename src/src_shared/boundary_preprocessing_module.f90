@@ -385,7 +385,7 @@ module boundary_routine_module
                     
                     ! if the flagged edge is not already flagged
 !                     if (e_boundary_flags(be).eq.999) then
-                    if (e_boundary_flags(be).ne.1000) then
+                    if ((e_boundary_flags(be).ne.1000).and.(e_boundary_flags(be).ne.current_flag)) then
                         ! if any edges are non feature we know we can keep going
                         all_edges_feature = .false.
                         
