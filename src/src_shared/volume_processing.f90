@@ -538,6 +538,9 @@ module volume_processing
         enddo
         
         if (k.eq.1001) then
+            
+            print*, centroid_obj_array
+            
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
             
             stop
