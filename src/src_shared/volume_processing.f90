@@ -425,6 +425,7 @@ module volume_processing
                     mm = p_e_obj_relation_array(m_stt+m_i)
                     print*, m_i, mm, e_bound_array(mm)
                     if (e_bound_array(mm)) then
+                        print*, flag, e_boundary_flags(reversed_e_bound_indexing_array(mm))
                         if     (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. flag) then
                             viable_mains(m_i) = .true.
                         elseif (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) then
