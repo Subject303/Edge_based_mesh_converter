@@ -448,6 +448,8 @@ module volume_processing
                     endif
                 enddo
                 
+                print*,centroid_array_count
+                
                 allocate(centroid_obj_array(centroid_array_count))
                 centroid_obj_array = -1
                 
