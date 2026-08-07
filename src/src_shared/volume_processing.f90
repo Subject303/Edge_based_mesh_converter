@@ -754,7 +754,7 @@ module volume_processing
             case(featre_point)
                 
 !                 print*, centroid_array_count
-!                 print*, centroid_obj_array
+                print*, centroid_obj_array
                 
                 if ((centroid_obj_array(centroid_array_count-2) .ne. -1) .and. (centroid_obj_array(centroid_array_count) .ne. -1)) then
                     if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
