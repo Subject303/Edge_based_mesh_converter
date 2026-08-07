@@ -542,10 +542,10 @@ module volume_processing
             print*, centroid_obj_array
             
             do i=1,centroid_array_count-1,2
-                print*, centroid_obj_array(i), e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(i)) 
+                print*, centroid_obj_array(i), e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(i)))
             enddo
             do i=2,centroid_array_count-2,2
-                print*, centroid_obj_array(i), f_boundary_flags(reversed_f_bound_indexing_array(centroid_obj_array(i)) 
+                print*, centroid_obj_array(i), f_boundary_flags(reversed_f_bound_indexing_array(centroid_obj_array(i)) )
             enddo
             
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
