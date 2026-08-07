@@ -883,7 +883,7 @@ module volume_processing
             
         enddo
         
-        if (k.eq.1000) then
+        if (k.eq.1001) then
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
             stop
         endif
