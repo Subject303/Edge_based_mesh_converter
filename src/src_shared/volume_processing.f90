@@ -1018,7 +1018,7 @@ module volume_processing
                 
                 ! allocate my temp arrays
                 allocate(viable_mains(main_count), centroid_obj_array(centroid_array_count))
-                centroid_obj_array = 0
+                centroid_obj_array = -1
                 
                 ! all main objects are viable to begin with.
                 viable_mains = .true.
@@ -1057,10 +1057,7 @@ module volume_processing
                 
                 ! allocate my temp arrays
                 allocate(viable_mains(main_count), centroid_obj_array(centroid_array_count))
-                centroid_obj_array = 0
-                
-                print*, centroid_array_count
-                print*, centroid_obj_array
+                centroid_obj_array = -1
                 
                 ! all main objects are viable to begin with.
                 viable_mains = .true.
@@ -1126,7 +1123,7 @@ module volume_processing
                 enddo
                 
                 allocate(centroid_obj_array(centroid_array_count))
-                centroid_obj_array = 0
+                centroid_obj_array = -1
                 
                 m_i = 1
                 ! then select a viable edge (ie a boundary edge)
@@ -1337,6 +1334,8 @@ module volume_processing
                 if (centroid_obj_array(1) .eq. centroid_obj_array(centroid_array_count)) e_state = .true.
                 
             case(boundary_edge)
+                
+                print*,centroid_obj_array
                 
                 if (f_bound_array(centroid_obj_array(centroid_array_count-1))) e_state = .true.
                 
