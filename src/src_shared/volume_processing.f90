@@ -892,7 +892,7 @@ module volume_processing
             stop
         endif
         
-        call centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count)
+        call centroid_float_assembler(centroid_obj_array, fwd_i, bck_i, centroid_array, centroid_array_count)
         
         
     end subroutine centroid_assembler
@@ -949,9 +949,9 @@ module volume_processing
             
     end subroutine obj_select
     
-    subroutine centroid_float_assembler(centroid_obj_array, centroid_array, centroid_array_count)
+    subroutine centroid_float_assembler(centroid_obj_array, fwd_i, bck_i, centroid_array, centroid_array_count)
         implicit none
-        integer(KIND=INT32) :: i, centroid_obj_array(:), centroid_array_count
+        integer(KIND=INT32) :: i, centroid_obj_array(:), centroid_array_count, fwd_i, bck_i
         real(KIND=REAL64)  ,allocatable :: centroid_array(:,:)
         
         deallocate(centroid_array)
@@ -998,10 +998,10 @@ module volume_processing
                 
 !                 edges are main
 !                 faces are tertiary
-                do i=1,centroid_array_count,2
+                do i=bck_i,fwd_i,2
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
-                do i=2,centroid_array_count-1,2
+                do i=bck_i+1,fwd_i-1,2
                     centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
                 enddo
                 
