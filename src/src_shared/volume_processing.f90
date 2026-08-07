@@ -82,7 +82,7 @@ module volume_processing
                 sn(ie,:) = -in_progress_projection
 			endif
 			
-! 			print*, ie, sn(ie,:), angle
+			print*, ie, sn(ie,:), angle
             
         enddo
         
@@ -97,26 +97,6 @@ module volume_processing
         real(KIND=REAL64),allocatable   :: centroid_array(:,:)
         real(KIND=REAL64)               :: in_progress_projection(3), in_progress_centroid(3), direction_array(3), c1(3), c2(3), angle, vol1, vol2
         logical, allocatable :: non_viable_faces(:)
-        
-!         do e=1,nedge
-!             i1       = e_p_index_array(e-1)	+ 1
-! 			ef_start = e_f_index_array(e-1)	+ 1
-!             ec_start = e_c_index_array(e-1)	+ 1
-!             i2       = e_p_index_array(e) 
-!             ef_end   = e_f_index_array(e)
-!             ec_end   = e_c_index_array(e)
-!             print*, 'bound ', e_bound_array(e), e_centroid(e,:)
-!             print*, 'point'
-!             print*, e_p_obj_relation_array(i1:i2)
-!             print*, p_bound_array(e_p_obj_relation_array(i1:i2))
-!             print*, 'edge'
-!             print*, e_f_obj_relation_array(ef_start:ef_end)
-!             print*, f_bound_array(e_f_obj_relation_array(ef_start:ef_end))
-!             print*, 'face'
-!             print*, e_c_obj_relation_array(ec_start:ec_end)
-!             
-! 	    enddo
-        
         
         ! it's upsetting this is the easiest of the three jobs I gotta do
         
@@ -152,8 +132,6 @@ module volume_processing
             
             call centroid_array_routine(in_progress_projection,  in_progress_centroid, centroid_array)
             
-! 			print*,in_progress_projection
-			
             direction_array(:) = c1(:) - c2(:)
             
             angle = alignment(in_progress_projection, direction_array)
@@ -164,7 +142,7 @@ module volume_processing
                 sb(be,:) = -in_progress_projection
 			endif
 			
-! 			print*, be, sb(be,:), angle
+			print*, be, sb(be,:), angle
             
         enddo
         
@@ -230,7 +208,7 @@ module volume_processing
                 sbb(bp,:) = -in_progress_projection(:)
             endif
             
-! 			print*, bp, sbb(bp,:), angle
+			print*, bp, sbb(bp,:), angle
             
         enddo
         
@@ -503,11 +481,11 @@ module volume_processing
             
         end select!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
-        print*, tt(1), mm, tt(2)
-        print*, centroid_obj_array
-        print*, ''
-        print*, ''
-        print*, ''
+!         print*, tt(1), mm, tt(2)
+!         print*, centroid_obj_array
+!         print*, ''
+!         print*, ''
+!         print*, ''
             
         do k=1,1000 ! this k limit is here to stop infinite loops, it needs to be set to an unreasonable number to not trip incorrectly
             
@@ -526,11 +504,11 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-            print*, tt(1), mm, tt(2)
-            print*, centroid_obj_array
-            print*, ''
-            print*, ''
-            print*, ''
+!             print*, tt(1), mm, tt(2)
+!             print*, centroid_obj_array
+!             print*, ''
+!             print*, ''
+!             print*, ''
             
             if (state) then
                 
@@ -545,15 +523,6 @@ module volume_processing
         enddo
         
         if (k.eq.1001) then
-            
-!             print*, centroid_obj_array
-!             
-!             do i=1,centroid_array_count-1,2
-!                 print*, centroid_obj_array(i), e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(i)))
-!             enddo
-!             do i=2,centroid_array_count-2,2
-!                 print*, centroid_obj_array(i), f_boundary_flags(reversed_f_bound_indexing_array(centroid_obj_array(i)) )
-!             enddo
             
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
             
@@ -780,26 +749,8 @@ module volume_processing
 !                 print*, centroid_obj_array
                 
                 if ((centroid_obj_array(centroid_array_count-2) .ne. -1) .and. (centroid_obj_array(centroid_array_count) .ne. -1)) then
-!                     do i=1,centroid_array_count-1,2
-!                         print*, centroid_obj_array(i), e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(i)))
-!                     enddo
-!                     do i=2,centroid_array_count-2,2
-!                         print*, centroid_obj_array(i), f_boundary_flags(reversed_f_bound_indexing_array(centroid_obj_array(i)) )
-!                     enddo
                     if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
                 endif
-                
-!                 if ((centroid_obj_array(1) .ne. -1) .and. (centroid_obj_array(centroid_array_count-1) .ne. -1)) then
-!                     
-!                     do i=1,centroid_array_count-1,2
-!                         print*, centroid_obj_array(i), e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(i)))
-!                     enddo
-!                     do i=2,centroid_array_count-2,2
-!                         print*, centroid_obj_array(i), f_boundary_flags(reversed_f_bound_indexing_array(centroid_obj_array(i)) )
-!                     enddo
-!                     
-!                     if ((e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(centroid_array_count-1))) .eq. 1000) .and. (e_boundary_flags(reversed_e_bound_indexing_array(centroid_obj_array(1))) .eq. 1000)) e_state = .true.
-!                 endif
                 
         end select
             
