@@ -430,6 +430,7 @@ module volume_processing
                     else
                         centroid_array_count = centroid_array_count - 1
                     endif
+                    print*, m_i, viable_mains(m_i)
                 enddo
                 
                 ! and the same for internal faces but we dont need to worry about features
@@ -480,11 +481,11 @@ module volume_processing
             
         end select!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
-!         print*, tt(1), mm, tt(2)
-!         print*, centroid_obj_array
-!         print*, ''
-!         print*, ''
-!         print*, ''
+        print*, tt(1), mm, tt(2)
+        print*, centroid_obj_array
+        print*, ''
+        print*, ''
+        print*, ''
             
         do k=1,1000 ! this k limit is here to stop infinite loops, it needs to be set to an unreasonable number to not trip incorrectly
             
@@ -503,11 +504,11 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-!             print*, tt(1), mm, tt(2)
-!             print*, centroid_obj_array
-!             print*, ''
-!             print*, ''
-!             print*, ''
+            print*, tt(1), mm, tt(2)
+            print*, centroid_obj_array
+            print*, ''
+            print*, ''
+            print*, ''
             
             if (state) then
                 
