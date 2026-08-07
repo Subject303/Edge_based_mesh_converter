@@ -279,7 +279,7 @@ module volume_processing
                 tert_count = t_end-t_stt
                 
                 ! for b_edge the centroid will consist of all adjacent centroids
-                centroid_array_count = 1 + main_count + tert_count
+                centroid_array_count = 2 + main_count + tert_count
                 ! but for convinience we accept that the last entry can be dropped so subroutines can be simpler
                 
                 ! allocate my temp arrays
