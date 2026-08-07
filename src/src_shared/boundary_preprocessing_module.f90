@@ -580,7 +580,7 @@ module boundary_routine_module
         deallocate(feature_points, p_normal_vectors)
         allocate(feature_points(new_b_npoin), p_normal_vectors(new_b_npoin,3))
         feature_points = .false.
-        p_boundary_flags = 0
+        p_normal_vectors = 0.0
         
         new_bp = 0
         do bp=1,b_npoin
