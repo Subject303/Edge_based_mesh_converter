@@ -312,7 +312,8 @@ module outputting_routines
         allocate(flagout(npoin))
         flagout = 0
         do i=1,b_npoin
-            flagout(p_bound_indexing_array(i)) = flagout(p_bound_indexing_array(i)) + p_boundary_flags(i)
+            i1 = p_bound_indexing_array(i)
+            flagout(i1) = flagout(i1) + p_boundary_flags(i)
         enddo
         
         write(1) flagout
