@@ -496,7 +496,7 @@ module volume_processing
                 bck_i = 1
                 
                 ! dont want to double back on our starting feature edge
-                viable_mains(m_i) = .false.
+!                 viable_mains(m_i) = .false.
             
             
         end select!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
