@@ -1254,8 +1254,6 @@ module volume_processing
                 
                 allocate(centroid_array(centroid_array_count,3))
                 
-!                 print*, 'count sn ', centroid_array_count
-                
                 ! start on a tertiary
                 
                 ! faces are main
@@ -1273,8 +1271,6 @@ module volume_processing
                 ! so we drop that
                 allocate(centroid_array(centroid_array_count-1,3))
                 
-!                 print*, 'count sb ', centroid_array_count
-                
                 ! start on a main
                 
 !                 faces are main
@@ -1291,8 +1287,6 @@ module volume_processing
                 
                 allocate(centroid_array(centroid_array_count,3))
                 
-!                 print*, 'count sbb ', centroid_array_count
-                
                 ! start on a tertiary
                 
 !                 edges are main
@@ -1303,11 +1297,6 @@ module volume_processing
                 do i=2,centroid_array_count-1,2
                     centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
                 enddo
-                
-!                 do i=1,centroid_array_count-1
-!                     print*, centroid_obj_array(i)
-!                     print*, centroid_array(i,:)
-!                 enddo
                 
                 
             case(featre_point)
@@ -1335,10 +1324,16 @@ module volume_processing
                 
             case(boundary_edge)
                 
-                !print*,centroid_obj_array
+                ! these two conditions are effectivly identical in function because if 
+                ! the last and 2nd to last values are the same it implies a face is only connected to one cell
+                ! and is therefore a boundary face
+                
 !                 if (centroid_obj_array(centroid_array_count-1) .ne. -1) then
 !                     if (f_bound_array(centroid_obj_array(centroid_array_count-1))) e_state = .true.
 !                 endif
+                
+                ! this is just slightly faster and more robust to upstream chicanery
+                
                 if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
                 
             case(non_feature_point)
