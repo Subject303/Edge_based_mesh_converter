@@ -998,10 +998,10 @@ module volume_processing
                 
 !                 edges are main
 !                 faces are tertiary
-                do i=bck_i,fwd_i,2
+                do i=1,fwd_i,2
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
-                do i=bck_i+1,fwd_i-1,2
+                do i=2,fwd_i-1,2
                     centroid_array(i,:) = e_centroid(centroid_obj_array(i),:)
                 enddo
                 
