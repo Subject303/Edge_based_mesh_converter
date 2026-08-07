@@ -202,11 +202,11 @@ module volume_processing
             
             angle = alignment(in_progress_projection, direction_array)
             
-            if (angle .lt. 0.) then
+!             if (angle .lt. 0.) then
                 sbb(bp,:) = in_progress_projection(:)
-            else
-                sbb(bp,:) = -in_progress_projection(:)
-            endif
+!             else
+!                 sbb(bp,:) = -in_progress_projection(:)
+!             endif
             
 ! 			print*, bp, sbb(bp,:), angle
             
