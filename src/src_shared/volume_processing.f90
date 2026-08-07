@@ -418,7 +418,7 @@ module volume_processing
                 viable_mains = .false.
                 
                 centroid_array_count = 1 + main_count + tert_count
-                
+                print*, coords(obj,:)
                 ! we also remove the wrong flagged centroids from the centroid array count
                 m_i = 1
                 do m_i=1, main_count
