@@ -674,8 +674,8 @@ module boundary_routine_module
         
         b_npoin = new_b_npoin
         
-        do i=1,b_nface
-            print*, f_boundary_flags(i)
+        do i=1,b_nedge
+            print*, e_boundary_flags(i)
         enddo
         
 !         reversed_p_bound_indexing_array
