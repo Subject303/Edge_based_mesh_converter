@@ -440,7 +440,7 @@ module boundary_routine_module
                         
                         flagged_edges = 0
                         fe_index = 0
-                        fe_index_old = fe_index + 1
+                        fe_index_old = 1
                         exit
                     endif
                 enddo
