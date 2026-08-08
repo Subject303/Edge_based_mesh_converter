@@ -395,7 +395,7 @@ module volume_processing
                 ! unlike with non feature points however, we must also only flag feature edges and edges with the correct boundary flag.
                 viable_mains = .false.
                 
-                centroid_array_count = 1 + main_count + tert_count
+                centroid_array_count = 2 + main_count + tert_count
                 
                 ! we also remove the wrong flagged centroids from the centroid array count
                 m_i = 1
