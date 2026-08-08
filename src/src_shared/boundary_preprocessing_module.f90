@@ -432,15 +432,16 @@ module boundary_routine_module
                     if (f_boundary_flags(i).eq.999) then
                         bf = i
                         
+                        ff_index = ff_index + 1
+                        
+                        flagged_faces(ff_index) = bf
                         f_boundary_flags(bf) = current_flag
                         
-                        flagged_faces = 0
-                        ff_index = 1
-                        ff_index_old = 1
+                        print*, ff_index_old, ff_index
+                        print*, fe_index_old, fe_index
+                        print*, current_flag
+                        print*, ' '
                         
-                        flagged_edges = 0
-                        fe_index = 0
-                        fe_index_old = 1
                         exit
                     endif
                 enddo
