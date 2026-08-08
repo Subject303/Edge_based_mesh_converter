@@ -425,7 +425,8 @@ module volume_processing
                             if ((f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .eq. flag ) .or. (f_boundary_flags(reversed_f_bound_indexing_array(tt(2))) .eq. flag )) then
                                 viable_mains(m_i) = .true.
                             endif
-                            
+                        else
+                            centroid_array_count = centroid_array_count - 1
                         endif
                     else
                         centroid_array_count = centroid_array_count - 1
