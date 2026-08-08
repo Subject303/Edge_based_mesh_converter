@@ -436,6 +436,7 @@ module volume_processing
                 enddo
                 
                 do m_i=1, main_count
+                    mm = p_e_obj_relation_array(m_stt+m_i)
                     print*, viable_mains(m_i),m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm))
                 enddo
                 
