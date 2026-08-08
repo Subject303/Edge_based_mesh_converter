@@ -180,6 +180,7 @@ module volume_processing
             
             if (feature_points(bp)) then
                 ! corners
+                cycle
                 obj_type = featre_point
                 
                 i = bp ! we need bp inside of the feature edges and we cant modify bp in the loop
