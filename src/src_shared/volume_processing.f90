@@ -431,7 +431,8 @@ module volume_processing
                     else
                         centroid_array_count = centroid_array_count - 1
                     endif
-                    if (viable_mains(m_i)) print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm))
+                    !if (viable_mains(m_i)) print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm))
+                    print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm))
                 enddo
                 
                 ! and the same for internal faces but we dont need to worry about features
