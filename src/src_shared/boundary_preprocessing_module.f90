@@ -437,11 +437,14 @@ module boundary_routine_module
                         flagged_faces(ff_index) = bf
                         f_boundary_flags(bf) = current_flag
                         
-                        fe_index = fe_index + 1
                         print*, ff_index_old, ff_index
                         print*, fe_index_old, fe_index
                         print*, current_flag
                         print*, ' '
+                        
+                        print*, flagged_faces((ff_index-10):(ff_index+10))
+                        
+                        print*, flagged_edges((fe_index-10):(fe_index+10))
                         
                         exit
                     endif
