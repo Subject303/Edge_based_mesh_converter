@@ -321,9 +321,9 @@ module boundary_routine_module
     
     subroutine boundary_region_face_flagging
         implicit none
-        integer(KIND=INT32) :: i, be, bf, current_flag, ff_index, fe_index, ff_index_old, fe_index_old, f, e, fe_stt, fe_end, ef_stt, ef_end, fe, ef
+        integer(KIND=INT32) :: i, be, bf, current_flag, ff_index, fe_index, ff_index_old, fe_index_old, f, e, fe_stt, fe_end, ef_stt, ef_end, fe, ef, k
         integer(KIND=INT32), allocatable :: flagged_faces(:), flagged_edges(:)
-        logical :: all_edges_feature
+        logical :: no_additions
         
         
         
@@ -351,14 +351,13 @@ module boundary_routine_module
         fe_index = 0
         
         ff_index_old = 1
-        fe_index_old = 0
+        fe_index_old = 1
         
         flagged_faces(ff_index) = bf
         f_boundary_flags(bf) = current_flag
         
         
         do 
-            fe_index_old = fe_index + 1
             
             !if (ff_index_old .ge. 11367) 
 !             print*, 'FLAG 1', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
@@ -372,7 +371,7 @@ module boundary_routine_module
                 fe_stt = f_e_index_array(f-1)+1
                 fe_end = f_e_index_array(f)
                 
-                all_edges_feature = .true.
+                no_additions = .true.
                 
                 ! loop over all flagged edges connected to flagged faces
                 do fe=fe_stt,fe_end
@@ -382,16 +381,12 @@ module boundary_routine_module
                     be = reversed_e_bound_indexing_array(f_e_obj_relation_array(fe))
                     
                     ! if the flagged edge is not a feature and is not already flagged then flag it
-                    if (e_boundary_flags(be).eq.1000) then
-                        cycle
-                    else
-                        all_edges_feature = .false.
-                    endif
+                    if (e_boundary_flags(be).eq.1000) cycle
                     
                     ! if the flagged edge is not already flagged
                     if (e_boundary_flags(be).ne.current_flag) then
                         ! if any edges are non feature we know we can keep going
-                        all_edges_feature = .false.
+                        no_additions = .false.
                         
                         fe_index = fe_index + 1
                         
@@ -402,26 +397,11 @@ module boundary_routine_module
                     endif
                 enddo
             enddo
-            
-            !if (ff_index_old .ge. 11367) then
-!                 print*, ''
-!                 print*, ''
-!                 print*, flagged_faces
-!                 print*, f_boundary_flags
-!                 print*, ''
-!                 print*, flagged_edges
-!                 print*, e_boundary_flags
-!                 print*, ''
-!                 print*, ''
-            !endif
-            
-            ! do somthing with exit conditions here
-            ! all_edges_feature .true. stuff
-            
             ff_index_old = ff_index + 1
             
+            
             ! this is the condition to create a new boundary region
-            if (all_edges_feature) then
+            if (no_additions) then
                 
                 
                 ! first check that we're not just already done.
@@ -452,9 +432,6 @@ module boundary_routine_module
                 
             endif
             
-            
-            !if (ff_index_old .ge. 11367) 
-!             print*, 'FLAG 2', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
             
             ! now we update the flagged faces to restart the loop 
             
@@ -488,6 +465,7 @@ module boundary_routine_module
                 enddo
                 
             enddo
+            fe_index_old = fe_index + 1
             
             
         enddo
