@@ -505,9 +505,9 @@ module volume_processing
             call obj_select(m_i, m_stt, mm, tt)
             
             if (obj_type.eq.featre_point) then
-                print*, 'cunt', fwd_i,centroid_array_count, e_boundary_flags(reversed_e_bound_indexing_array(mm))
+                print*, mm, tt(1), tt(2), f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2))), e_boundary_flags(reversed_e_bound_indexing_array(mm))
                 print*, centroid_obj_array
-                if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-4)) cycle
+                !if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-4)) cycle
             endif
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
