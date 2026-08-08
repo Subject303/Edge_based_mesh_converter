@@ -667,6 +667,8 @@ module boundary_routine_module
                 
                 p_boundary_flags(new_bp) = flag
                 
+                print*,p_boundary_flags(new_bp)
+                
             enddo
             
         enddo
