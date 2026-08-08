@@ -362,6 +362,7 @@ module boundary_routine_module
             !if (ff_index_old .ge. 11367) 
 !             print*, 'FLAG 1', current_flag, fe_index_old, fe_index, ff_index_old, ff_index
             
+            no_additions = .true.
             ! loop over all flagged faces we havn't already looped over
             do i=ff_index_old,ff_index
                 bf = flagged_faces(i)
@@ -370,8 +371,6 @@ module boundary_routine_module
                 
                 fe_stt = f_e_index_array(f-1)+1
                 fe_end = f_e_index_array(f)
-                
-                no_additions = .true.
                 
                 ! loop over all flagged edges connected to flagged faces
                 do fe=fe_stt,fe_end
