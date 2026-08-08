@@ -376,13 +376,16 @@ module boundary_routine_module
                 
                 ! loop over all flagged edges connected to flagged faces
                 do fe=fe_stt,fe_end
+                
+                    if (e_internal_array(f_e_obj_relation_array(fe))) cycle
+                    
                     be = reversed_e_bound_indexing_array(f_e_obj_relation_array(fe))
                     
                     ! if the flagged edge is not a feature and is not already flagged then flag it
-                    !if ((e_boundary_flags(be).ne.1000).and.(e_boundary_flags(be).ne.current_flag)) then
+                    if (e_boundary_flags(be).eq.1000) cycle
                     
                     ! if the flagged edge is not already flagged
-                    if (e_boundary_flags(be).eq.999) then
+                    if (e_boundary_flags(be).ne.current_flag) then
                         ! if any edges are non feature we know we can keep going
                         all_edges_feature = .false.
                         
@@ -470,7 +473,7 @@ module boundary_routine_module
                     bf = reversed_f_bound_indexing_array(f)
                     
                     ! if the face is not already flagged
-                    if (f_boundary_flags(bf).eq.999) then
+                    if (f_boundary_flags(bf).ne.current_flag) then
                         ff_index = ff_index + 1
                         
                         ! and add all the boundary faces
