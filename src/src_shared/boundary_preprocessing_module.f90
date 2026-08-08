@@ -674,12 +674,8 @@ module boundary_routine_module
         
         b_npoin = new_b_npoin
         
-        flag = -999
         do i=1,b_nface
-            if (flag .ne. f_boundary_flags(i)) then
-                print*, f_boundary_flags(i)
-                flag = f_boundary_flags(i)
-            endif
+            print*, f_boundary_flags(i)
         enddo
         
 !         reversed_p_bound_indexing_array
