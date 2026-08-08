@@ -485,56 +485,56 @@ module boundary_routine_module
             
         enddo
         
-        do be=1,b_nedge
-            
-            if (e_boundary_flags(be) .eq. 1000) cycle
-            
-            current_flag = -999
-            
-            e = e_bound_indexing_array(be)
-            
-            ef_stt = e_f_index_array(e-1)+1
-            ef_end = e_f_index_array(e)
-            
-            do ef=ef_stt,ef_end
-                f = e_f_obj_relation_array(ef)
-                
-                ! ignore internal faces
-                if (f_internal_array(f)) cycle
-                
-                bf = reversed_f_bound_indexing_array(f)
-                
-                if (current_flag .ne. -999) then
-                    ! if the face is not already flagged
-                    if (f_boundary_flags(bf).ne.current_flag) then
-                        
-                        if (f_boundary_flags(bf).gt.current_flag) then
-                            do i=1, b_nface
-                                if (f_boundary_flags(i) .eq. current_flag) f_boundary_flags(i) = f_boundary_flags(bf)
-                            enddo
-                            
-                            do i=1, b_nedge
-                                if (e_boundary_flags(i) .eq. current_flag) e_boundary_flags(i) = f_boundary_flags(bf)
-                            enddo
-                        elseif (f_boundary_flags(bf).lt.current_flag) then
-                            do i=1, b_nface
-                                if (f_boundary_flags(i) .eq. f_boundary_flags(bf)) f_boundary_flags(i) = current_flag
-                            enddo
-                            
-                            do i=1, b_nedge
-                                if (e_boundary_flags(i) .eq. f_boundary_flags(bf)) e_boundary_flags(i) = current_flag
-                            enddo
-                        endif
-                            
-                            
-                        exit
-                    endif
-                endif
-                
-                current_flag = f_boundary_flags(bf)
-                
-            enddo
-        enddo
+!         do be=1,b_nedge
+!             
+!             if (e_boundary_flags(be) .eq. 1000) cycle
+!             
+!             current_flag = -999
+!             
+!             e = e_bound_indexing_array(be)
+!             
+!             ef_stt = e_f_index_array(e-1)+1
+!             ef_end = e_f_index_array(e)
+!             
+!             do ef=ef_stt,ef_end
+!                 f = e_f_obj_relation_array(ef)
+!                 
+!                 ! ignore internal faces
+!                 if (f_internal_array(f)) cycle
+!                 
+!                 bf = reversed_f_bound_indexing_array(f)
+!                 
+!                 if (current_flag .ne. -999) then
+!                     ! if the face is not already flagged
+!                     if (f_boundary_flags(bf).ne.current_flag) then
+!                         
+!                         if (f_boundary_flags(bf).gt.current_flag) then
+!                             do i=1, b_nface
+!                                 if (f_boundary_flags(i) .eq. current_flag) f_boundary_flags(i) = f_boundary_flags(bf)
+!                             enddo
+!                             
+!                             do i=1, b_nedge
+!                                 if (e_boundary_flags(i) .eq. current_flag) e_boundary_flags(i) = f_boundary_flags(bf)
+!                             enddo
+!                         elseif (f_boundary_flags(bf).lt.current_flag) then
+!                             do i=1, b_nface
+!                                 if (f_boundary_flags(i) .eq. f_boundary_flags(bf)) f_boundary_flags(i) = current_flag
+!                             enddo
+!                             
+!                             do i=1, b_nedge
+!                                 if (e_boundary_flags(i) .eq. f_boundary_flags(bf)) e_boundary_flags(i) = current_flag
+!                             enddo
+!                         endif
+!                             
+!                             
+!                         exit
+!                     endif
+!                 endif
+!                 
+!                 current_flag = f_boundary_flags(bf)
+!                 
+!             enddo
+!         enddo
         
         
     end subroutine boundary_region_face_flagging
