@@ -402,7 +402,7 @@ module volume_processing
                 do m_i=1, main_count
                     mm = p_e_obj_relation_array(m_stt+m_i)
                     if (e_bound_array(mm)) then
-                        print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm)), viable_mains(m_i) = .true.
+                        print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm)), viable_mains(m_i)
                         
                         if     (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. flag) then
                             viable_mains(m_i) = .true.
@@ -431,7 +431,7 @@ module volume_processing
                             centroid_array_count = centroid_array_count - 1
                         endif
                         
-                        print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm)), viable_mains(m_i) = .true.
+                        print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm)), viable_mains(m_i)
                         
                         print*, ' ' 
                     else
