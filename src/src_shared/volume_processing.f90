@@ -402,6 +402,8 @@ module volume_processing
                 do m_i=1, main_count
                     mm = p_e_obj_relation_array(m_stt+m_i)
                     if (e_bound_array(mm)) then
+                        print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm)), viable_mains(m_i) = .true.
+                        
                         if     (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. flag) then
                             viable_mains(m_i) = .true.
                         elseif (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) then
@@ -428,6 +430,10 @@ module volume_processing
                         else
                             centroid_array_count = centroid_array_count - 1
                         endif
+                        
+                        print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm)), viable_mains(m_i) = .true.
+                        
+                        print*, ' ' 
                     else
                         centroid_array_count = centroid_array_count - 1
                     endif
@@ -435,10 +441,6 @@ module volume_processing
                     !print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm))
                 enddo
                 
-                do m_i=1, main_count
-                    mm = p_e_obj_relation_array(m_stt+m_i)
-                    print*, viable_mains(m_i),m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm))
-                enddo
                 
                 ! and the same for internal faces but we dont need to worry about features
                 m_i = 1
