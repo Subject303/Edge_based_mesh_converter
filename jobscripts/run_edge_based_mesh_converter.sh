@@ -49,7 +49,7 @@ python3 "./python_scripts/case_preprocessor.py" -f case_file
 
 echo ' running main converter program serial '
 
-./converter case_file
+# ./converter case_file
 
 echo ' finished. '
 
