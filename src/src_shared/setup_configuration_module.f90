@@ -78,7 +78,7 @@ module setup_configuration_module
             stop
         endif
         
-        allocate(raw_data_path(len=indexer) :: string)
+        allocate(character(indexer)::raw_data_path)
         
         call GET_COMMAND_ARGUMENT (1 , value=raw_data_path)
         
