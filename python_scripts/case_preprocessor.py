@@ -25,7 +25,7 @@ filename = args.filename
 
 print(filename)
 
-if (filename == 'None') then
+if (filename == 'None') :
     sys.exit("No file input, use '"'-f foo'"' or '"'--file foo to point to a file'"' ")
 
 
