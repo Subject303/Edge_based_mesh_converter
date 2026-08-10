@@ -27,7 +27,7 @@ if filename is None :
 else:
     filedest = "./case/"+filename
     print("reading case file ", filename, " located at ", filedest )
-    case_name = filename[:-6]
+    case_name = './preprocessed_mesh_folder/'+filename[:-5]+'.preprocessed_mesh_file'
     print(case_name)
 
 sys.exit('AAAAAAAAAAAAA')

@@ -23,7 +23,7 @@ module purge
 module load GCC
 module load Python/3.10.8-GCCcore-12.2.0
 
-case_file=$0
+case_file=$1
 
 COMPLIST=" ./src/src_shared/global_data.f90 ./src/src_shared/quicksort.f90 ./src/src_shared/utils.f90  ./src/src_shared/boundary_preprocessing_module.f90 ./src/src_shared/volume_processing.f90 ./src/src_shared/preprocessor_routine_module.f90 ./src/src_shared/setup_configuration_module.f90 ./src/src_shared/manual_geom_generation.f90 ./src/src_shared/outputting_routines.f90 "
 
