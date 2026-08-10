@@ -10,18 +10,11 @@
 
 cd      $PBS_O_WORKDIR
 
-case_file="2_rad_sphere_poly.case"
+sh "./run_edge_based_mesh_converter.sh" "2_rad_sphere_poly.case" &
 
-sh "./run_edge_based_mesh_converter.sh" $case_file
+sh "./run_edge_based_mesh_converter.sh" "2.case" &
 
-cd      $PBS_O_WORKDIR
+sh "./run_edge_based_mesh_converter.sh" "tet_cube.case" &
 
-case_file="2_rad_sphere_poly.case"
-
-sh "./run_edge_based_mesh_converter.sh" $case_file
-
-cd      $PBS_O_WORKDIR
-
-case_file="2_rad_sphere_poly.case"
-
-sh "./run_edge_based_mesh_converter.sh" $case_file
+wait
+exit
