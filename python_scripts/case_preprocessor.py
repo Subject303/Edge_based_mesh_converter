@@ -22,14 +22,12 @@ parser.add_argument("-f", "--file", dest="filename",help="write report to FILE",
 args = parser.parse_args()
 
 filename = args.filename
-
-print(filename)
+filedest = "./case/"+filename
 
 if filename is None :
-    sys.exit("No file input, use '"'-f foo'"' or '"'--file foo to point to a file'"' ")
-
-
-sys.exit("backstop")
+    sys.exit('No file input, use '"'-f foo'"' or '"'--file foo to point to a file'"' ')
+else:
+    print("reading case file ", filename, " located at ", filedest )
 
 print('reading raw case file',time.time()-start); sys.stdout.flush()
 # read the raw data
@@ -39,12 +37,7 @@ cdp = vtkCompositeDataPipeline()
 # might not be needed
 algo.SetDefaultExecutivePrototype(cdp)
 del cdp
-# algo.SetCaseFileName("./case/tet_sphere.case") #tet sphere
-# algo.SetCaseFileName("./case/666cube.case") #666 cube
-# algo.SetCaseFileName("./case/2.case") #tiny cube
-# algo.SetCaseFileName("./case/tet_cube.case") #TET cube
-# algo.SetCaseFileName("./case/2_rad_sphere_poly.case") #4 diameter poly sphere
-algo.SetCaseFileName("./case/star1.case") # 0.75 mil mesh
+algo.SetCaseFileName(filedest)
 # algo.SetCaseFileName("./case/star.case") # 24 mil mesh
 # will want to change to somthing more generic
 algo.Update()
@@ -56,6 +49,7 @@ polyblock = raw_data.GetBlock(0)  # vtkUnstructuredGrid format
 del raw_data
 # freeing up the multiblock view
 
+sys.exit("backsttop")
 
 print('cleaning case file',time.time()-start); sys.stdout.flush()
 # general cleanup
