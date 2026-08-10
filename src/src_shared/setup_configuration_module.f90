@@ -82,7 +82,8 @@ module setup_configuration_module
         
         ! 28 chars in ./preprocessed_mesh_folder/
         ! 23 in .preprocessed_mesh_file
-        binary_intern_data_path = raw_data_path(28:(len(raw_data_path)-23))//".internalmesh"
+        binary_intern_data_path = "complete_meshes/"//raw_data_path(28:(len(raw_data_path)-23))//".internalmesh"
+        vtu_visualisation_path  = "complete_meshes/"raw_data_path(28:(len(raw_data_path)-23))//".vtu"
         print*, binary_intern_data_path
         
         

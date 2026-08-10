@@ -97,7 +97,7 @@ module outputting_routines
         character(16)                   :: offset_text, TXTnele, TXTnpoin
         
         print*, NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE('')
-        print*, 'WRITING VTU BINARY FILE'
+        print*, "writing visualisation file to ", vtu_visualisation_path
         print*, NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE(''),NEW_LINE('')
         
         write(TXTnpoin, '(I16)') npoin
@@ -169,7 +169,7 @@ module outputting_routines
 &<AppendedData encoding="raw">'//&
 &'_'
         
-        open(1,file='vtu_mesh.vtu',access='stream',status='replace',convert='little_endian')
+        open(1,file=vtu_visualisation_path,access='stream',status='replace',convert='little_endian')
         
         write(1) outstring
         
