@@ -4,6 +4,8 @@
 **.case
 **.geo
 **.preprocessed_mesh_file
+**.internalmesh
+**.vtu
 
 **/logfile.txt
 **/log.**
