@@ -85,7 +85,7 @@ module setup_configuration_module
         ! 27 chars in ./preprocessed_mesh_folder/
         ! 23 in .preprocessed_mesh_file
         binary_intern_data_path = raw_data_path(27:(len(raw_data_path)-23))
-        
+        print*, binary_intern_data_path
         
         if (output_requests .eq. no_output) print*, 'no output formats specified'
         
