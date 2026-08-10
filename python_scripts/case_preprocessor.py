@@ -45,7 +45,6 @@ algo.Update()
 raw_data = algo.GetOutput()
 del algo
 
-
 # block 0 is always the primary datablock here
 polyblock = raw_data.GetBlock(0)  # vtkUnstructuredGrid format
 del raw_data
