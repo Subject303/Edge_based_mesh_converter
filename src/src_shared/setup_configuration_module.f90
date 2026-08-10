@@ -82,6 +82,9 @@ module setup_configuration_module
         
         call GET_COMMAND_ARGUMENT (1 , value=raw_data_path)
         
+        binary_intern_data_path = raw_data_path
+        
+        
         if (output_requests .eq. no_output) print*, 'no output formats specified'
         
         close(10)
