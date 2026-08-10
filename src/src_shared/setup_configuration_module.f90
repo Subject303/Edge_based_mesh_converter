@@ -35,10 +35,6 @@ module setup_configuration_module
                 temp_str = current_line(1:indexer)
                 
                 select case(temp_str)
-                
-                    case('prerocessed_data_file=')
-                        raw_data_path = current_line(indexer+1:)
-                        
                     case('feature_angle=')
                         read(current_line(indexer+1:), '(f12.9)') splitting_angle
                         
@@ -72,6 +68,10 @@ module setup_configuration_module
             deallocate(current_line)
         enddo
         
+        call GET_COMMAND_ARGUMENT (1 , raw_data_path)
+        
+        print*, raw_data_path
+        stop
         
         if (.not.allocated(raw_data_path)) print*, 'no raw data file found', raw_data_path
         
