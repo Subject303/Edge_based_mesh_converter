@@ -70,7 +70,7 @@ module setup_configuration_module
         
         call GET_COMMAND_ARGUMENT (1 , length=indexer)
         
-        allocate(raw_data_path(indexer))
+        allocate(raw_data_path(len=indexer))
         
         call GET_COMMAND_ARGUMENT (1 , value=raw_data_path)
         
