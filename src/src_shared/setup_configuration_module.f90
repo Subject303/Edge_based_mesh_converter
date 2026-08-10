@@ -82,7 +82,9 @@ module setup_configuration_module
         
         call GET_COMMAND_ARGUMENT (1 , value=raw_data_path)
         
-        binary_intern_data_path = raw_data_path
+        ! 27 chars in ./preprocessed_mesh_folder/
+        ! 23 in .preprocessed_mesh_file
+        binary_intern_data_path = raw_data_path(27:(len(raw_data_path)-23))
         
         
         if (output_requests .eq. no_output) print*, 'no output formats specified'
