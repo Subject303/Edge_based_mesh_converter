@@ -25,9 +25,11 @@ filename = args.filename
 
 print(filename)
 
-if filename == 'None' :
+if 'None' is filename :
     sys.exit("No file input, use '"'-f foo'"' or '"'--file foo to point to a file'"' ")
 
+
+sys.exit("backstop")
 
 print('reading raw case file',time.time()-start); sys.stdout.flush()
 # read the raw data
