@@ -27,10 +27,12 @@ if filename is None :
 else:
     filedest = "./case/"+filename
     print("reading case file ", filename, " located at ", filedest )
-    case_name = './preprocessed_mesh_folder/'+filename[:-5]+'.preprocessed_mesh_file'
-    print(case_name)
+    preprocceced_dest = './preprocessed_mesh_folder/'+filename[:-5]+'.preprocessed_mesh_file'
+    print(preprocceced_dest)
 
-sys.exit('AAAAAAAAAAAAA')
+if (os.path.isfile(preprocceced_dest)) :
+    print("preproccessed file at ", preprocceced_dest, "already exists")
+    sys.exit('skipping python preproccessor')
     
 print('reading raw case file',time.time()-start); sys.stdout.flush()
 # read the raw data
@@ -558,8 +560,8 @@ print('beginning writing to file',time.time()-start); sys.stdout.flush()
 
 print('creating raw file',time.time()-start); sys.stdout.flush()
 # opening/creating file
-file_name = './preprocessed_mesh_folder/raw_mesh_data.preprocessed_mesh_file'
-file = open(file_name, "wb")
+print("file named ", preprocceced_dest)
+file = open(preprocceced_dest, "wb")
 
 
 print('writing header',time.time()-start); sys.stdout.flush()
