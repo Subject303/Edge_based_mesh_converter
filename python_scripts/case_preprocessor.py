@@ -19,11 +19,12 @@ start = time.time()
 parser = ArgumentParser()
 parser.add_argument("-f", "--file", dest="filename",help="write report to FILE", metavar="FILE")
 
-args = parser.parse_args()
+filename = args.filename
 
-print(args)
+print(filename)
 
-stop
+sys.exit("Error message")
+
 
 print('reading raw case file',time.time()-start); sys.stdout.flush()
 # read the raw data
