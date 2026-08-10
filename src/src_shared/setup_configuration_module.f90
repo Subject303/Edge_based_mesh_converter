@@ -82,10 +82,6 @@ module setup_configuration_module
         
         call GET_COMMAND_ARGUMENT (1 , value=raw_data_path)
         
-        print*, raw_data_path
-        stop
-        
-        
         if (output_requests .eq. no_output) print*, 'no output formats specified'
         
         close(10)
