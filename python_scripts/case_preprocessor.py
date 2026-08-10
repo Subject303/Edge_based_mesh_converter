@@ -20,13 +20,13 @@ parser = ArgumentParser()
 parser.add_argument("-f", "--file", dest="filename",help="write report to FILE", metavar="FILE")
 
 args = parser.parse_args()
+filename = args.filename
 
 if filename is None :
     sys.exit('No file input, use '"'-f foo'"' or '"'--file foo to point to a file'"' ')
 else:
-    print("reading case file ", filename, " located at ", filedest )
-    filename = args.filename
     filedest = "./case/"+filename
+    print("reading case file ", filename, " located at ", filedest )
 
 print('reading raw case file',time.time()-start); sys.stdout.flush()
 # read the raw data
