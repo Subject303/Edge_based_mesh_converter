@@ -50,7 +50,7 @@ echo ' running main converter program serial '
 
 # ./converter $case_file
 
-echo ' finished. '
+echo ' finished overall shell script. '
 
 cd "./modfiles"
 rm -f $MOD
