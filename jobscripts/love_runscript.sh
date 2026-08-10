@@ -10,6 +10,6 @@
 
 cd      $PBS_O_WORKDIR
 
-case_file="2_rad_sphere_poly.case"
+case_file="2.case"
 
 sh "./run_edge_based_mesh_converter.sh" $case_file
