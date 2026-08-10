@@ -9,9 +9,6 @@
 #PBS -A Szmelter2025b
 
 
-cd      $PBS_O_WORKDIR
-cd      ..
-
 case_file="2_rad_sphere_poly.case"
 
 echo $case_file
