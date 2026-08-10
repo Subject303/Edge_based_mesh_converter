@@ -28,7 +28,6 @@ else:
     filedest = "./case/"+filename
     print("reading case file ", filename, " located at ", filedest )
     preprocceced_dest = './preprocessed_mesh_folder/'+filename[:-5]+'.preprocessed_mesh_file'
-    print(preprocceced_dest)
 
 if (os.path.isfile(preprocceced_dest)) :
     print("preproccessed file at ", preprocceced_dest, "already exists")
