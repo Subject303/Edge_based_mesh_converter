@@ -19,6 +19,8 @@ start = time.time()
 parser = ArgumentParser()
 parser.add_argument("-f", "--file", dest="filename",help="write report to FILE", metavar="FILE")
 
+args = parser.parse_args()
+
 filename = args.filename
 
 print(filename)
