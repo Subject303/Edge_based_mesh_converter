@@ -8,7 +8,6 @@
 #PBS -l nodes=1:ppn=40
 #PBS -A Szmelter2025b
 
-cd      $PBS_O_WORKDIR
 cd      ..
 
 main_path=$(pwd)
