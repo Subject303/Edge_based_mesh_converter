@@ -24,6 +24,7 @@ module load Python/3.10.8-GCCcore-12.2.0
 
 case_file=$1
 preprocessed_file=${case_file#"./case/"}
+preprocessed_file=${preprocessed_file#".case"}
 
 echo $preprocessed_file
 echo $preprocessed_file
