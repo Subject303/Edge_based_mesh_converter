@@ -72,6 +72,12 @@ module setup_configuration_module
         
         print*, indexer
         
+        if (indexer .eq. 0) then
+            print*, 'no raw data file found ', raw_data_path, ' somthing is broken '
+            print*, 'stopping'
+            stop
+        endif
+        
         allocate(raw_data_path(len=indexer) :: string)
         
         call GET_COMMAND_ARGUMENT (1 , value=raw_data_path)
@@ -79,7 +85,6 @@ module setup_configuration_module
         print*, raw_data_path
         stop
         
-        if (.not.allocated(raw_data_path)) print*, 'no raw data file found', raw_data_path
         
         if (output_requests .eq. no_output) print*, 'no output formats specified'
         
