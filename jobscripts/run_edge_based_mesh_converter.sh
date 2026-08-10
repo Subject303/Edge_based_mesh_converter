@@ -1,12 +1,4 @@
 #!/bin/bash
-#PBS -N Mesh_converter
-#PBS -e logfolder/log.$PBS_JOBID.txt
-#PBS -j eo
-#PBS -m bf
-#PBS -M j.thomas@lboro.ac.uk
-#PBS -l walltime=20:00:00
-#PBS -l nodes=1:ppn=40
-#PBS -A Szmelter2025b
 
 cd      ..
 
@@ -25,15 +17,6 @@ module load Python/3.10.8-GCCcore-12.2.0
 case_file=$1
 preprocessed_file=${case_file#"./case/"}
 preprocessed_file="./preprocessed_mesh_folder/"${preprocessed_file%.*}".preprocessed_mesh_file"
-
-echo $preprocessed_file
-echo $preprocessed_file
-echo $preprocessed_file
-echo $preprocessed_file
-echo $preprocessed_file
-echo $preprocessed_file
-
-exit
 
 COMPLIST=" ./src/src_shared/global_data.f90 ./src/src_shared/quicksort.f90 ./src/src_shared/utils.f90  ./src/src_shared/boundary_preprocessing_module.f90 ./src/src_shared/volume_processing.f90 ./src/src_shared/preprocessor_routine_module.f90 ./src/src_shared/setup_configuration_module.f90 ./src/src_shared/manual_geom_generation.f90 ./src/src_shared/outputting_routines.f90 "
 
