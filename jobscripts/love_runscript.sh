@@ -8,6 +8,9 @@
 #PBS -l nodes=1:ppn=40
 #PBS -A Szmelter2025b
 
+ls
+pwd
+
 
 case_file="2_rad_sphere_poly.case"
 
