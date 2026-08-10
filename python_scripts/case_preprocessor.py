@@ -27,7 +27,11 @@ if filename is None :
 else:
     filedest = "./case/"+filename
     print("reading case file ", filename, " located at ", filedest )
+    case_name = filename[:-6]
+    print(case_name)
 
+sys.exit('AAAAAAAAAAAAA')
+    
 print('reading raw case file',time.time()-start); sys.stdout.flush()
 # read the raw data
 algo = vtkGenericEnSightReader()
@@ -37,8 +41,6 @@ cdp = vtkCompositeDataPipeline()
 algo.SetDefaultExecutivePrototype(cdp)
 del cdp
 algo.SetCaseFileName(filedest)
-# algo.SetCaseFileName("./case/star.case") # 24 mil mesh
-# will want to change to somthing more generic
 algo.Update()
 raw_data = algo.GetOutput()
 del algo
@@ -47,8 +49,6 @@ del algo
 polyblock = raw_data.GetBlock(0)  # vtkUnstructuredGrid format
 del raw_data
 # freeing up the multiblock view
-
-sys.exit("backsttop")
 
 print('cleaning case file',time.time()-start); sys.stdout.flush()
 # general cleanup

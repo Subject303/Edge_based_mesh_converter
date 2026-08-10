@@ -12,7 +12,6 @@ cd      $PBS_O_WORKDIR
 cd      ..
 
 main_path=$(pwd)
-# MOD=$(find . -name $main_path"/modfiles/*.prj")
 MOD=' '$(ls $main_path'/modfiles')
 MOD=${MOD//"dum"/}
 cd "./modfiles"
@@ -20,15 +19,11 @@ rm -f $MOD
 cd      ..
 rm -f "./converter"
 
-# LOG="./jobscripts/logfolder/logfile.txt"
-# rm -f $LOG
-# touch $LOG
-# chmod 777 $LOG
-
 module purge
 module load GCC
 module load Python/3.10.8-GCCcore-12.2.0
 
+case_file=$0
 
 COMPLIST=" ./src/src_shared/global_data.f90 ./src/src_shared/quicksort.f90 ./src/src_shared/utils.f90  ./src/src_shared/boundary_preprocessing_module.f90 ./src/src_shared/volume_processing.f90 ./src/src_shared/preprocessor_routine_module.f90 ./src/src_shared/setup_configuration_module.f90 ./src/src_shared/manual_geom_generation.f90 ./src/src_shared/outputting_routines.f90 "
 
@@ -37,26 +32,26 @@ COMPLIST=$COMPLIST" ./src/src_serial/read_data_serial.f90 ./src/src_serial/data_
 COMP_OPTIONS=" -o2 -fdec-format-defaults -ffree-line-length-none -g3 -fcheck=all -fbacktrace -ffpe-trap=zero,overflow  "
 # COMP_OPTIONS=" -fdec-format-defaults -ffree-line-length-none -ffpe-trap=zero,overflow  "
 
-echo ' beginning compilation ' # 2>&1 | tee $LOG
+echo ' beginning compilation '
 
-gfortran $COMP_OPTIONS -o "./converter" $COMPLIST -J"./modfiles" # 2>&1 | tee -a $LOG
+gfortran $COMP_OPTIONS -o "./converter" $COMPLIST -J"./modfiles"
 
 if [ -f "./converter"  ]; then
-    echo " passed compilation " # 2>&1 | tee -a $LOG
+    echo " passed compilation "
 else
-    echo "compilation failed" # 2>&1 | tee -a $LOG
+    echo "compilation failed"
     exit
 fi
 
-echo ' running python preprocessor ' # 2>&1 | tee -a $LOG
+echo ' running python preprocessor '
 
-python3 "./python_scripts/case_preprocessor.py" -f "2_rad_sphere_poly.case" # 2>&1 | tee -a $LOG
+python3 "./python_scripts/case_preprocessor.py" -f case_file
 
-echo ' running main converter program serial ' # 2>&1 | tee -a $LOG
+echo ' running main converter program serial '
 
-# ./converter # 2>&1 | tee -a $LOG
+./converter case_file
 
-echo ' finished. ' # 2>&1 | tee -a $LOG
+echo ' finished. '
 
 cd "./modfiles"
 rm -f $MOD
