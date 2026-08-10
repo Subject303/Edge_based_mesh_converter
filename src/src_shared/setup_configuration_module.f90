@@ -68,7 +68,11 @@ module setup_configuration_module
             deallocate(current_line)
         enddo
         
-        call GET_COMMAND_ARGUMENT (1 , raw_data_path)
+        call GET_COMMAND_ARGUMENT (1 , length=indexer)
+        
+        allocate(raw_data_path(indexer))
+        
+        call GET_COMMAND_ARGUMENT (1 , value=raw_data_path)
         
         print*, raw_data_path
         stop
