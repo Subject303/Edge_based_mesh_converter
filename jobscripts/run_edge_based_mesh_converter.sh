@@ -24,7 +24,7 @@ module load Python/3.10.8-GCCcore-12.2.0
 
 case_file=$1
 preprocessed_file=${case_file#"./case/"}
-preprocessed_file=${preprocessed_file#".case"}
+preprocessed_file=${preprocessed_file::-5}
 
 echo $preprocessed_file
 echo $preprocessed_file
@@ -59,7 +59,7 @@ python3 "./python_scripts/case_preprocessor.py" -f $case_file
 
 echo ' running main converter program serial '
 
-./converter $case_file
+./converter $preprocessed_file
 
 echo ' finished overall shell script. '
 
