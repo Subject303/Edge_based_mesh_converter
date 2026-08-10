@@ -17,8 +17,9 @@ module outputting_routines
 		integer(KIND=INT32 )            :: elesize(nele), nfaces(nele), facesize(nface)
         integer(KIND=INT64)			    :: offset, face_offset
         
+        print*, "writing internal mesh file to ", binary_intern_data_path
         
-        open(2,file='internal_mesh.internalmesh',access='stream',status='replace',convert='little_endian')
+        open(2,file=binary_intern_data_path,access='stream',status='replace',convert='little_endian')
         
         write(2) npoin, i_nedge, b_nedge, b_npoin, nele
         
