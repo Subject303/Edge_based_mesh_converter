@@ -25,7 +25,8 @@ filename = args.filename
 
 print(filename)
 
-sys.exit("Error message")
+if (filename == 'None') then
+    sys.exit("No file input, use '"'-f foo'"' or '"'--file foo to point to a file'"' ")
 
 
 print('reading raw case file',time.time()-start); sys.stdout.flush()
