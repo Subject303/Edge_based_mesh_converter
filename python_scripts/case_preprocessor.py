@@ -9,12 +9,21 @@ from vtkmodules.vtkIOEnSight import *
 from vtkmodules.util.misc import *
 from vtkmodules.vtkFiltersPoints import *
 from vtkmodules.all import *
+from argparse import ArgumentParser
+
 
 VTK_DATA_ROOT = vtkGetDataRoot()
 
 start = time.time()
 
+parser = ArgumentParser()
+parser.add_argument("-f", "--file", dest="filename",help="write report to FILE", metavar="FILE")
 
+args = parser.parse_args()
+
+print(args)
+
+stop
 
 print('reading raw case file',time.time()-start); sys.stdout.flush()
 # read the raw data
