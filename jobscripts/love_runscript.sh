@@ -10,6 +10,6 @@
 
 cd      $PBS_O_WORKDIR
 
-case_file="wank2.vtk"
+case_file="bwehww.case"
 
 sh "./run_edge_based_mesh_converter.sh" $case_file
