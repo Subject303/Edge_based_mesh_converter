@@ -43,13 +43,8 @@ algo.SetDefaultExecutivePrototype(cdp)
 del cdp
 algo.SetFileName(filedest)
 algo.Update()
-raw_data = algo.GetOutput()
+polyblock = algo.GetOutput()
 del algo
-
-# block 0 is always the primary datablock here
-polyblock = raw_data.GetBlock(0)  # vtkUnstructuredGrid format
-del raw_data
-# freeing up the multiblock view
 
 print('cleaning case file',time.time()-start); sys.stdout.flush()
 # general cleanup
