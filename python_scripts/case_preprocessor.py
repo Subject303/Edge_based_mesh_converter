@@ -56,7 +56,7 @@ raw_data = polyblock
 # (It contains mixed 3D cells and unwanted 2D/1D/0D cells)
 
 # 2. Identify the IDs of all 3D cells
-cell_ids_to_keep = vtk.vtkIdTypeArray()
+cell_ids_to_keep = vtkIdTypeArray()
 cell_ids_to_keep.SetName("CellsToKeep")
 
 num_cells = raw_data.GetNumberOfCells()
@@ -68,23 +68,23 @@ for cell_id in range(num_cells):
         cell_ids_to_keep.InsertNextValue(cell_id)
 
 # 3. Create a selection node using the identified cell IDs
-selection_node = vtk.vtkSelectionNode()
-selection_node.SetContentType(vtk.vtkSelectionNode.INDICES)
-selection_node.SetFieldType(vtk.vtkSelectionNode.CELL)
+selection_node = vtkSelectionNode()
+selection_node.SetContentType(vtkSelectionNode.INDICES)
+selection_node.SetFieldType(vtkSelectionNode.CELL)
 selection_node.SetSelectionList(cell_ids_to_keep)
 
 # 4. Wrap the node inside a vtkSelection object
-selection = vtk.vtkSelection()
+selection = vtkSelection()
 selection.AddNode(selection_node)
 
 # 5. Extract the 3D cells into a new unstructured grid
-extractor = vtk.vtkExtractSelection()
+extractor = vtkExtractSelection()
 extractor.SetInputData(0, raw_data)
 extractor.SetInputData(1, selection)
 extractor.Update()
 
 # 6. Retrieve your cleaned unstructured grid
-polyblock = vtk.vtkUnstructuredGrid.SafeDownCast(extractor.GetOutput())
+polyblock = vtkUnstructuredGrid.SafeDownCast(extractor.GetOutput())
 
 
 print('cleaning case file',time.time()-start); sys.stdout.flush()
