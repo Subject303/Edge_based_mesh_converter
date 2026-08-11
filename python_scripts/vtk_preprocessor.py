@@ -586,6 +586,7 @@ print('writing connectivities',time.time()-start); sys.stdout.flush()
 # writing object connectivities
 file.write(struct.pack('<2i' ,c_p_sum, 0))
 for entry in c_p_index:
+    print(entry)
     file.write(struct.pack('<i' ,entry))
     
 file.write(struct.pack('<2i' ,f_p_sum, 0))
