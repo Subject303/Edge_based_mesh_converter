@@ -51,6 +51,14 @@ polyblock = raw_data.GetBlock(0)  # vtkUnstructuredGrid format
 del raw_data
 # freeing up the multiblock view
 
+print('removing 2d elements',time.time()-start); sys.stdout.flush()
+# general cleanup
+algo = vtkRemovePolyData()
+algo.SetInputData(polyblock)
+algo.Update()
+polyblock = algo.GetOutput()
+del algo
+
 print('cleaning case file',time.time()-start); sys.stdout.flush()
 # general cleanup
 algo = vtkStaticCleanUnstructuredGrid()
