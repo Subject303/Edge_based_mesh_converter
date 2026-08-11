@@ -118,8 +118,6 @@ module volume_processing
             e = e_bound_indexing_array(be)
             ! this is a loop of all boundary edges.
             
-            sb(be,:) = 0.0
-            cycle
             
             i1 = e_p_obj_relation_array(e_p_index_array(e)-1)
             i2 = e_p_obj_relation_array(e_p_index_array(e))
@@ -181,8 +179,6 @@ module volume_processing
             p = p_bound_indexing_array(bp)
             ! this is a loop of all boundary edges.
             
-            sbb(bp,:) = 0.0
-            cycle
             
             if (feature_points(bp)) then
                 ! corners
