@@ -80,6 +80,9 @@ module setup_configuration_module
         
         call GET_COMMAND_ARGUMENT (1 , value=raw_data_path)
         
+        print*,raw_data_path
+        stop
+        
         ! 28 chars in ./preprocessed_mesh_folder/
         ! 23 in .preprocessed_mesh_file
         binary_intern_data_path = "complete_meshes/"//raw_data_path(28:(len(raw_data_path)-23))//".internalmesh"
