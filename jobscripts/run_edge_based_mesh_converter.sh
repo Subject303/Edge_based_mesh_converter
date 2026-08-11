@@ -38,8 +38,8 @@ fi
 
 echo ' running python preprocessor '
 
-python3 "./python_scripts/case_preprocessor.py" -f $case_file
-# python3 "./python_scripts/vtk_preprocessor.py" -f $case_file
+# python3 "./python_scripts/case_preprocessor.py" -f $case_file
+python3 "./python_scripts/vtk_preprocessor.py" -f $case_file
 
 echo ' running main converter program serial '
 
