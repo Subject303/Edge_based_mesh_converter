@@ -35,7 +35,7 @@ if (os.path.isfile(preprocceced_dest)) :
     
 print('reading raw case file',time.time()-start); sys.stdout.flush()
 # read the raw data
-algo = vtkDataReader()
+algo = vtkUnstructuredGridReader()
 cdp = vtkCompositeDataPipeline()
 # Make sure all algorithms use the composite data pipeline
 # might not be needed
