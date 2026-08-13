@@ -215,6 +215,11 @@ module boundary_routine_module
             
             magnitude = f_normal_vectors(bf,1)*f_normal_vectors(bf,1) + f_normal_vectors(bf,2)*f_normal_vectors(bf,2) + f_normal_vectors(bf,3)*f_normal_vectors(bf,3)
             
+            if (magnitude .eq. 0.0) then
+                print*, bf, f, 'zero magnitude normal'
+                stop
+            endif
+            
             f_normal_vectors(bf,:)  = f_normal_vectors(bf,:) / sqrt(magnitude)
             
             
