@@ -35,8 +35,11 @@ module setup_configuration_module
                 temp_str = current_line(1:indexer)
                 
                 select case(temp_str)
-                    case('feature_angle=')
-                        read(current_line(indexer+1:), '(f12.9)') splitting_angle
+                    case('feature_internal_angle=')
+                        read(current_line(indexer+1:), '(f12.9)') internal_splitting_angle
+                        
+                    case('feature_external_angle=')
+                        read(current_line(indexer+1:), '(f12.9)') external_splitting_angle
                         
                     case('manual_geom=')
                         indexer = index(current_line,'true')

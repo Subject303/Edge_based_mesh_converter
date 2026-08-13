@@ -312,9 +312,20 @@ module boundary_routine_module
             nv1(:)=f_normal_vectors(f1,:)
             nv2(:)=f_normal_vectors(f2,:)
             
-            angle = abs(acosd(alignment(nv1, nv2)))
+            angle = acosd(alignment(nv1, nv2))
             
-            if (angle.gt.splitting_angle) then
+            if (angle.gt.internal_splitting_angle) then
+            
+                feature_edges(be) = .true.
+                
+                bp1 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)  ))
+                bp2 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)-1))
+                
+                feature_points(bp1) = .true.
+                feature_points(bp2) = .true.
+            endif
+            
+            if (angle.lt.(-external_splitting_angle)) then
             
                 feature_edges(be) = .true.
                 
@@ -324,7 +335,6 @@ module boundary_routine_module
                 feature_points(bp1) = .true.
                 feature_points(bp2) = .true.
                 
-                !call split_feature_edges(e,be, f1, f2)
             endif
             
         enddo

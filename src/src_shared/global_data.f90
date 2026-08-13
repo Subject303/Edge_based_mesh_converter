@@ -105,7 +105,7 @@ module boundary_data
     integer(KIND=INT32)  :: n_fb_points, fbp_f_sum
     
     ! the angle we class feature edges with
-    real(KIND=REAL64)   :: splitting_angle = 45.0
+    real(KIND=REAL64)   :: internal_splitting_angle = 45.0, external_splitting_angle = 45.0
     
 end module boundary_data
 
