@@ -570,10 +570,12 @@ module boundary_routine_module
                 do i=1,size(temp_flag)
                     flag = temp_flag(i)
                     
-                    if (flag .eq. f_boundary_flags(bf)) cycle
+                    if (flag .eq. f_boundary_flags(bf)) exit
                     
                     number_of_projections(bp) = number_of_projections(bp) - 1
                     temp_flag = (/temp_flag, f_boundary_flags(bf)/)
+                    
+                    exit
                     
                 enddo
                 
