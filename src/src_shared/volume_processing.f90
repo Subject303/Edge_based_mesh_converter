@@ -480,10 +480,8 @@ module volume_processing
                 enddo
                 viable_mains(m_i) = .false.
                 
-                if (tt(1) .eq. tt(2)) tt(1) = -1
-                
                 ! we just assign our values into the first available slots
-                centroid_obj_array(1) = tt(1)
+                centroid_obj_array(1) = -1
                 centroid_obj_array(2) = mm
                 centroid_obj_array(3) = tt(2)
                 
