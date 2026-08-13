@@ -542,7 +542,10 @@ module volume_processing
             
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
             
-            if (obj_type.eq.featre_point) print*, 'new point', obj, flag, coords(obj,:)
+            if (obj_type.eq.featre_point)then
+                print*, 'new point', obj, flag, coords(obj,:)
+                print*, centroid_obj_array
+            endif    
             
             return
         endif
