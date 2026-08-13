@@ -518,20 +518,13 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-!             if (obj_type.eq.featre_point) then
-!                 print*, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm))
-!                 if (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) then
-!                     if (tt(1) .eq. tt(2)) then
-!                         !print*, 'edge is bounding region', f_boundary_flags(reversed_f_bound_indexing_array(tt(1)))
-!                     else
-!                         print*, 'edge is internal to region', f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
-!                     endif
-!                 endif
-!                 print*, centroid_obj_array
-!                 print*, ' '
-!                 print*, ' '
-!                 !if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-4)) cycle
-!             endif
+            if (obj_type.eq.featre_point) then
+                print*, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm))
+                print*, centroid_obj_array
+                print*, ' '
+                print*, ' '
+                !if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-4)) cycle
+            endif
             
             if (state) then
                 
@@ -625,6 +618,8 @@ module volume_processing
                         if (f_bound_array(e_f_obj_relation_array(i))) exit
                     enddo
                     tt(2) = e_f_obj_relation_array(i)
+                    
+                    print*, f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
                     
                     if (f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .ne. flag ) then
                         tt(1) = tt(2)
