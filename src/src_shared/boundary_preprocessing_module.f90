@@ -203,41 +203,10 @@ module boundary_routine_module
             fp_stt = f_p_index_array(f-1)+1
             fp_end = f_p_index_array(f)
             
-!             p1=-1
-!             p2=-1
-!             p3=-1
-!             
-!             fp = fp_stt
-!             p1 = f_p_obj_relation_array(fp_stt)
-!             do 
-!                 fp = fp + 1
-!                 p = f_p_obj_relation_array(fp)
-!                 p2 = p
-!                 if (p2.ne.p1) then
-!                     exit
-!                 endif
-!             enddo
-!             do 
-!                 fp = fp + 1
-!                 p = f_p_obj_relation_array(fp)
-!                 p3 = p
-!                 if ((p3.ne.p2).and.(p3.ne.p1)) then
-!                     exit
-!                 endif
-!             enddo
-!             
-!             if (fp .gt. fp_end)then
-!                 print*, 'broken face point array'
-!                 stop
-!             endif
-!             
-!             v1(:) = coords(p1,:) - coords(p2,:)
-!             v2(:) = coords(p1,:) - coords(p3,:)
-            
-
             p1=f_p_obj_relation_array(fp_stt)
             p2=f_p_obj_relation_array(fp_end)
             
+            ! doing this from the centroid means we should at the very least get the wrong normal instead of NAN if somthing is fucked
             v1(:) = f_centroid(f,:) - coords(p1,:)
             v2(:) = f_centroid(f,:) - coords(p2,:)
 
