@@ -479,15 +479,9 @@ module volume_processing
                 call obj_select(m_i, m_stt, mm, tt)
                 
                 ! we just assign our values into the first available slots
-                if (tt(2) .eq. -2 ) then
-                    centroid_obj_array(1) = tt(2)
-                    centroid_obj_array(2) = mm
-                    centroid_obj_array(3) = tt(1)
-                else
-                    centroid_obj_array(1) = tt(1)
-                    centroid_obj_array(2) = mm
-                    centroid_obj_array(3) = tt(2)
-                endif
+                centroid_obj_array(1) = tt(1)
+                centroid_obj_array(2) = mm
+                centroid_obj_array(3) = tt(2)
                 
                 ! and initialise our indexers
                 fwd_i = 3
@@ -625,10 +619,10 @@ module volume_processing
                     tt(2) = e_f_obj_relation_array(i)
                     
                     if (f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .ne. flag ) then
-                        tt(1) = -2
+                        tt(1) = tt(2)
                     endif
                     if (f_boundary_flags(reversed_f_bound_indexing_array(tt(2))) .ne. flag ) then
-                        tt(2) = -2
+                        tt(2) = tt(1)
                     endif
                     
                 else
