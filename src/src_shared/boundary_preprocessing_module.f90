@@ -498,7 +498,7 @@ module boundary_routine_module
     subroutine split_corners
         implicit none
         integer(KIND=INT32) :: i, j, f, p, be, bf, bp, pf, pf_stt, pf_end, bp1, bp2, e, new_b_npoin, num_feature_points, num_feat_projections, new_bp, flag
-        integer(KIND=INT32),allocatable :: number_of_projections(:), temp_p_bound_indexing_array(:)
+        integer(KIND=INT32),allocatable :: number_of_projections(:), temp_p_bound_indexing_array(:), temp_flag(:)
         logical, allocatable :: temp_feature_points(:)
         
         ! ok so
@@ -552,13 +552,13 @@ module boundary_routine_module
         number_of_projections = 0
         
         do bp=1,b_npoin
-        
-            flag = 999
             
             p = p_bound_indexing_array(bp)
             
             pf_stt = p_f_index_array(p-1)+1
             pf_end = p_f_index_array(p)
+            
+            temp_flag = (/999/)
             
             do pf=pf_stt,pf_end
                 f = p_f_obj_relation_array(pf)
@@ -567,14 +567,19 @@ module boundary_routine_module
                 
                 bf = reversed_f_bound_indexing_array(f)
                 
-                if (flag .ne. f_boundary_flags(bf)) then
+                do i=1,size(temp_flag)
+                    flag = temp_flag(i)
+                    
+                    if (flag .eq. f_boundary_flags(bf)) exit
                     
                     number_of_projections(bp) = number_of_projections(bp) - 1
-                    flag = f_boundary_flags(bf)
+                    temp_flag = (/temp_flag, f_boundary_flags(bf)/)
                     
-                endif
+                enddo
                 
             enddo
+            
+            deallocate(temp_flag)
             
         enddo
         
