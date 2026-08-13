@@ -217,6 +217,7 @@ module boundary_routine_module
             
             if (magnitude .eq. 0.0) then
                 print*, bf, f, 'zero magnitude face normal', p1, p2, p3
+                print*, f_p_obj_relation_array(fp_start:(f_p_index_array(f)))
                 stop
             endif
             
