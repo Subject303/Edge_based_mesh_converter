@@ -494,7 +494,7 @@ module volume_processing
                     endif
                 enddo
                 
-                print*, m_i, main_count, 'test'
+                if (m_i .ne. main_count+1) print*, m_i, main_count, 'test'
                 
                 if (m_i .eq. main_count+1) then
                     do m_i=1, main_count
