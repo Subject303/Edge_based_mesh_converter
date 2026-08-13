@@ -203,37 +203,44 @@ module boundary_routine_module
             fp_stt = f_p_index_array(f-1)+1
             fp_end = f_p_index_array(f)
             
-            p1=-1
-            p2=-1
-            p3=-1
+!             p1=-1
+!             p2=-1
+!             p3=-1
+!             
+!             fp = fp_stt
+!             p1 = f_p_obj_relation_array(fp_stt)
+!             do 
+!                 fp = fp + 1
+!                 p = f_p_obj_relation_array(fp)
+!                 p2 = p
+!                 if (p2.ne.p1) then
+!                     exit
+!                 endif
+!             enddo
+!             do 
+!                 fp = fp + 1
+!                 p = f_p_obj_relation_array(fp)
+!                 p3 = p
+!                 if ((p3.ne.p2).and.(p3.ne.p1)) then
+!                     exit
+!                 endif
+!             enddo
+!             
+!             if (fp .gt. fp_end)then
+!                 print*, 'broken face point array'
+!                 stop
+!             endif
+!             
+!             v1(:) = coords(p1,:) - coords(p2,:)
+!             v2(:) = coords(p1,:) - coords(p3,:)
             
-            fp = fp_stt
-            p1 = f_p_obj_relation_array(fp_stt)
-            do 
-                fp = fp + 1
-                p = f_p_obj_relation_array(fp)
-                p2 = p
-                if (p2.ne.p1) then
-                    exit
-                endif
-            enddo
-            do 
-                fp = fp + 1
-                p = f_p_obj_relation_array(fp)
-                p3 = p
-                if ((p3.ne.p2).and.(p3.ne.p1)) then
-                    exit
-                endif
-            enddo
+
+            p1=fp_stt
+            p2=fp_end
             
-            if (fp .gt. fp_end)then
-                print*, 'broken face point array'
-                stop
-            endif
-            
-            v1(:) = coords(p1,:) - coords(p2,:)
-            v2(:) = coords(p1,:) - coords(p3,:)
-            
+            v1(:) = f_centroid(f) - coords(p1,:)
+            v2(:) = f_centroid(f) - coords(p2,:)
+
             f_normal_vectors(bf,1) = v1(2)*v2(3) - v1(3)*v2(2)
             f_normal_vectors(bf,2) = v1(3)*v2(1) - v1(1)*v2(3)
             f_normal_vectors(bf,3) = v1(1)*v2(2) - v1(2)*v2(1)
