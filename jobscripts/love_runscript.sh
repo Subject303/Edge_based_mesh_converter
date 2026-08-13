@@ -10,6 +10,6 @@
 
 cd      $PBS_O_WORKDIR
 
-case_file="yeah.vtk"
+case_file="half_domain_slender.vtk"
 
 sh "./run_edge_based_mesh_converter.sh" $case_file
