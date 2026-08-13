@@ -103,7 +103,8 @@ module data_processing_serial
         print*, 'finished calculating boundary normal vectors'        
         print*, ' '
         print*, 'starting boundary flagging routines'
-        print*, 'identifying feature edges with an angle of ', internal_splitting_angle
+        print*, 'identifying internal feature edges with an angle of ', internal_splitting_angle
+        print*, 'and external feature edges with an angle of ', external_splitting_angle
         print*, ' '
         
         

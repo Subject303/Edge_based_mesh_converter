@@ -468,15 +468,45 @@ module volume_processing
                 ! starting arrangements here are more difficult, 
                 ! we need a feature edge and then we need to make sure we select only the correctly flagged face
                 
-                ! so we make sure we start on a feature edge
+                ! so we make sure we start on a feature edge, preferably one that is bounding the region
+                
                 do m_i=1, main_count
                     if (viable_mains(m_i)) then
                         mm = p_e_obj_relation_array(m_stt+m_i)
                         if (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) then
-                            exit
+                            
+                            i = e_f_index_array(mm-1)
+                            do 
+                                i=i+1
+                                if (f_bound_array(e_f_obj_relation_array(i))) exit
+                            enddo
+                            tt(1) = e_f_obj_relation_array(i)
+                            do 
+                                i=i+1
+                                if (f_bound_array(e_f_obj_relation_array(i))) exit
+                            enddo
+                            tt(2) = e_f_obj_relation_array(i)
+                            
+                            if (f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .ne. f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))) then
+                                exit
+                            endif
                         endif
                     endif
                 enddo
+                
+                print*, m_i, main_count, 'test'
+                
+                if (m_i .eq. main_count+1) then
+                    do m_i=1, main_count
+                        if (viable_mains(m_i)) then
+                            mm = p_e_obj_relation_array(m_stt+m_i)
+                            if (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) then
+                                exit
+                            endif
+                        endif
+                    enddo
+                    
+                endif
                 
                 call obj_select(m_i, m_stt, mm, tt)
                 
