@@ -530,7 +530,7 @@ module boundary_routine_module
         
             flag = 999
             
-            p = temp_p_bound_indexing_array(bp)
+            p = p_bound_indexing_array(bp)
             
             pf_stt = p_f_index_array(p-1)+1
             pf_end = p_f_index_array(p)
@@ -580,7 +580,10 @@ module boundary_routine_module
         ! this finds the last feature point in the index so we can seperate these out
         num_feature_points = 0
         do bp=1,b_npoin-1
-            if (number_of_projections(bp+1).eq.1) num_feature_points = bp
+            if (number_of_projections(bp+1).eq.1) then
+                num_feature_points = bp
+                exit
+            endif
         enddo
         
         ! so now we can loop from 1:num_feature_points or num_feature_points+1:b_npoin
