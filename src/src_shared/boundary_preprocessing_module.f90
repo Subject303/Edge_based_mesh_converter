@@ -216,7 +216,7 @@ module boundary_routine_module
             magnitude = f_normal_vectors(bf,1)*f_normal_vectors(bf,1) + f_normal_vectors(bf,2)*f_normal_vectors(bf,2) + f_normal_vectors(bf,3)*f_normal_vectors(bf,3)
             
             if (magnitude .eq. 0.0) then
-                print*, bf, f, 'zero magnitude face normal'
+                print*, bf, f, 'zero magnitude face normal', p1, p2, p3
                 stop
             endif
             
@@ -244,7 +244,6 @@ module boundary_routine_module
             
             pf_start = (1 + p_f_index_array(p-1))
             pf_end   = p_f_index_array(p)
-            number_of_points = 1 + pf_end - pf_start
             
             do i=1,3
                 
