@@ -479,9 +479,9 @@ module volume_processing
                 call obj_select(m_i, m_stt, mm, tt)
                 
                 ! we just assign our values into the first available slots
-                centroid_obj_array(1) = -1
+                centroid_obj_array(1) = tt(1)
                 centroid_obj_array(2) = mm
-                centroid_obj_array(3) = tt(1)
+                centroid_obj_array(3) = tt(2)
                 
                 ! and initialise our indexers
                 fwd_i = 3
@@ -613,12 +613,13 @@ module volume_processing
                     enddo
                     tt(2) = e_f_obj_relation_array(i)
                     
-                    ! this breaks it if we have a feature edge that is inside of a boundary region
-!                     if (f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .eq. flag ) then
-!                         tt(2) = tt(1)
-!                     else
-!                         tt(1) = tt(2)
-!                     endif
+                    if (f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .ne. flag ) then
+                        tt(1) = -1
+                    endif
+                    if (f_boundary_flags(reversed_f_bound_indexing_array(tt(2))) .ne. flag ) then
+                        tt(2) = tt(1)
+                        tt(1) = -1
+                    endif
                     
                 else
                     ! else proceed as a normal edge would in the non feature point list
@@ -764,10 +765,10 @@ module volume_processing
 !                 print*, centroid_array_count
 !                 print*, centroid_obj_array
                 
-                if ((centroid_obj_array(centroid_array_count-2) .ne. -1) .and. (centroid_obj_array(centroid_array_count) .ne. -1)) then
+                !if ((centroid_obj_array(centroid_array_count-2) .ne. -1) .and. (centroid_obj_array(centroid_array_count) .ne. -1)) then
                     if (feature_edges(reversed_e_bound_indexing_array(centroid_obj_array(2))) .and. feature_edges(reversed_e_bound_indexing_array(centroid_obj_array(centroid_array_count-1)))) e_state = .true.
                     !if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
-                endif
+                !endif
                 
         end select
             
