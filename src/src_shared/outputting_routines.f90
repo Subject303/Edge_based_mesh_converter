@@ -158,6 +158,9 @@ module outputting_routines
     outstring = outstring//'<DataArray type="Float64" Name="volume" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + npoin*real_length
         write(offset_text, '(i16)')  offset
+    outstring = outstring//'<DataArray type="Int32" Name="feature_points" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+        offset = offset + 8 + npoin*4
+        write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Int32" Name="flags" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + npoin*4
         write(offset_text, '(i16)')  offset
@@ -315,6 +318,24 @@ module outputting_routines
         do i=1,b_npoin
             i1 = p_bound_indexing_array(i)
             flagout(i1) = flagout(i1) + p_boundary_flags(i)
+        enddo
+        
+        write(1) flagout
+        
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        !feature points
+        offset = 8+npoin*4
+        write(1) offset
+        
+        flagout = 0
+        do i=1,b_npoin
+            i1 = p_bound_indexing_array(i)
+            if (feature_points(i)) then
+                flagout(i1) = 1
+            else
+                flagout(i1) = 2
+            endif
+            
         enddo
         
         write(1) flagout
