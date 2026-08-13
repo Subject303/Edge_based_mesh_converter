@@ -567,19 +567,20 @@ module boundary_routine_module
                 
                 bf = reversed_f_bound_indexing_array(f)
                 
+                flag = f_boundary_flags(bf)
+                
                 do i=1,size(temp_flag)
-                    flag = temp_flag(i)
                     
-                    if (flag .eq. f_boundary_flags(bf)) then
-                        cycle
-                    else
-                        number_of_projections(bp) = number_of_projections(bp) - 1
-                        temp_flag = (/temp_flag, f_boundary_flags(bf)/)
-                        exit
+                    if (temp_flag(i) .eq. flag) then
+                        flag = 999
                     endif
                     
-                    
                 enddo
+                
+                if (flag .eq. f_boundary_flags(bf)) then
+                    number_of_projections(bp) = number_of_projections(bp) - 1
+                    temp_flag = (/temp_flag, f_boundary_flags(bf)/)
+                endif
                 
             enddo
             
