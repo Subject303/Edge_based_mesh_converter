@@ -201,7 +201,7 @@ module boundary_routine_module
             f = f_bound_indexing_array(bf)
             
             fp_stt = f_p_index_array(f-1)+1
-            fp_end = f_p_index_array(f))
+            fp_end = f_p_index_array(f)
             
             p1=-1
             p2=-1
@@ -242,7 +242,7 @@ module boundary_routine_module
             
             if (magnitude .eq. 0.0) then
                 print*, bf, f, 'zero magnitude face normal', p1, p2, p3
-                print*, f_p_obj_relation_array(fp_start:(f_p_index_array(f)))
+                print*, f_p_obj_relation_array(fp_stt:(f_p_index_array(f)))
                 stop
             endif
             
