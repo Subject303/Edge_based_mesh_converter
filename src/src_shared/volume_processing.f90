@@ -470,34 +470,34 @@ module volume_processing
                 
                 ! so we make sure we start on a feature edge, preferably one that is bounding the region
                 
-                do m_i=1, main_count
-                    if (viable_mains(m_i)) then
-                        mm = p_e_obj_relation_array(m_stt+m_i)
-                        if (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) then
-                            
-                            i = e_f_index_array(mm-1)
-                            do 
-                                i=i+1
-                                if (f_bound_array(e_f_obj_relation_array(i))) exit
-                            enddo
-                            tt(1) = e_f_obj_relation_array(i)
-                            do 
-                                i=i+1
-                                if (f_bound_array(e_f_obj_relation_array(i))) exit
-                            enddo
-                            tt(2) = e_f_obj_relation_array(i)
-                            
-                            if (f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .ne. f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))) then
-                                exit
-                            endif
-                        endif
-                    endif
-                    ! dont want to double back on our starting feature edge
-                    viable_mains(m_i) = .false.
-                enddo
-                
-                ! otherwise just make do with any edge
-                if (m_i .eq. main_count+1) then
+!                 do m_i=1, main_count
+!                     if (viable_mains(m_i)) then
+!                         mm = p_e_obj_relation_array(m_stt+m_i)
+!                         if (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) then
+!                             
+!                             i = e_f_index_array(mm-1)
+!                             do 
+!                                 i=i+1
+!                                 if (f_bound_array(e_f_obj_relation_array(i))) exit
+!                             enddo
+!                             tt(1) = e_f_obj_relation_array(i)
+!                             do 
+!                                 i=i+1
+!                                 if (f_bound_array(e_f_obj_relation_array(i))) exit
+!                             enddo
+!                             tt(2) = e_f_obj_relation_array(i)
+!                             
+!                             if (f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .ne. f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))) then
+!                                 exit
+!                             endif
+!                         endif
+!                     endif
+!                     ! dont want to double back on our starting feature edge
+!                     viable_mains(m_i) = .false.
+!                 enddo
+!                 
+!                 ! otherwise just make do with any edge
+!                 if (m_i .eq. main_count+1) then
                     do m_i=1, main_count
                         if (viable_mains(m_i)) then
                             mm = p_e_obj_relation_array(m_stt+m_i)
@@ -509,8 +509,8 @@ module volume_processing
                     ! if the only feature edge available is internal to a region,
                     ! then the only way to fully loop about it is to double it
                     ! though I'll admit I expect this breaks somthing I havn't bothered to test it
-                    viable_mains(m_i) = .true.
-                endif
+                    viable_mains(m_i) = .false.
+!                 endif
                 
                 call obj_select(m_i, m_stt, mm, tt)
                 
