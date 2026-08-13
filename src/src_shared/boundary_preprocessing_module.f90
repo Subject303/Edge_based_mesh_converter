@@ -579,6 +579,8 @@ module boundary_routine_module
                 
             enddo
             
+            print*,temp_flag
+            
             deallocate(temp_flag)
             
         enddo
