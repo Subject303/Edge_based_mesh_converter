@@ -238,8 +238,8 @@ module boundary_routine_module
             p1=fp_stt
             p2=fp_end
             
-            v1(:) = f_centroid(f) - coords(p1,:)
-            v2(:) = f_centroid(f) - coords(p2,:)
+            v1(:) = f_centroid(f,:) - coords(p1,:)
+            v2(:) = f_centroid(f,:) - coords(p2,:)
 
             f_normal_vectors(bf,1) = v1(2)*v2(3) - v1(3)*v2(2)
             f_normal_vectors(bf,2) = v1(3)*v2(1) - v1(1)*v2(3)
