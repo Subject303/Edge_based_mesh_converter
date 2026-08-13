@@ -204,8 +204,8 @@ module boundary_routine_module
             fp_end = f_p_index_array(f))
             
             p1=-1
-            p2=-2
-            p3=-3
+            p2=-1
+            p3=-1
             
             fp = fp_stt
             p1 = f_p_obj_relation_array(fp_stt)
