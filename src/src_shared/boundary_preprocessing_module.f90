@@ -510,61 +510,61 @@ module boundary_routine_module
         ! first step i think is to count the number of boundaries each point will have
         ! we can do this by adding the number of feature edges connected to a point, all non feature points have a count of 1
         
-        allocate(number_of_projections(b_npoin))
-        number_of_projections = 0
-        
+!         allocate(number_of_projections(b_npoin))
+!         number_of_projections = 0
+!         
         ! we make the number of projections negative to play with the sorting algo later dw
-        do be=1,b_nedge
-            
-            if (feature_edges(be))then
-                
-                e = e_bound_indexing_array(be)
-            
-                bp1 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)  ))
-                bp2 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)-1))
-                
-                number_of_projections(bp1) = number_of_projections(bp1) - 1
-                number_of_projections(bp2) = number_of_projections(bp2) - 1
-            endif
-            
-        enddo
-        
-        do bp=1,b_npoin
-            if (number_of_projections(bp).eq.0) number_of_projections(bp) = 1
-        enddo
+!         do be=1,b_nedge
+!             
+!             if (feature_edges(be))then
+!                 
+!                 e = e_bound_indexing_array(be)
+!             
+!                 bp1 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)  ))
+!                 bp2 = reversed_p_bound_indexing_array(e_p_obj_relation_array(e_p_index_array(e)-1))
+!                 
+!                 number_of_projections(bp1) = number_of_projections(bp1) - 1
+!                 number_of_projections(bp2) = number_of_projections(bp2) - 1
+!             endif
+!             
+!         enddo
+!         
+!         do bp=1,b_npoin
+!             if (number_of_projections(bp).eq.0) number_of_projections(bp) = 1
+!         enddo
         
         ! ok so the above counts based off feature edges, but most of the processing I do down the line is based off of flags
         ! so it may be sometimes preferable to scan boundry face flags and count it that way
         
-!         allocate(number_of_projections(b_npoin))
-!         number_of_projections = 0
-!         
-!         do bp=1,b_npoin
-!         
-!             flag = 999
-!             
-!             p = p_bound_indexing_array(bp)
-!             
-!             pf_stt = p_f_index_array(p-1)+1
-!             pf_end = p_f_index_array(p)
-!             
-!             do pf=pf_stt,pf_end
-!                 f = p_f_obj_relation_array(pf)
-!                     
-!                 if (f_internal_array(f)) cycle
-!                 
-!                 bf = reversed_f_bound_indexing_array(f)
-!                 
-!                 if (flag .ne. f_boundary_flags(bf)) then
-!                     
-!                     number_of_projections(bp) = number_of_projections(bp) - 1
-!                     flag = f_boundary_flags(bf)
-!                     
-!                 endif
-!                 
-!             enddo
-!             
-!         enddo
+        allocate(number_of_projections(b_npoin))
+        number_of_projections = 0
+        
+        do bp=1,b_npoin
+        
+            flag = 999
+            
+            p = p_bound_indexing_array(bp)
+            
+            pf_stt = p_f_index_array(p-1)+1
+            pf_end = p_f_index_array(p)
+            
+            do pf=pf_stt,pf_end
+                f = p_f_obj_relation_array(pf)
+                    
+                if (f_internal_array(f)) cycle
+                
+                bf = reversed_f_bound_indexing_array(f)
+                
+                if (flag .ne. f_boundary_flags(bf)) then
+                    
+                    number_of_projections(bp) = number_of_projections(bp) - 1
+                    flag = f_boundary_flags(bf)
+                    
+                endif
+                
+            enddo
+            
+        enddo
         
         
         ! this means lines of feature edges will split into two projections, the meeting point of 3 edges becomes 3 bounds ect
