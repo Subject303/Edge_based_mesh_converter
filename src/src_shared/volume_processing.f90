@@ -492,10 +492,11 @@ module volume_processing
                             endif
                         endif
                     endif
+                    ! dont want to double back on our starting feature edge
+                    viable_mains(m_i) = .false.
                 enddo
                 
-                if (m_i .ne. main_count+1) print*, m_i, main_count, 'test'
-                
+                ! otherwise just make do with any edge
                 if (m_i .eq. main_count+1) then
                     do m_i=1, main_count
                         if (viable_mains(m_i)) then
@@ -505,7 +506,10 @@ module volume_processing
                             endif
                         endif
                     enddo
-                    
+                    ! if the only feature edge available is internal to a region,
+                    ! then the only way to fully loop about it is to double it
+                    ! though I'll admit I expect this breaks somthing I havn't bothered to test it
+                    viable_mains(m_i) = .true.
                 endif
                 
                 call obj_select(m_i, m_stt, mm, tt)
@@ -521,8 +525,6 @@ module volume_processing
                 fwd_i = 3
                 bck_i = 1
                 
-                ! dont want to double back on our starting feature edge
-                viable_mains(m_i) = .false.
             
             
         end select!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -555,8 +557,11 @@ module volume_processing
             
             if (obj_type.eq.featre_point) then
                 print*, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm)), flag
-                if (tt(1) .ne. -1) print*, f_boundary_flags(reversed_f_bound_indexing_array(tt(1)))
-                if (tt(2) .ne. -1) print*, f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
+                if (tt(1) .ne. tt(2)) then
+                    print*, f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
+                else
+                    print*, 'edge is internal to region', f_boundary_flags(reversed_f_bound_indexing_array(tt(1)))
+                endif
                 print*, centroid_obj_array
                 print*, ' '
                 print*, ' '
