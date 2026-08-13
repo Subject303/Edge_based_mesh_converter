@@ -479,7 +479,7 @@ module volume_processing
                 call obj_select(m_i, m_stt, mm, tt)
                 
                 ! we just assign our values into the first available slots
-                if (f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .eq. flag ) then
+                if (tt(2) .eq. -1 ) then
                     centroid_obj_array(1) = tt(2)
                     centroid_obj_array(2) = mm
                     centroid_obj_array(3) = tt(1)
