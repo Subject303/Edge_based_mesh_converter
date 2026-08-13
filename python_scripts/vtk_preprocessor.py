@@ -313,7 +313,7 @@ for obj in c_p_obj_relation_array:
 i=0
 for obj in f_p_obj_relation_array:
     f_p_index[i] = len(obj)
-    print(f_p_index[i])
+    print(f_p_index[i], obj)
     i=i+1
     
 i=0
