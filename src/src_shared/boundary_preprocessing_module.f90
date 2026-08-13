@@ -237,7 +237,7 @@ module boundary_routine_module
             if (angle .lt. 0) f_normal_vectors(bf,:) = -f_normal_vectors(bf,:)
             
         enddo
-        stop
+        
         ! because I've already split my feature edges in my preprocessor I can then get point normal vectors by just averaging connected face normals
         
         allocate(p_normal_vectors(b_npoin,3))
