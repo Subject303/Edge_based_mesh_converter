@@ -498,7 +498,10 @@ module volume_processing
 !         print*, ''
 !         print*, ''
 !         print*, ''
-            
+        
+        
+        if (obj_type.eq.featre_point) print*, 'new point'
+        
         do k=1,1000 ! this k limit is here to stop infinite loops, it needs to be set to an unreasonable number to not trip incorrectly
             
             ! now we loop about our centroids
