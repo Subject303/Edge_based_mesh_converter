@@ -136,11 +136,11 @@ module data_processing_serial
         print*, ' '
         print*, 'Moving to boundary edge projection processing. '
         print*, ' '
-!         call boundary_edge_volume_processing
+        call boundary_edge_volume_processing
         print*, ' '
         print*, 'Moving to boundary face projection processing. '
         print*, ' '
-!         call boundary_face_volume_processing
+        call boundary_face_volume_processing
         
         call volume_generation
         
