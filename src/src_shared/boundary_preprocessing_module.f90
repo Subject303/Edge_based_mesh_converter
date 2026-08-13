@@ -235,8 +235,8 @@ module boundary_routine_module
 !             v2(:) = coords(p1,:) - coords(p3,:)
             
 
-            p1=fp_stt
-            p2=fp_end
+            p1=f_p_obj_relation_array(fp_stt)
+            p2=f_p_obj_relation_array(fp_end)
             
             v1(:) = f_centroid(f,:) - coords(p1,:)
             v2(:) = f_centroid(f,:) - coords(p2,:)
