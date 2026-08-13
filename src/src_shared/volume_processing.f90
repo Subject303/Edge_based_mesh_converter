@@ -619,7 +619,7 @@ module volume_processing
                     enddo
                     tt(2) = e_f_obj_relation_array(i)
                     
-                    print*, f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
+                    print*, tt(1), f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), tt(2), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
                     
                     if (f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .ne. flag ) then
                         tt(1) = tt(2)
