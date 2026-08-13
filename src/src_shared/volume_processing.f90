@@ -397,8 +397,7 @@ module volume_processing
                 ! unlike with non feature points however, we must also only flag feature edges and edges with the correct boundary flag.
                 viable_mains = .false.
                 
-                centroid_array_count = main_count + tert_count
-                !centroid_array_count = 2 + main_count + tert_count
+                centroid_array_count = 2 + main_count + tert_count
                 
                 ! we also remove the wrong flagged centroids from the centroid array count
                 m_i = 1
@@ -428,7 +427,7 @@ module volume_processing
                             ! and then we check if either of them are flagged correctly
                             
                             if ((f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .eq. flag ) .or. (f_boundary_flags(reversed_f_bound_indexing_array(tt(2))) .eq. flag )) then
-                                centroid_array_count = centroid_array_count + 1
+                                viable_mains(m_i) = .true.
                             endif
                             
                         else
@@ -614,11 +613,12 @@ module volume_processing
                     enddo
                     tt(2) = e_f_obj_relation_array(i)
                     
-                    if (f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .eq. flag ) then
-                        tt(2) = tt(1)
-                    else
-                        tt(1) = tt(2)
-                    endif
+                    ! this breaks it if we have a feature edge that is inside of a boundary region
+!                     if (f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .eq. flag ) then
+!                         tt(2) = tt(1)
+!                     else
+!                         tt(1) = tt(2)
+!                     endif
                     
                 else
                     ! else proceed as a normal edge would in the non feature point list
@@ -765,7 +765,8 @@ module volume_processing
 !                 print*, centroid_obj_array
                 
                 if ((centroid_obj_array(centroid_array_count-2) .ne. -1) .and. (centroid_obj_array(centroid_array_count) .ne. -1)) then
-                    if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
+                    if (feature_edges(reversed_e_bound_indexing_array(centroid_obj_array(2))) .eq. 1000) .and. (feature_edges(reversed_e_bound_indexing_array(centroid_obj_array(centroid_array_count-1))) .eq. 1000) e_state = .true.
+                    !if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
                 endif
                 
         end select
