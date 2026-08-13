@@ -397,7 +397,8 @@ module volume_processing
                 ! unlike with non feature points however, we must also only flag feature edges and edges with the correct boundary flag.
                 viable_mains = .false.
                 
-                centroid_array_count = 2 + main_count + tert_count
+                centroid_array_count = main_count + tert_count
+                !centroid_array_count = 2 + main_count + tert_count
                 
                 ! we also remove the wrong flagged centroids from the centroid array count
                 m_i = 1
@@ -427,8 +428,9 @@ module volume_processing
                             ! and then we check if either of them are flagged correctly
                             
                             if ((f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .eq. flag ) .or. (f_boundary_flags(reversed_f_bound_indexing_array(tt(2))) .eq. flag )) then
-                                viable_mains(m_i) = .true.
+                                centroid_array_count = centroid_array_count + 1
                             endif
+                            
                         else
                             centroid_array_count = centroid_array_count - 1
                         endif
