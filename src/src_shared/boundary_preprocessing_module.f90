@@ -187,7 +187,7 @@ module boundary_routine_module
     subroutine calculate_normal_vectors
         use centroid_data
         implicit none
-        integer(KIND=INT32) :: f, bf, fp_start, p1, p2, p3, p, bp, pf_start, pf_end, number_of_points, i, j
+        integer(KIND=INT32) :: f, bf, fp, fp_stt, fp_end, p1, p2, p3, p, bp, pf_start, pf_end, number_of_points, i, j
         real(KIND=REAL64)   :: v1(3), v2(3), sumV, magnitude, angle
         
         
@@ -200,11 +200,31 @@ module boundary_routine_module
             
             f = f_bound_indexing_array(bf)
             
-            fp_start = (1 + f_p_index_array(f-1))
+            fp_stt = f_p_index_array(f-1)+1
+            fp_end = f_p_index_array(f))
             
-            p1 = f_p_obj_relation_array(fp_start)
-            p2 = f_p_obj_relation_array(fp_start+1)
-            p3 = f_p_obj_relation_array(fp_start+2)
+            p1=-1
+            p2=-2
+            p3=-3
+            
+            fp = fp_stt
+            p1 = f_p_obj_relation_array(fp_stt)
+            do 
+                fp = fp + 1
+                p = f_p_obj_relation_array(fp)
+                p2 = p
+                if (p2.ne.p1) then
+                    exit
+                endif
+            enddo
+            do 
+                fp = fp + 1
+                p = f_p_obj_relation_array(fp)
+                p3 = p
+                if ((p3.ne.p2).and.(p3.ne.p1)) then
+                    exit
+                endif
+            enddo
             
             v1(:) = coords(p1,:) - coords(p2,:)
             v2(:) = coords(p1,:) - coords(p3,:)
