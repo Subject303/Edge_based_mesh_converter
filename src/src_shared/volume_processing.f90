@@ -397,8 +397,8 @@ module volume_processing
                 ! unlike with non feature points however, we must also only flag feature edges and edges with the correct boundary flag.
                 viable_mains = .false.
                 
-                centroid_array_count = 2 + main_count + tert_count
-                
+                !centroid_array_count = 2 + main_count + tert_count
+                centroid_array_count = 2
                 ! we also remove the wrong flagged centroids from the centroid array count
                 m_i = 1
                 do m_i=1, main_count
@@ -408,6 +408,7 @@ module volume_processing
                         
                         if     (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. flag) then
                             viable_mains(m_i) = .true.
+                            centroid_array_count = centroid_array_count + 1
                         elseif (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) then
                             ! now we only want the feature edges that are adjacent to at least one correctly flagged face
                             
@@ -428,17 +429,18 @@ module volume_processing
                             
                             if ((f_boundary_flags(reversed_f_bound_indexing_array(tt(1))) .eq. flag ) .or. (f_boundary_flags(reversed_f_bound_indexing_array(tt(2))) .eq. flag )) then
                                 viable_mains(m_i) = .true.
+                                centroid_array_count = centroid_array_count + 1
                             endif
                             
                         else
-                            centroid_array_count = centroid_array_count - 1
+                            !centroid_array_count = centroid_array_count - 1
                         endif
                         
 !                         print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm)), viable_mains(m_i)
 !                         
 !                         print*, ' ' 
                     else
-                        centroid_array_count = centroid_array_count - 1
+                        !centroid_array_count = centroid_array_count - 1
                     endif
                     !if (viable_mains(m_i)) print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm))
                     !print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm))
@@ -451,12 +453,12 @@ module volume_processing
                     mm = p_f_obj_relation_array(t_stt+m_i)
                     if (f_bound_array(mm)) then
                         ! no wrong flags
-                        if (f_boundary_flags(reversed_f_bound_indexing_array(mm)) .ne. flag) then
-                            centroid_array_count = centroid_array_count - 1
+                        if (f_boundary_flags(reversed_f_bound_indexing_array(mm)) .eq. flag) then
+                            centroid_array_count = centroid_array_count + 1
                         endif
                     ! no internals
                     else
-                        centroid_array_count = centroid_array_count - 1
+                        
                     endif
                 enddo
                 
