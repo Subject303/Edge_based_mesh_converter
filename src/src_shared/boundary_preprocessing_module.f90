@@ -226,6 +226,11 @@ module boundary_routine_module
                 endif
             enddo
             
+            if (fp .gt. fp_end)then
+                print*, 'broken face point array'
+                stop
+            endif
+            
             v1(:) = coords(p1,:) - coords(p2,:)
             v2(:) = coords(p1,:) - coords(p3,:)
             
