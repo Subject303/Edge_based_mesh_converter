@@ -157,6 +157,7 @@ for c in range(nele):
     #c_p_obj_relation_array [c] = sorted([cell.GetPointId(p) for p in range(cell.GetNumberOfPoints())])
     c_p_obj_relation_array [c] = [cell.GetPointId(p) for p in range(cell.GetNumberOfPoints())]
     
+    print(len(c_p_obj_relation_array [c]))
     
     nfaces = cell.GetNumberOfFaces()
     
