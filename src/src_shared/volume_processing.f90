@@ -556,12 +556,10 @@ module volume_processing
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
             if (obj_type.eq.featre_point) then
-                print*, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm))
+                print*, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm)), f_boundary_flags(reversed_f_bound_indexing_array(tt(1)))
                 if (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) then
                     if (tt(1) .ne. tt(2)) then
                         print*, 'edge is bounding region', f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
-                    else
-                        print*, 'edge is internal to region', f_boundary_flags(reversed_f_bound_indexing_array(tt(1)))
                     endif
                 endif
                 print*, centroid_obj_array
