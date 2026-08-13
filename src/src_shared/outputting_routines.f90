@@ -158,10 +158,10 @@ module outputting_routines
     outstring = outstring//'<DataArray type="Float64" Name="volume" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + npoin*real_length
         write(offset_text, '(i16)')  offset
-    outstring = outstring//'<DataArray type="Int32" Name="feature_points" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+    outstring = outstring//'<DataArray type="Int32" Name="flags" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + npoin*4
         write(offset_text, '(i16)')  offset
-    outstring = outstring//'<DataArray type="Int32" Name="flags" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
+    outstring = outstring//'<DataArray type="Int32" Name="feature_points" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
         offset = offset + 8 + npoin*4
         write(offset_text, '(i16)')  offset
     outstring = outstring//'<DataArray type="Float64" NumberOfComponents="3" Name="normals" format="appended" offset="'//offset_text//'" ></DataArray>'//NEW_LINE('')
