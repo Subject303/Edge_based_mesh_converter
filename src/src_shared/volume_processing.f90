@@ -480,6 +480,8 @@ module volume_processing
                 
                 call obj_select(m_i, m_stt, mm, tt)
                 
+                if (tt(1) .eq. tt(2)) tt(1) = -1
+                
                 ! we just assign our values into the first available slots
                 centroid_obj_array(1) = tt(1)
                 centroid_obj_array(2) = mm
