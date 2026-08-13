@@ -541,7 +541,7 @@ module volume_processing
             
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
             
-            stop
+            return
         endif
         
         call centroid_float_assembler(centroid_obj_array, fwd_i, bck_i, centroid_array, centroid_array_count)
