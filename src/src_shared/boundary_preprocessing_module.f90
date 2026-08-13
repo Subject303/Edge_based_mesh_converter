@@ -558,7 +558,7 @@ module boundary_routine_module
             pf_stt = p_f_index_array(p-1)+1
             pf_end = p_f_index_array(p)
             
-            temp_flag = (/999/)
+            allocate(temp_flag(0))
             
             do pf=pf_stt,pf_end
                 f = p_f_obj_relation_array(pf)
@@ -570,12 +570,14 @@ module boundary_routine_module
                 do i=1,size(temp_flag)
                     flag = temp_flag(i)
                     
-                    if (flag .eq. f_boundary_flags(bf)) exit
+                    if (flag .eq. f_boundary_flags(bf)) then
+                        cycle
+                    else
+                        number_of_projections(bp) = number_of_projections(bp) - 1
+                        temp_flag = (/temp_flag, f_boundary_flags(bf)/)
+                        exit
+                    endif
                     
-                    number_of_projections(bp) = number_of_projections(bp) - 1
-                    temp_flag = (/temp_flag, f_boundary_flags(bf)/)
-                    
-                    exit
                     
                 enddo
                 
