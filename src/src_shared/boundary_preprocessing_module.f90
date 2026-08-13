@@ -586,6 +586,8 @@ module boundary_routine_module
             endif
         enddo
         
+        print*, p_bound_indexing_array((num_feature_points-2):(num_feature_points+2))
+        
         ! so now we can loop from 1:num_feature_points or num_feature_points+1:b_npoin
         ! if we want feat or non feat
         
