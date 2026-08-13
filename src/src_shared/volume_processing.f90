@@ -525,18 +525,17 @@ module volume_processing
                 fwd_i = 3
                 bck_i = 1
                 
-            
+                
             
         end select!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         
-!         print*, tt(1), mm, tt(2)
-!         print*, centroid_obj_array
-!         print*, ''
-!         print*, ''
-!         print*, ''
         
         
-        if (obj_type.eq.featre_point) print*, 'new point'
+        if (obj_type.eq.featre_point) then
+            print*, 'new point'
+            print*, tt(1), mm, tt(2)
+            print*, centroid_obj_array
+        endif
         
         do k=1,1000 ! this k limit is here to stop infinite loops, it needs to be set to an unreasonable number to not trip incorrectly
             
@@ -555,20 +554,20 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-            if (obj_type.eq.featre_point) then
-                print*, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm))
-                if (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) then
-                    if (tt(1) .eq. tt(2)) then
-                        !print*, 'edge is bounding region', f_boundary_flags(reversed_f_bound_indexing_array(tt(1)))
-                    else
-                        print*, 'edge is internal to region', f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
-                    endif
-                endif
-                print*, centroid_obj_array
-                print*, ' '
-                print*, ' '
-                !if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-4)) cycle
-            endif
+!             if (obj_type.eq.featre_point) then
+!                 print*, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm))
+!                 if (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) then
+!                     if (tt(1) .eq. tt(2)) then
+!                         !print*, 'edge is bounding region', f_boundary_flags(reversed_f_bound_indexing_array(tt(1)))
+!                     else
+!                         print*, 'edge is internal to region', f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
+!                     endif
+!                 endif
+!                 print*, centroid_obj_array
+!                 print*, ' '
+!                 print*, ' '
+!                 !if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-4)) cycle
+!             endif
             
             if (state) then
                 
@@ -587,6 +586,10 @@ module volume_processing
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
             
             return
+        endif
+        
+        if (obj_type.eq.featre_point) then
+            print*, centroid_obj_array
         endif
         
         call centroid_float_assembler(centroid_obj_array, fwd_i, bck_i, centroid_array, centroid_array_count)
