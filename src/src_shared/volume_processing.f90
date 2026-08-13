@@ -767,10 +767,10 @@ module volume_processing
 !                 print*, centroid_array_count
 !                 print*, centroid_obj_array
                 
-                !if ((centroid_obj_array(centroid_array_count-2) .ne. -1) .and. (centroid_obj_array(centroid_array_count) .ne. -1)) then
+                if ((centroid_obj_array(2) .ne. -1) .and. (centroid_obj_array(centroid_array_count-1) .ne. -1)) then
                     if (feature_edges(reversed_e_bound_indexing_array(centroid_obj_array(2))) .and. feature_edges(reversed_e_bound_indexing_array(centroid_obj_array(centroid_array_count-1)))) e_state = .true.
                     !if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
-                !endif
+                endif
                 
         end select
             
