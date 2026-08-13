@@ -204,7 +204,13 @@ module boundary_routine_module
             fp_end = f_p_index_array(f)
             
             p1=f_p_obj_relation_array(fp_stt)
-            p2=f_p_obj_relation_array(fp_end)
+            do fp=fp_stt+1,fp_end
+                p=f_p_obj_relation_array(fp)
+                if (p1 .ne.p) then
+                    p2 = p
+                    exit
+                endif
+            enddo
             
             ! doing this from the centroid means we should at the very least get the wrong normal instead of NAN if somthing is fucked
             v1(:) = f_centroid(f,:) - coords(p1,:)
