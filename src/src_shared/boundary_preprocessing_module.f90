@@ -523,6 +523,10 @@ module boundary_routine_module
         ! ok so the above counts based off feature edges, but most of the processing I do down the line is based off of flags
         ! so it may be sometimes preferable to scan boundry face flags and count it that way
         
+        print*, f_normal_vectors(:,1)
+        print*, f_normal_vectors(:,2)
+        print*, f_normal_vectors(:,3)
+        
         allocate(number_of_projections(b_npoin))
         number_of_projections = 0
         

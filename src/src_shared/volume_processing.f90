@@ -404,7 +404,7 @@ module volume_processing
                 do m_i=1, main_count
                     mm = p_e_obj_relation_array(m_stt+m_i)
                     if (e_bound_array(mm)) then
-                        print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm)), viable_mains(m_i)
+!                         print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm)), viable_mains(m_i)
                         
                         if     (e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. flag) then
                             viable_mains(m_i) = .true.
@@ -433,9 +433,9 @@ module volume_processing
                             centroid_array_count = centroid_array_count - 1
                         endif
                         
-                        print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm)), viable_mains(m_i)
-                        
-                        print*, ' ' 
+!                         print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm)), viable_mains(m_i)
+!                         
+!                         print*, ' ' 
                     else
                         centroid_array_count = centroid_array_count - 1
                     endif
@@ -458,8 +458,6 @@ module volume_processing
                         centroid_array_count = centroid_array_count - 1
                     endif
                 enddo
-                
-                print*,centroid_array_count
                 
                 allocate(centroid_obj_array(centroid_array_count))
                 centroid_obj_array = -1
@@ -517,13 +515,13 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-            if (obj_type.eq.featre_point) then
-                print*, mm, tt(1), tt(2), f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2))), e_boundary_flags(reversed_e_bound_indexing_array(mm)), flag
-                print*, centroid_obj_array
-                print*, ' '
-                print*, ' '
-                !if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-4)) cycle
-            endif
+!             if (obj_type.eq.featre_point) then
+!                 print*, mm, tt(1), tt(2), f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2))), e_boundary_flags(reversed_e_bound_indexing_array(mm)), flag
+!                 print*, centroid_obj_array
+!                 print*, ' '
+!                 print*, ' '
+!                 !if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-4)) cycle
+!             endif
             
             if (state) then
                 
