@@ -203,6 +203,8 @@ module boundary_routine_module
             fp_stt = f_p_index_array(f-1)+1
             fp_end = f_p_index_array(f)
             
+            print*, f_p_obj_relation_array(fp_stt:fp_end)
+            
             p1=f_p_obj_relation_array(fp_stt)
             do fp=fp_stt+1,fp_end
                 p=f_p_obj_relation_array(fp)
@@ -222,11 +224,11 @@ module boundary_routine_module
             
             magnitude = f_normal_vectors(bf,1)*f_normal_vectors(bf,1) + f_normal_vectors(bf,2)*f_normal_vectors(bf,2) + f_normal_vectors(bf,3)*f_normal_vectors(bf,3)
             
-            if (magnitude .eq. 0.0) then
-                print*, bf, f, 'zero magnitude face normal', p1, p2, p3
-                print*, f_p_obj_relation_array(fp_stt:(f_p_index_array(f)))
-                stop
-            endif
+!             if (magnitude .eq. 0.0) then
+!                 print*, bf, f, 'zero magnitude face normal', p1, p2, p3
+!                 print*, f_p_obj_relation_array(fp_stt:(f_p_index_array(f)))
+!                 stop
+!             endif
             
             f_normal_vectors(bf,:)  = f_normal_vectors(bf,:) / sqrt(magnitude)
             
@@ -240,7 +242,7 @@ module boundary_routine_module
             if (angle .lt. 0) f_normal_vectors(bf,:) = -f_normal_vectors(bf,:)
             
         enddo
-        
+        stop
         ! because I've already split my feature edges in my preprocessor I can then get point normal vectors by just averaging connected face normals
         
         allocate(p_normal_vectors(b_npoin,3))
