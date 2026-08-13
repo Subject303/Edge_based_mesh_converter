@@ -206,17 +206,12 @@ module boundary_routine_module
             print*, f_p_obj_relation_array(fp_stt:fp_end)
             
             p1=f_p_obj_relation_array(fp_stt)
-            do fp=fp_stt+1,fp_end
-                p=f_p_obj_relation_array(fp)
-                if (p1 .ne.p) then
-                    p2 = p
-                    exit
-                endif
-            enddo
+            p2=f_p_obj_relation_array(fp_stt+1)
+            p3=f_p_obj_relation_array(fp_stt+2)
             
             ! doing this from the centroid means we should at the very least get the wrong normal instead of NAN if somthing is fucked
-            v1(:) = f_centroid(f,:) - coords(p1,:)
-            v2(:) = f_centroid(f,:) - coords(p2,:)
+            v1(:) = coords(p1,:) - coords(p2,:)
+            v2(:) = coords(p1,:) - coords(p3,:)
 
             f_normal_vectors(bf,1) = v1(2)*v2(3) - v1(3)*v2(2)
             f_normal_vectors(bf,2) = v1(3)*v2(1) - v1(1)*v2(3)
