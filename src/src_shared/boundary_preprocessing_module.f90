@@ -209,7 +209,6 @@ module boundary_routine_module
             p2=f_p_obj_relation_array(fp_stt+1)
             p3=f_p_obj_relation_array(fp_stt+2)
             
-            ! doing this from the centroid means we should at the very least get the wrong normal instead of NAN if somthing is fucked
             v1(:) = coords(p1,:) - coords(p2,:)
             v2(:) = coords(p1,:) - coords(p3,:)
 
