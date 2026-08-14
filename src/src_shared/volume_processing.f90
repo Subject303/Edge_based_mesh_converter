@@ -780,6 +780,12 @@ module volume_processing
                     !if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
                 endif
                 
+                
+                if ((centroid_obj_array(3) .ne. -1) .and. (centroid_obj_array(centroid_array_count-1) .ne. -1)) then
+                    if (centroid_obj_array(3) .eq. centroid_obj_array(centroid_array_count-1)) e_state = .true.
+                    !if (centroid_obj_array(centroid_array_count) .eq. centroid_obj_array(centroid_array_count-2)) e_state = .true.
+                endif
+                
         end select
             
     end subroutine obj_endconditions
