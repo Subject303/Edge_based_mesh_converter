@@ -186,9 +186,8 @@ for c in range(nele):
                 
             if i1!=i2:
                 e_p_obj_relation_array.append([i1,i2])
-            
-            e_array.append(edgeid)
-            edgeid = edgeid + 1
+                e_array.append(edgeid)
+                edgeid = edgeid + 1
     
         f_array.append(faceid)
         faceid = faceid + 1
