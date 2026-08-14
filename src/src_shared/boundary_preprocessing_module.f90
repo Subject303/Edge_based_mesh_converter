@@ -665,9 +665,9 @@ module boundary_routine_module
                     
                     flag = f_boundary_flags(bf)
                     
-                    do i=1,size(temp_flag)
+                    do j=1,size(temp_flag)
                         
-                        if (temp_flag(i) .eq. flag) then
+                        if (temp_flag(j) .eq. flag) then
                             flag = 999
                         endif
                         
