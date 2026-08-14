@@ -504,6 +504,15 @@ module volume_processing
 !             print*, tt(1), mm, tt(2)
 !             print*, centroid_obj_array
 !         endif
+        if (obj_type.eq.boundary_edge) then
+            if ((obj.eq. 4).or.(obj.eq.10)) then
+                print*, flag, mm, tt(1), tt(2), f_bound_array(mm)
+                print*, centroid_obj_array
+                print*, ' '
+                print*, ' '
+            endif
+        endif
+        
         
         do k=1,1000 ! this k limit is here to stop infinite loops, it needs to be set to an unreasonable number to not trip incorrectly
             
