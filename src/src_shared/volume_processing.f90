@@ -446,6 +446,7 @@ module volume_processing
                     !print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm))
                 enddo
                 
+                if (obj .eq. 17) print*, 'faces'
                 
                 ! and the same for internal faces but we dont need to worry about features
                 m_i = 1
