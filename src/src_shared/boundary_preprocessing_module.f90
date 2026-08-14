@@ -584,6 +584,8 @@ module boundary_routine_module
                 
             enddo
             
+            if (p.eq.17) print*, temp_flag
+            
             deallocate(temp_flag)
             
         enddo
