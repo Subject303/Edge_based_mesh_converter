@@ -637,89 +637,60 @@ module boundary_routine_module
         feature_points = .false.
         p_normal_vectors = 0.0
         
-!         new_bp = 0
-!         do bp=1,b_npoin
-!             
-!             flag = 999
-!             
-!             p = temp_p_bound_indexing_array(bp)
-!                 
-!             pf_stt = p_f_index_array(p-1)+1
-!             pf_end = p_f_index_array(p)
-!             
-!             pf = pf_stt
-!             
-!             do i=1,number_of_projections(bp)
-!                 new_bp = new_bp + 1
-!                 
-!                 feature_points(new_bp) = temp_feature_points(bp)
-!                 
-!                 p_bound_indexing_array(new_bp) = p
-!                 
-!                 ! this is so we only look forward into the face array
-!                 do pf=pf,pf_end
-!                     
-!                     f = p_f_obj_relation_array(pf)
-!                     
-!                     if (p.eq.17) print*, f, f_internal_array(f), f_bound_array(f), pf
-!                     
-!                     if (f_internal_array(f)) cycle
-!                     
-!                     bf = reversed_f_bound_indexing_array(f)
-!                     
-!                     if (p.eq.17) print*, flag, f, f_boundary_flags(bf), pf
-!                     
-!                     if (f_boundary_flags(bf) .ne. flag)then
-!                         flag = f_boundary_flags(bf)
-!                         exit
-!                     endif
-!                     
-!                     
-!                 enddo
-!                 
-!                 p_boundary_flags(new_bp) = flag
-!                 
-!             enddo
-!             
-!         enddo
+        new_bp = 0
         do bp=1,b_npoin
-            
-            p = p_bound_indexing_array(bp)
-            
-            pf_stt = p_f_index_array(p-1)+1
-            pf_end = p_f_index_array(p)
             
             allocate(temp_flag(0))
             
-            do pf=pf_stt,pf_end
-                f = p_f_obj_relation_array(pf)
+            p = temp_p_bound_indexing_array(bp)
+                
+            pf_stt = p_f_index_array(p-1)+1
+            pf_end = p_f_index_array(p)
+            
+            do i=1,number_of_projections(bp)
+                new_bp = new_bp + 1
+                
+                feature_points(new_bp) = temp_feature_points(bp)
+                
+                p_bound_indexing_array(new_bp) = p
+                
+                ! this is so we only look forward into the face array
+                do pf=pf_stt,pf_end
                     
-                if (f_internal_array(f)) cycle
-                
-                bf = reversed_f_bound_indexing_array(f)
-                
-                flag = f_boundary_flags(bf)
-                
-                do i=1,size(temp_flag)
+                    f = p_f_obj_relation_array(pf)
                     
-                    if (temp_flag(i) .eq. flag) then
-                        flag = 999
+                    if (f_internal_array(f)) cycle
+                    
+                    bf = reversed_f_bound_indexing_array(f)
+                    
+                    flag = f_boundary_flags(bf)
+                    
+                    do i=1,size(temp_flag)
+                        
+                        if (temp_flag(i) .eq. flag) then
+                            flag = 999
+                        endif
+                        
+                    enddo
+                    
+                    if (p.eq.17) print*, flag, f, f_boundary_flags(bf), pf
+                    
+                    if (f_boundary_flags(bf) .eq. flag)then
+                        temp_flag = (/temp_flag, f_boundary_flags(bf)/)
+                        exit
                     endif
+                    
                     
                 enddo
                 
-                if (flag .eq. f_boundary_flags(bf)) then
-                    p_boundary_flags(new_bp) = flag
-                    temp_flag = (/temp_flag, f_boundary_flags(bf)/)
-                endif
+                p_boundary_flags(new_bp) = f_boundary_flags(bf)
                 
             enddo
-            
-            if (p.eq.17) print*, temp_flag
             
             deallocate(temp_flag)
             
         enddo
+        
         b_npoin = new_b_npoin
         
 !         reversed_p_bound_indexing_array
