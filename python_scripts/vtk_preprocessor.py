@@ -178,7 +178,14 @@ for c in range(nele):
             
             edge = face.GetEdge(e)
             
-            e_p_obj_relation_array.append([edge.GetPointId(0),edge.GetPointId(1)])
+            i1 = edge.GetPointId(0)
+            i2 = edge.GetPointId(1)
+            
+            if i1==i2:
+                print('FUCKFUCKFUCKFUCK')
+                
+            if i1!=i2:
+                e_p_obj_relation_array.append([i1,i2])
             
             e_array.append(edgeid)
             edgeid = edgeid + 1
@@ -194,9 +201,7 @@ del polyblock
 del cell
 del face
 del edge
-    
-print(e_p_obj_relation_array)
-    
+
 nface = faceid
 nedge = edgeid
 
