@@ -524,13 +524,13 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-!             if (obj_type.eq.boundary_edge) then
-!                 print*, flag, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm))
-!                 print*, centroid_obj_array
-!                 print*, ' '
-!                 print*, ' '
-!                 !if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-4)) cycle
-!             endif
+            if (obj_type.eq.boundary_edge) then
+                print*, flag, mm, tt(1), tt(2), f_bound_array(mm))
+                print*, centroid_obj_array
+                print*, ' '
+                print*, ' '
+                !if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-4)) cycle
+            endif
             
             if (state) then
                 
