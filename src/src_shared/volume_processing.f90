@@ -495,11 +495,11 @@ module volume_processing
         
         
         
-!         if (obj_type.eq.featre_point) then
-!             print*, 'new point', obj, flag, coords(obj,:)
-!             print*, tt(1), mm, tt(2)
-!             print*, centroid_obj_array
-!         endif
+        if (obj_type.eq.featre_point) then
+            print*, 'new point', obj, flag, coords(obj,:)
+            print*, tt(1), mm, tt(2)
+            print*, centroid_obj_array
+        endif
         
         do k=1,1000 ! this k limit is here to stop infinite loops, it needs to be set to an unreasonable number to not trip incorrectly
             
