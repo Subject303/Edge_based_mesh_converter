@@ -554,10 +554,10 @@ module volume_processing
         
         if (k.eq.1001) then
         
-            if (obj_type.eq.boundary_edge)then
-                print*, 'new edge', obj
-                print*, centroid_obj_array
-            endif    
+!             if (obj_type.eq.boundary_edge)then
+!                 print*, 'new edge', obj
+!                 print*, centroid_obj_array
+!             endif    
             
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
             
