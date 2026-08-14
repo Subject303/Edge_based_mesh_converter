@@ -453,6 +453,7 @@ module volume_processing
                 do m_i=1, tert_count
                     mm = p_f_obj_relation_array(t_stt+m_i)
                     if (f_bound_array(mm)) then
+                        if (obj .eq. 17) print*, m_i, mm, f_boundary_flags(reversed_f_bound_indexing_array(mm))
                         ! no wrong flags
                         if (f_boundary_flags(reversed_f_bound_indexing_array(mm)) .eq. flag) then
                             centroid_array_count = centroid_array_count + 1
@@ -461,7 +462,6 @@ module volume_processing
                     else
                         
                     endif
-                    if (obj .eq. 17) print*, m_i, mm, f_boundary_flags(reversed_f_bound_indexing_array(mm))
                 enddo
                 
                 allocate(centroid_obj_array(centroid_array_count))
