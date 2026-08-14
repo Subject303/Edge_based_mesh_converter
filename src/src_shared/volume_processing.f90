@@ -62,6 +62,8 @@ module volume_processing
             i2 = e_p_obj_relation_array(e_p_index_array(e))
             ! i1 and i2 are the constituent points of edge e
             
+            if (e.eq.10) print*, 'edge 10, ', i1, i2, coords(i1,:), coords(i2,:)
+            
             call centroid_assembler(e, centroid_array)
             
             in_progress_projection(:) = 0.0
@@ -506,7 +508,7 @@ module volume_processing
 !             print*, centroid_obj_array
 !         endif
         if (obj_type.eq.boundary_edge) then
-            if ((obj.eq. 4).or.(obj.eq.10)) then
+            if (obj.eq.10) then
                 print*, flag, mm, tt(1), tt(2), f_bound_array(mm)
                 print*, centroid_obj_array
                 print*, ' '
@@ -533,7 +535,7 @@ module volume_processing
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
             if (obj_type.eq.boundary_edge) then
-                if ((obj.eq. 4).or.(obj.eq.10)) then
+                if (obj.eq.10) then
                     print*, flag, mm, tt(1), tt(2), f_bound_array(mm)
                     print*, centroid_obj_array
                     print*, ' '
