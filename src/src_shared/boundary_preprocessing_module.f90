@@ -659,13 +659,13 @@ module boundary_routine_module
                     
                     f = p_f_obj_relation_array(pf)
                     
-                    if (p.eq.17) print*, f, f_internal_array(f), f_bound_array(f)
+                    if (p.eq.17) print*, f, f_internal_array(f), f_bound_array(f), pf
                     
                     if (f_internal_array(f)) cycle
                     
                     bf = reversed_f_bound_indexing_array(f)
                     
-                    if (p.eq.17) print*, flag, f, f_boundary_flags(bf), p_f_obj_relation_array(pf_end)
+                    if (p.eq.17) print*, flag, f, f_boundary_flags(bf), pf
                     
                     if (f_boundary_flags(bf) .ne. flag)then
                         flag = f_boundary_flags(bf)
