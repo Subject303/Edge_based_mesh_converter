@@ -302,6 +302,8 @@ module volume_processing
                 
                 call obj_select(m_i, m_stt, mm, tt)
                 
+                if ((obj.eq. 4).or.(obj.eq.10)) print*, obj, mm, tt(1), tt(2)
+                
                 ! this differs from internal because our first val will be a face and only connects to one cell
                 centroid_obj_array(1) = mm
                 centroid_obj_array(2) = tt(1)
@@ -517,7 +519,7 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-!             if (obj_type.eq.featre_point) then
+!             if (obj_type.eq.boundary_edge) then
 !                 print*, flag, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm))
 !                 print*, centroid_obj_array
 !                 print*, ' '
