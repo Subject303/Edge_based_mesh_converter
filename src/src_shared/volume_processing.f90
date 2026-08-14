@@ -302,12 +302,12 @@ module volume_processing
                 
                 call obj_select(m_i, m_stt, mm, tt)
                 
-!                 if ((obj.eq. 4).or.(obj.eq.10)) then
-!                     print*, obj, mm, tt(1), tt(2)
-!                     print*,e_f_obj_relation_array(m_stt:m_end)
-!                     print*,f_bound_array(e_f_obj_relation_array(m_stt:m_end))
-!                     print*,e_c_obj_relation_array(t_stt:t_end)
-!                 endif
+                if (obj.eq.10) then
+                    print*, obj, mm, tt(1), tt(2)
+                    print*,e_f_obj_relation_array(m_stt:m_end)
+                    print*,f_bound_array(e_f_obj_relation_array(m_stt:m_end))
+                    print*,e_c_obj_relation_array(t_stt:t_end)
+                endif
                 
                 ! this differs from internal because our first val will be a face and only connects to one cell
                 centroid_obj_array(1) = -1
