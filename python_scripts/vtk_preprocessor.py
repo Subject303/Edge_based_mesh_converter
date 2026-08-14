@@ -195,6 +195,8 @@ del cell
 del face
 del edge
     
+print(e_p_obj_relation_array)
+    
 nface = faceid
 nedge = edgeid
 
