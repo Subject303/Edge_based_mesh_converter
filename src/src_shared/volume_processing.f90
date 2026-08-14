@@ -122,8 +122,6 @@ module volume_processing
             i2 = e_p_obj_relation_array(e_p_index_array(e))
             ! i1 and i2 are the constituent points of edge e
             
-            if((i1.eq.1).or.(i2.eq.1)) print*, be, e, i1, i2, coords(i1,:), coords(i2,:)
-            
             call centroid_assembler(e, centroid_array)
             
             in_progress_projection(:) = 0.0
@@ -302,12 +300,12 @@ module volume_processing
                 
                 call obj_select(m_i, m_stt, mm, tt)
                 
-                if ((obj.eq. 4).or.(obj.eq.10)) then
-                    print*, obj, mm, tt(1), tt(2)
-                    print*,e_f_obj_relation_array(m_stt:m_end)
-                    print*,f_bound_array(e_f_obj_relation_array(m_stt:m_end))
-                    print*,e_c_obj_relation_array(t_stt:t_end)
-                endif
+!                 if ((obj.eq. 4).or.(obj.eq.10)) then
+!                     print*, obj, mm, tt(1), tt(2)
+!                     print*,e_f_obj_relation_array(m_stt:m_end)
+!                     print*,f_bound_array(e_f_obj_relation_array(m_stt:m_end))
+!                     print*,e_c_obj_relation_array(t_stt:t_end)
+!                 endif
                 
                 ! this differs from internal because our first val will be a face and only connects to one cell
                 centroid_obj_array(1) = mm
@@ -525,11 +523,12 @@ module volume_processing
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
             if (obj_type.eq.boundary_edge) then
-                print*, flag, mm, tt(1), tt(2), f_bound_array(mm)
-                print*, centroid_obj_array
-                print*, ' '
-                print*, ' '
-                !if ((e_boundary_flags(reversed_e_bound_indexing_array(mm)) .eq. 1000) .and. (fwd_i.ne.centroid_array_count-4)) cycle
+                if ((obj.eq. 4).or.(obj.eq.10)) then
+                    print*, flag, mm, tt(1), tt(2), f_bound_array(mm)
+                    print*, centroid_obj_array
+                    print*, ' '
+                    print*, ' '
+                endif
             endif
             
             if (state) then
