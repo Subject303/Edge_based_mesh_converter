@@ -442,18 +442,14 @@ module volume_processing
                     else
                         !centroid_array_count = centroid_array_count - 1
                     endif
-                    if (obj .eq. 17) print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm))
                     !print*, m_i, mm, e_boundary_flags(reversed_e_bound_indexing_array(mm))
                 enddo
-                
-                if (obj .eq. 17) print*, 'faces'
                 
                 ! and the same for internal faces but we dont need to worry about features
                 m_i = 1
                 do m_i=1, tert_count
                     mm = p_f_obj_relation_array(t_stt+m_i)
                     if (f_bound_array(mm)) then
-                        if (obj .eq. 17) print*, m_i, mm, f_boundary_flags(reversed_f_bound_indexing_array(mm))
                         ! no wrong flags
                         if (f_boundary_flags(reversed_f_bound_indexing_array(mm)) .eq. flag) then
                             centroid_array_count = centroid_array_count + 1
@@ -497,11 +493,11 @@ module volume_processing
         
         
         
-        if (obj_type.eq.featre_point) then
-            print*, 'new point', obj, flag, coords(obj,:)
-            print*, tt(1), mm, tt(2)
-            print*, centroid_obj_array
-        endif
+!         if (obj_type.eq.featre_point) then
+!             print*, 'new point', obj, flag, coords(obj,:)
+!             print*, tt(1), mm, tt(2)
+!             print*, centroid_obj_array
+!         endif
         
         do k=1,1000 ! this k limit is here to stop infinite loops, it needs to be set to an unreasonable number to not trip incorrectly
             
@@ -544,10 +540,10 @@ module volume_processing
             
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
             
-            if (obj_type.eq.featre_point)then
-                print*, 'new point', obj, flag, coords(obj,:)
-                print*, centroid_obj_array
-            endif    
+!             if (obj_type.eq.featre_point)then
+!                 print*, 'new point', obj, flag, coords(obj,:)
+!                 print*, centroid_obj_array
+!             endif    
             
             return
         endif

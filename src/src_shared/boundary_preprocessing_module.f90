@@ -584,8 +584,6 @@ module boundary_routine_module
                 
             enddo
             
-            if (p.eq.17) print*, temp_flag
-            
             deallocate(temp_flag)
             
         enddo
@@ -672,8 +670,6 @@ module boundary_routine_module
                         endif
                         
                     enddo
-                    
-                    if (p.eq.17) print*, flag, f, f_boundary_flags(bf), pf
                     
                     if (f_boundary_flags(bf) .eq. flag)then
                         temp_flag = (/temp_flag, f_boundary_flags(bf)/)
