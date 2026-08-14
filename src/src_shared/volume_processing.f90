@@ -305,6 +305,7 @@ module volume_processing
                 if ((obj.eq. 4).or.(obj.eq.10)) then
                     print*, obj, mm, tt(1), tt(2)
                     print*,e_f_obj_relation_array(m_stt:m_end)
+                    print*,f_bound_array(e_f_obj_relation_array(m_stt:m_end))
                     print*,e_c_obj_relation_array(t_stt:t_end)
                 endif
                 
