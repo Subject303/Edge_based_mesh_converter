@@ -541,10 +541,10 @@ module volume_processing
             
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
             
-!             if (obj_type.eq.featre_point)then
-!                 print*, 'new point', obj, flag, coords(obj,:)
-!                 print*, centroid_obj_array
-!             endif    
+            if (obj_type.eq.boundary_edge)then
+                print*, 'new edge', obj
+                print*, centroid_obj_array
+            endif    
             
             return
         endif
