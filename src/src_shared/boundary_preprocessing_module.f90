@@ -663,7 +663,7 @@ module boundary_routine_module
                     
                     bf = reversed_f_bound_indexing_array(f)
                     
-                    if (p.eq.17) print*, flag, f, f_boundary_flags(bf)
+                    if (p.eq.17) print*, flag, f, f_boundary_flags(bf), p_f_obj_relation_array(pf_end)
                     
                     if (f_boundary_flags(bf) .ne. flag)then
                         flag = f_boundary_flags(bf)
