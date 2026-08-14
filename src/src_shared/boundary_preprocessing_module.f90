@@ -657,13 +657,13 @@ module boundary_routine_module
                 ! this is so we only look forward into the face array
                 do pf=pf,pf_end
                     
-                    if (p.eq.17) print*, flag, f_boundary_flags(bf)
-                    
                     f = p_f_obj_relation_array(pf)
                     
                     if (f_internal_array(f)) cycle
                     
                     bf = reversed_f_bound_indexing_array(f)
+                    
+                    if (p.eq.17) print*, flag, f_boundary_flags(bf)
                     
                     if (f_boundary_flags(bf) .ne. flag)then
                         flag = f_boundary_flags(bf)
