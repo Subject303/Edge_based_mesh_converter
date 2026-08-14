@@ -525,7 +525,7 @@ module volume_processing
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
             if (obj_type.eq.boundary_edge) then
-                print*, flag, mm, tt(1), tt(2), f_bound_array(mm))
+                print*, flag, mm, tt(1), tt(2), f_bound_array(mm)
                 print*, centroid_obj_array
                 print*, ' '
                 print*, ' '
