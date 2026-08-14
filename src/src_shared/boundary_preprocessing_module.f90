@@ -659,6 +659,8 @@ module boundary_routine_module
                     
                     f = p_f_obj_relation_array(pf)
                     
+                    if (p.eq.17) print*, f, f_internal_array(f), f_bound_array(f)
+                    
                     if (f_internal_array(f)) cycle
                     
                     bf = reversed_f_bound_indexing_array(f)
