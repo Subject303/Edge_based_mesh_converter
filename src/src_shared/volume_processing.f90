@@ -710,10 +710,10 @@ module volume_processing
 !                 faces are main
 !                 cells are tertiary
                 do i=2,centroid_array_count-1,2
-                    centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
+                    centroid_array(i-1,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
                 do i=3,centroid_array_count-2,2
-                    centroid_array(i,:) = c_centroid(centroid_obj_array(i),:)
+                    centroid_array(i-1,:) = c_centroid(centroid_obj_array(i),:)
                 enddo
                 
                 
