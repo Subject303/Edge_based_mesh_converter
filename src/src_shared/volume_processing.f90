@@ -302,7 +302,11 @@ module volume_processing
                 
                 call obj_select(m_i, m_stt, mm, tt)
                 
-                if ((obj.eq. 4).or.(obj.eq.10)) print*, obj, mm, tt(1), tt(2)
+                if ((obj.eq. 4).or.(obj.eq.10)) then
+                    print*, obj, mm, tt(1), tt(2)
+                    print*,e_f_obj_relation_array(m_stt:m_end)
+                    print*,e_c_obj_relation_array(t_stt:t_end)
+                endif
                 
                 ! this differs from internal because our first val will be a face and only connects to one cell
                 centroid_obj_array(1) = mm
@@ -540,13 +544,14 @@ module volume_processing
         enddo
         
         if (k.eq.1001) then
-            
-            print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
-            
+        
             if (obj_type.eq.boundary_edge)then
                 print*, 'new edge', obj
                 print*, centroid_obj_array
             endif    
+            
+            print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
+            
             
             return
         endif
