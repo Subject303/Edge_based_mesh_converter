@@ -280,7 +280,7 @@ module volume_processing
                 tert_count = t_end-t_stt
                 
                 ! for b_edge the centroid will consist of all adjacent centroids
-                centroid_array_count = 1 + main_count + tert_count
+                centroid_array_count = 2 + main_count + tert_count
                 ! but for convinience we accept that the last entry can be dropped so subroutines can be simpler
                 
                 ! allocate my temp arrays
@@ -308,12 +308,13 @@ module volume_processing
 !                 endif
                 
                 ! this differs from internal because our first val will be a face and only connects to one cell
-                centroid_obj_array(1) = mm
-                centroid_obj_array(2) = tt(1)
+                centroid_obj_array(1) = -1
+                centroid_obj_array(2) = mm
+                centroid_obj_array(3) = tt(1)
                 ! tt(1) and tt(2) should be identical here 
                 
                 ! and initialise our indexers
-                fwd_i = 2
+                fwd_i = 3
                 bck_i = 1
                 
                 ! other than the current edge
@@ -708,10 +709,10 @@ module volume_processing
                 
 !                 faces are main
 !                 cells are tertiary
-                do i=1,centroid_array_count-1,2
+                do i=2,centroid_array_count-1,2
                     centroid_array(i,:) = f_centroid(centroid_obj_array(i),:)
                 enddo
-                do i=2,centroid_array_count-2,2
+                do i=3,centroid_array_count-2,2
                     centroid_array(i,:) = c_centroid(centroid_obj_array(i),:)
                 enddo
                 
