@@ -182,7 +182,7 @@ for c in range(nele):
             i2 = edge.GetPointId(1)
             
             if i1==i2:
-                print('FUCKFUCKFUCKFUCK')
+                print('FUCKFUCKFUCKFUCK', i1, i2)
                 
             if i1!=i2:
                 e_p_obj_relation_array.append([i1,i2])
