@@ -460,6 +460,7 @@ module volume_processing
                     else
                         
                     endif
+                    if (obj .eq. 17) print*, m_i, mm, f_boundary_flags(reversed_f_bound_indexing_array(mm))
                 enddo
                 
                 allocate(centroid_obj_array(centroid_array_count))
