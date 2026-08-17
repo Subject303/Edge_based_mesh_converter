@@ -10,9 +10,6 @@ rm -f $MOD
 cd      ..
 rm -f "./converter"
 
-module purge
-module load GCC
-module load Python/3.10.8-GCCcore-12.2.0
 
 case_file=$1
 preprocessed_file=${case_file#"./case/"}

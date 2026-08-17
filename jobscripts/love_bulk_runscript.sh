@@ -10,6 +10,10 @@
 
 cd      $PBS_O_WORKDIR
 
+module purge
+module load GCC
+module load Python/3.10.8-GCCcore-12.2.0
+
 sh "./run_edge_based_mesh_converter.sh" "2_rad_sphere_poly.case"
 
 sh "./run_edge_based_mesh_converter.sh" "2.case"

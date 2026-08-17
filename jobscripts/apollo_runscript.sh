@@ -8,6 +8,12 @@
 
 cd      $SLURM_SUBMIT_DIR
 
+module purge
+# module load VTK/9.3.0-foss-2023a
+
+module load GCC
+module load Python/3.10.8-GCCcore-12.2.0
+
 case_file="half_domain_slender.vtk"
 # case_file="test_intake.vtk"
 # case_file="star1.case"
