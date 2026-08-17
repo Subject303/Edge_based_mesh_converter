@@ -8,10 +8,10 @@
 
 cd      $SLURM_SUBMIT_DIR
 
-pip list
+# pip list
 
 module purge
-module load VTK/9.3.0-foss-2023a
+# module load VTK/9.3.0-foss-2023a
 
 pip list
 
