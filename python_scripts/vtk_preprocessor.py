@@ -84,7 +84,6 @@ print('cleaning case file',time.time()-start); sys.stdout.flush()
 # general cleanup
 algo = vtkStaticCleanUnstructuredGrid()
 algo.SetInputData(polyblock)
-algo.SetAbsoluteTolerance(1e-8)
 algo.RemoveUnusedPointsOn()
 algo.Update()
 polyblock = algo.GetOutput()
