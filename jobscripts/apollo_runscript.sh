@@ -12,7 +12,7 @@ module purge
 # module load VTK/9.3.0-foss-2023a
 
 module load GCC
-module load Python/3.10.8-GCCcore-12.2.0
+module load Python/3.13.1-GCCcore-14.2.0
 
 case_file="half_domain_slender.vtk"
 # case_file="test_intake.vtk"
