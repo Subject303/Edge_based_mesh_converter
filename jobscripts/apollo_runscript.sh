@@ -11,7 +11,8 @@ cd      $SLURM_SUBMIT_DIR
 module purge
 module load GCC
 
-case_file="half_domain_slender.vtk"
+# case_file="half_domain_slender.vtk"
+case_file="full_domain.vtk"
 # case_file="test_intake.vtk"
 # case_file="star1.case"
 
