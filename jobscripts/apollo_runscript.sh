@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=BaseMpdataDEV
-#SBATCH --output Logfolder/Apollotest.STD_OUT_LOG
+#SBATCH --output Logfolder/mesh_log_job_$SLURM_JOB_ID.STD_OUT_LOG
 #SBATCH --ntasks-per-node=64
 #SBATCH --partition=compute
 #SBATCH --time=24:00:00
