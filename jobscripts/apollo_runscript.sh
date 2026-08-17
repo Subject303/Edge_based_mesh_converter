@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=BaseMpdataDEV
+#SBATCH --job-name=edge-mesher
 #SBATCH --output logfolder/log_mesher_.%j.txt
 #SBATCH --ntasks-per-node=64
 #SBATCH --partition=compute
