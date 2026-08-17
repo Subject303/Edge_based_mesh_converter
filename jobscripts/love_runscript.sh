@@ -12,7 +12,7 @@ cd      $PBS_O_WORKDIR
 
 module purge
 module load GCC
-module load Python/3.10.8-GCCcore-12.2.0
+module load Python/3.13.1-GCCcore-14.2.0
 
 case_file="half_domain_slender.vtk"
 # case_file="test_intake.vtk"
