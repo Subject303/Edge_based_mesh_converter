@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=BaseMpdataDEV
-#SBATCH --output Logfolder/log_mesher_.%j.txt
+#SBATCH --output logfolder/log_mesher_.%j.txt
 #SBATCH --ntasks-per-node=64
 #SBATCH --partition=compute
 #SBATCH --time=24:00:00
