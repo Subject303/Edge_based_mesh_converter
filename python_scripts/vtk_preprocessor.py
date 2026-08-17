@@ -1,4 +1,5 @@
 from vtk import *
+import numpy
 import pyvista
 import os
 import struct
