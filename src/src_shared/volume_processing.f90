@@ -302,12 +302,12 @@ module volume_processing
                 
                 call obj_select(m_i, m_stt, mm, tt)
                 
-                if (obj.eq.10) then
-                    print*, obj, mm, tt(1), tt(2)
-                    print*,e_f_obj_relation_array(m_stt:m_end)
-                    print*,f_bound_array(e_f_obj_relation_array(m_stt:m_end))
-                    print*,e_c_obj_relation_array(t_stt:t_end)
-                endif
+!                 if (obj.eq.10) then
+!                     print*, obj, mm, tt(1), tt(2)
+!                     print*,e_f_obj_relation_array(m_stt:m_end)
+!                     print*,f_bound_array(e_f_obj_relation_array(m_stt:m_end))
+!                     print*,e_c_obj_relation_array(t_stt:t_end)
+!                 endif
                 
                 ! this differs from internal because our first val will be a face and only connects to one cell
                 centroid_obj_array(1) = -1
@@ -507,14 +507,14 @@ module volume_processing
 !             print*, tt(1), mm, tt(2)
 !             print*, centroid_obj_array
 !         endif
-        if (obj_type.eq.boundary_edge) then
-            if (obj.eq.10) then
-                print*, flag, mm, tt(1), tt(2), f_bound_array(mm)
-                print*, centroid_obj_array
-                print*, ' '
-                print*, ' '
-            endif
-        endif
+!         if (obj_type.eq.boundary_edge) then
+!             if (obj.eq.10) then
+!                 print*, flag, mm, tt(1), tt(2), f_bound_array(mm)
+!                 print*, centroid_obj_array
+!                 print*, ' '
+!                 print*, ' '
+!             endif
+!         endif
         
         
         do k=1,1000 ! this k limit is here to stop infinite loops, it needs to be set to an unreasonable number to not trip incorrectly
@@ -534,14 +534,14 @@ module volume_processing
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
             
-            if (obj_type.eq.boundary_edge) then
-                if (obj.eq.10) then
-                    print*, flag, mm, tt(1), tt(2), f_bound_array(mm)
-                    print*, centroid_obj_array
-                    print*, ' '
-                    print*, ' '
-                endif
-            endif
+!             if (obj_type.eq.boundary_edge) then
+!                 if (obj.eq.10) then
+!                     print*, flag, mm, tt(1), tt(2), f_bound_array(mm)
+!                     print*, centroid_obj_array
+!                     print*, ' '
+!                     print*, ' '
+!                 endif
+!             endif
             
             if (state) then
                 
@@ -564,6 +564,10 @@ module volume_processing
             
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
             
+            print*, flag, mm, tt(1), tt(2), f_bound_array(mm)
+            print*, centroid_obj_array
+            print*, ' '
+            print*, ' '
             
             return
         endif
