@@ -564,7 +564,7 @@ module volume_processing
             
             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
             
-            print*, flag, mm, tt(1), tt(2), f_bound_array(mm)
+            print*, flag, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm), f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
             print*, centroid_obj_array
             print*, ' '
             print*, ' '
