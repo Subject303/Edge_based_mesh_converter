@@ -515,7 +515,7 @@ module volume_processing
         endif
         
         
-        do k=1,1000 ! this k limit is here to stop infinite loops, it needs to be set to an unreasonable number to not trip incorrectly
+        do !k=1,1000 ! this k limit is here to stop infinite loops, it needs to be set to an unreasonable number to not trip incorrectly
             
             ! now we loop about our centroids
             if (m_i.eq.main_count) then
