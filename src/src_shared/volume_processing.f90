@@ -506,13 +506,13 @@ module volume_processing
 !             print*, 'new point', obj, flag, coords(obj,:)
 !             print*, tt(1), mm, tt(2)
 !             print*, centroid_obj_array
+! !         endif
+!         if (obj_type.eq.featre_point) then
+!             print*, flag, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm)), f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
+!             print*, centroid_obj_array
+!             print*, ' '
+!             print*, ' '
 !         endif
-        if (obj_type.eq.featre_point) then
-            print*, flag, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm)), f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
-            print*, centroid_obj_array
-            print*, ' '
-            print*, ' '
-        endif
         
         
         do !k=1,1000 ! this k limit is here to stop infinite loops, it needs to be set to an unreasonable number to not trip incorrectly
@@ -531,13 +531,13 @@ module volume_processing
             call obj_select(m_i, m_stt, mm, tt)
             
             call centroid_swapper(mm, tt, fwd_i, bck_i, centroid_obj_array, state)
-            
-            if (obj_type.eq.featre_point) then
-                print*, flag, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm)), f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
-                print*, centroid_obj_array
-                print*, ' '
-                print*, ' '
-            endif
+!             
+!             if (obj_type.eq.featre_point) then
+!                 print*, flag, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm)), f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
+!                 print*, centroid_obj_array
+!                 print*, ' '
+!                 print*, ' '
+!             endif
             
             if (state) then
                 
@@ -551,22 +551,22 @@ module volume_processing
             
         enddo
         
-        if (k.eq.1001) then
-        
-!             if (obj_type.eq.boundary_edge)then
-!                 print*, 'new edge', obj
-!                 print*, centroid_obj_array
-!             endif    
-            
-            print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
-            
-            print*, flag, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm)), f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
-            print*, centroid_obj_array
-            print*, ' '
-            print*, ' '
-            
-            return
-        endif
+!         if (k.eq.1001) then
+!         
+! !             if (obj_type.eq.boundary_edge)then
+! !                 print*, 'new edge', obj
+! !                 print*, centroid_obj_array
+! !             endif    
+!             
+!             print*, 'weve hit 1000 loops in the centroid assembler so the end conditions are probably munted'
+!             
+!             print*, flag, mm, tt(1), tt(2), e_boundary_flags(reversed_e_bound_indexing_array(mm)), f_boundary_flags(reversed_f_bound_indexing_array(tt(1))), f_boundary_flags(reversed_f_bound_indexing_array(tt(2)))
+!             print*, centroid_obj_array
+!             print*, ' '
+!             print*, ' '
+!             
+!             return
+!         endif
         
 !         if (obj_type.eq.featre_point) then
 !             print*, centroid_obj_array
