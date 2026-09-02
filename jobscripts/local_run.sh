@@ -7,5 +7,6 @@ case_file="slender-no-wake-cour.vtk"
 # case_file="star1.case"
 
 ls
+pwd
 
 source "./run_edge_based_mesh_converter.sh" $case_file
