@@ -8,4 +8,4 @@ case_file="slender-no-wake-cour.vtk"
 
 ls
 
-source "run_edge_based_mesh_converter.sh" $case_file
+source "./run_edge_based_mesh_converter.sh" $case_file
