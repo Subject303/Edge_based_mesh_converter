@@ -6,6 +6,7 @@
 **.preprocessed_mesh_file
 **.internalmesh
 **.vtu
+**.vtk
 
 **/logfile.txt
 **/log.**

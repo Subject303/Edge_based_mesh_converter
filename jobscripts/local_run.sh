@@ -2,7 +2,7 @@
 
 # case_file="half_domain_slender.vtk"
 # case_file="full_domain.vtk"
-case_file="slender-no-wake-cour.vtk"
+case_file="slender-no-wake-fine.vtk"
 # case_file="slender-no-wake-acc.vtk"
 # case_file="star1.case"
 
