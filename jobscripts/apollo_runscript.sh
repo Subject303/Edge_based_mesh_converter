@@ -11,10 +11,7 @@ cd      $SLURM_SUBMIT_DIR
 module purge
 module load GCC
 
-# case_file="half_domain_slender.vtk"
-# case_file="full_domain.vtk"
-# case_file="wedge.vtk"
-case_file="scaled-fine.vtk" 
-# case_file="star1.case"
+# case_file="scaled-fine.vtk" 
+case_file="slender_Copy-ran.case" 
 
 sh "./run_edge_based_mesh_converter.sh" $case_file
