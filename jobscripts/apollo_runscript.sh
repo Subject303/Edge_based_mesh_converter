@@ -12,6 +12,6 @@ module purge
 module load GCC
 
 # case_file="scaled-fine.vtk" 
-case_file="t-birch-slender-visc-2nd2nd_1@45300.case" 
+case_file="t-birch-slender-mesh.case" 
 
 sh "./run_edge_based_mesh_converter.sh" $case_file
