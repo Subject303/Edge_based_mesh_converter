@@ -16,10 +16,10 @@ module load GCC
 # 
 # sh "./run_edge_based_mesh_converter.sh" $case_file
 
-# case_file="808080.vtk" 
-# 
-# sh "./run_edge_based_mesh_converter.sh" $case_file
-# 
-case_file="160160160.vtk" 
+case_file="808080.vtk" 
 
 sh "./run_edge_based_mesh_converter.sh" $case_file
+# 
+# case_file="160160160.vtk" 
+# 
+# sh "./run_edge_based_mesh_converter.sh" $case_file
