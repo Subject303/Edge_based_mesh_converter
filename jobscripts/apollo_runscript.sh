@@ -11,14 +11,14 @@ cd      $SLURM_SUBMIT_DIR
 module purge
 module load GCC
 
-case_file="404040.vtk" 
-# case_file="t-birch-slender-mesh.case" 
-
-sh "./run_edge_based_mesh_converter.sh" $case_file
-
-# case_file="808080.vtk" 
+# case_file="404040.vtk" 
+# # case_file="t-birch-slender-mesh.case" 
 # 
 # sh "./run_edge_based_mesh_converter.sh" $case_file
+
+case_file="808080.vtk" 
+
+sh "./run_edge_based_mesh_converter.sh" $case_file
 # 
 # case_file="160160160.vtk" 
 # 
