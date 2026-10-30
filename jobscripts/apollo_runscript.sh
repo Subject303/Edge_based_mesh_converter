@@ -12,7 +12,7 @@ module purge
 module load GCC
 
 # case_file="404040.vtk" 
-case_file="80-semi.case" 
+case_file="40-semi.case" 
 
 sh "./run_edge_based_mesh_converter.sh" $case_file
 
