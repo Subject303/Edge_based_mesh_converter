@@ -11,27 +11,7 @@ cd      $SLURM_SUBMIT_DIR
 module purge
 module load GCC
 
-# case_file="404040.vtk" 
-<<<<<<< HEAD
-# case_file="160-semi.case" 
-# 
-# sh "./run_edge_based_mesh_converter.sh" $case_file
-=======
-case_file="40-semi.case" 
-
-sh "./run_edge_based_mesh_converter.sh" $case_file
->>>>>>> origin
-
-# case_file="808080.vtk" 
-# case_file="512k-tet.case" 
-# 
-# sh "./run_edge_based_mesh_converter.sh" $case_file
-
 case_file="160160160-mod.vtk" 
 # case_file="4000k-tet.case" 
 # 
 sh "./run_edge_based_mesh_converter.sh" $case_file
-
-# case_file="320320320.vtk" 
-# 
-# sh "./run_edge_based_mesh_converter.sh" $case_file
