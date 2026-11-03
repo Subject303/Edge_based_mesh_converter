@@ -2,7 +2,7 @@
 #SBATCH --job-name=edge-mesher
 #SBATCH --output logfolder/log_mesher_.%j.txt
 #SBATCH --ntasks-per-node=64
-#SBATCH --partition=compute
+#SBATCH --partition=himem
 #SBATCH --time=24:00:00
 #SBATCH --account=Szmelter2026b
 
