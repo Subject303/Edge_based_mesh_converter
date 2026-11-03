@@ -10,7 +10,7 @@ from vtkmodules.util.misc import *
 from vtkmodules.vtkFiltersPoints import *
 from vtkmodules.all import *
 from argparse import ArgumentParser
-
+sys.setrecursionlimit(10**8)
 
 VTK_DATA_ROOT = vtkGetDataRoot()
 
@@ -257,7 +257,7 @@ for i in range(len(c_f_obj_relation_array)):
         obj[j] = f_sort[obj[j]]
     c_f_obj_relation_array[i] = sorted(obj)
 
-del f_sort
+del f_sort; gc.collect()
 
 print('   e_p',time.time()-start); sys.stdout.flush()
 
@@ -266,7 +266,7 @@ e_sort = list(range(len(e_p_obj_relation_array)))
 sorted_e_p    = [sorted(obj) for obj in e_p_obj_relation_array]
 
 coupled = sorted(zip(sorted_e_p, e_p_obj_relation_array, e_sort), key=lambda element: element[0])
-
+gc.collect()
 i=0
 for p, x, y in coupled:
     sorted_e_p[i] = p
